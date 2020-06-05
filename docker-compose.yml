@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  db:
+    image: mariadb:10.4
+    environment:
+      MYSQL_DATABASE: "directus"
+      MYSQL_USER: "directus"
+      MYSQL_PASSWORD: "directus"
+      MYSQL_ROOT_PASSWORD: "directus"
+    ports:
+      - "3306:3306"
+
+  directus:
+    image: directus/directus:v8-apache
+    ports:
+      - "8080:80"
+    environment:
+      DIRECTUS_APP_ENV: "production"
+      DIRECTUS_AUTH_PUBLICKEY: "R9B+xvgXRKMCTkBJJ69CvmaLyZzCRClZ73IKWEXMJEY"
+      DIRECTUS_AUTH_SECRETKEY: "VJ4Pgg4rt1vUWNAVz/C5yy0kMI5gqcKQtgSa3MMbTvc"
+      DIRECTUS_DATABASE_HOST: "db"
+      DIRECTUS_DATABASE_PORT: "3306"
+      DIRECTUS_DATABASE_NAME: "directus"
+      DIRECTUS_DATABASE_USERNAME: "directus"
+      DIRECTUS_DATABASE_PASSWORD: "directus"
+      DIRECTUS_INSTALL_TITLE: "Abteilungs-Homepage"
+      DIRECTUS_INSTALL_EMAIL: "admin@gloggi.ch"
+      DIRECTUS_INSTALL_PASSWORD: "admin"
+
+    volumes:
+      - ./backend/data/config:/var/directus/config
+      - ./backend/data/uploads:/var/directus/public/uploads
