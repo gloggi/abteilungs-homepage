@@ -1,15 +1,6 @@
 version: "3"
 
 services:
-  db:
-    image: mariadb:10.4
-    environment:
-      MYSQL_DATABASE: "directus"
-      MYSQL_USER: "directus"
-      MYSQL_PASSWORD: "directus"
-      MYSQL_ROOT_PASSWORD: "directus"
-    ports:
-      - "3306:3306"
 
   directus:
     image: directus/directus:v8-apache
@@ -27,7 +18,25 @@ services:
       DIRECTUS_INSTALL_TITLE: "Abteilungs-Homepage"
       DIRECTUS_INSTALL_EMAIL: "admin@gloggi.ch"
       DIRECTUS_INSTALL_PASSWORD: "admin"
-
     volumes:
       - ./backend/data/config:/var/directus/config
       - ./backend/data/uploads:/var/directus/public/uploads
+
+  migrations:
+    build: ./db
+    environment:
+      - DATABASE_URL=mysql://root:directus@db:3306/directus
+    depends_on:
+      - db
+    volumes:
+      - ./db:/db
+
+  db:
+    image: mariadb:10.4
+    environment:
+      MYSQL_DATABASE: "directus"
+      MYSQL_USER: "directus"
+      MYSQL_PASSWORD: "directus"
+      MYSQL_ROOT_PASSWORD: "directus"
+    ports:
+      - "3306:3306"

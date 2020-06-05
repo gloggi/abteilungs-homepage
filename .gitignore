@@ -71,7 +71,7 @@ Thumbs.db
 
 # ignore log files and databases
 *.log
-*.sql
+#*.sql
 *.sqlite
 
 # ignore compiled files
@@ -103,5 +103,6 @@ Thumbs.db
 
 # track these files, if they exist
 !.gitignore
+!.gitkeep
 !.editorconfig
 !.phpcs.xml.dist
