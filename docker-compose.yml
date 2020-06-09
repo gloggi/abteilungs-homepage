@@ -15,7 +15,7 @@ services:
       PORT: 80
 
   directus:
-    image: directus/directus:v8-apache
+    image: directus/directus:v8.7.2-apache
     ports:
       - "8080:80"
     environment:
