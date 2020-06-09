@@ -230,7 +230,7 @@ CREATE TABLE `directus_permissions` (
   `write_field_blacklist` varchar(1000) DEFAULT NULL,
   `status_blacklist` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -655,5 +655,6 @@ LOCK TABLES `schema_migrations` WRITE;
 INSERT INTO `schema_migrations` (version) VALUES
   ('20200606100000'),
   ('20200606170000'),
-  ('20200609120000');
+  ('20200609120000'),
+  ('20200609170000');
 UNLOCK TABLES;
