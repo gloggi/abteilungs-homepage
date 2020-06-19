@@ -31,7 +31,7 @@ CREATE TABLE `age_levels` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +175,7 @@ CREATE TABLE `directus_files` (
   `checksum` varchar(32) DEFAULT NULL,
   `metadata` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -492,7 +492,7 @@ CREATE TABLE `groups` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -522,13 +522,13 @@ CREATE TABLE `locations` (
 CREATE TABLE `page_contents` (
   `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
   `page` int(10) unsigned NOT NULL,
-  `separator_banner` int(10) unsigned NOT NULL,
+  `separator_banner` int(10) unsigned DEFAULT NULL,
   `content` text NOT NULL,
   `sort` int(10) unsigned DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -545,8 +545,8 @@ CREATE TABLE `pages` (
   `form_fields` text DEFAULT NULL,
   `whatwedo_show` tinyint(3) unsigned DEFAULT NULL,
   `whoweare_show` tinyint(3) unsigned DEFAULT NULL,
-  `whoweare_participate_links_page` int(10) unsigned NOT NULL,
-  `whoweare_agenda_links_page` int(10) unsigned NOT NULL,
+  `whoweare_participate_links_page` int(10) unsigned DEFAULT NULL,
+  `whoweare_agenda_links_page` int(10) unsigned DEFAULT NULL,
   `whoweare_show_contacts` tinyint(3) unsigned DEFAULT NULL,
   `agenda_sections` text DEFAULT NULL,
   `agenda_noevents` text DEFAULT NULL COMMENT 'Wird angezeigt falls für eine Gruppe keine zukünftigen Anlässe erfasst sind.',
@@ -554,8 +554,9 @@ CREATE TABLE `pages` (
   `created_on` datetime DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
+  `route` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -629,7 +630,7 @@ CREATE TABLE `successor_groups` (
   `predecessor_group` int(10) unsigned NOT NULL,
   `successor_group` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -656,5 +657,6 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20200606100000'),
   ('20200606170000'),
   ('20200609120000'),
-  ('20200609170000');
+  ('20200609170000'),
+  ('20200609180000');
 UNLOCK TABLES;

@@ -188,15 +188,16 @@ CREATE TABLE `locations` (
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `page_contents` (
-                                 `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
-                                 `page` int(10) unsigned NOT NULL,
-                                 `separator_banner` int(10) unsigned NOT NULL,
-                                 `content` text NOT NULL,
-                                 `sort` int(10) unsigned DEFAULT NULL,
-                                 `modified_by` int(10) unsigned DEFAULT NULL,
-                                 `modified_on` datetime DEFAULT NULL,
-                                 PRIMARY KEY (`id`)
+create table page_contents
+(
+    id               int(15) unsigned auto_increment
+        primary key,
+    page             int unsigned not null,
+    separator_banner int unsigned null,
+    content          text         not null,
+    sort             int unsigned null,
+    modified_by      int unsigned null,
+    modified_on      datetime     null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,24 +207,26 @@ CREATE TABLE `page_contents` (
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pages` (
-                         `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
-                         `name` varchar(64) NOT NULL,
-                         `status` varchar(20) NOT NULL DEFAULT 'draft',
-                         `banner` int(10) unsigned NOT NULL,
-                         `form_fields` text DEFAULT NULL,
-                         `whatwedo_show` tinyint(3) unsigned DEFAULT NULL,
-                         `whoweare_show` tinyint(3) unsigned DEFAULT NULL,
-                         `whoweare_participate_links_page` int(10) unsigned NOT NULL,
-                         `whoweare_agenda_links_page` int(10) unsigned NOT NULL,
-                         `whoweare_show_contacts` tinyint(3) unsigned DEFAULT NULL,
-                         `agenda_sections` text DEFAULT NULL,
-                         `agenda_noevents` text DEFAULT NULL COMMENT 'Wird angezeigt falls für eine Gruppe keine zukünftigen Anlässe erfasst sind.',
-                         `sort` int(10) unsigned DEFAULT NULL,
-                         `created_on` datetime DEFAULT NULL,
-                         `modified_by` int(10) unsigned DEFAULT NULL,
-                         `modified_on` datetime DEFAULT NULL,
-                         PRIMARY KEY (`id`)
+create table pages
+(
+    id                              int(15) unsigned auto_increment
+        primary key,
+    name                            varchar(64)                 not null,
+    status                          varchar(20) default 'draft' not null,
+    banner                          int unsigned                not null,
+    form_fields                     text                        null,
+    whatwedo_show                   tinyint unsigned            null,
+    whoweare_show                   tinyint unsigned            null,
+    whoweare_participate_links_page int unsigned                null,
+    whoweare_agenda_links_page      int unsigned                null,
+    whoweare_show_contacts          tinyint unsigned            null,
+    agenda_sections                 text                        null,
+    agenda_noevents                 text                        null comment 'Wird angezeigt falls für eine Gruppe keine zukünftigen Anlässe erfasst sind.',
+    sort                            int unsigned                null,
+    created_on                      datetime                    null,
+    modified_by                     int unsigned                null,
+    modified_on                     datetime                    null,
+    route                           text                        not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
