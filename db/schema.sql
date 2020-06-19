@@ -175,7 +175,7 @@ CREATE TABLE `directus_files` (
   `checksum` varchar(32) DEFAULT NULL,
   `metadata` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -596,7 +596,7 @@ CREATE TABLE `settings` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -658,5 +658,6 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20200606170000'),
   ('20200609120000'),
   ('20200609170000'),
-  ('20200609180000');
+  ('20200616180000'),
+  ('20200619160000');
 UNLOCK TABLES;
