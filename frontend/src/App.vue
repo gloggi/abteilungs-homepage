@@ -3,8 +3,11 @@
          :style="'--primary-color: '+settings[0].primary_color+';--secondary-color: '+settings[0].secondary_color">
         <Header :page="findPage()" :pages="pages"
                 :settings="settings"></Header>
-        <Navbar :pages="pages" :routes="routes"></Navbar>
-        <router-view :page="findPage()" :pages="pages"></router-view>
+        <Navbar :pages="pages" :routes="routes" :settings="settings"></Navbar>
+        <router-view :page="findPage()"
+                     :pages="pages"
+                     :age_levels="age_levels"
+                     :groups="groups"></router-view>
         <Footer :groups="groups" :settings="settings"></Footer>
     </div>
 </template>
