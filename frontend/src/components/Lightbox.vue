@@ -34,6 +34,7 @@
                             </div>
                         </div>
                         <div class="content__column">
+                            <div v-html="group.description"></div>
                             <a href="#" class="button button--small">Mitmachen</a>
                         </div>
                     </div>

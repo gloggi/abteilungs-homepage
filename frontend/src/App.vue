@@ -7,7 +7,8 @@
         <router-view :page="findPage()"
                      :pages="pages"
                      :age_levels="age_levels"
-                     :groups="groups"></router-view>
+                     :groups="groups"
+                     :contacts="contacts"></router-view>
         <Footer :groups="groups" :settings="settings"></Footer>
     </div>
 </template>
@@ -131,7 +132,7 @@
     }
 
     h2, h3, h4 {
-        color: < var(--primary-color) !important;
+        color:  var(--primary-color) !important;
     }
 
     .heading-2--inverted {
