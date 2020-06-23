@@ -50,8 +50,9 @@ CREATE TABLE `contacts` (
   `created_on` datetime DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
+  `position` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +74,7 @@ CREATE TABLE `directus_activity` (
   `comment` text CHARACTER SET utf8mb4 DEFAULT NULL,
   `comment_deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=263 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +144,7 @@ CREATE TABLE `directus_fields` (
   `translation` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_collection_field` (`collection`,`field`)
-) ENGINE=InnoDB AUTO_INCREMENT=314 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=332 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +176,7 @@ CREATE TABLE `directus_files` (
   `checksum` varchar(32) DEFAULT NULL,
   `metadata` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +231,7 @@ CREATE TABLE `directus_permissions` (
   `write_field_blacklist` varchar(1000) DEFAULT NULL,
   `status_blacklist` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +248,7 @@ CREATE TABLE `directus_relations` (
   `field_one` varchar(64) DEFAULT NULL,
   `junction_field` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +268,7 @@ CREATE TABLE `directus_revisions` (
   `parent_item` varchar(255) DEFAULT NULL,
   `parent_changed` tinyint(1) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=262 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,7 +323,7 @@ CREATE TABLE `directus_user_sessions` (
   `created_on` datetime DEFAULT NULL,
   `token_expired_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -418,7 +419,7 @@ CREATE TABLE `events` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,7 +433,7 @@ CREATE TABLE `events_groups` (
   `event` int(10) unsigned NOT NULL,
   `group` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -510,7 +511,7 @@ CREATE TABLE `locations` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -523,12 +524,22 @@ CREATE TABLE `page_contents` (
   `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
   `page` int(10) unsigned NOT NULL,
   `separator_banner` int(10) unsigned DEFAULT NULL,
-  `content` text NOT NULL,
+  `content` text DEFAULT NULL,
   `sort` int(10) unsigned DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
+  `form_fields` text DEFAULT NULL,
+  `agenda_noevents` text DEFAULT NULL COMMENT 'Wird angezeigt falls f??r eine Gruppe keine zuk??nftigen Anl??sse erfasst sind.',
+  `agenda_sections` text DEFAULT NULL,
+  `whoweare_show_contacts` tinyint(3) unsigned DEFAULT NULL,
+  `whoweare_agenda_links_page` int(10) unsigned DEFAULT NULL,
+  `whoweare_show` tinyint(3) unsigned DEFAULT NULL,
+  `whoweare_participate_links_page` int(10) unsigned DEFAULT NULL,
+  `whatwedo_show` tinyint(3) unsigned DEFAULT NULL,
+  `form_title` varchar(200) DEFAULT NULL,
+  `form_email` varchar(200) DEFAULT NULL COMMENT 'Die Antwort des Formulars wird an die angegebene E-Mail Adresse gesendet.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -542,21 +553,13 @@ CREATE TABLE `pages` (
   `name` varchar(64) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'draft',
   `banner` int(10) unsigned NOT NULL,
-  `form_fields` text DEFAULT NULL,
-  `whatwedo_show` tinyint(3) unsigned DEFAULT NULL,
-  `whoweare_show` tinyint(3) unsigned DEFAULT NULL,
-  `whoweare_participate_links_page` int(10) unsigned DEFAULT NULL,
-  `whoweare_agenda_links_page` int(10) unsigned DEFAULT NULL,
-  `whoweare_show_contacts` tinyint(3) unsigned DEFAULT NULL,
-  `agenda_sections` text DEFAULT NULL,
-  `agenda_noevents` text DEFAULT NULL COMMENT 'Wird angezeigt falls für eine Gruppe keine zukünftigen Anlässe erfasst sind.',
   `sort` int(10) unsigned DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
-  `route` text NOT NULL,
+  `route` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,7 +593,7 @@ CREATE TABLE `settings` (
   `recaptcha_site_key` varchar(200) DEFAULT NULL,
   `recaptcha_secret_key` varchar(200) DEFAULT NULL,
   `footer_group_list_title` varchar(200) DEFAULT NULL,
-  `footer_group_links_page` int(10) unsigned NOT NULL,
+  `footer_group_links_page` int(10) unsigned DEFAULT NULL,
   `footer_links` text DEFAULT NULL,
   `footer_contact` text DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
@@ -616,7 +619,7 @@ CREATE TABLE `special_events` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -630,7 +633,7 @@ CREATE TABLE `successor_groups` (
   `predecessor_group` int(10) unsigned NOT NULL,
   `successor_group` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -659,5 +662,7 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20200609120000'),
   ('20200609170000'),
   ('20200616180000'),
-  ('20200619160000');
+  ('20200619160000'),
+  ('20200623132615'),
+  ('20200623133405');
 UNLOCK TABLES;
