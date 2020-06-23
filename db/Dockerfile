@@ -13,8 +13,7 @@ RUN git clone https://github.com/DBDiff/DBDiff.git /dbdiff
 WORKDIR /dbdiff
 RUN composer install
 RUN ln -s /dbdiff/dbdiff /usr/local/bin/dbdiff
-
-COPY create /usr/local/bin/create
+RUN ln -s /db/create /usr/local/bin/create
 
 WORKDIR /
 CMD ["migrate"]
