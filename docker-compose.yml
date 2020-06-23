@@ -38,6 +38,7 @@ services:
     build: ./db
     environment:
       - DATABASE_URL=mysql://root:directus@db:3306/directus
+      - DIFF_DATABASE_URL=mysql://root:directus@db:3306/directus_diff
     depends_on:
       - db
     volumes:

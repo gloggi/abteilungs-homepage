@@ -25,12 +25,6 @@ TODO
 
 ## Creating a database change
 
-In order to modify the initial state and structure of the database, we use migrations. Migrations are SQL files in the db/migrations directory. You can run `docker-compose exec migrations new` or copy an old migration. Then fill it in by hand, or if you don't know what changes to make in SQL, you can make the changes in the Directus admin interface, then run `docker-compose exec migrations dump` and see the generated (structure) changes in db/schema.sql (`git diff HEAD db/schema.sql`).
+In order to modify the initial state and structure of the database, we use migrations. Migrations are SQL files in the db/migrations directory. The easiest way to create a migration is to perform your changes in the Directus admin interface and then run `docker-compose run --entrypoint create migrations`. This will create a new migration file that contains all changes exist in your database when comparing to a fresh database that was just set up using all existing migrations.
 
-However, this will only show DB structure changes, not the directus system table changes. To find these changes, you could dump the whole database using mysqldump or similar as follows (sorry, Directus v9 will be much more developer-friendly in that regard):
-
-```bash
-docker run --rm -it -v $(pwd):/app -w /app --network host imega/mysql-client bash
-mysqldump --host=127.0.0.1 --user=directus --password=directus --all-databases --result-file="
-/app/dump.sql" --skip-extended-insert --complete-insert
-```
+Alternatively, you can run `docker-compose exec migrations new` to create an empty migration, or copy and edit an old migration.

@@ -1,0 +1,13 @@
+server1:
+  user: root
+  password: directus
+  port: 3306
+  host: db
+template: /db/dbmate.tmpl
+type: all
+include: all
+nocomments: true
+tablesToIgnore:
+  - directus_activity
+  - directus_revisions
+  - directus_user_sessions
