@@ -1,6 +1,6 @@
 <template>
     <div class="content__block" id="kontakt">
-        <h2 style="margin-top: 0px;">Formular</h2>
+        <h2 style="margin-top: 0px;">{{form_title}}</h2>
         <form>
             <ul>
                 <li :key="index" v-for="(field,index) in form_fields">
@@ -34,7 +34,7 @@
 <script>
     export default {
         name: "FormFields",
-        props: ["form_fields"]
+        props: ["form_fields", "form_title"]
     }
 </script>
 

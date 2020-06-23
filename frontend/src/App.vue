@@ -8,7 +8,11 @@
                      :pages="pages"
                      :age_levels="age_levels"
                      :groups="groups"
-                     :contacts="contacts"></router-view>
+                     :contacts="contacts"
+                     :events="events"
+                     :special_events="special_events"
+                     :locations="locations"
+                     :settings="settings"></router-view>
         <Footer :groups="groups" :settings="settings"></Footer>
     </div>
 </template>

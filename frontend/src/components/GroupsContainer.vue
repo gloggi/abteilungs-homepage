@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                         </a>
-                        <lightbox @hide="active_lightbox=0" v-if="active_lightbox==group.id" :group="group"
+                        <lightbox @hide="active_lightbox=0" @change="(id)=>{active_lightbox=id}" v-if="active_lightbox==group.id" :group="group"
                                   :age_levels="age_levels" :key="'lb-'+group.id"></lightbox>
                     </template>
                 </div>

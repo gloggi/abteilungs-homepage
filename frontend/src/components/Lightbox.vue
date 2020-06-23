@@ -18,11 +18,15 @@
                                 <p><b>Region:</b> {{group.area}}</p>
                                 <p><b>Vorgängergruppe:</b></p>
                                 <ul>
-                                    <li><a href="#v">Vorgänger</a></li>
+                                    <li v-if="group.successor_groups.length>0&&group.successor_groups[0].predecessor_group.name!=group.name">
+                                        <a href="#v">{{group.successor_groups[0].predecessor_group.name}}</a></li>
+                                    <li v-else>-</li>
                                 </ul>
                                 <p><b>Nachfolgergruppe:</b></p>
                                 <ul>
-                                    <li><a href="#n">Nachfolger</a></li>
+                                    <li v-if="group.successor_groups.length>0&&group.successor_groups[0].successor_group.name!=group.name">
+                                        <a @click="changeGroup(group.successor_groups[0].successor_group.id)" href="#n">{{group.successor_groups[0].successor_group.name}}</a></li>
+                                    <li v-else>-</li>
                                 </ul>
                                 <p><b>Kontakt:</b> <a
                                         :href="'mailto:'+group.contact_email">{{group.contact_name}}</a>
@@ -56,6 +60,9 @@
         methods: {
             hide() {
                 this.$emit('hide', 'true')
+            },
+            changeGroup(group_id){
+                this.$emit('change', group_id)
             },
             parseGender(g) {
                 switch (g) {
