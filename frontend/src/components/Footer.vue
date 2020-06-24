@@ -2,7 +2,7 @@
     <div class="footer">
         <div class="footer__content">
             <div class="footer__column">
-                <h3 class="heading--footer">Gruppen</h3>
+                <h3 class="heading--footer">{{settings[0].footer_group_list_title}}</h3>
                 <ul>
                     <li v-for="group in groups" :key="group.id"><a href="#">{{group.name}}</a></li>
                 </ul>
