@@ -74,7 +74,7 @@ CREATE TABLE `directus_activity` (
   `comment` text CHARACTER SET utf8mb4 DEFAULT NULL,
   `comment_deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=263 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `directus_collection_presets` (
   `translation` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_user_collection_title` (`user`,`collection`,`title`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +144,7 @@ CREATE TABLE `directus_fields` (
   `translation` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_collection_field` (`collection`,`field`)
-) ENGINE=InnoDB AUTO_INCREMENT=332 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=335 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +176,7 @@ CREATE TABLE `directus_files` (
   `checksum` varchar(32) DEFAULT NULL,
   `metadata` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +248,7 @@ CREATE TABLE `directus_relations` (
   `field_one` varchar(64) DEFAULT NULL,
   `junction_field` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +268,7 @@ CREATE TABLE `directus_revisions` (
   `parent_item` varchar(255) DEFAULT NULL,
   `parent_changed` tinyint(1) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=262 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,7 +323,7 @@ CREATE TABLE `directus_user_sessions` (
   `created_on` datetime DEFAULT NULL,
   `token_expired_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -465,7 +465,7 @@ CREATE TABLE `group_images` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -492,8 +492,9 @@ CREATE TABLE `groups` (
   `created_on` datetime DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
+  `parent_group` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -558,6 +559,7 @@ CREATE TABLE `pages` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
   `route` varchar(200) NOT NULL,
+  `show_in_navigation_bar` tinyint(3) unsigned NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -593,11 +595,11 @@ CREATE TABLE `settings` (
   `recaptcha_site_key` varchar(200) DEFAULT NULL,
   `recaptcha_secret_key` varchar(200) DEFAULT NULL,
   `footer_group_list_title` varchar(200) DEFAULT NULL,
-  `footer_group_links_page` int(10) unsigned DEFAULT NULL,
   `footer_links` text DEFAULT NULL,
   `footer_contact` text DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
+  `footer_group_links_page` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -633,7 +635,7 @@ CREATE TABLE `successor_groups` (
   `predecessor_group` int(10) unsigned NOT NULL,
   `successor_group` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -664,5 +666,6 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20200616180000'),
   ('20200619160000'),
   ('20200623132615'),
-  ('20200623133405');
+  ('20200623133405'),
+  ('20200623205530');
 UNLOCK TABLES;
