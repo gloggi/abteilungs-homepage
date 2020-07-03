@@ -1,5 +1,5 @@
 <template>
-    <div id="app"
+    <div id="app" v-if="loaded"
          :style="'--primary-color: '+settings[0].primary_color+';--secondary-color: '+settings[0].secondary_color">
         <Header :page="findPage()" :pages="pages"
                 :settings="settings"></Header>
@@ -22,6 +22,7 @@
     import Header from './components/Header'
     import Navbar from "./components/Navbar";
     import Footer from "./components/Footer";
+    import NotFound from "./components/NotFound";
 
     export default {
         name: 'App',
@@ -41,7 +42,21 @@
                 pages: [],
                 settings: [],
                 special_events: [],
-                routes: []
+                routes: [],
+                loaded: false,
+                loaded_items: {}
+            }
+        },
+        metaInfo() {
+            return {
+                title: `${this.scoutGroupName} | ${this.findPage().name}`,
+                htmlAttrs: {
+                    lang: 'de',
+                    amp: true
+                },
+                link: [
+                    {rel: 'icon', type: "image/png", href: this.favicon}
+                ]
             }
         },
         methods: {
@@ -49,6 +64,8 @@
                 this.$http.get('items/' + item + '?fields=*.*.*').then(
                     response => {
                         this[item] = response.data.data;
+                        this.loaded_items[item]=true
+                        this.loaded_check()
                         if (item == 'pages') {
                             this.setRoutes(this.pages);
                         }
@@ -61,14 +78,16 @@
             loadData() {
                 var vm = this;
                 this.items.forEach(function (item) {
+                    vm.loaded_items[item]=false
                     vm.getItems(item);
                 })
             },
-            createAndAppendRoute(route, route_name) {
+            createAndAppendRoute(route, route_name, route_show, component) {
                 let newRoute = {
                     path: `/${route}`,
-                    component: page,
+                    component: component,
                     name: `${route_name}`,
+                    show: route_show
                 }
 
                 this.$router.addRoutes([newRoute])
@@ -80,8 +99,9 @@
                     if (index == 0) {
                         item.route = ''
                     }
-                    vm.createAndAppendRoute(item.route, item.name)
+                    vm.createAndAppendRoute(item.route, item.name, item.show_in_navigation_bar, page)
                 })
+                vm.createAndAppendRoute('*', '404', false, NotFound)
             },
             findPage() {
                 var vm = this;
@@ -93,6 +113,29 @@
 
                 })
                 return page
+            },
+            loaded_check(){
+                var loaded = true
+                for(var item in this.loaded_items){
+                    if(!this.loaded_items[item]){
+                        loaded = false;
+                    }
+                }
+                this.loaded = loaded
+            }
+        },
+        computed: {
+            scoutGroupName() {
+                if (this.settings.length > 0) {
+                    return this.settings[0].scout_group_name
+                }
+                return "Pfadiabteilung"
+            },
+            favicon() {
+                    if (this.settings.length > 0) {
+                        return this.settings[0].favicon.data.full_url
+                    }
+                    return ""
             }
         },
         created() {
@@ -136,7 +179,7 @@
     }
 
     h2, h3, h4 {
-        color:  var(--primary-color) !important;
+        color: var(--primary-color) !important;
     }
 
     .heading-2--inverted {

@@ -11,11 +11,11 @@
                 </div>
                 <div class="groups__section-entries">
                     <template v-for="group in groups">
-                        <a @click="showLightBox(group.id)" :title="group.id" v-if="age_level.id==group.age_level.id"
+                        <a @click="showLightBox(group.id)" :title="group.id" v-if="age_level.id==group.age_level.id&&!group.parent_group"
                            :key="group.id">
                             <div class="groups__entry">
                                 <div class="circle-medium" :style="'background-color: '+group.color">
-                                    <img :src="group.logo.data.full_url" alt="">
+                                    <img v-if="group.logo" :src="group.logo.data.full_url" alt="">
                                 </div>
                                 <div class="circle-notification">
                                     <img v-if="group.gender=='b'" src="../assets/img/b.svg" alt="">
@@ -25,7 +25,7 @@
                             </div>
                         </a>
                         <lightbox @hide="active_lightbox=0" @change="(id)=>{active_lightbox=id}" v-if="active_lightbox==group.id" :group="group"
-                                  :age_levels="age_levels" :key="'lb-'+group.id"></lightbox>
+                                  :age_levels="age_levels" :settings="settings" :events="events" :groups="groups" :key="'lb-'+group.id"></lightbox>
                     </template>
                 </div>
             </div>
@@ -39,7 +39,7 @@
     export default {
         name: "GroupsContainer",
         components: {Lightbox},
-        props: ["age_levels", "groups"],
+        props: ["age_levels", "groups", "events", "settings"],
         data() {
             return {
                 active_lightbox: 0
@@ -49,7 +49,7 @@
         methods: {
             showLightBox(id) {
                 this.active_lightbox = id
-            }
+            },
 
         }
     }

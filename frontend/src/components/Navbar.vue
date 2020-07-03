@@ -16,9 +16,11 @@
 
             <div class="collapse navbar-collapse" :class="collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li v-for="route in routes" class="dropdown" :key="route.name">
+                    <template v-for="route in routes">
+                    <li  v-if="route.show" class="dropdown" :key="route.name">
                         <a :href="route.path">{{route.name}}</a>
                     </li>
+                    </template>
                 </ul>
             </div>
         </div>

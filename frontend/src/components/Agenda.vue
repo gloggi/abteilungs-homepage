@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{agenda_sections}}
         <!-- Groups -->
         <div class="content__block">
             <div class="agenda">
@@ -59,14 +58,14 @@
             </template>
 
             <!-- Anual Plan -->
-            <template v-if="section.type=='anual_plan'">
+            <template v-if="section.type=='anual_plan'&&active_group.annual_plan">
                 <div v-if="!entry_text" class="content__block" :key="section.id">
                     <h2 class="heading-2">
                         Jahresplan der Gruppe
                     </h2>
                     <ul class="agenda__year-agenda">
                         <li class="annualplan">
-                            <a href="#">
+                            <a :href="active_group.annual_plan.data.full_url">
                                 <img class="agenda__anualplan svg" src="../assets/img/doc.svg">
                                 <p>{{active_group.name}}</p>
                             </a>
@@ -80,7 +79,7 @@
                     <h2 class="heading-2">Wichtige Pfadianlässe</h2>
                     <ul class="agenda__special-events">
                         <li v-for="special_event in special_events" :key="special_event.id">
-                            <a href="#">
+                            <a @click="selectEvent(special_event)" href="#">
                                 <div class="circle-medium color-primary">
                                     <p>{{special_event.name}}</p>
                                 </div>
@@ -92,7 +91,7 @@
         </template>
         <!-- Agenda Lightbox -->
         <lightbox-agenda v-if="lightbox_show" @hide="lightbox_show=false" :event="active_event"
-                         :group="active_group" :settings="settings"></lightbox-agenda>
+                         :group="active_group" :special="isSpecial" :settings="settings"></lightbox-agenda>
     </div>
 </template>
 
@@ -111,7 +110,8 @@
                 other_events: [],
                 entry_text: true,
                 active_event: {},
-                lightbox_show: false
+                lightbox_show: false,
+                isSpecial: false
 
             }
         },
@@ -161,8 +161,8 @@
             },
             selectEvent(event) {
                 this.active_event = event
+                this.isSpecial = !('start_time' in event);
                 this.lightbox_show = true
-
             }
 
         }

@@ -13,7 +13,9 @@
                         <h2 class="heading-2">Unsere Gruppen</h2>
                         <groups-container
                                 :age_levels="age_levels"
-                                :groups="groups"></groups-container>
+                                :groups="groups"
+                                :settings="settings"
+                                :events="events"></groups-container>
                     </div>
                     <div v-if="content.whoweare_show_contacts" class="content__block" :key="'contacts-'+content.id">
                         <h2 class="heading-2">Kontakt</h2>
@@ -51,9 +53,6 @@
         props: ["page", "pages", "age_levels", "groups", "contacts","locations", "special_events", "events", "settings"],
         data() {
             return {}
-        },
-        methods: {},
-        created() {
         }
     }
 </script>
