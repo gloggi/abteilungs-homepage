@@ -10,6 +10,13 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
 })
+/* VueMeta */
+import VueMeta from 'vue-meta'
+
+Vue.use(VueMeta, {
+  // optional pluginOptions
+  refreshOnceOnNavigation: true
+})
 
 Vue.config.productionTip = false
 
