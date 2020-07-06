@@ -5,12 +5,11 @@
                     <h3 class="heading--footer">{{settings[0].footer_group_list_title}}</h3>
                     <ul>
                         <template v-for="(value, key) in getGroupHierarchy">
-                            <li :key="key"><a
-                                    :href="'/'+settings[0].footer_group_links_page.route">{{key}}</a></li>
+                            <li :key="key"><router-link :to="'/'+settings[0].footer_group_links_page.route">{{key}}</router-link></li>
                             <template v-if="value">
                                 <ul :key="'sub-'+key">
-                                    <li v-for="group in value" :key="group"><a
-                                            :href="'/'+settings[0].footer_group_links_page.route">{{group}}</a></li>
+                                    <li v-for="group in value" :key="group">
+                                        <router-link :to="'/'+settings[0].footer_group_links_page.route">{{group}}</router-link></li>
                                 </ul>
                             </template>
                         </template>

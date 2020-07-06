@@ -18,7 +18,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <template v-for="route in routes">
                     <li  v-if="route.show" class="dropdown" :key="route.name">
-                        <a :href="route.path">{{route.name}}</a>
+                        <router-link :to="route.path">{{route.name}}</router-link>
                     </li>
                     </template>
                 </ul>
