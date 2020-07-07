@@ -11,7 +11,7 @@
                 </div>
                 <div class="lightbox__body groupdetail__body">
                     <div class="lightbox__section">
-                        <div class="content__columns content__columns--1-1">
+                        <div :class="group.description?'content__columns content__columns--1-1':''">
                             <div class="content__column" v-if="group.description">
                                 <div v-html="group.description"></div>
                                 <a href="#" class="button button--small">Mitmachen</a>
