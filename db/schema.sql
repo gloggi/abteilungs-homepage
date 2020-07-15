@@ -560,8 +560,9 @@ CREATE TABLE `pages` (
   `modified_on` datetime DEFAULT NULL,
   `route` varchar(200) NOT NULL,
   `show_in_navigation_bar` tinyint(3) unsigned NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_route` (`route`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -667,6 +668,7 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20200619160000'),
   ('20200623132615'),
   ('20200623133405'),
-  ('20200623205530'),
-  ('20200703102438');
+  ('20200623155928'),
+  ('20200703102438'),
+  ('20200715152149');
 UNLOCK TABLES;
