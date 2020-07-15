@@ -4,14 +4,13 @@
                 <div class="footer__column">
                     <h3 class="heading--footer">{{settings[0].footer_group_list_title}}</h3>
                     <ul>
-                        <template v-for="(value, key) in getGroupHierarchy">
+                        <template v-for="(value, key) in groupHierarchy">
                             <li :key="key"><router-link :to="'/'+settings[0].footer_group_links_page.route">{{key}}</router-link></li>
-                            <template v-if="value">
-                                <ul :key="'sub-'+key">
-                                    <li v-for="group in value" :key="group">
-                                        <router-link :to="'/'+settings[0].footer_group_links_page.route">{{group}}</router-link></li>
-                                </ul>
-                            </template>
+                            <ul :key="'sub-'+key">
+                                <li v-for="group in value" :key="group.name">
+                                    <router-link :to="'/'+settings[0].footer_group_links_page.route">{{group.name}}</router-link>
+                                </li>
+                            </ul>
                         </template>
                     </ul>
                 </div>
@@ -31,48 +30,23 @@
 </template>
 
 <script>
-    export default {
-        name: "Footer",
-        props: ['groups', 'settings'],
-        data() {
-            return {}
-        },
-        computed: {
-            getGroupHierarchy() {
-                var groups = this.groups;
-                var ord_groups = {}
-                var temp = []
-                groups.forEach(function (item) {
-                    if (item.parent_group) {
-                        if (item.parent_group.name in ord_groups) {
-                            temp = ord_groups[item.parent_group.name]
-                            if (!temp) {
-                                temp = []
-                            }
-                            temp.push(item.name)
-                            ord_groups[item.parent_group.name] = temp
-                        } else {
-                            temp = []
-                            temp.push(item.name)
-                            ord_groups[item.parent_group.name] = temp;
-
-                        }
-                    } else {
-                        if (!(item.name in ord_groups)) {
-                            ord_groups[item.name] = null
-                        }
-                    }
-
-
-                })
-                return ord_groups
-
-            }
-        },
-        created() {
-
+export default {
+    name: "Footer",
+    props: ['groups', 'settings'],
+    data() {
+        return {}
+    },
+    computed: {
+        groupHierarchy() {
+            return Object.assign(...this.groups
+                .filter(group => !group.parent_group)
+                .map(group => ({ [group.name]: this.groups.filter(child => child.parent_group && child.parent_group.id === group.id) })))
         }
+    },
+    created() {
+
     }
+}
 </script>
 
 <style scoped>

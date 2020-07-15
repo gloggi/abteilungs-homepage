@@ -1,5 +1,5 @@
 <template>
-    <div v-if="$route.path=='/'" class="header-large">
+    <div v-if="$route.path==='/'" class="header-large">
         <svg xmlns="http://www.w3.org/2000/svg" style="height:0; width:0; position: fixed;">
             <defs>
                 <filter id="shadow">
@@ -7,11 +7,9 @@
                 </filter>
             </defs>
         </svg>
-        <!-- Post Thumbnail -->
         <img class="header__image-large" :src="page.banner.data.full_url">
         <div class="header__banner-large">
-            <img class="header__logo-large" :src="settings[0].logo.data.full_url" alt=""
-                 style="filter:url(#shadow)"/>
+            <img class="header__logo-large" :src="settings[0].logo.data.full_url" alt="" style="filter:url(#shadow)"/>
             <h1 class="header__title">{{settings[0].scout_group_name}}</h1>
         </div>
     </div>
@@ -33,10 +31,10 @@
 </template>
 
 <script>
-    export default {
-        name: "Header",
-        props: ["page", "pages", "settings"]
-    }
+export default {
+    name: "Header",
+    props: ["page", "pages", "settings"]
+}
 </script>
 
 <style scoped>

@@ -1,17 +1,17 @@
 <template>
     <div class="groups__container">
-        <template v-for="age_level in age_levels">
-            <div class="groups__section" :style="'background-color:'+ age_level.color" :key="age_level.id">
+        <template v-for="ageLevel in ageLevels">
+            <div class="groups__section" :style="'background-color:'+ ageLevel.color" :key="ageLevel.id">
                 <div class="groups__section-icon">
-                    <img :src="age_level.logo.data.full_url" alt="">
+                    <img v-if="ageLevel.logo" :src="ageLevel.logo.data.full_url" alt="">
                     <div>
-                        <h3>{{age_level.name}}</h3>
-                        <p>{{age_level.age_min}} - {{age_level.age_max}} Jahre</p>
+                        <h3>{{ageLevel.name}}</h3>
+                        <p>{{ageLevel.age_min}} - {{ageLevel.age_max}} Jahre</p>
                     </div>
                 </div>
                 <div class="groups__section-entries">
-                    <template v-for="group in groups">
-                        <a @click="showLightBox(group.id)" :title="group.id" v-if="age_level.id==group.age_level.id&&!group.parent_group"
+                    <template v-for="group in groups.filter(group => group.age_level.id === ageLevel.id && !group.parent_group)">
+                        <a @click="showLightBox(group.id)" :title="group.id"
                            :key="group.id">
                             <div class="groups__entry">
                                 <div class="circle-medium" :style="'background-color: '+group.color">
@@ -24,8 +24,8 @@
                                 </div>
                             </div>
                         </a>
-                        <lightbox @hide="active_lightbox=0" @change="(id)=>{active_lightbox=id}" v-if="active_lightbox==group.id" :group="group"
-                                  :age_levels="age_levels" :settings="settings" :events="events" :groups="groups" :key="'lb-'+group.id"></lightbox>
+                        <lightbox v-if="activeLightbox===group.id" @hide="activeLightbox=null" @change="showLightBox" :group="group"
+                                  :age-levels="ageLevels" :settings="settings" :events="events" :groups="groups" :key="'lb-'+group.id"></lightbox>
                     </template>
                 </div>
             </div>
@@ -34,25 +34,23 @@
 </template>
 
 <script>
-    import Lightbox from "./Lightbox";
+import Lightbox from "./Lightbox";
 
-    export default {
-        name: "GroupsContainer",
-        components: {Lightbox},
-        props: ["age_levels", "groups", "events", "settings"],
-        data() {
-            return {
-                active_lightbox: 0
-
-            }
-        },
-        methods: {
-            showLightBox(id) {
-                this.active_lightbox = id
-            },
-
+export default {
+    name: "GroupsContainer",
+    components: {Lightbox},
+    props: ["ageLevels", "groups", "events", "settings"],
+    data() {
+        return {
+            activeLightbox: null
         }
+    },
+    methods: {
+        showLightBox(id) {
+            this.activeLightbox = id
+        },
     }
+}
 </script>
 
 <style scoped>

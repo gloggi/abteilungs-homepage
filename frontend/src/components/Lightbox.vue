@@ -18,20 +18,20 @@
                             </div>
                             <div>
                                 <div class="group__info-box">
-                                    <p><b>Alter:</b> {{age_level.age_min}} - {{age_level.age_max}} Jahre</p>
+                                    <p><b>Alter:</b> {{ageLevel.age_min}} - {{ageLevel.age_max}} Jahre</p>
                                     <p><b>Geschlecht:</b> {{parseGender(group.gender)}}</p>
                                     <p><b>Region:</b> {{group.area}}</p>
-                                    <template v-if="GroupChildren.length>0">
+                                    <template v-if="groupChildren.length>0">
                                         <p><b>Untergruppen:</b></p>
                                         <ul>
-                                            <li v-for="child in GroupChildren" :key="child.id"><a
+                                            <li v-for="child in groupChildren" :key="child.id"><a
                                                     @click="changeGroup(child.id)">{{child.name}}</a></li>
                                         </ul>
                                     </template>
                                     <p><b>Vorgängergruppe:</b></p>
                                     <ul>
-                                        <template v-if="predecessorGroup.length>0">
-                                            <li v-for="item in predecessorGroup" :key="item.id">
+                                        <template v-if="predecessorGroups.length>0">
+                                            <li v-for="item in predecessorGroups" :key="item.id">
                                                 <a href="#v" @click="changeGroup(item.id)">{{item.name}}</a></li>
                                         </template>
                                         <li v-else>-</li>
@@ -54,19 +54,19 @@
                             </div>
                         </div>
                         <div class="lightbox__section"><h3>Nächste Anlässe</h3></div>
-                        <div class="eventslist-list-entry lightbox__section agenda__entry" v-for="event in all_events" :key="event.id">
-                            <a @click="selectEvent(event)" href="#">
+                        <div class="eventslist-list-entry lightbox__section agenda__entry" v-for="event in allEvents" :key="event.id">
+                            <a @click="activeEvent = event" href="#">
                                 <div class="circle-small color-primary" style="">
                                     <p>{{getDate(event.start_time)}}</p>
                                 </div>
                             </a>
                             <div class="agenda__entry-content">
-                                <a @click="selectEvent(event)" href="#">
+                                <a @click="activeEvent = event" href="#">
                                     <h3>{{event.name}}</h3>
                                     <p class="agenda__date">{{listGroups(event)}}, {{getDate(event.start_time)}}</p>
                                     <div v-html="event.description"></div>
                                 </a>
-                                <a @click="selectEvent(event)" href="#">Mehr &gt;&gt;</a>
+                                <a @click="activeEvent = event" href="#">Mehr &gt;&gt;</a>
                             </div>
                         </div>
                     </div>
@@ -74,122 +74,67 @@
 
             </div>
         </div>
-        <lightbox-agenda v-if="lightbox_show" @hide="lightbox_show=false" :event="active_event"
+        <lightbox-agenda v-if="activeEvent" @hide="activeEvent=null" :event="activeEvent"
                          :group="group" :special="false" :settings="settings"></lightbox-agenda>
     </div>
 </template>
 
 <script>
-    import LightboxAgenda from "./LightboxAgenda";
-    export default {
-        name: "Lightbox",
-        components: {LightboxAgenda},
-        props: ["group", "age_levels", "groups", "events", "settings"],
-        data() {
-            return {
-                age_level: {},
-                all_events: [],
-                active_event:{},
-                lightbox_show: false
-            }
+import LightboxAgenda from "./LightboxAgenda";
+export default {
+    name: "Lightbox",
+    components: {LightboxAgenda},
+    props: ["group", "ageLevels", "groups", "events", "settings"],
+    data() {
+        return {
+            activeEvent: null
+        }
+    },
+    methods: {
+        hide() {
+            this.$emit('hide', 'true')
         },
-        methods: {
-            hide() {
-                this.$emit('hide', 'true')
-            },
-            changeGroup(group_id) {
-                this.$emit('change', group_id)
-            },
-            parseGender(g) {
-                switch (g) {
-                    case "m":
-                        return "Jungs"
-                    case "w":
-                        return "Mädchen"
-                    case "b":
-                        return "Gemischte Gruppe"
-
-                }
-            },
-            findGroupAgeLevel() {
-                var vm = this;
-                this.age_levels.forEach(function (item) {
-                    if (item.id == vm.group.age_level.id) {
-                        vm.age_level = item
-                    }
-                })
-
-            },
-            loadEvents() {
-                var group = this.group
-                this.all_events = []
-                for (let i = 0; i < this.events.length; i = i + 1) {
-                    for (let j = 0; j < this.events[i].participating_groups.length; j = j + 1) {
-                        if (!this.hasPassed(this.events[i].end_time) && this.events[i].participating_groups[j].group.id == group.id) {
-                                this.all_events.push(this.events[i])
-                        }
-                    }
-                }
-
-            },
-            getDate(time) {
-                const options = {year: '2-digit', month: '2-digit', day: 'numeric'};
-                var d = new Date(time)
-                return d.toLocaleDateString('de-CH', options)
-            },
-            hasPassed(time) {
-                var n = new Date(Date.now())
-                var d = new Date(time)
-                return n - d > 0
-            },
-            selectEvent(event) {
-                this.active_event = event
-                this.lightbox_show = true
-            },
-            listGroups(event) {
-                var groups = []
-                event.participating_groups.forEach(function (item) {
-                    groups.push(item.group.name)
-                })
-                return groups.join(", ")
-            }
+        changeGroup(group_id) {
+            this.$emit('change', group_id)
         },
-        computed: {
-            GroupChildren() {
-                var group_name = this.group.name
-                var children = []
-                this.groups.forEach(function (item) {
-                    if (item.parent_group && item.parent_group.name == group_name) {
-                        children.push({name: item.name, id: item.id})
-
-                    }
-
-                })
-                return children
-
-            },
-            predecessorGroup() {
-                var group_id = this.group.id
-                var predecessors = []
-                var temp_group = ""
-                this.groups.forEach(function (item) {
-                    temp_group = item
-                    item.successor_groups.forEach(function (item) {
-                        if ('successor_group' in item && item.successor_group.id == group_id) {
-                            predecessors.push({name: temp_group.name, id: temp_group.id})
-                        }
-                    })
-
-                })
-                return predecessors
-
-            }
+        parseGender(g) {
+            return { 'm': 'Jungs', 'w': 'Mädchen', 'b': 'Gemischte Gruppe' }[g]
         },
-        created() {
-            this.findGroupAgeLevel()
-            this.loadEvents()
+        getDate(time) {
+            const options = {year: '2-digit', month: '2-digit', day: 'numeric'};
+            return (new Date(time)).toLocaleDateString('de-CH', options)
+        },
+        upcoming(time) {
+            return (new Date(time)) - (new Date()) > 0
+        },
+        selectEvent(event) {
+            this.activeEvent = event
+        },
+        listGroups(event) {
+            return event.participating_groups.map(group => group.group.name).join(', ')
+        }
+    },
+    computed: {
+        ageLevel() {
+            return this.ageLevels.find(ageLevel => ageLevel.id === this.group.age_level.id)
+        },
+        allEvents() {
+            return this.events
+                .filter(event => this.upcoming(event.end_time))
+                .filter(event => event.participating_groups.any(group => group.id === this.group.id))
+        },
+        groupChildren() {
+            return this.groups
+                .filter(group => group.parent_group && group.parent_group.id === this.group.id)
+                .map(group => ({ id: group.id, name: group.name }))
+        },
+        predecessorGroups() {
+            return this.groups
+                .filter(group => group.successor_group && group.successor_group.id === this.group.id)
+                .map(group => ({ id: group.id, name: group.name }))
         }
     }
+}
 </script>
 
 <style scoped>

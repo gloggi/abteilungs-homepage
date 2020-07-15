@@ -12,7 +12,7 @@
                     <div v-if="content.whoweare_show" class="content__block" :key="'whoweare-'+content.id">
                         <h2 class="heading-2">Unsere Gruppen</h2>
                         <groups-container
-                                :age_levels="age_levels"
+                                :age-levels="ageLevels"
                                 :groups="groups"
                                 :settings="settings"
                                 :events="events"></groups-container>
@@ -21,19 +21,22 @@
                         <h2 class="heading-2">Kontakt</h2>
                         <contact-container :contacts="contacts"></contact-container>
                     </div>
-                    <template v-if="content.whatwedo_show">
-                        <what-we-do :age_levels="age_levels" :key="'whatwedo-'+content.id"></what-we-do>
-                    </template>
-                    <template v-if="content.form_fields">
-                        <form-fields :form_title="content.form_title" :form_email="content.form_email" :form_fields="content.form_fields" :key="'form-'+content.id"></form-fields>
-                    </template>
-                    <template v-if="content.agenda_sections">
-                    <agenda :agenda_sections="content.agenda_sections" :groups="groups" :events="events"
-                            :special_events="special_events"
+                    <what-we-do v-if="content.whatwedo_show"
+                                :age-levels="ageLevels"
+                                :key="'whatwedo-'+content.id"></what-we-do>
+                    <form-fields v-if="content.form_fields"
+                                 :form-title="content.form_title"
+                                 :form-fields="content.form_fields"
+                                 :key="'form-'+content.id"></form-fields>
+                    <agenda v-if="content.agenda_sections"
+                            :agenda-sections="content.agenda_sections"
+                            :groups="groups"
+                            :events="events"
+                            :special-events="specialEvents"
                             :locations="locations"
-                            :settings="settings" :key="'agenda-'+content.id"></agenda>
-                    </template>
-                    </template>
+                            :settings="settings"
+                            :key="'agenda-'+content.id"></agenda>
+                </template>
             </div>
 
         </div>
@@ -41,20 +44,17 @@
 </template>
 
 <script>
-    import GroupsContainer from "./GroupsContainer";
-    import ContactContainer from "./ContactContainer";
-    import WhatWeDo from "./WhatWeDo";
-    import FormFields from "./FormFields";
-    import Agenda from "./Agenda";
+import GroupsContainer from "./GroupsContainer";
+import ContactContainer from "./ContactContainer";
+import WhatWeDo from "./WhatWeDo";
+import FormFields from "./FormFields";
+import Agenda from "./Agenda";
 
-    export default {
-        name: "Page",
-        components: {Agenda, FormFields, WhatWeDo, ContactContainer, GroupsContainer},
-        props: ["page", "pages", "age_levels", "groups", "contacts","locations", "special_events", "events", "settings"],
-        data() {
-            return {}
-        }
-    }
+export default {
+    name: "Page",
+    components: {Agenda, FormFields, WhatWeDo, ContactContainer, GroupsContainer},
+    props: ["page", "ageLevels", "groups", "contacts", "locations", "specialEvents", "events", "settings"],
+}
 </script>
 
 <style scoped>

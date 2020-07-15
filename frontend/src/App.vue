@@ -1,16 +1,15 @@
 <template>
     <div id="app" v-if="loaded"
          :style="'--primary-color: '+settings[0].primary_color+';--secondary-color: '+settings[0].secondary_color">
-        <Header :page="findPage()" :pages="pages"
+        <Header :page="page" :pages="pages"
                 :settings="settings"></Header>
-        <Navbar :pages="pages" :routes="routes" :settings="settings"></Navbar>
-        <router-view :page="findPage()"
-                     :pages="pages"
-                     :age_levels="age_levels"
+        <Navbar :pages="pages" :settings="settings"></Navbar>
+        <router-view :page="page"
+                     :age-levels="ageLevels"
                      :groups="groups"
                      :contacts="contacts"
                      :events="events"
-                     :special_events="special_events"
+                     :special-events="specialEvents"
                      :locations="locations"
                      :settings="settings"></router-view>
         <Footer :groups="groups" :settings="settings"></Footer>
@@ -18,131 +17,82 @@
 </template>
 
 <script>
-    import page from './components/Page'
-    import Header from './components/Header'
-    import Navbar from "./components/Navbar";
-    import Footer from "./components/Footer";
-    import NotFound from "./components/NotFound";
+import Page from './components/Page'
+import Header from './components/Header'
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import NotFound from './components/NotFound';
+import { camelCase, isEmpty, get } from 'lodash';
 
-    export default {
-        name: 'App',
-        components: {
-            Footer,
-            Navbar,
-            Header
-        },
-        data() {
-            return {
-                items: ['age_levels', 'contacts', 'events', 'groups', 'locations', 'pages', 'settings', 'special_events'],
-                age_levels: [],
-                contacts: [],
-                events: [],
-                groups: [],
-                locations: [],
-                pages: [],
-                settings: [],
-                special_events: [],
-                routes: [],
-                loaded: false,
-                loaded_items: {}
-            }
-        },
-        metaInfo() {
-            return {
-                title: `${this.scoutGroupName} | ${this.findPage().name}`,
-                htmlAttrs: {
-                    lang: 'de',
-                    amp: true
-                },
-                link: [
-                    {rel: 'icon', type: "image/png", href: this.favicon}
-                ]
-            }
-        },
-        methods: {
-            getItems(item) {
-                this.$http.get('items/' + item + '?fields=*.*.*').then(
-                    response => {
-                        this[item] = response.data.data;
-                        this.loaded_items[item]=true
-                        this.loaded_check()
-                        if (item == 'pages') {
-                            this.setRoutes(this.pages);
-                        }
-                    },
-                    error => {
-                        console.log(error)
-                    }
-                )
-            },
-            loadData() {
-                var vm = this;
-                this.items.forEach(function (item) {
-                    vm.loaded_items[item]=false
-                    vm.getItems(item);
-                })
-            },
-            createAndAppendRoute(route, route_name, route_show, component) {
-                let newRoute = {
-                    path: `/${route}`,
-                    component: component,
-                    name: `${route_name}`,
-                    show: route_show
-                }
-
-                this.$router.addRoutes([newRoute])
-                this.routes.push(newRoute)
-            },
-            setRoutes(pages) {
-                var vm = this;
-                pages.forEach(function (item, index) {
-                    if (index == 0) {
-                        item.route = ''
-                    }
-                    vm.createAndAppendRoute(item.route, item.name, item.show_in_navigation_bar, page)
-                })
-                vm.createAndAppendRoute('*', '404', false, NotFound)
-            },
-            findPage() {
-                var vm = this;
-                var page = {};
-                this.pages.forEach(function (item) {
-                    if (vm.$route.name == item.name) {
-                        page = item
-                    }
-
-                })
-                return page
-            },
-            loaded_check(){
-                var loaded = true
-                for(var item in this.loaded_items){
-                    if(!this.loaded_items[item]){
-                        loaded = false;
-                    }
-                }
-                this.loaded = loaded
-            }
-        },
-        computed: {
-            scoutGroupName() {
-                if (this.settings.length > 0) {
-                    return this.settings[0].scout_group_name
-                }
-                return "Pfadiabteilung"
-            },
-            favicon() {
-                    if (this.settings.length > 0) {
-                        return this.settings[0].favicon.data.full_url
-                    }
-                    return ""
-            }
-        },
-        created() {
-            this.loadData();
+export default {
+    name: 'App',
+    components: {
+        Footer,
+        Navbar,
+        Header
+    },
+    data() {
+        return {
+            items: ['age_levels', 'contacts', 'events', 'groups', 'locations', 'pages', 'settings', 'special_events'],
+            ageLevels: [],
+            contacts: [],
+            events: [],
+            groups: [],
+            locations: [],
+            pages: [],
+            settings: [],
+            specialEvents: []
         }
-
+    },
+    metaInfo() {
+        return {
+            title: `${this.scoutGroupName} | ${this.page.name}`,
+            htmlAttrs: {
+                lang: 'de',
+                amp: true
+            },
+            link: [
+                {rel: 'icon', type: 'image/png', href: this.favicon}
+            ]
+        }
+    },
+    methods: {
+        async getItems(item) {
+            this[camelCase(item)] = (await this.$http.get('items/' + item + '?fields=*.*.*')).data.data
+        },
+        loadData() {
+            this.items.forEach(item => this.getItems(item))
+        },
+        createRoute(route, name, show, component) {
+            this.$router.addRoutes([{ path: `/${route}`, component, name }])
+        }
+    },
+    computed: {
+        page() {
+            return this.pages.find(page => this.$route.name === page.name) || {}
+        },
+        loaded() {
+            return this.items.every(item => !isEmpty(this[camelCase(item)]))
+        },
+        scoutGroupName() {
+            return get(this.settings, '[0].scout_group_name', 'Pfadiabteilung')
+        },
+        favicon() {
+            return get(this.settings, '[0].favicon.data.full_url', '')
+        }
+    },
+    watch: {
+        pages() {
+            if (this.pages.length) this.createRoute('', this.pages[0].name, this.pages[0].show_in_navigation_bar, Page)
+            this.pages.slice(1).forEach(page => this.createRoute(page.route, page.name, page.show_in_navigation_bar, Page));
+            this.createRoute('*', '404', false, NotFound)
+        }
+    },
+    created() {
+        this.loadData();
     }
+
+}
 </script>
 
 <style>

@@ -13,10 +13,10 @@
 </template>
 
 <script>
-    export default {
-        name: "ContactContainer",
-        props: ["contacts"]
-    }
+export default {
+    name: "ContactContainer",
+    props: ["contacts"]
+}
 </script>
 
 <style scoped>

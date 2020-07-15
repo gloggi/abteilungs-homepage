@@ -1,9 +1,9 @@
 <template>
     <div class="content__block" id="kontakt">
-        <h2 style="margin-top: 0px;">{{form_title}}</h2>
+        <h2 style="margin-top: 0px;">{{formTitle}}</h2>
         <form>
             <ul>
-                <li :key="index" v-for="(field,index) in form_fields">
+                <li :key="index" v-for="(field,index) in formFields">
                     <label :for="'field-'+index">{{field.name}} {{field.required ? '*':''}}</label>
                     <textarea v-if="field.type=='textarea'" type="text" :name="'field-'+index" :id="'field-'+index"
                               value="" required="required" class="form-control"/>
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-    export default {
-        name: "FormFields",
-        props: ["form_fields", "form_title"]
-    }
+export default {
+    name: "FormFields",
+    props: ["formFields", "formTitle"]
+}
 </script>
 
 <style scoped>

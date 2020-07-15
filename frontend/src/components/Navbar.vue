@@ -16,11 +16,9 @@
 
             <div class="collapse navbar-collapse" :class="collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <template v-for="route in routes">
-                    <li  v-if="route.show" class="dropdown" :key="route.name">
-                        <router-link :to="route.path">{{route.name}}</router-link>
+                    <li  v-for="{ name, path } in routes" class="dropdown" :key="name">
+                        <router-link :to="path">{{name}}</router-link>
                     </li>
-                    </template>
                 </ul>
             </div>
         </div>
@@ -28,24 +26,27 @@
 </template>
 
 <script>
-    export default {
-        name: "Navbar",
-        props: ["pages", "routes", "settings"],
-        data() {
-            return {
-                collapse: ""
-            }
-        },
-        methods: {
-            collapseNavbar() {
-                if (!this.collapse) {
-                    this.collapse = "in"
-                } else {
-                    this.collapse = ""
-                }
-            }
+export default {
+    name: "Navbar",
+    props: ["pages", "settings"],
+    data() {
+        return {
+            collapse: ''
+        }
+    },
+    methods: {
+        collapseNavbar() {
+            this.collapse = this.collapse ? '' : 'in'
+        }
+    },
+    computed: {
+        routes() {
+            return this.pages
+                .filter(page => page.show_in_navigation_bar)
+                .map(page => ({ name: page.name, path: `/${page.route}` }))
         }
     }
+}
 </script>
 
 <style scoped>

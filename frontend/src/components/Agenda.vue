@@ -4,40 +4,39 @@
         <div class="content__block">
             <div class="agenda">
                 <div class="agenda__sections">
-                    <a @click="setGroup(group)" v-for="group in groups"
+                    <a v-for="group in groups" @click.prevent="selectGroup(group)"
                        class="agenda__section button--inactive select" :id="group.name" href="#"
                        :data-showclass="group.name" :key="group.id">{{group.name}}</a>
                 </div>
             </div>
         </div>
         <!-- Agenda Entries -->
-        <template v-for="section in agenda_sections">
+        <template v-for="section in agendaSections">
             <template v-if="section.type=='events'">
                 <!-- First Entry -->
                 <div class="content__block" :key="section.id">
-                    <p v-if="entry_text">Wähle eine Gruppe aus, um ihre Einträge anzuzeigen.</p>
-                    <div v-if="Object.keys(next_event).length !== 0" class="agenda__entries-first"
-                         id="naechster-anlass">
+                    <p v-if="!activeGroup">Wähle eine Gruppe aus, um ihre Einträge anzuzeigen.</p>
+                    <div v-if="nextEvent" class="agenda__entries-first" id="naechster-anlass">
                         <div class="agenda__entry">
-                            <a @click="selectEvent(next_event)" href="#">
+                            <a @click="selectEvent(nextEvent)" href="#">
                                 <div class="circle-small color-primary" style="">
-                                    <p>{{getDate(next_event.start_time)}}</p>
+                                    <p>{{getDate(nextEvent.start_time)}}</p>
                                 </div>
                             </a>
                             <div class="agenda__entry-content">
-                                <a @click="selectEvent(next_event)" href="#">
-                                    <h3>{{next_event.name}}</h3>
-                                    <p class="agenda__date">{{listGroups(next_event)}},
-                                        {{getDate(next_event.start_time)}}</p>
-                                    <div v-html="next_event.description"></div>
+                                <a @click="selectEvent(nextEvent)" href="#">
+                                    <h3>{{nextEvent.name}}</h3>
+                                    <p class="agenda__date">{{listGroups(nextEvent)}},
+                                        {{getDate(nextEvent.start_time)}}</p>
+                                    <div v-html="nextEvent.description"></div>
                                 </a>
-                                <a @click="selectEvent(next_event)" href="#">Mehr &gt;&gt;</a>
+                                <a @click="selectEvent(nextEvent)" href="#">Mehr &gt;&gt;</a>
                             </div>
                         </div>
                     </div>
                     <!-- Other Entries -->
                     <div class="agenda__entries">
-                        <div v-for="event in other_events" class="agenda__entry" :key="event.id">
+                        <div v-for="event in otherEvents" class="agenda__entry" :key="event.id">
                             <a @click="selectEvent(event)" href="#">
                                 <div class="circle-small color-primary" style="">
                                     <p>{{getDate(event.start_time)}}</p>
@@ -49,7 +48,7 @@
                                     <p class="agenda__date">{{listGroups(event)}}, {{getDate(event.start_time)}}</p>
                                     <div v-html="event.description"></div>
                                 </a>
-                                <a @click="selectEvent(next_event)" href="#">Mehr &gt;&gt;</a>
+                                <a @click="selectEvent(nextEvent)" href="#">Mehr &gt;&gt;</a>
                             </div>
                         </div>
 
@@ -58,16 +57,16 @@
             </template>
 
             <!-- Anual Plan -->
-            <template v-if="section.type=='anual_plan'&&active_group.annual_plan">
-                <div v-if="!entry_text" class="content__block" :key="section.id">
+            <template v-if="section.type=='anual_plan' && annualPlan">
+                <div v-if="activeGroup" class="content__block" :key="section.id">
                     <h2 class="heading-2">
                         Jahresplan der Gruppe
                     </h2>
                     <ul class="agenda__year-agenda">
                         <li class="annualplan">
-                            <a :href="active_group.annual_plan.data.full_url">
+                            <a :href="annualPlan.data.full_url">
                                 <img class="agenda__anualplan svg" src="../assets/img/doc.svg">
-                                <p>{{active_group.name}}</p>
+                                <p>{{activeGroup.name}}</p>
                             </a>
                         </li>
                     </ul>
@@ -78,10 +77,10 @@
                 <div class="content__block" :key="section.id">
                     <h2 class="heading-2">Wichtige Pfadianlässe</h2>
                     <ul class="agenda__special-events">
-                        <li v-for="special_event in special_events" :key="special_event.id">
-                            <a @click="selectEvent(special_event)" href="#">
+                        <li v-for="specialEvent in specialEvents" :key="specialEvent.id">
+                            <a @click="selectEvent(specialEvent)" href="#">
                                 <div class="circle-medium color-primary">
-                                    <p>{{special_event.name}}</p>
+                                    <p>{{specialEvent.name}}</p>
                                 </div>
                             </a>
                         </li>
@@ -90,83 +89,69 @@
             </template>
         </template>
         <!-- Agenda Lightbox -->
-        <lightbox-agenda v-if="lightbox_show" @hide="lightbox_show=false" :event="active_event"
-                         :group="active_group" :special="isSpecial" :settings="settings"></lightbox-agenda>
+        <lightbox-agenda v-if="activeEvent" @hide="activeEvent=null" :event="activeEvent"
+                         :group="activeGroup" :special="isSpecial" :settings="settings"></lightbox-agenda>
     </div>
 </template>
 
 
 <script>
-    import LightboxAgenda from "./LightboxAgenda";
+import LightboxAgenda from './LightboxAgenda';
+import { get } from 'lodash'
 
-    export default {
-        name: "Agenda",
-        components: {LightboxAgenda},
-        props: ["groups", "agenda_sections", "locations", "special_events", "events", "settings"],
-        data() {
-            return {
-                active_group: {},
-                next_event: {},
-                other_events: [],
-                entry_text: true,
-                active_event: {},
-                lightbox_show: false,
-                isSpecial: false
-
-            }
-        },
-        methods: {
-            getDate(time) {
-                const options = {year: '2-digit', month: '2-digit', day: 'numeric'};
-                var d = new Date(time)
-                return d.toLocaleDateString('de-CH', options)
-            },
-            getTime(time) {
-                const options = {hour: '2-digit', minute: '2-digit'};
-                var d = new Date(time)
-                return d.toLocaleTimeString('de-CH', options)
-            },
-            hasPassed(time) {
-                var n = new Date(Date.now())
-                var d = new Date(time)
-                return n - d > 0
-            },
-            setGroup(group) {
-                this.active_group = group
-                this.entry_text = false
-                this.next_event = {}
-                this.other_events = []
-                var flag = true
-                for (let i = 0; i < this.events.length; i = i + 1) {
-                    for (let j = 0; j < this.events[i].participating_groups.length; j = j + 1) {
-                        if (!this.hasPassed(this.events[i].end_time) && this.events[i].participating_groups[j].group.id == group.id) {
-                            if (flag) {
-                                this.next_event = this.events[i]
-                                flag = false
-                            } else {
-                                this.other_events.push(this.events[i])
-                            }
-
-                        }
-                    }
-                }
-
-            },
-            listGroups(event) {
-                var groups = []
-                event.participating_groups.forEach(function (item) {
-                    groups.push(item.group.name)
-                })
-                return groups.join(", ")
-            },
-            selectEvent(event) {
-                this.active_event = event
-                this.isSpecial = !('start_time' in event);
-                this.lightbox_show = true
-            }
-
+export default {
+    name: "Agenda",
+    components: {LightboxAgenda},
+    props: ["groups", "agendaSections", "locations", "specialEvents", "events", "settings"],
+    data() {
+        return {
+            activeGroup: null,
+            activeEvent: null,
+            isSpecial: false
         }
+    },
+    computed: {
+        allEvents() {
+            if (!this.activeGroup) return []
+            return this.events
+                .filter(event => this.upcoming(event.end_time))
+                .filter(event => event.participating_groups.some(group => group.group.id === this.activeGroup.id))
+        },
+        nextEvent() {
+            return this.allEvents.length ? this.allEvents[0] : null
+        },
+        otherEvents() {
+            return this.allEvents.slice(1)
+        },
+        annualPlan() {
+            return get(this.activeGroup, 'annualPlan')
+        }
+    },
+    methods: {
+        getDate(time) {
+            const options = {year: '2-digit', month: '2-digit', day: 'numeric'}
+            return (new Date(time)).toLocaleDateString('de-CH', options)
+        },
+        getTime(time) {
+            const options = {hour: '2-digit', minute: '2-digit'}
+            return (new Date(time)).toLocaleTimeString('de-CH', options)
+        },
+        upcoming(time) {
+            return (new Date(time)) - (new Date) > 0
+        },
+        listGroups(event) {
+            return event.participating_groups.map(group => group.group.name).join(', ')
+        },
+        selectGroup(group) {
+            this.activeGroup = group
+        },
+        selectEvent(event) {
+            this.activeEvent = event
+            this.isSpecial = !('start_time' in event);
+        }
+
     }
+}
 </script>
 
 <style scoped>
