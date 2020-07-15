@@ -74,7 +74,7 @@ CREATE TABLE `directus_activity` (
   `comment` text CHARACTER SET utf8mb4 DEFAULT NULL,
   `comment_deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +268,7 @@ CREATE TABLE `directus_revisions` (
   `parent_item` varchar(255) DEFAULT NULL,
   `parent_changed` tinyint(1) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,7 +323,7 @@ CREATE TABLE `directus_user_sessions` (
   `created_on` datetime DEFAULT NULL,
   `token_expired_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -595,11 +595,11 @@ CREATE TABLE `settings` (
   `recaptcha_site_key` varchar(200) DEFAULT NULL,
   `recaptcha_secret_key` varchar(200) DEFAULT NULL,
   `footer_group_list_title` varchar(200) DEFAULT NULL,
+  `footer_group_links_page` int(10) unsigned DEFAULT NULL,
   `footer_links` text DEFAULT NULL,
   `footer_contact` text DEFAULT NULL,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
-  `footer_group_links_page` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -667,5 +667,6 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20200619160000'),
   ('20200623132615'),
   ('20200623133405'),
-  ('20200623205530');
+  ('20200623205530'),
+  ('20200703102438');
 UNLOCK TABLES;
