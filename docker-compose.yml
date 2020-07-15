@@ -33,6 +33,7 @@ services:
     volumes:
       - ./backend/data/config:/var/directus/config
       - ./backend/data/uploads:/var/directus/public/uploads
+      - ./backend/form:/var/directus/public/extensions/custom/endpoints/form
 
   migrations:
     build: ./db
