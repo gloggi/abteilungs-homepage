@@ -59,13 +59,13 @@ INSERT INTO `events_groups` VALUES('9','7','3');
 INSERT INTO `events_groups` VALUES('10','7','4');
 INSERT INTO `events_groups` VALUES('11','7','5');
 INSERT INTO `events_groups` VALUES('12','7','6');
-INSERT INTO `locations` VALUES('1','Bahnhof Schwerzenbach','{\"lat\":47.3843989,\"lng\":8.6587609}','published','2020-06-23 15:41:37','1','2020-06-23 15:41:37');
+INSERT INTO `locations` VALUES('1','Bahnhof Schwerzenbach','{\"x\":2692131,\"y\":1248890}','published','2020-06-23 15:41:37','1','2020-06-23 15:41:37');
 INSERT INTO `events` VALUES('1','Aktivität 1','<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>','2021-01-01 14:00:00','1','2021-01-01 16:00:00','1','<p>Zvieri</p>
 <p>Ztrinke</p>','published','1','2020-06-23 15:47:20','1','2020-06-23 15:47:20');
-INSERT INTO `locations` VALUES('3','Friedhof Schwerzenbach','{\"lat\":47.37985095,\"lng\":8.65870374154236}','published','2020-06-23 15:42:42','1','2020-06-23 15:42:42');
-INSERT INTO `locations` VALUES('4','Friedhof Volketswil','{\"lat\":47.3850393,\"lng\":8.6865416}','published','2020-06-23 15:43:53','1','2020-06-23 15:43:53');
-INSERT INTO `locations` VALUES('5','Schützenhaus Hegnau','{\"lat\":47.3956176,\"lng\":8.6737268}','published','2020-06-23 15:44:41','1','2020-06-23 15:44:41');
-INSERT INTO `locations` VALUES('2','Bruggeln','{\"lat\":47.3970703,\"lng\":8.6958692}','published','2020-06-23 15:42:15','1','2020-06-23 15:42:15');
+INSERT INTO `locations` VALUES('3','Friedhof Schwerzenbach','{\"x\":2692134,\"y\":1248384}','published','2020-06-23 15:42:42','1','2020-06-23 15:42:42');
+INSERT INTO `locations` VALUES('4','Friedhof Volketswil','{\"x\":2694227,\"y\":1248993}','published','2020-06-23 15:43:53','1','2020-06-23 15:43:53');
+INSERT INTO `locations` VALUES('5','Schützenhaus Hegnau','{\"x\":2693241,\"y\":1250155}','published','2020-06-23 15:44:41','1','2020-06-23 15:44:41');
+INSERT INTO `locations` VALUES('2','Bruggeln','{\"x\":2694910,\"y\":1250343}','published','2020-06-23 15:42:15','1','2020-06-23 15:42:15');
 
 
 -- migrate:down

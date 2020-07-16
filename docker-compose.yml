@@ -33,7 +33,14 @@ services:
     volumes:
       - ./backend/data/config:/var/directus/config
       - ./backend/data/uploads:/var/directus/public/uploads
-      - ./backend/form:/var/directus/public/extensions/custom/endpoints/form
+      - ./backend/extensions/endpoints/form:/var/directus/public/extensions/custom/endpoints/form
+      - ./backend/extensions/interfaces/swisstopo_map/dist:/var/directus/public/extensions/custom/interfaces/swisstopo_map
+
+  swisstopo-map:
+    build: ./backend/extensions
+    volumes:
+      - ./backend/extensions/interfaces/swisstopo_map:/app
+    working_dir: '/app'
 
   migrations:
     build: ./db
