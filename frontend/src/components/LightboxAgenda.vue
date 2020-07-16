@@ -13,7 +13,8 @@
                 </div>
                 <div class="lightbox__body">
                     <div class="agenda__map" v-if="!special">
-                        <Map :start_loc_lat="get(event, 'start_location.location.lat')"
+                        <Map :settings="settings"
+                             :start_loc_lat="get(event, 'start_location.location.lat')"
                              :start_loc_lng="get(event, 'start_location.location.lng')"
                              :end_loc_lat="get(event, 'end_location.location.lat')"
                              :end_loc_lng="get(event, 'end_location.location.lng')"></Map>

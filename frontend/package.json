@@ -9,14 +9,11 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "leaflet": "^1.6.0",
-    "leaflet-tilelayer-swiss": "^2.1.0",
     "lodash": "^4.17.19",
     "vue": "^2.6.11",
     "vue-meta": "^2.4.0",
     "vue-resource": "^1.5.1",
-    "vue-router": "^3.3.4",
-    "vue2-leaflet": "^2.5.2"
+    "vue-router": "^3.3.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
@@ -25,6 +22,9 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "leaflet": "^1.6.0",
+    "leaflet-tilelayer-swiss": "^2.1.0",
+    "vue2-leaflet": "^2.5.2",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
