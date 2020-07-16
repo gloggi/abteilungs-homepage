@@ -104,9 +104,6 @@ export default {
             const options = {year: '2-digit', month: '2-digit', day: 'numeric'};
             return (new Date(time)).toLocaleDateString('de-CH', options)
         },
-        upcoming(time) {
-            return (new Date(time)) - (new Date()) > 0
-        },
         selectEvent(event) {
             this.activeEvent = event
         },
@@ -120,7 +117,6 @@ export default {
         },
         allEvents() {
             return this.events
-                .filter(event => this.upcoming(event.end_time))
                 .filter(event => event.participating_groups.any(group => group.id === this.group.id))
         },
         groupChildren() {

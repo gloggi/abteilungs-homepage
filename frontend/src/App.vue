@@ -22,7 +22,7 @@ import Header from './components/Header'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
-import { camelCase, isEmpty, get } from 'lodash';
+import { camelCase, get } from 'lodash';
 
 export default {
     name: 'App',
@@ -33,15 +33,24 @@ export default {
     },
     data() {
         return {
-            items: ['age_levels', 'contacts', 'events', 'groups', 'locations', 'pages', 'settings', 'special_events'],
-            ageLevels: [],
-            contacts: [],
-            events: [],
-            groups: [],
-            locations: [],
-            pages: [],
-            settings: [],
-            specialEvents: []
+            items: {
+                age_levels: '',
+                contacts: '',
+                events: 'filter[end_time][gte]=now',
+                groups: '',
+                locations: '',
+                pages: '',
+                settings: '',
+                special_events: ''
+            },
+            ageLevels: null,
+            contacts: null,
+            events: null,
+            groups: null,
+            locations: null,
+            pages: null,
+            settings: null,
+            specialEvents: null
         }
     },
     metaInfo() {
@@ -57,11 +66,12 @@ export default {
         }
     },
     methods: {
-        async getItems(item) {
-            this[camelCase(item)] = (await this.$http.get('items/' + item + '?fields=*.*.*')).data.data
+        async getItems(item, query) {
+            if (query) query = '&' + query
+            this[camelCase(item)] = (await this.$http.get('items/' + item + '?fields=*.*.*' + query)).data.data
         },
         loadData() {
-            this.items.forEach(item => this.getItems(item))
+            Object.entries(this.items).forEach(item => this.getItems(...item))
         },
         createRoute(route, name, show, component) {
             this.$router.addRoutes([{ path: `/${route}`, component, name }])
@@ -69,10 +79,11 @@ export default {
     },
     computed: {
         page() {
+            if (!this.pages) return {}
             return this.pages.find(page => this.$route.name === page.name) || {}
         },
         loaded() {
-            return this.items.every(item => !isEmpty(this[camelCase(item)]))
+            return Object.keys(this.items).every(item => this[camelCase(item)] !== null)
         },
         scoutGroupName() {
             return get(this.settings, '[0].scout_group_name', 'Pfadiabteilung')

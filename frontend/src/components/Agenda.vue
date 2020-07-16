@@ -114,7 +114,6 @@ export default {
         allEvents() {
             if (!this.activeGroup) return []
             return this.events
-                .filter(event => this.upcoming(event.end_time))
                 .filter(event => event.participating_groups.some(group => group.group.id === this.activeGroup.id))
         },
         nextEvent() {
@@ -135,9 +134,6 @@ export default {
         getTime(time) {
             const options = {hour: '2-digit', minute: '2-digit'}
             return (new Date(time)).toLocaleTimeString('de-CH', options)
-        },
-        upcoming(time) {
-            return (new Date(time)) - (new Date) > 0
         },
         listGroups(event) {
             return event.participating_groups.map(group => group.group.name).join(', ')
