@@ -19,7 +19,9 @@
                              :end_loc_lat="get(event, 'end_location.location.lat')"
                              :end_loc_lng="get(event, 'end_location.location.lng')"></Map>
                     </div>
+
                     <div class="agenda__body">
+                        {{event.start_location.location}}
                         <div class="lightbox__section" v-html="event.description">
                         </div>
                         <div class="lightbox__section" >

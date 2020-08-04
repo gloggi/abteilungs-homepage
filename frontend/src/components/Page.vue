@@ -27,7 +27,9 @@
                     <form-fields v-if="content.form_fields"
                                  :form-title="content.form_title"
                                  :form-fields="content.form_fields"
-                                 :key="'form-'+content.id"></form-fields>
+                                 :use-recaptcha="content.use_recaptcha"
+                                 :form-email="content.form_email"
+                                 :key="'form-'+content.id" :recaptcha-site-key="settings[0]['recaptcha_site_key']"></form-fields>
                     <agenda v-if="content.agenda_sections"
                             :agenda-sections="content.agenda_sections"
                             :groups="groups"
