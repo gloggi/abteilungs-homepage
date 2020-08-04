@@ -74,7 +74,7 @@ CREATE TABLE `directus_activity` (
   `comment` text CHARACTER SET utf8mb4 DEFAULT NULL,
   `comment_deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +144,7 @@ CREATE TABLE `directus_fields` (
   `translation` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_collection_field` (`collection`,`field`)
-) ENGINE=InnoDB AUTO_INCREMENT=335 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=336 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +268,7 @@ CREATE TABLE `directus_revisions` (
   `parent_item` varchar(255) DEFAULT NULL,
   `parent_changed` tinyint(1) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,7 +323,7 @@ CREATE TABLE `directus_user_sessions` (
   `created_on` datetime DEFAULT NULL,
   `token_expired_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -539,6 +539,7 @@ CREATE TABLE `page_contents` (
   `whatwedo_show` tinyint(3) unsigned DEFAULT NULL,
   `form_title` varchar(200) DEFAULT NULL,
   `form_email` varchar(200) DEFAULT NULL COMMENT 'Die Antwort des Formulars wird an die angegebene E-Mail Adresse gesendet.',
+  `use_recaptcha` tinyint(3) unsigned NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
