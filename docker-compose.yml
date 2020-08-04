@@ -30,11 +30,16 @@ services:
       DIRECTUS_INSTALL_TITLE: "Abteilungs-Homepage"
       DIRECTUS_INSTALL_EMAIL: "admin@gloggi.ch"
       DIRECTUS_INSTALL_PASSWORD: "admin"
+      DIRECTUS_MAIL_DEFAULT_TRANSPORT: "smtp"
+      DIRECTUS_MAIL_DEFAULT_PORT: "1025"
+      DIRECTUS_MAIL_DEFAULT_FROM: "website@gloggi.ch"
+      DIRECTUS_MAIL_DEFAULT_HOST: "mail"
     volumes:
       - ./backend/data/config:/var/directus/config
       - ./backend/data/uploads:/var/directus/public/uploads
       - ./backend/extensions/endpoints/form:/var/directus/public/extensions/custom/endpoints/form
       - ./backend/extensions/interfaces/swisstopo_map/dist:/var/directus/public/extensions/custom/interfaces/swisstopo_map
+      - ./backend/extensions/custom/mail:/var/directus/public/extensions/custom/mail
 
   swisstopo-map:
     build: ./backend/extensions
@@ -61,6 +66,12 @@ services:
       MYSQL_ROOT_PASSWORD: "directus"
     ports:
       - "3306:3306"
+
+  mail:
+    image: schickling/mailcatcher:latest
+    container_name: 'abteilungs-mail'
+    ports:
+      - '1080:1080'
 
 volumes:
   node_modules:
