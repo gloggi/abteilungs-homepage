@@ -33,7 +33,7 @@
 <script>
 export default {
     name: "Header",
-    props: ["page", "pages", "settings"]
+    props: ["page", "settings"]
 }
 </script>
 

@@ -1,8 +1,7 @@
 <template>
     <div id="app" v-if="loaded"
          :style="'--primary-color: '+settings[0].primary_color+';--secondary-color: '+settings[0].secondary_color">
-        <Header :page="page" :pages="pages"
-                :settings="settings"></Header>
+        <Header :page="page" :settings="settings"></Header>
         <Navbar :pages="pages" :settings="settings"></Navbar>
         <router-view :page="page"
                      :age-levels="ageLevels"
@@ -24,6 +23,17 @@ import Footer from './components/Footer';
 import NotFound from './components/NotFound';
 import { camelCase, get } from 'lodash';
 
+const itemsToLoad = {
+    pages: '',
+    settings: '',
+    age_levels: '',
+    contacts: '',
+    events: 'filter[end_time][gte]=now',
+    groups: '',
+    locations: '',
+    special_events: ''
+};
+
 export default {
     name: 'App',
     components: {
@@ -33,22 +43,12 @@ export default {
     },
     data() {
         return {
-            items: {
-                age_levels: '',
-                contacts: '',
-                events: 'filter[end_time][gte]=now',
-                groups: '',
-                locations: '',
-                pages: '',
-                settings: '',
-                special_events: ''
-            },
             ageLevels: null,
             contacts: null,
             events: null,
             groups: null,
             locations: null,
-            pages: null,
+            allPages: null,
             settings: null,
             specialEvents: null
         }
@@ -68,13 +68,12 @@ export default {
     methods: {
         async getItems(item, query) {
             if (query) query = '&' + query
-            this[camelCase(item)] = (await this.$http.get('items/' + item + '?fields=*.*.*' + query)).data.data
+            return (await this.$http.get('items/' + item + '?fields=*.*.*' + query)).data.data
         },
         loadData() {
-            Object.entries(this.items).forEach(item => this.getItems(...item))
-        },
-        createRoute(route, name, show, component) {
-            this.$router.addRoutes([{ path: `/${route}`, component, name }])
+            Object.entries(itemsToLoad).forEach(async ([item, query]) => {
+                this[camelCase(item)] = await this.getItems(item, query)
+            })
         }
     },
     computed: {
@@ -82,21 +81,27 @@ export default {
             if (!this.pages) return {}
             return this.pages.find(page => this.$route.name === page.name) || {}
         },
+        pages: {
+            get() {
+                return this.allPages
+            },
+            set(pages) {
+                if (pages.length) pages[0].route = ''
+                this.allPages = pages
+                const routes = this.allPages
+                    .map(page => ({ path: '/' + page.route, name: page.name, component: Page }))
+                    .concat([{ path: '*', name: '404', component: NotFound }])
+                this.$router.addRoutes(routes)
+            }
+        },
         loaded() {
-            return Object.keys(this.items).every(item => this[camelCase(item)] !== null)
+            return Object.keys(itemsToLoad).every(item => this[camelCase(item)] !== null)
         },
         scoutGroupName() {
             return get(this.settings, '[0].scout_group_name', 'Pfadiabteilung')
         },
         favicon() {
             return get(this.settings, '[0].favicon.data.full_url', '')
-        }
-    },
-    watch: {
-        pages() {
-            if (this.pages.length) this.createRoute('', this.pages[0].name, this.pages[0].show_in_navigation_bar, Page)
-            this.pages.slice(1).forEach(page => this.createRoute(page.route, page.name, page.show_in_navigation_bar, Page));
-            this.createRoute('*', '404', false, NotFound)
         }
     },
     created() {
