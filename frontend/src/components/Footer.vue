@@ -4,11 +4,11 @@
                 <div class="footer__column">
                     <h3 class="heading--footer">{{settings.footer_group_list_title}}</h3>
                     <ul>
-                        <template v-for="(value, key) in groupHierarchy">
-                            <li :key="key"><router-link :to="'/'+settings.footer_group_links_page.route">{{key}}</router-link></li>
-                            <ul :key="'sub-'+key">
-                                <li v-for="group in value" :key="group.name">
-                                    <router-link :to="'/'+settings.footer_group_links_page.route">{{group.name}}</router-link>
+                        <template v-for="{group, children} in groupHierarchy">
+                            <li :key="group.name"><router-link :to="{ name: settings.footer_group_links_page.name, hash: slug(group) }">{{group.name}}</router-link></li>
+                            <ul :key="'sub-'+group.name">
+                                <li v-for="child in children" :key="child.name">
+                                    <router-link :to="{ name: settings.footer_group_links_page.name, hash: slug(child) }">{{child.name}}</router-link>
                                 </li>
                             </ul>
                         </template>
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import slugify from 'slugify'
+
 export default {
     name: "Footer",
     props: ['groups', 'settings'],
@@ -40,7 +42,15 @@ export default {
         groupHierarchy() {
             return Object.assign(...this.groups
                 .filter(group => !group.parent_group)
-                .map(group => ({ [group.name]: this.groups.filter(child => child.parent_group && child.parent_group.id === group.id) })))
+                .map(group => ({[group.name]: {
+                    group: group,
+                    children: this.groups.filter(child => child.parent_group && child.parent_group.id === group.id)
+                }})))
+        }
+    },
+    methods: {
+        slug(group) {
+            return '#' + slugify(group.name, { lower: true })
         }
     },
     created() {

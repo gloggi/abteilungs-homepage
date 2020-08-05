@@ -16,8 +16,8 @@
 
             <div class="collapse navbar-collapse" :class="collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li  v-for="{ name, path } in routes" class="dropdown" :key="name">
-                        <router-link :to="path">{{name}}</router-link>
+                    <li  v-for="{ name } in routes" class="dropdown" :key="name">
+                        <router-link :to="{ name: name }">{{name}}</router-link>
                     </li>
                 </ul>
             </div>
@@ -43,7 +43,7 @@ export default {
         routes() {
             return this.pages
                 .filter(page => page.show_in_navigation_bar)
-                .map(page => ({ name: page.name, path: `/${page.route}` }))
+                .map(page => ({ name: page.name }))
         }
     }
 }

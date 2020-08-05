@@ -86,12 +86,10 @@ export default {
                 return this.allPages
             },
             set(pages) {
-                if (pages.length) pages[0].route = ''
                 this.allPages = pages
-                const routes = this.allPages
+                this.$router.addRoutes(this.allPages
                     .map(page => ({ path: '/' + page.route, name: page.name, component: Page }))
-                    .concat([{ path: '*', name: '404', component: NotFound }])
-                this.$router.addRoutes(routes)
+                    .concat([{ path: '*', name: '404', component: NotFound }]))
             }
         },
         settings: {
