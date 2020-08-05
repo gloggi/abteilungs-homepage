@@ -13,6 +13,7 @@ INSERT INTO `directus_relations` VALUES('30','settings','footer_group_links_page
 INSERT INTO `directus_relations` VALUES('31','groups','parent_group','groups',NULL,NULL);
 INSERT INTO `group_images` VALUES('1','2','11','1','2020-07-02 16:25:14','1','2020-07-02 16:25:14');
 INSERT INTO `groups` VALUES('7','Pfadistamm','3','b',NULL,'#3F51B5',NULL,'','pfadistamm@gloggi.ch','Nuvolo',NULL,'published','4','1','2020-07-01 12:43:15','1','2020-07-01 12:44:21',NULL);
+UPDATE `groups` SET parent_group='7' WHERE id IN (4, 5);
 INSERT INTO `successor_groups` VALUES('15','3','4');
 UPDATE `directus_settings` SET `value` = '[{\"key\":\"thumbnail\",\"width\":200,\"height\":200,\"fit\":\"contain\",\"quality\":80},{\"newItem\":true,\"key\":\"favicon\",\"fit\":\"contain\",\"width\":\"32\",\"height\":\"26\",\"quality\":100}]' WHERE `id` = '19';
 
