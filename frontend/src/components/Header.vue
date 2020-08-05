@@ -9,8 +9,8 @@
         </svg>
         <img class="header__image-large" :src="page.banner.data.full_url">
         <div class="header__banner-large">
-            <img class="header__logo-large" :src="settings[0].logo.data.full_url" alt="" style="filter:url(#shadow)"/>
-            <h1 class="header__title">{{settings[0].scout_group_name}}</h1>
+            <img class="header__logo-large" :src="settings.logo.data.full_url" alt="" style="filter:url(#shadow)"/>
+            <h1 class="header__title">{{settings.scout_group_name}}</h1>
         </div>
     </div>
     <div class="header" v-else>
@@ -23,8 +23,8 @@
         </svg>
         <img class="header__image-large" :src="page.banner.data.full_url">
         <div class="header__banner">
-            <img class="header__logo" :src="settings[0].logo.data.full_url" alt="" style="filter:url(#shadow)"/>
-            <h1 class="header__title">{{settings[0].scout_group_name}}</h1>
+            <img class="header__logo" :src="settings.logo.data.full_url" alt="" style="filter:url(#shadow)"/>
+            <h1 class="header__title">{{settings.scout_group_name}}</h1>
         </div>
         <h1 class="header__heading">{{page.name}}</h1>
     </div>

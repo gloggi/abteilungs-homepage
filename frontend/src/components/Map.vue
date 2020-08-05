@@ -46,7 +46,7 @@ export default {
         },
         markerIconDataUrl() {
             const svgStr = '<svg width="26" height="50" version="1.1" viewBox="0 0 26 50" xmlns="http://www.w3.org/2000/svg">' +
-                    '<path class="svg" d="m8 1-1e-7 20h-7s12 19 12 28c0-9 12-28 12-28h-7v-20z" stroke="#fff" fill="' + this.settings[0].primary_color + '" stroke-width="2"/>' +
+                    '<path class="svg" d="m8 1-1e-7 20h-7s12 19 12 28c0-9 12-28 12-28h-7v-20z" stroke="#fff" fill="' + this.settings.primary_color + '" stroke-width="2"/>' +
                     '</svg>'
             return 'data:image/svg+xml,' + encodeURIComponent(svgStr)
                 .replace(/'/g, '%27')

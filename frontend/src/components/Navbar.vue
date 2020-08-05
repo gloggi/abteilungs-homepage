@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/">
-                    <img class="navbar__logo" :src="settings[0].logo.data.full_url" height="50" alt="">
+                    <img class="navbar__logo" :src="settings.logo.data.full_url" height="50" alt="">
                 </a>
             </div>
 

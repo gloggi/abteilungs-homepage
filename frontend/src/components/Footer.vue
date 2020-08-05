@@ -2,28 +2,28 @@
     <div class="footer">
         <div class="footer__content">
                 <div class="footer__column">
-                    <h3 class="heading--footer">{{settings[0].footer_group_list_title}}</h3>
+                    <h3 class="heading--footer">{{settings.footer_group_list_title}}</h3>
                     <ul>
                         <template v-for="(value, key) in groupHierarchy">
-                            <li :key="key"><router-link :to="'/'+settings[0].footer_group_links_page.route">{{key}}</router-link></li>
+                            <li :key="key"><router-link :to="'/'+settings.footer_group_links_page.route">{{key}}</router-link></li>
                             <ul :key="'sub-'+key">
                                 <li v-for="group in value" :key="group.name">
-                                    <router-link :to="'/'+settings[0].footer_group_links_page.route">{{group.name}}</router-link>
+                                    <router-link :to="'/'+settings.footer_group_links_page.route">{{group.name}}</router-link>
                                 </li>
                             </ul>
                         </template>
                     </ul>
                 </div>
-            <div class="footer__column" v-if="settings[0].footer_links">
+            <div class="footer__column" v-if="settings.footer_links">
                 <h3 class="heading--footer">Links</h3>
                 <ul>
-                    <li v-for="(link, index) in settings[0].footer_links" :key="index">
+                    <li v-for="(link, index) in settings.footer_links" :key="index">
                         <a :href="link.url">{{link.name}}</a></li>
                 </ul>
             </div>
             <div class="footer__column">
                 <h3 class="heading--footer">Kontakt</h3>
-                <div v-html="settings[0].footer_contact"></div>
+                <div v-html="settings.footer_contact"></div>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div id="app" v-if="loaded"
-         :style="'--primary-color: '+settings[0].primary_color+';--secondary-color: '+settings[0].secondary_color">
+         :style="'--primary-color: '+settings.primary_color+';--secondary-color: '+settings.secondary_color">
         <Header :page="page" :settings="settings"></Header>
         <Navbar :pages="pages" :settings="settings"></Navbar>
         <router-view :page="page"
@@ -49,7 +49,7 @@ export default {
             groups: null,
             locations: null,
             allPages: null,
-            settings: null,
+            allSettings: null,
             specialEvents: null
         }
     },
@@ -92,6 +92,15 @@ export default {
                     .map(page => ({ path: '/' + page.route, name: page.name, component: Page }))
                     .concat([{ path: '*', name: '404', component: NotFound }])
                 this.$router.addRoutes(routes)
+            }
+        },
+        settings: {
+            get() {
+                return this.allSettings
+            },
+            set(settings) {
+                if (settings.length) this.allSettings = settings[0]
+                else this.allSettings = null
             }
         },
         loaded() {

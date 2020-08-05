@@ -9,7 +9,7 @@
                         <p v-if="!special && event.start_location">Start: {{getDate(event.start_time)}} {{getTime(event.start_time)}} {{event.start_location.name}}</p>
                         <p v-if="!special && event.end_location">Stop: {{getDate(event.end_time)}} {{getTime(event.end_time)}} {{event.end_location.name}}</p>
                     </div>
-                    <img style="height: 50px" :src="settings[0].logo.data.full_url" alt="Abteilungs-Logo">
+                    <img style="height: 50px" :src="settings.logo.data.full_url" alt="Abteilungs-Logo">
                 </div>
                 <div class="lightbox__body">
                     <div class="agenda__map" v-if="!special">
@@ -27,7 +27,7 @@
                         <div class="lightbox__section" >
                             <p >Hast du noch Fragen? Dann melde dich bei
                                 <a v-if="!special" :href="'mailto:'+group.contact_email">{{group.contact_name}}</a>
-                                <a v-else :href="'mailto:'+settings[0].event_email">{{settings[0].event_email}}</a>
+                                <a v-else :href="'mailto:'+settings.event_email">{{settings.event_email}}</a>
                             </p>
                         </div>
                         <div class="lightbox__section" v-if="!special">
