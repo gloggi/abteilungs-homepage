@@ -48,7 +48,7 @@ export default {
             events: null,
             groups: null,
             locations: null,
-            allPages: null,
+            pages: null,
             allSettings: null,
             specialEvents: null
         }
@@ -81,17 +81,6 @@ export default {
             if (!this.pages) return {}
             return this.pages.find(page => this.$route.name === page.name) || {}
         },
-        pages: {
-            get() {
-                return this.allPages
-            },
-            set(pages) {
-                this.allPages = pages
-                this.$router.addRoutes(this.allPages
-                    .map(page => ({ path: '/' + page.route, name: page.name, component: Page }))
-                    .concat([{ path: '*', name: '404', component: NotFound }]))
-            }
-        },
         settings: {
             get() {
                 return this.allSettings
@@ -113,8 +102,14 @@ export default {
     },
     created() {
         this.loadData();
+    },
+    watch: {
+        pages() {
+            this.$router.addRoutes(this.pages
+                .map(page => ({ path: '/' + page.route, name: page.name, component: Page }))
+                .concat([{ path: '*', name: '404', component: NotFound }]))
+        }
     }
-
 }
 </script>
 
