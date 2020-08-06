@@ -7,21 +7,18 @@
                     <div class="agenda__header-text">
                         <h3>{{event.name}}</h3>
                         <p v-if="!special && event.start_location">Start: {{getDate(event.start_time)}} {{getTime(event.start_time)}} {{event.start_location.name}}</p>
-                        <p v-if="!special && event.end_location">Stop: {{getDate(event.end_time)}} {{getTime(event.end_time)}} {{event.end_location.name}}</p>
+                        <p v-if="!special && event.end_location">Ende: {{getDate(event.end_time)}} {{getTime(event.end_time)}} {{event.end_location.name}}</p>
                     </div>
                     <img style="height: 50px" :src="settings.logo.data.full_url" alt="Abteilungs-Logo">
                 </div>
                 <div class="lightbox__body">
                     <div class="agenda__map" v-if="!special">
-                        <Map :settings="settings"
-                             :start_loc_lat="get(event, 'start_location.location.lat')"
-                             :start_loc_lng="get(event, 'start_location.location.lng')"
-                             :end_loc_lat="get(event, 'end_location.location.lat')"
-                             :end_loc_lng="get(event, 'end_location.location.lng')"></Map>
+                        <swisstopo-map :settings="settings"
+                             :start-loc="startLoc"
+                             :end-loc="endLoc"></swisstopo-map>
                     </div>
 
                     <div class="agenda__body">
-                        {{event.start_location.location}}
                         <div class="lightbox__section" v-html="event.description">
                         </div>
                         <div class="lightbox__section" >
@@ -43,12 +40,20 @@
 </template>
 
 <script>
-import Map from "./Map";
+import SwisstopoMap from "./SwisstopoMap";
 import { get } from 'lodash'
 export default {
     name: "LightboxAgenda",
-    components: {Map},
+    components: {SwisstopoMap},
     props: ["event", "settings", "group", "special"],
+    computed: {
+        startLoc() {
+            return get(this.event, 'start_location.location')
+        },
+        endLoc() {
+            return get(this.event, 'end_location.location')
+        }
+    },
     methods: {
         get,
         hide() {

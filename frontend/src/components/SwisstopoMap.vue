@@ -1,13 +1,13 @@
 <template>
     <l-map
+        ref="leafletMap"
         style="height: 100%; width: 100%"
         :zoom.sync="zoom"
         :center.sync="center"
         :crs="crs">
         <l-tile-layer :tile-layer-class="tileLayerClass"></l-tile-layer>
-        <l-marker :lat-lng="startLocation" :icon="markerIcon">
-            X
-        </l-marker>
+        <l-marker :lat-lng="startLocation" :icon="markerIcon"></l-marker>
+        <l-marker v-if="startLocation !== endLocation" :lat-lng="endLocation" :icon="markerIcon"></l-marker>
     </l-map>
 </template>
 
@@ -16,26 +16,32 @@ import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import 'leaflet-tilelayer-swiss'
 import L from 'leaflet'
 
+// coordinate reference system LV95+ (converts between LatLng and swiss coordinates)
+const crs = L.CRS.EPSG2056
+
 export default {
-    name: "Map",
+    name: "SwisstopoMap",
     components: { LMap, LTileLayer, LMarker },
-    props:["settings", "start_loc_lat", "start_loc_lng", "end_loc_lat", "end_loc_lng"],
+    props:["settings", "startLoc", "endLoc"],
     data () {
         return {
-            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             zoom: 20,
-            center: [this.start_loc_lat, this.start_loc_lng]
+            center: crs.unproject(this.startLoc)
         };
     },
     computed: {
         crs() {
-            return L.CRS.EPSG2056
+            return crs
         },
         tileLayerClass() {
             return L.tileLayer.swiss;
         },
         startLocation() {
-            return [this.start_loc_lat, this.start_loc_lng]
+            return crs.unproject(this.startLoc)
+        },
+        endLocation() {
+            if (!this.endLoc) return this.startLocation
+            return crs.unproject(this.endLoc)
         },
         markerIcon() {
             return L.icon({
@@ -51,6 +57,14 @@ export default {
             return 'data:image/svg+xml,' + encodeURIComponent(svgStr)
                 .replace(/'/g, '%27')
                 .replace(/"/g, '%22')
+        }
+    },
+    mounted() {
+        if (this.endLocation.lat !== this.startLocation.lat || this.endLocation.lng !== this.startLocation.lng) {
+            this.$nextTick(() => {
+                const markers = new L.featureGroup([new L.Marker(this.startLocation), new L.Marker(this.endLocation)]);
+                this.$refs.leafletMap.mapObject.fitBounds(markers.getBounds(), {paddingTopLeft: [15, 50], paddingBottomRight: [15, 0], maxZoom: 22});
+            });
         }
     }
 };
