@@ -57,16 +57,17 @@
             </template>
 
             <!-- Anual Plan -->
-            <template v-if="section.type=='anual_plan' && annualPlan">
+
+            <template v-if="section.type=='anual_plan' || settings.annual_plan">
                 <div v-if="activeGroup" class="content__block" :key="section.id">
                     <h2 class="heading-2">
-                        Jahresplan der Gruppe
+                        Jahresplan der {{annualPlan? "Gruppe" : settings.scout_group_name}}
                     </h2>
                     <ul class="agenda__year-agenda">
                         <li class="annualplan">
-                            <a :href="annualPlan.data.full_url">
+                            <a :href="annualPlan? annualPlan.data.full_url : settings.annual_plan.data.full_url">
                                 <img class="agenda__anualplan svg" src="../assets/img/doc.svg">
-                                <p>{{activeGroup.name}}</p>
+                                <p>{{annualPlan? activeGroup.name : "Jahresplan "+ settings.scout_group_name}}</p>
                             </a>
                         </li>
                     </ul>
@@ -123,7 +124,7 @@ export default {
             return this.allEvents.slice(1)
         },
         annualPlan() {
-            return get(this.activeGroup, 'annualPlan')
+            return get(this.activeGroup, 'annual_plan')
         }
     },
     methods: {
