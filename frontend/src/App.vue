@@ -98,6 +98,22 @@ export default {
         },
         favicon() {
             return get(this.settings, '[0].favicon.data.full_url', '')
+        },
+        footerGroupsLinkPageName(){
+            return get(this.settings, '[0].footer_group_links_page.name', 'Mitmachen')
+        },
+        footerGroupsLinkPageRoute(){
+            return get(this.settings, '[0].footer_group_links_page.route', 'mitmachen')
+        },
+        pagesWithGroupContainer(){
+            var pages = []
+            this.pages.forEach(page=>{
+                if(page.contents.filter(content=>content.whoweare_show===true).length>0){
+                    pages.push({path: '/' + page.route +'/gruppe/:router_group', name: page.name, component: Page})
+                    pages.push({path: '/' + page.route +'/gruppe/:router_group/event/:router_event', name: page.name, component: Page})
+                }
+            })
+            return pages
         }
     },
     created() {
@@ -107,6 +123,7 @@ export default {
         pages() {
             this.$router.addRoutes(this.pages
                 .map(page => ({ path: '/' + page.route, name: page.name, component: Page }))
+                .concat(this.pagesWithGroupContainer)
                 .concat([{ path: '*', name: '404', component: NotFound }]))
         }
     }

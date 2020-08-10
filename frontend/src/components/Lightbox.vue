@@ -55,18 +55,18 @@
                         </div>
                         <div class="lightbox__section"><h3>Nächste Anlässe</h3></div>
                         <div class="eventslist-list-entry lightbox__section agenda__entry" v-for="event in allEvents" :key="event.id">
-                            <a @click="activeEvent = event" href="#">
+                            <router-link :to="{path: group.name.split(' ').join('-')+'/event/'+event.id}">
                                 <div class="circle-small color-primary" style="">
                                     <p>{{getDate(event.start_time)}}</p>
                                 </div>
-                            </a>
+                            </router-link>
                             <div class="agenda__entry-content">
-                                <a @click="activeEvent = event" href="#">
+                                <router-link :to="{path: group.name.split(' ').join('-')+'/event/'+event.id}">
                                     <h3>{{event.name}}</h3>
                                     <p class="agenda__date">{{listGroups(event)}}, {{getDate(event.start_time)}}</p>
                                     <div v-html="event.description"></div>
-                                </a>
-                                <a @click="activeEvent = event" href="#">Mehr &gt;&gt;</a>
+                                </router-link>
+                                <router-link :to="{path: group.name.split(' ').join('-')+'/event/'+event.id}">Mehr &gt;&gt;</router-link>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
 
             </div>
         </div>
-        <lightbox-agenda v-if="activeEvent" @hide="activeEvent=null" :event="activeEvent"
+        <lightbox-agenda v-if="activeEvent" @hide="hideAgendaLightBox" :event="activeEvent"
                          :group="group" :special="false" :settings="settings"></lightbox-agenda>
     </div>
 </template>
@@ -109,6 +109,10 @@ export default {
         },
         listGroups(event) {
             return event.participating_groups.map(group => group.group.name).join(', ')
+        },
+        hideAgendaLightBox(){
+            this.activeEvent=null
+            this.$router.back()
         }
     },
     computed: {
@@ -117,7 +121,7 @@ export default {
         },
         allEvents() {
             return this.events
-                .filter(event => event.participating_groups.any(group => group.id === this.group.id))
+                .filter(event => event.participating_groups.some(group => group.id === this.group.id))
         },
         groupChildren() {
             return this.groups
@@ -128,6 +132,21 @@ export default {
             return this.groups
                 .filter(group => group.successor_group && group.successor_group.id === this.group.id)
                 .map(group => ({ id: group.id, name: group.name }))
+        }
+    },
+    watch:{
+        $route(){
+            if(this.$route.params.router_event){
+                var event = this.allEvents.find(event => event.id === parseInt(this.$route.params.router_event))
+                this.selectEvent(event)
+            }
+
+        }
+    },
+    created() {
+        if(this.$route.params.router_event){
+            var event = this.allEvents.find(event => event.id === parseInt(this.$route.params.router_event))
+            this.selectEvent(event)
         }
     }
 }

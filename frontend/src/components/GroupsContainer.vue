@@ -11,7 +11,7 @@
                 </div>
                 <div class="groups__section-entries">
                     <template v-for="group in groups.filter(group => group.age_level.id === ageLevel.id && !group.parent_group)">
-                        <a @click="showLightBox(group.id)" :title="group.id"
+                        <router-link :to="{path: $route.path+'/gruppe/'+group.name.split(' ').join('-')}" :title="group.id"
                            :key="group.id">
                             <div class="groups__entry">
                                 <div class="circle-medium" :style="'background-color: '+group.color">
@@ -23,8 +23,8 @@
                                     <img v-if="group.gender=='w'" src="../assets/img/f.svg" alt="">
                                 </div>
                             </div>
-                        </a>
-                        <lightbox v-if="activeLightbox===group.id" @hide="activeLightbox=null" @change="showLightBox" :group="group"
+                        </router-link>
+                        <lightbox v-if="activeLightbox===group.id" @hide="hideLightBox" @change="showLightBox" :group="group"
                                   :age-levels="ageLevels" :settings="settings" :events="events" :groups="groups" :key="'lb-'+group.id"></lightbox>
                     </template>
                 </div>
@@ -49,6 +49,25 @@ export default {
         showLightBox(id) {
             this.activeLightbox = id
         },
+        hideLightBox(){
+            this.activeLightbox=null
+            this.$router.back()
+        }
+    },
+    watch:{
+        $route(){
+            if(this.$route.params){
+                var group = this.groups.find(group => group.name === this.$route.params.router_group.split("-").join(" "))
+                this.showLightBox(group.id)
+            }
+
+        }
+    },
+    created() {
+        if(this.$route.params){
+            var group = this.groups.find(group => group.name === this.$route.params.router_group.split("-").join(" "))
+            this.showLightBox(group.id)
+        }
     }
 }
 </script>
