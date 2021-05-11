@@ -14,7 +14,7 @@
     "@directus/extension-toolkit": "^0.0.1",
     "leaflet": "^1.6.0",
     "leaflet-tilelayer-swiss": "^2.1.0",
-    "lodash": "^4.17.19"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^2.6.0",
