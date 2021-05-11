@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "slugify": "^1.4.5",
     "vue": "^2.6.11",
     "vue-meta": "^2.4.0",
