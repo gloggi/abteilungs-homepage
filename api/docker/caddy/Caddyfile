@@ -1,6 +1,11 @@
 {
     # Debug
     {$DEBUG}
+
+    http_port 80
+    https_port 443
+    auto_https disable_redirects
+
     # HTTP/3 support
     servers {
         protocol {
