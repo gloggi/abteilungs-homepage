@@ -14,7 +14,7 @@
 
     ```docker-compose up```
 
-4. Once the containers have started, access the site at `localhost:8080`
+4. Once the containers have started, access the site at `https://localhost`
 
 You can log in with user 'admin@gloggi.ch' and password 'admin'.
 

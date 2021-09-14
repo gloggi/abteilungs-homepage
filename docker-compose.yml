@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 
 services:
 
@@ -14,56 +14,78 @@ services:
       NODE_ENV: development
       PORT: 80
 
-  directus:
-    image: directus/directus:v8.7.2-apache
-    ports:
-      - "8080:80"
-    environment:
-      DIRECTUS_APP_ENV: "production"
-      DIRECTUS_AUTH_PUBLICKEY: "R9B+xvgXRKMCTkBJJ69CvmaLyZzCRClZ73IKWEXMJEY"
-      DIRECTUS_AUTH_SECRETKEY: "VJ4Pgg4rt1vUWNAVz/C5yy0kMI5gqcKQtgSa3MMbTvc"
-      DIRECTUS_DATABASE_HOST: "db"
-      DIRECTUS_DATABASE_PORT: "3306"
-      DIRECTUS_DATABASE_NAME: "directus"
-      DIRECTUS_DATABASE_USERNAME: "directus"
-      DIRECTUS_DATABASE_PASSWORD: "directus"
-      DIRECTUS_INSTALL_TITLE: "Abteilungs-Homepage"
-      DIRECTUS_INSTALL_EMAIL: "admin@gloggi.ch"
-      DIRECTUS_INSTALL_PASSWORD: "admin"
-      DIRECTUS_MAIL_DEFAULT_TRANSPORT: "smtp"
-      DIRECTUS_MAIL_DEFAULT_PORT: "1025"
-      DIRECTUS_MAIL_DEFAULT_FROM: "website@gloggi.ch"
-      DIRECTUS_MAIL_DEFAULT_HOST: "mail"
-    volumes:
-      - ./backend/data/config:/var/directus/config
-      - ./backend/data/uploads:/var/directus/public/uploads
-      - ./backend/extensions/endpoints/form:/var/directus/public/extensions/custom/endpoints/form
-      - ./backend/extensions/interfaces/swisstopo_map/dist:/var/directus/public/extensions/custom/interfaces/swisstopo_map
-      - ./backend/extensions/custom/mail:/var/directus/public/extensions/custom/mail
-
-  swisstopo-map:
-    build: ./backend/extensions
-    volumes:
-      - ./backend/extensions/interfaces/swisstopo_map:/app
-    working_dir: '/app'
-
-  migrations:
-    build: ./db
-    environment:
-      - DATABASE_URL=mysql://root:directus@db:3306/directus
-      - DIFF_DATABASE_URL=mysql://root:directus@db:3306/directus_diff
+  php:
+    build:
+      context: ./api
+      target: api_platform_php
     depends_on:
-      - db
+      - database
+    restart: unless-stopped
     volumes:
-      - ./db:/db
+      - php_socket:/var/run/php
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  pwa:
+    build:
+      context: ./pwa
+      target: api_platform_pwa_prod
+    environment:
+      API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: http://caddy
+      NEXT_PUBLIC_ENTRYPOINT: http://caddy
+
+  caddy:
+    build:
+      context: api/
+      target: api_platform_caddy
+    depends_on:
+      - php
+      - pwa
+    environment:
+      PWA_UPSTREAM: pwa:3000
+      SERVER_NAME: ${SERVER_NAME:-localhost, caddy:80}
+      MERCURE_PUBLISHER_JWT_KEY: ${MERCURE_PUBLISHER_JWT_KEY:-!ChangeMe!}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${MERCURE_SUBSCRIBER_JWT_KEY:-!ChangeMe!}
+    restart: unless-stopped
+    volumes:
+      - php_socket:/var/run/php
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      # HTTP
+      - target: 80
+        published: 80
+        protocol: tcp
+      # HTTPS
+      - target: 443
+        published: 443
+        protocol: tcp
+      # HTTP/3
+      - target: 443
+        published: 443
+        protocol: udp
+
+  database:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=api
+      - POSTGRES_PASSWORD=!ChangeMe!
+      - POSTGRES_USER=api-platform
+    volumes:
+      - db_data:/var/lib/postgresql/data:rw
+      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./api/docker/db/data:/var/lib/postgresql/data:rw
 
   db:
     image: mariadb:10.4
     environment:
-      MYSQL_DATABASE: "directus"
-      MYSQL_USER: "directus"
-      MYSQL_PASSWORD: "directus"
-      MYSQL_ROOT_PASSWORD: "directus"
+      MYSQL_DATABASE: "api"
+      MYSQL_USER: "gloggi"
+      MYSQL_PASSWORD: "gloggi"
+      MYSQL_ROOT_PASSWORD: "gloggi"
     ports:
       - "3306:3306"
 
@@ -74,4 +96,8 @@ services:
       - '1080:1080'
 
 volumes:
+  php_socket:
+  db_data:
+  caddy_data:
+  caddy_config:
   node_modules:
