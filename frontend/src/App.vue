@@ -1,5 +1,5 @@
 <template>
-    <div id="app" v-if="loaded"
+    <div id="app" v-if="loaded||true"
          :style="'--primary-color: '+settings.primary_color+';--secondary-color: '+settings.secondary_color">
         <Header :page="page" :settings="settings"></Header>
         <Navbar :pages="pages" :settings="settings"></Navbar>

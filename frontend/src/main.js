@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import routes from './routes'
 /* VueResource */
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
@@ -9,6 +10,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
+  routes
 })
 /* VueMeta */
 import VueMeta from 'vue-meta'

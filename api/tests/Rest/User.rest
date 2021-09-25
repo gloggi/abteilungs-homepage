@@ -1,0 +1,57 @@
+### Register user
+POST http://localhost/sections HTTP/1.1
+content-type: application/json
+Accept: application/json
+
+{
+    "name": "Wolfsstufe",
+    "ageFrom": 6,
+    "ageTo": 10,
+    "color": "#000000",
+    "description": "bla",
+    "logo": "/logo",
+    "anualPlan": "/anual_plan"
+}
+
+###
+POST http://localhost/users HTTP/1.1
+content-type: application/json
+Accept: application/json
+
+{
+    "nickname": "Test",
+    "firstName": "Test",
+    "lastName": "Test",
+    "email": "mail@mail.com",
+    "plainPassword": "password",
+    "role": ""
+}
+
+###
+GET http://localhost/users HTTP/1.1
+content-type: application/json
+Accept: application/json
+
+###
+POST http://localhost/textfields HTTP/1.1
+content-type: application/json
+Accept: application/json
+
+{
+    "text": "Lorem ipsum, bla bla bla",
+    "page": "/pages/1"
+}
+###
+POST http://localhost/pages HTTP/1.1
+content-type: application/json
+Accept: application/json
+
+{
+    "name": "Testseite",
+    "slug": "testseite"
+}
+
+###
+GET http://localhost/pages HTTP/1.1
+content-type: application/json
+Accept: application/json
