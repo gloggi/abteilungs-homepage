@@ -1,0 +1,9 @@
+### Login
+POST http://localhost/login
+Accept: application/json
+Content-Type: application/json
+
+{ 
+    "username": "foo",
+    "password": "foo"
+    }
