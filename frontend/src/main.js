@@ -1,28 +1,13 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
-/* VueResource */
-import VueResource from 'vue-resource'
-Vue.use(VueResource);
-Vue.http.options.root = 'http://localhost:8080/api/';
-/* VueRouter */
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
-const router = new VueRouter({
-  mode: 'history',
-})
-/* VueMeta */
-import VueMeta from 'vue-meta'
+import router from './router'
+import store from './store'
+import './styles/app.css';
+import {mixin} from './mixins.js'
 
-Vue.use(VueMeta, {
-  // optional pluginOptions
-  refreshOnceOnNavigation: true
-})
+router.beforeEach((to, from, next) => {
+    if (to.name !== 'Login' && !localStorage.userIRI) next({ name: 'Login' })
+    else next()
+  })
 
-import 'leaflet/dist/leaflet.css';
-
-Vue.config.productionTip = false
-
-new Vue({
-  render: h => h(App),
-  router,
-}).$mount('#app')
+createApp(App).use(store).use(router).mixin(mixin).mount('#app')
