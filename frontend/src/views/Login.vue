@@ -22,8 +22,8 @@ export default {
   data(){
       return {
           form:{
-              username: "archi",
-              password: "password"
+              username: undefined,
+              password: undefined
           }
       }
   },
