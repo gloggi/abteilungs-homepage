@@ -1,6 +1,9 @@
 import axios from 'axios'
 const api = axios.create({
     baseURL: 'http://localhost',
+    headers:{
+        'Accept': 'application/ld+json'
+    },
     timeout: 1000
   });
 export const mixin = {
