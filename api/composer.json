@@ -29,7 +29,8 @@
         "symfony/serializer": "5.3.*",
         "symfony/twig-bundle": "5.3.*",
         "symfony/validator": "5.3.*",
-        "symfony/yaml": "5.3.*"
+        "symfony/yaml": "5.3.*",
+        "vich/uploader-bundle": "^1.19"
     },
     "require-dev": {
         "api-platform/schema-generator": "^3.0",

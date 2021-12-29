@@ -1,4 +1,5 @@
 /docker/db/data
+/public/media/
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -19,3 +20,4 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
