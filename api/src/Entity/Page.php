@@ -32,7 +32,8 @@ class Page
     private $route;
 
     /**
-     * @ORM\OneToMany(targetEntity=PageItem::class, mappedBy="page")
+     * @ORM\OneToMany(targetEntity=PageItem::class, mappedBy="page", cascade={"persist"})
+     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $pageItems;
 

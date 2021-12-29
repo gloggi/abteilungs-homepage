@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="entityType", type="string")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"textItem" = "TextItem", "formItem" = "FormItem"})
  */
 class PageItem
 {
@@ -21,9 +22,14 @@ class PageItem
 
 
     /**
-     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="pageItems")
+     * @ORM\ManyToOne(targetEntity=Page::class, inversedBy="pageItems", cascade={"persist"})
      */
     protected $page;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $sort;
 
     public function getId(): ?int
     {
@@ -38,6 +44,18 @@ class PageItem
     public function setPage(?Page $page): self
     {
         $this->page = $page;
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): self
+    {
+        $this->sort = $sort;
 
         return $this;
     }
