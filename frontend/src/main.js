@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import './styles/app.css';
 import {mixin} from './mixins.js'
+import './assets/tailwind.css'
 
 router.beforeEach((to, from, next) => {
     if (to.name !== 'Login' && !localStorage.userIRI) next({ name: 'Login' })

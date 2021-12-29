@@ -1,16 +1,19 @@
 <template>
   <div class="justify-center flex flex-col bg-yellow-300 items-center h-screen">
       <div class="w-1/2 md:w-1/4">
+      <form @submit.prevent="login">
     <div class="bg-white rounded-lg p-4 shadow-lg flex space-y-4 flex-col">
      <div class="text-4xl">
          Login
      </div>
      <ErrorMessage />
      <hr>
+     
          <TextInput v-model="form.username" label="Username" type="text" :content="form.username"></TextInput>
         <TextInput v-model="form.password" label="Password" type="password" :content="form.username"></TextInput>
-     <Button @click="login">Login</Button>
+     <Button type="submit">Login</Button>
     </div>
+    </form>
     </div>
   </div>
 </template>

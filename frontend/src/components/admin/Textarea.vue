@@ -3,7 +3,8 @@
     <label class="block text-gray-700 text-sm font-bold mb-1" for="username">
       {{ label }}
     </label>
-    <input
+    <textarea
+    rows="7"
       v-model="payload"
       class="
         appearance-none
@@ -19,7 +20,7 @@
       :id="label"
       :type="type"
       :placeholder="label"
-    />
+    ></textarea>
   </div>
 </template>
 
