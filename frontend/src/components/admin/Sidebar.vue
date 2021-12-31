@@ -5,15 +5,25 @@
 </svg>
     </div>
     <div :class="`bg-gray-900 w-64 md:flex flex-col md:rounded-r-lg ${dMSb?'flex':'hidden'}`">
-        <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 text-center mx-auto p-5">
+        <router-link to="/dashboard">
+        <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 text-center mx-auto p-5 cursor-pointer">
             Abteilungs Homepage
         </div>
+        </router-link>
         <router-link to="/dashboard/pages">
-        <div class="p-3 flex text-gray-50 rounded-lg border  border-transparent hover:border-gray-50 m-2">
+        <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
             <div class="px-5">
                 <BookIcon />
             </div>
             <div class="text">Pages</div>
+        </div>
+        </router-link>
+        <router-link to="/dashboard/media">
+        <div class="p-1 flex text-gray-50 rounded-lg border  border-transparent hover:border-gray-50 m-0.5">
+            <div class="px-5">
+                <ArchiveIcon />
+            </div>
+            <div class="text">Media</div>
         </div>
         </router-link>
     </div>
@@ -26,8 +36,9 @@
 
 <script>
 import BookIcon from '../../icons/BookIcon.vue';
+import ArchiveIcon from '../../icons/ArchiveIcon.vue'
 export default {
-  components: { BookIcon },
+  components: { BookIcon, ArchiveIcon },
     data(){
         return {
             dMSb: false

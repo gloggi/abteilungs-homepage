@@ -3,14 +3,7 @@
         <PopoverButton
             class="bg-gray-300 hover:bg-gray-400 rounded-lg my-1 h-1.5 w-full"
         ></PopoverButton>
-        <transition
-            enter-active-class="transition duration-200 ease-out"
-            enter-from-class="translate-y-1 opacity-0"
-            enter-to-class="translate-y-0 opacity-100"
-            leave-active-class="transition duration-150 ease-in"
-            leave-from-class="translate-y-0 opacity-100"
-            leave-to-class="translate-y-1 opacity-0"
-        >
+        <Fade>
             <PopoverPanel
                 class="absolute z-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             >
@@ -38,16 +31,17 @@
                     </div>
                 </div>
             </PopoverPanel>
-        </transition>
+        </Fade>
     </Popover>
 </template>
 
 <script>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import BookIcon from "../../icons/BookIcon.vue";
+import Fade from '../../transitions/Fade.vue';
 
 export default {
-    components: { Popover, PopoverButton, PopoverPanel, BookIcon },
+    components: { Popover, PopoverButton, PopoverPanel, BookIcon, Fade },
     props: ["position"],
     methods:{
         emit(type){

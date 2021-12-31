@@ -17,11 +17,12 @@
             <TextInput label="Title" v-model="content.title" />
             <TextInput class="mt-2" label="Route" v-model="content.route" />
         </Card>
-        <div v-for="(pageItem, i) in content.pageItems" :key="i">
+        <div v-for="(pageItem) in content.pageItems" :key="pageItem.sort">
             <AddPageItem :position="pageItem.sort" @addComponent="handleAddComponent" />
+            <Fade>
             <Card>
                 <TextInput label="Title" v-model="pageItem.title" />
-                <Textarea class="mt-2" label="Text" v-model="pageItem.text" />
+                <Editor class="mt-2" v-model="pageItem.text" />
                 <hr/>
                 <div class="flex justify-end p-2">
                     <button
@@ -32,18 +33,22 @@
                 </button>
                 </div>
             </Card>
+            </Fade>
         </div>
+        <AddPageItem :position="lastPageItemPosition" @addComponent="handleAddComponent" />
     </div>
 </template>
 
 <script>
-import Textarea from "../../components/admin/Textarea.vue";
+//import Textarea from "../../components/admin/Textarea.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import Card from "../../components/admin/Card.vue";
 import PlusIcon from "../../icons/PlusIcon.vue"
 import AddPageItem from '../../components/admin/AddPageItem.vue';
+import Editor from '../../components/admin/Editor/Editor.vue';
+import Fade from '../../transitions/Fade.vue';
 export default {
-    components: { TextInput, Textarea, Card, PlusIcon, AddPageItem },
+    components: { TextInput, Card, PlusIcon, AddPageItem, Editor, Fade },
     data() {
         return {
             content: undefined,
@@ -52,6 +57,14 @@ export default {
     },
     async created() {
         await this.getPage();
+    },
+    computed:{
+        lastPageItemPosition(){
+            if(this.content.pageItems.length>0){
+                return this.content.pageItems[this.content.pageItems.length-1].sort+1
+            }
+            return 0
+        }
     },
     methods: {
         async handleAddComponent(event){
@@ -64,6 +77,7 @@ export default {
             }
             await this.createNewItem(this.content["@id"],event.type, event.position);
             await this.updateAll();
+            await this.getPage();
             
         },
         async createNewItem(page, itemType, sort){
