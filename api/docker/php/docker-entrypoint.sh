@@ -46,6 +46,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		if ls -A migrations/*.php >/dev/null 2>&1; then
 			php bin/console doctrine:migrations:migrate --no-interaction
 		fi
+		# load fixtures into the database
+		php bin/console hautelook:fixtures:load --append
 	fi
 fi
 

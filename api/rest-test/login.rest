@@ -7,3 +7,8 @@ Content-Type: application/json
     "username": "foo",
     "password": "foo"
     }
+
+### Delete
+DELETE http://localhost/media_objects/1
+Accept: application/json
+Content-Type: application/json

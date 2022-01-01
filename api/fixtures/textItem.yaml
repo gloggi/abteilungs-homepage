@@ -1,0 +1,6 @@
+App\Entity\TextItem:
+    textItem_{1..200}:
+        title: <sentence(4)>
+        text: <text()>
+        sort: <numberBetween(0, 100)>
+        page: '@page_*'
