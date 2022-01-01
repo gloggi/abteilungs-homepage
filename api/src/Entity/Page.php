@@ -11,8 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=PageRepository::class)
  * @ORM\HasLifecycleCallbacks
+ * 
  */
-#[ApiResource]
+#[ApiResource(
+    attributes: ["pagination_items_per_page"=>30]
+                  
+          
+)]
 class Page
 {
     /**
@@ -33,7 +38,7 @@ class Page
     private $route;
 
     /**
-     * @ORM\OneToMany(targetEntity=PageItem::class, mappedBy="page", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=PageItem::class, mappedBy="page", cascade={"persist"}, orphanRemoval=true)
      * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $pageItems;
