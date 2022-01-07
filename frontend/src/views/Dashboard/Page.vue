@@ -4,21 +4,24 @@
       <h2 class="font-extrabold text-4xl">{{ content.title }}</h2>
     </Card>
     <div class="flex justify-between mb-2">
-        <router-link :to="{name: 'Pages'}">
-      <button class="rounded-l-lg bg-white p-1 ">
-        <ChevronLeftIcon class="h-6 w-6 text-gray-500" />
-      </button>
+      <router-link :to="{ name: 'Pages' }">
+        <button class="rounded-l-lg bg-white p-1">
+          <ChevronLeftIcon class="h-6 w-6 text-gray-500" />
+        </button>
       </router-link>
       <div>
         <button class="rounded-l-lg bg-white p-1">
           <SwitchVerticalIcon class="h-6 w-6 text-gray-500" />
         </button>
-        <button @click="deletePage" class="bg-white p-1 border-r border-l border-gray-200">
+        <button
+          @click="deletePage"
+          class="bg-white p-1 border-r border-l border-gray-200"
+        >
           <TrashIcon class="h-6 w-6 text-gray-500" />
         </button>
-        <button class="rounded-r-lg bg-white p-1 " @click="updateAll">
-                 <RefreshIcon class="h-6 w-6 text-gray-500"/>
-            </button>
+        <button class="rounded-r-lg bg-white p-1" @click="updateAll">
+          <RefreshIcon class="h-6 w-6 text-gray-500" />
+        </button>
       </div>
     </div>
     <Card>
@@ -30,14 +33,9 @@
         :position="pageItem.sort"
         @addComponent="handleAddComponent"
       />
-      <Fade>
-        <Card>
-          <TextInput label="Title" v-model="pageItem.title" />
-          <Editor class="mt-2" v-model="pageItem.text" />
-        </Card>
-      </Fade>
+      <TextItem :ref="pageItem['@id']" v-if="pageItem['@type'] == 'TextItem'" @updatePage="getPage" :item="pageItem" />
+      <ImageItem :ref="pageItem['@id']" v-if="pageItem['@type'] == 'ImageItem'" @updatePage="getPage" :item="pageItem" />
     </div>
-    <Modal />
     <AddPageItem
       :position="lastPageItemPosition"
       @addComponent="handleAddComponent"
@@ -49,30 +47,34 @@
 //import Textarea from "../../components/admin/Textarea.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import Card from "../../components/admin/Card.vue";
-import AddPageItem from "../../components/admin/AddPageItem.vue";
-import Editor from "../../components/admin/Editor/Editor.vue";
-import Fade from "../../transitions/Fade.vue";
-import Modal from "../../components/admin/Modal.vue";
-import { RefreshIcon, ChevronLeftIcon, TrashIcon, SwitchVerticalIcon } from '@heroicons/vue/solid'
-
+import AddPageItem from "../../components/admin/PageItems/AddPageItem.vue";
+import {
+  RefreshIcon,
+  ChevronLeftIcon,
+  TrashIcon,
+  SwitchVerticalIcon,
+} from "@heroicons/vue/solid";
+import TextItem from '../../components/admin/PageItems/TextItem.vue';
+import ImageItem from '../../components/admin/PageItems/ImageItem.vue';
 
 export default {
   components: {
     TextInput,
     Card,
     AddPageItem,
-    Editor,
-    Fade,
-    Modal,
     ChevronLeftIcon,
     RefreshIcon,
     TrashIcon,
-    SwitchVerticalIcon
+    SwitchVerticalIcon,
+    TextItem,
+    ImageItem,
   },
   data() {
     return {
       content: undefined,
       loadedKey: 0,
+      activeItemIri: undefined,
+      preSelectedImages: undefined
     };
   },
   async created() {
@@ -118,13 +120,16 @@ export default {
         console.log(this.content);
         this.loadedKey++;
       } catch (e) {
-        console.log(e,);
+        console.log(e);
       }
     },
     async updateAll() {
-      this.content.pageItems.forEach(async (item) => {
-        await this.callApi("put", `${item["@id"]}`, item);
-      });
+      await Promise.all(
+          this.content.pageItems.map(async (item) => {
+            console.log(this.$refs[item['@id']])
+                await this.$refs[item['@id']][0].update()
+          }))
+      
       const page = { ...this.content };
       delete page["pageItems"];
       try {
@@ -141,16 +146,14 @@ export default {
         console.log(e);
       }
     },
-    async deletePage(){
-        try {
+    async deletePage() {
+      try {
         await this.callApi("delete", this.content["@id"]);
         this.$store.dispatch("notification/notify", "Page deleted");
-        this.$router.push({name: "Pages"})
+        this.$router.push({ name: "Pages" });
       } catch (e) {
         console.log(e);
       }
-        
-
     },
     async deleteItem(iri) {
       try {

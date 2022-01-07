@@ -10,19 +10,21 @@
                 <div
                     class="flex flex-col rounded-lg bg-gray-50 shadow p-2 w-64 items-stretch"
                 >
-                    <div
+                    <button
                         class="rounded-lg p-2 hover:bg-gray-200 flex justify-center w-full"
                         @click="()=>{emit('text_items')}"
                     >
-                        <BookIcon />
+                         <BookIcon />
                         <div class="ml-2">Add Text item</div>
-                    </div>
-                    <div
+                    </button>
+                    <button
                         class="rounded-lg p-2 hover:bg-gray-200 flex justify-center w-full"
+                        @click="()=>{emit('image_items')}"
                     >
-                        <BookIcon />
-                        <div class="ml-2">Add Text item</div>
-                    </div>
+                       
+                        <PhotographIcon class="h-6 w-6 " />
+                        <div class="ml-2">Add Image item</div>
+                    </button>
                     <div
                         class="rounded-lg p-2 hover:bg-gray-200 flex justify-center w-full"
                     >
@@ -37,11 +39,12 @@
 
 <script>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import BookIcon from "../../icons/BookIcon.vue";
-import Fade from '../../transitions/Fade.vue';
+import BookIcon from "../../../icons/BookIcon.vue";
+import Fade from '../../../transitions/Fade.vue';
+import { PhotographIcon } from '@heroicons/vue/solid'
 
 export default {
-    components: { Popover, PopoverButton, PopoverPanel, BookIcon, Fade },
+    components: { Popover, PopoverButton, PopoverPanel, BookIcon, Fade, PhotographIcon },
     props: ["position"],
     methods:{
         emit(type){

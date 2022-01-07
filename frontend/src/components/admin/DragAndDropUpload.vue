@@ -1,54 +1,59 @@
 <template>
-    <div
-        @dragover.prevent
-        @dragenter="isDragging = true"
-        @dragleave="isDragging = false"
-        @drop.prevent
-        @drop="dragFile"
-        :class="` rounded-lg ${
-            isDragging
-                ? 'border-dashed bg-gray-500 border-2'
-                : 'bg-white border'
-        }  border-gray-50 text-center p-5`"
-    >
-        Drag and Drop your Files to upload
-    </div>
+  <div
+    @dragover.prevent
+    @dragenter="isDragging = true"
+    @dragleave="isDragging = false"
+    @drop.prevent
+    @drop="dragFile"
+    :class="`flex flex-col justify-center items-center rounded-lg ${
+      isDragging ? 'bg-gray-50' : ''
+    }  border-2 border-gray-400 border-dashed text-center p-5`"
+  >
+      <DocumentAddIcon class="h-12 w-12 text-gray-400" />
+     <div class="flex items-center">
+          <label for="file-upload" class="text-sm font-medium text-blue-600 hover:text-blue-800">Upload a File
+               <input id="file-upload" type="file" class="sr-only" multiple @change="uploadFile"/> </label>
+          <div class="text-sm">&nbsp;or drag and drop</div>
+     </div>
+  </div>
 </template>
 
 <script>
+import { DocumentAddIcon } from "@heroicons/vue/solid";
 export default {
-    data() {
-        return {
-            files: [],
-            isDragging: false,
-        };
+  components: { DocumentAddIcon },
+  data() {
+    return {
+      files: [],
+      isDragging: false,
+    };
+  },
+  methods: {
+    async addMedia() {
+      try {
+        const formData = new FormData();
+        for(const file of this.files){
+            console.log(file)
+        formData.append("file", file, file.name);
+        const response = await this.callApi("post", "/media_objects", formData);
+        console.log(response);
+        }
+        this.files = [];
+        this.$emit("uploadedFile", true);
+      } catch (e) {
+        console.log(e);
+      }
     },
-    methods: {
-        async addMedia() {
-            try {
-                const formData = new FormData();
-                formData.append(
-                    "file",
-                    this.files[0],
-                    this.files[0].name
-                );
-                const response = await this.callApi("post", "/media_objects", formData);
-                console.log(response);
-                this.files = []
-                this.$emit("uploadedFile", true)
-            } catch (e) {
-                console.log(e);
-            }
-        },
-        uploadFile(e) {
-            this.files = e.target.files;
-        },
-        dragFile(e) {
-            this.isDragging = false;
-            this.files = e.dataTransfer.files;
-            this.addMedia()
-        },
+    uploadFile(e) {
+      this.files = e.target.files;
+      this.addMedia()
     },
+    dragFile(e) {
+      this.isDragging = false;
+      this.files = e.dataTransfer.files;
+      this.addMedia();
+    },
+  },
 };
 </script>
 
