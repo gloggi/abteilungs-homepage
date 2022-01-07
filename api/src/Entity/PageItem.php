@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"textItem" = "TextItem", "formItem" = "FormItem"})
+ * @ORM\DiscriminatorMap({"textItem" = "TextItem", "formItem" = "FormItem", "imageItem" = "ImageItem"})
  */
 class PageItem
 {

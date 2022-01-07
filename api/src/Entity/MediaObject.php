@@ -4,15 +4,20 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\CreateMediaObjectAction;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity
  * @Vich\Uploadable
+ * @ApiFilter(SearchFilter::class, properties={"type": "partial"})
  */
 #[ApiResource(
     iri: 'http://schema.org/MediaObject',
@@ -54,7 +59,7 @@ class MediaObject
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
-    #[Groups(['media_object:read'])]
+    #[Groups(['media_object:read', 'imageitem:read'])]
     public ?string $contentUrl = null;
 
     /**
@@ -79,6 +84,16 @@ class MediaObject
      */
     #[Groups(['media_object:read'])]
     private $category;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=ImageItem::class, mappedBy="images")
+     */
+    private $imageItems;
+
+    public function __construct()
+    {
+        $this->imageItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +120,33 @@ class MediaObject
     public function setCategory(?string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ImageItem[]
+     */
+    public function getImageItems(): Collection
+    {
+        return $this->imageItems;
+    }
+
+    public function addImageItem(ImageItem $imageItem): self
+    {
+        if (!$this->imageItems->contains($imageItem)) {
+            $this->imageItems[] = $imageItem;
+            $imageItem->addImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImageItem(ImageItem $imageItem): self
+    {
+        if ($this->imageItems->removeElement($imageItem)) {
+            $imageItem->removeImage($this);
+        }
 
         return $this;
     }
