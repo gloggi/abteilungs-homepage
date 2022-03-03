@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PageItemRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -28,6 +29,7 @@ class PageItem
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"imageitem:read"})
      */
     protected $sort;
 

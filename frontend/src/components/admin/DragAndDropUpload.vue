@@ -22,6 +22,7 @@
 import { DocumentAddIcon } from "@heroicons/vue/solid";
 export default {
   components: { DocumentAddIcon },
+  emits:["uploadedFile"],
   data() {
     return {
       files: [],

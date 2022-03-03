@@ -26,7 +26,7 @@
 <script>
 import { computed } from "vue";
 export default {
-  props: ["label", "type", "content", "modelValue"],
+  props: ["label", "type", "modelValue"],
   setup(props, { emit }) {
     const payload = computed({
       get: () => props.modelValue,

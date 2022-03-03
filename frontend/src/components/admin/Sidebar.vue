@@ -13,15 +13,23 @@
         <router-link to="/dashboard/pages">
         <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
             <div class="px-5">
-                <BookIcon />
+                <BookOpenIcon class="h-6 w-6" />
             </div>
             <div class="text">Pages</div>
+        </div>
+        </router-link>
+        <router-link to="/dashboard/sections">
+        <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
+            <div class="px-5">
+                <PuzzleIcon class="h-6 w-6 " />
+            </div>
+            <div class="text">Sections</div>
         </div>
         </router-link>
         <router-link to="/dashboard/media">
         <div class="p-1 flex text-gray-50 rounded-lg border  border-transparent hover:border-gray-50 m-0.5">
             <div class="px-5">
-                <ArchiveIcon />
+                <ArchiveIcon class="h-6 w-6" />
             </div>
             <div class="text">Media</div>
         </div>
@@ -35,10 +43,9 @@
 </template>
 
 <script>
-import BookIcon from '../../icons/BookIcon.vue';
-import ArchiveIcon from '../../icons/ArchiveIcon.vue'
+import { PuzzleIcon, BookOpenIcon, ArchiveIcon } from "@heroicons/vue/solid";
 export default {
-  components: { BookIcon, ArchiveIcon },
+  components: { BookOpenIcon, PuzzleIcon, ArchiveIcon },
     data(){
         return {
             dMSb: false

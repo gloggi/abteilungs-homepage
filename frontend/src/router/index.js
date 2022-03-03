@@ -7,6 +7,8 @@ import Pages from '../views/Dashboard/Pages.vue'
 import Page from '../views/Dashboard/Page.vue'
 import FileUploadTest from '../views/Dashboard/FileUploadTest.vue'
 import Media from '../views/Dashboard/Media.vue'
+import Sections from '../views/Dashboard/Sections'
+import Section from '../views/Dashboard/Section'
 
 const routes = [
   {
@@ -38,6 +40,16 @@ const routes = [
         path: 'pages/:id',
         name: 'Page',
         component: Page
+      },
+      {
+        path: 'sections',
+        name: 'Sections',
+        component: Sections
+      },
+      {
+        path: 'sections/:id',
+        name: 'Section',
+        component: Section
       },
       {
         path: 'files',

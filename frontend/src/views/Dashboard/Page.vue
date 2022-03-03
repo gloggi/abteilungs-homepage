@@ -100,6 +100,7 @@ export default {
         }
       }
       await this.createNewItem(this.content["@id"], event.type, event.position);
+      this.loadedKey++;
       await this.updateAll();
       await this.getPage();
     },
