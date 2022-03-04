@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=GroupRepository::class)
  * @ORM\Table(name="`group`")
  * @ApiResource(
- * collectionOperations={"get", "post"},
+ * collectionOperations={"get"={}, "post"},
  *     itemOperations={
  *          "get"={},
  *          "put", "patch", "delete"
@@ -25,6 +25,7 @@ class Group
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"group:read"})
      */
     private $id;
 
@@ -36,7 +37,7 @@ class Group
 
     /**
      * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="groups")
-     * @Groups({"group:read"})
+     * @Groups({"group:read", "section:read"})
      */
     private $section;
 

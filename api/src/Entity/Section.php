@@ -54,7 +54,7 @@ class Section
 
     /**
      * @ORM\OneToMany(targetEntity=Group::class, mappedBy="section")
-     * @Groups({"group:read", "section:read"})
+     * 
      */
     private $groups;
 
