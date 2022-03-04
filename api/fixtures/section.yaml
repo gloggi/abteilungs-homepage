@@ -1,0 +1,21 @@
+App\Entity\Section:
+  section0:
+    name: Biberstufe
+    fromAge: 4
+    toAge: 5
+  section1:
+    name: Wolfsstufe
+    fromAge: 6
+    toAge: 10
+  section2:
+    name: Pfadistufe
+    fromAge: 11
+    toAge: 13
+  section3:
+    name: Piostufe
+    fromAge: 14
+    toAge: 15
+  section4:
+    name: Roverstufe
+    fromAge: 16
+    toAge: 99
