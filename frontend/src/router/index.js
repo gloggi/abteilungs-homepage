@@ -9,6 +9,8 @@ import FileUploadTest from '../views/Dashboard/FileUploadTest.vue'
 import Media from '../views/Dashboard/Media.vue'
 import Sections from '../views/Dashboard/Sections'
 import Section from '../views/Dashboard/Section'
+import Groups from '../views/Dashboard/Groups'
+import Group from '../views/Dashboard/Group'
 
 const routes = [
   {
@@ -50,6 +52,16 @@ const routes = [
         path: 'sections/:id',
         name: 'Section',
         component: Section
+      },
+      {
+        path: 'groups',
+        name: 'Groups',
+        component: Groups
+      },
+      {
+        path: 'groups/:id',
+        name: 'Group',
+        component: Group
       },
       {
         path: 'files',

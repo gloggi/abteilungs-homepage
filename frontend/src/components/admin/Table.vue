@@ -38,7 +38,7 @@
         >
       </template>
       <template v-else>
-        <div class="text-sm text-gray-500">{{ item[key] }}</div>
+        <div class="text-sm text-gray-500">{{ getValue(item, key) }}</div>
       </template>
     </div>
   </div>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import {get} from "lodash"
 import Button from './Button.vue';
 export default {
   components: { Button },
@@ -80,6 +81,9 @@ export default {
     },
   },
   methods: {
+    getValue(obj,key){
+      return get(obj, key)
+    },
       changeBox(event, iri){
           if(event.target.checked){
               this.selected.add(iri)
