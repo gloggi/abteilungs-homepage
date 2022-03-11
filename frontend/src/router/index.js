@@ -11,6 +11,8 @@ import Sections from '../views/Dashboard/Sections'
 import Section from '../views/Dashboard/Section'
 import Groups from '../views/Dashboard/Groups'
 import Group from '../views/Dashboard/Group'
+import Contacts from '../views/Dashboard/Contacts'
+import Contact from '../views/Dashboard/Contact'
 
 const routes = [
   {
@@ -62,6 +64,16 @@ const routes = [
         path: 'groups/:id',
         name: 'Group',
         component: Group
+      },
+      {
+        path: 'contacts',
+        name: 'Contacts',
+        component: Contacts
+      },
+      {
+        path: 'contacts/:id',
+        name: 'Contact',
+        component: Contact
       },
       {
         path: 'files',
