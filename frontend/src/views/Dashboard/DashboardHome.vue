@@ -1,6 +1,6 @@
 <template>
   <Card v-if="user" class="text-4xl font-extrabold">Hello, {{user.nickname}}!</Card>
-  <Button @click="notify">Notification Test</Button>
+  <Button class="mt-2" @click="notify">Notification Test</Button>
 </template>
 
 <script>

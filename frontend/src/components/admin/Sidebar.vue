@@ -26,6 +26,14 @@
             <div class="text">Groups</div>
         </div>
         </router-link>
+        <router-link to="/dashboard/contacts">
+        <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
+            <div class="px-5">
+                <UserIcon class="h-6 w-6 " />
+            </div>
+            <div class="text">Contacts</div>
+        </div>
+        </router-link>
         <router-link to="/dashboard/sections">
         <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
             <div class="px-5">
@@ -51,9 +59,9 @@
 </template>
 
 <script>
-import { PuzzleIcon, BookOpenIcon, ArchiveIcon, UserGroupIcon } from "@heroicons/vue/solid";
+import { PuzzleIcon, BookOpenIcon, ArchiveIcon, UserGroupIcon, UserIcon } from "@heroicons/vue/solid";
 export default {
-  components: { BookOpenIcon, PuzzleIcon, ArchiveIcon, UserGroupIcon },
+  components: { BookOpenIcon, PuzzleIcon, ArchiveIcon, UserGroupIcon, UserIcon },
     data(){
         return {
             dMSb: false

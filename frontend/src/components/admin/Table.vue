@@ -42,19 +42,16 @@
       </template>
     </div>
   </div>
-  <div v-if="Math.ceil(totalItems / itemsPerPage)>1" class="flex rounded-lg p-3 bg-white mt-2" :key="paginationKey">
-    <Button v-for="i in Math.ceil(totalItems / itemsPerPage)" @click="()=>goToPage(i)" class="p-2 w-10 h-10 bg-white rounded-lg mr-1" :key="i">
-      {{ i }}
-    </Button>
-  </div>
+  <PaginationNav :pageNumber="page" :itemsPerPage="itemsPerPage" :totalItems="totalItems" @goToPage="(i)=>goToPage(i)"/>
 
 </template>
 
 <script>
 import {get} from "lodash"
 import Button from './Button.vue';
+import PaginationNav from './PaginationNav.vue'
 export default {
-  components: { Button },
+  components: { Button, PaginationNav },
   props: ["entity", "columns", "titles"],
   emits:["changeSelected"],
   data() {
