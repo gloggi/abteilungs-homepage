@@ -59,7 +59,7 @@ class MediaObject
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
-    #[Groups(['media_object:read', 'imageitem:read'])]
+    #[Groups(['media_object:read', 'imageitem:read', 'contact:read'])]
     public ?string $contentUrl = null;
 
     /**
@@ -76,13 +76,13 @@ class MediaObject
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    #[Groups(['media_object:read'])]
+    #[Groups(['media_object:read', 'contact:read'])]
     private $type;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    #[Groups(['media_object:read'])]
+    #[Groups(['media_object:read', 'contact:read'])]
     private $category;
 
     /**
@@ -90,9 +90,15 @@ class MediaObject
      */
     private $imageItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Contact::class, mappedBy="image")
+     */
+    private $contacts;
+
     public function __construct()
     {
         $this->imageItems = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +152,36 @@ class MediaObject
     {
         if ($this->imageItems->removeElement($imageItem)) {
             $imageItem->removeImage($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contact[]
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->setImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getImage() === $this) {
+                $contact->setImage(null);
+            }
         }
 
         return $this;
