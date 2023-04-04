@@ -5,8 +5,8 @@
             <TrashIcon class="h-6 w-6 text-gray-500" />
             </button>
       </div>
-    <TextInput label="Title" v-model="textItem.title" />
-    <Editor class="mt-2" v-model="textItem.text" />
+    <TextInput  label="Title" v-model.lazy="textItem.title" />
+    <Editor class="mt-2" v-model.lazy="textItem.body" />
   </Card>
 </template>
 
@@ -27,21 +27,25 @@ export default {
     };
   },
   methods: {
-    async update() {
-      try {
-        await this.callApi("put", `${this.textItem["@id"]}`, this.textItem);
-      } catch (e) {
-        console.log(e);
-      }
+    change(){
+      console.log("Change")
     },
     async deleteItem() {
-      try {
-        await this.callApi("delete", `${this.textItem["@id"]}`);
-        this.$emit("updatePage")
-      } catch (e) {
-        console.log(e);
-      }
+      this.$store.commit("pageInEdit/updateItem", {id: this.textItem.id})
     },
+    
+  },
+  watch: {
+    textItem: {
+      handler: function(newVal, oldval) {
+        if(!oldval){
+          return
+        }
+        //console.log(this.$store)
+        this.$store.commit("pageInEdit/updateItem",newVal)
+      },
+      deep: true
+    }
   },
   mounted() {
     this.textItem = {...this.item}

@@ -4,7 +4,8 @@
       {{ label }}
     </label>
     <input
-      v-model="payload"
+      v-model.lazy="payload"
+      :lazy="true"
       class="
         appearance-none
         border

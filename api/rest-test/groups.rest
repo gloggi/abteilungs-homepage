@@ -1,0 +1,38 @@
+# Define Variables
+@token = 
+@host = http://localhost:8000
+
+### GET request to retrieve all groups
+GET {{host}}/api/groups
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### POST request to create a new group
+POST {{host}}/api/groups
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "New Group 2"
+}
+
+### GET request to retrieve a specific group by ID
+GET {{host}}/api/groups/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### PUT request to update a specific group by ID
+PUT {{host}}/api/groups/2
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "Updated Group Name"
+}
+
+### DELETE request to delete a specific group by ID
+DELETE {{host}}/api/groups/1
+Accept: application/json
+Authorization: Bearer {{token}}

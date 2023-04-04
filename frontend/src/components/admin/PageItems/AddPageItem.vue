@@ -12,25 +12,20 @@
                 >
                     <button
                         class="rounded-lg p-2 hover:bg-gray-200 flex justify-center w-full"
-                        @click="()=>{emit('text_items')}"
+                        @click="createNewItem('text')"
                     >
                          <BookIcon />
                         <div class="ml-2">Add Text item</div>
                     </button>
                     <button
                         class="rounded-lg p-2 hover:bg-gray-200 flex justify-center w-full"
-                        @click="()=>{emit('image_items')}"
+                        @click="createNewItem('image')"
                     >
                        
                         <PhotographIcon class="h-6 w-6 " />
                         <div class="ml-2">Add Image item</div>
                     </button>
-                    <div
-                        class="rounded-lg p-2 hover:bg-gray-200 flex justify-center w-full"
-                    >
-                        <BookIcon />
-                        <div class="ml-2">Add Text item</div>
-                    </div>
+                
                 </div>
             </PopoverPanel>
         </Fade>
@@ -51,6 +46,9 @@ export default {
             console.log(type)
             this.$emit("addComponent", {type, position: this.position})
 
+        },
+        async createNewItem(type){
+            await this.$store.commit("pageInEdit/addItem",type)
         }
     }
 };

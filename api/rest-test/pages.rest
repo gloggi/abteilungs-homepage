@@ -1,0 +1,79 @@
+# Define Variables
+@token =
+@host = http://localhost:8000
+
+### GET request to retrieve all entity pages
+GET {{host}}/api/pages
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### POST request to create a new entity page
+POST {{host}}/api/pages
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+"title": "My Awesome Entity Page",
+"page_items": [
+{
+"type": "text",
+"title": "Lorem Ipsum",
+"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+},
+{
+"type": "image",
+"path": "https://example.com/image.jpg"
+},
+{
+"type": "image",
+"path": "https://example.com/image.jpg"
+},
+{
+"type": "text",
+"title": "Lorem Ipsum",
+"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+},
+{
+"type": "text",
+"title": "Lorem Ipsum",
+"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+}
+]
+}
+
+### GET request to retrieve a specific entity page by ID
+GET {{host}}/api/pages/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### PUT request to update a specific entity page by ID
+PUT {{host}}/api/pages/2
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+"title": "Updated Entity Page",
+"page_items": [
+{
+"type": "text",
+"title": "Lorem Ipsum",
+"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+},
+{
+"type": "image",
+"path": "https://example.com/image.jpg"
+},
+{
+"type": "text",
+"title": "New Section Title",
+"body": "New section content."
+}
+]
+}
+
+### DELETE request to delete a specific entity page by ID
+DELETE {{host}}/api/pages/1
+Accept: application/json
+Authorization: Bearer {{token}}

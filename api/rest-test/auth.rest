@@ -1,0 +1,18 @@
+# Define Variables
+@token = 
+@host = http://localhost:8000
+
+
+
+### POST request to create a new group
+POST {{host}}/api/auth/login
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+    "email": "admin@gloggi.ch",
+     "password": "123456"
+}
+
+

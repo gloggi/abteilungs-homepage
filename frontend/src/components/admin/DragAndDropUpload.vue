@@ -36,7 +36,8 @@ export default {
         for(const file of this.files){
             console.log(file)
         formData.append("file", file, file.name);
-        const response = await this.callApi("post", "/media_objects", formData);
+        formData.append("category", "general")
+        const response = await this.callApi("post", "/files", formData);
         console.log(response);
         }
         this.files = [];

@@ -1,7 +1,7 @@
 <template>
-  <div :key="loadedKey" v-if="content">
+  <div :key="loadedKey" v-if="pageInEdit">
     <Card class="flex justify-between items-center mb-2">
-      <h2 class="font-extrabold text-4xl">{{ content.title }}</h2>
+      <h2 class="font-extrabold text-4xl">{{ pageInEdit.title }}</h2>
     </Card>
     <div class="flex justify-between mb-2">
       <router-link :to="{ name: 'Pages' }">
@@ -19,22 +19,22 @@
         >
           <TrashIcon class="h-6 w-6 text-gray-500" />
         </button>
-        <button class="rounded-r-lg bg-white p-1" @click="updateAll">
+        <button class="rounded-r-lg bg-white p-1" @click="updatePage">
           <RefreshIcon class="h-6 w-6 text-gray-500" />
         </button>
       </div>
     </div>
     <Card>
-      <TextInput label="Title" v-model="content.title" />
-      <TextInput class="mt-2" label="Route" v-model="content.route" />
+      <TextInput label="Title" v-model="pageInEdit.title" />
+      <TextInput class="mt-2" label="Route" v-model="pageInEdit.route" />
     </Card>
-    <div v-for="pageItem in content.pageItems" :key="pageItem.sort">
+    <div v-for="pageItem in pageInEdit.page_items" :key="pageItem.sort">
       <AddPageItem
         :position="pageItem.sort"
         @addComponent="handleAddComponent"
       />
-      <TextItem :ref="pageItem['@id']" v-if="pageItem['@type'] == 'TextItem'" @updatePage="getPage" :item="pageItem" />
-      <ImageItem :ref="pageItem['@id']" v-if="pageItem['@type'] == 'ImageItem'" @updatePage="getPage" :item="pageItem" />
+      <TextItem  v-if="pageItem['type'] == 'text'"  :item="pageItem" />
+      <ImageItem  v-if="pageItem['type'] == 'image'" :item="pageItem" />
     </div>
     <AddPageItem
       :position="lastPageItemPosition"
@@ -82,83 +82,48 @@ export default {
   },
   computed: {
     lastPageItemPosition() {
-      if (this.content.pageItems.length > 0) {
+      /* if (this.content.page_items.length > 0) {
         return (
-          this.content.pageItems[this.content.pageItems.length - 1].sort + 1
+          this.content.page_items[this.content.page_items.length - 1].sort + 1
         );
-      }
+      } */
       return 0;
     },
+    pageInEdit(){
+      return this.$store.state.pageInEdit.page
+    }
   },
   methods: {
-    async handleAddComponent(event) {
-      console.log(event);
-      let pItems = this.content.pageItems;
-      for (let i = 0; i < pItems.length; i++) {
-        if (pItems[i].sort >= event.position) {
-          pItems[i].sort = pItems[i].sort + 1;
-        }
-      }
-      await this.createNewItem(this.content["@id"], event.type, event.position);
-      this.loadedKey++;
-      await this.updateAll();
-      await this.getPage();
+    async updateComponent(newItem){
+      this.$store.commit("pageInEdit/updateItem",newItem)
     },
-    async createNewItem(page, itemType, sort) {
-      try {
-        await this.callApi("post", `/${itemType}`, { sort, page });
-      } catch (e) {
-        console.log(e);
-      }
+    async handleAddComponent(event) {
+      this.content.page_items.push({type: event.type})
+      this.loadedKey++;
+      await this.updatePage()
+      console.log(event.type=="text_item")
     },
     async getPage() {
-      try {
-        const response = await this.callApi(
-          "get",
-          `/pages/${this.$route.params.id}`
-        );
-        this.content = response.data;
-        console.log(this.content);
-        this.loadedKey++;
-      } catch (e) {
-        console.log(e);
-      }
+      console.log("done")
+      await this.$store.dispatch("pageInEdit/getPage",this.$route.params.id)
+      this.loadedKey++;
     },
-    async updateAll() {
-      await Promise.all(
-          this.content.pageItems.map(async (item) => {
-            console.log(this.$refs[item['@id']])
-                await this.$refs[item['@id']][0].update()
-          }))
+    async updatePage() {
+      this.$store.dispatch("pageInEdit/updatePage")
       
-      const page = { ...this.content };
-      delete page["pageItems"];
-      try {
-        const response = await this.callApi(
-          "put",
-          `/pages/${this.$route.params.id}`,
-          page
-        );
-        this.content = response.data;
-        console.log(this.content);
-        this.loadedKey++;
-        this.$store.dispatch("notification/notify", "Page updated");
-      } catch (e) {
-        console.log(e);
-      }
     },
     async deletePage() {
       try {
-        await this.callApi("delete", this.content["@id"]);
+        await this.callApi("delete", this.content["id"]);
         this.$store.dispatch("notification/notify", "Page deleted");
         this.$router.push({ name: "Pages" });
       } catch (e) {
         console.log(e);
       }
     },
-    async deleteItem(iri) {
+    async deleteItem(id) {
       try {
-        await this.callApi("delete", iri);
+        await this.callApi("delete", `pages/${id}`);
         this.getPage();
       } catch (e) {
         console.log(e);

@@ -1,8 +1,8 @@
 import axios from 'axios'
-const api = axios.create({
-    baseURL: 'http://localhost',
+export const api = axios.create({
+    baseURL: 'http://localhost:8000/api',
     headers:{
-        'Accept': 'application/ld+json'
+        'Accept': 'application/json'
     },
     timeout: 1000
   });

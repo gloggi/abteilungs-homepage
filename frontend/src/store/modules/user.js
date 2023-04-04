@@ -1,4 +1,3 @@
-import axios from 'axios'
 export const user = {
     namespaced: true,
     state() {
@@ -15,14 +14,14 @@ export const user = {
         },
     },
     actions: {
-        async storeUser(context, userIRI){
+        async storeUser(context, user){
             try{
-                const response = await axios({method: "get",url:"http://localhost"+userIRI })
-                context.commit("setUser", response.data)
-                localStorage.userIRI = userIRI
+                
+                context.commit("setUser", user)
+                localStorage.user = user
             }catch(e){
                 console.log(e)
-                localStorage.removeItem("userIRI")
+                localStorage.removeItem("user")
                 console.log("Couldn't store the user")
             }
             

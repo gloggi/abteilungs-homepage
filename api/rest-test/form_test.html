@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Submit Form</title>
+</head>
+<body>
+	<form id="myForm" action="" method="post" enctype="multipart/form-data">
+		<label for="postUrl">Post URL:</label>
+		<input type="text" id="postUrl" value="http://localhost:8000/api/files" name="postUrl"><br><br>
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name"><br><br>
+        <label for="name">Category:</label>
+		<input type="text" id="category" name="category" value="test"><br><br>
+		<label for="file">Select a file:</label>
+		<input type="file" id="file" name="file"><br><br>
+		<button type="button" onclick="submitForm()">Submit</button>
+	</form>
+	<p id="responseCode"></p>
+
+	<script>
+		function submitForm() {
+			const form = document.getElementById("myForm");
+			const postUrl = document.getElementById("postUrl").value;
+			const xhr = new XMLHttpRequest();
+			xhr.open("POST", postUrl, true);
+			xhr.onload = function() {
+				document.getElementById("responseCode").innerHTML = "Response code: " + xhr.status;
+			};
+			const formData = new FormData(form);
+			xhr.send(formData);
+		}
+	</script>
+</body>
+</html>

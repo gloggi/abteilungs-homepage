@@ -54,7 +54,7 @@
 <script>
 import Card from "../../components/admin/Card.vue";
 import TextInput from "../../components/admin/TextInput.vue";
-import Button  from "../../components/admin/Button.vue"
+/* import Button  from "../../components/admin/Button.vue" */
 import MediaModal from '../../components/admin/MediaModal.vue';
 import ImageDropDown from '../../components/admin/ImageDropDown.vue'
 import {
@@ -69,7 +69,7 @@ export default {
     RefreshIcon,
     ChevronLeftIcon,
     TrashIcon,
-    Button,
+    /* Button, */
     MediaModal,
     ImageDropDown
     

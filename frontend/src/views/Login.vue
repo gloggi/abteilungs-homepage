@@ -9,8 +9,8 @@
      <ErrorMessage />
      <hr>
      
-         <TextInput v-model="form.username" label="Username" type="text" :content="form.username"></TextInput>
-        <TextInput v-model="form.password" label="Password" type="password" :content="form.username"></TextInput>
+         <TextInput v-model="form.email" label="E-Mail" type="text" :content="form.email"></TextInput>
+        <TextInput v-model="form.password" label="Password" type="password" :content="form.email"></TextInput>
      <Button type="submit">Login</Button>
     </div>
     </form>
@@ -27,7 +27,7 @@ export default {
   data(){
       return {
           form:{
-              username: undefined,
+              email: undefined,
               password: undefined
           }
       }
@@ -41,7 +41,7 @@ export default {
       },
       async login(){
           try{
-          const response = await this.callApi("post", "/login", this.form)
+          const response = await this.callApi("post", "/auth/login", this.form)
           console.log(response.headers.location)
           await this.$store.dispatch("user/storeUser",response.headers.location)
           this.$router.push("/dashboard")

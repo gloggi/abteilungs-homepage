@@ -7,7 +7,7 @@ import {mixin} from './mixins.js'
 import './assets/tailwind.css'
 
 router.beforeEach((to, from, next) => {
-    if (to.name !== 'Login' && !localStorage.userIRI) next({ name: 'Login' })
+    if (to.name !== 'Login' && !localStorage.user) next({ name: 'Login' })
     else next()
   })
 

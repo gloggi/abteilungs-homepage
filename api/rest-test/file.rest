@@ -1,0 +1,40 @@
+# Define Variables
+@token =
+@host = http://localhost:8000
+
+### GET request to retrieve all files
+GET {{host}}/api/files
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### POST request to upload a new file
+POST {{host}}/api/files
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+"file": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAnElEQVR42u3RAQ0AAAgDIE1u9FvDOahApzLFGS1ECEKEIEQIQoQgRIgQIQgRghAhCBGCECEIQYgQhAhBiBCECEEIQoQgRAhChCBECEIQIgQhQhAiBCFCEIIQIQgRghAhCBGCEIQIQYgQhAhBiBCEIEQIQoQgRAhChCAEIUIQIgQhQhAiBCEIEYIQIQgRghAhCBEiRAhChCBECEK+W99M+TnxqRsqAAAAAElFTkSuQmCC",
+"category": "testing"
+}
+
+### GET request to retrieve a specific file by ID
+GET {{host}}/api/files/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### PUT request to update a specific file by ID
+PUT {{host}}/api/files/2
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+"file": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAnElEQVR42u3RAQ0AAAgDIE1u9FvDOahApzLFGS1ECEKEIEQIQoQgRIgQIQgRghAhCBGCECEIQYgQhAhBiBCECEEIQoQgRAhChCBECEIQIgQhQhAiBCFCEIIQIQgRghAhCBGCEIQIQYgQhAhBiBCEIEQIQoQgRAhChCAEIUIQIgQhQhAiBCEIEYIQIQgRghAhCBEiRAhChCBECEK+W99M+TnxqRsqAAAAAElFTkSuQmCC",
+"category": "updated"
+}
+
+### DELETE request to delete a specific file by ID
+DELETE {{host}}/api/files/1
+Accept: application/json
+Authorization: Bearer {{token}}

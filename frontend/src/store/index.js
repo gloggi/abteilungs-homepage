@@ -4,6 +4,7 @@ import { message } from './modules/message'
 import { user } from './modules/user'
 import { modal} from './modules/modal'
 import { notification } from './modules/notification'
+import {pageInEdit} from './modules/pageInEdit'
 
 export default createStore({
   modules: {
@@ -11,6 +12,7 @@ export default createStore({
     message,
     user,
     modal,
-    notification
+    notification,
+    pageInEdit
   }
 })

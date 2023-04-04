@@ -4,7 +4,7 @@
 <script>
 export default {
   async created(){
-    await this.$store.dispatch("user/storeUser",localStorage.userIRI)
+    await this.$store.dispatch("user/storeUser",localStorage.user)
    
   }
 

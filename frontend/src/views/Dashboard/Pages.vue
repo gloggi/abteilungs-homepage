@@ -22,7 +22,7 @@
     entity="pages"
     @changeSelected="changeSelected"
     titles="Titel,Permalink"
-    columns="title:link(@id),route"
+    columns="title:link(id),route"
   />
 </template>
 
@@ -49,11 +49,14 @@ export default {
     },
     async deletePages() {
       try {
+        console.log("HAPPPPENED")
         await Promise.all(
           this.selected.map(async (page) => {
-            await this.callApi("delete", page);
+            console.log("selected one")
+            await this.callApi("delete", `pages/${page}`);
           })
         );
+        this.selected = []
         this.tableKey++;
         this.$store.dispatch(
           "notification/notify",
@@ -67,6 +70,7 @@ export default {
       try {
         const response = await this.callApi("post", "/pages", {
           title: "Testpage",
+          page_items: [],
           route: "",
         });
         this.$router.push({ name: "Page", params: { id: response.data.id } });

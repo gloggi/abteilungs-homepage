@@ -122,7 +122,7 @@ export default {
   mounted() {
     this.editor = new Editor({
       content: this.modelValue,
-      onUpdate: () => {
+      onBlur: () => {
         // HTML
         this.$emit('update:modelValue', this.editor.getHTML())
 

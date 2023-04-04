@@ -22,7 +22,7 @@
     :key="`row-${j}`"
     class="bg-white w-full p-3 border-b flex justify-between"
   >
-  <div class="w-10"><input type="checkbox" @change="(e)=>changeBox(e, item['@id'])" v-model="checkBoxValues[item['@id']]"
+  <div class="w-10"><input type="checkbox" @change="(e)=>changeBox(e, item['id'])" v-model="checkBoxValues[item['id']]"
   class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-900"></div>
     <div
       v-for="(key, i) in keys"
@@ -33,7 +33,7 @@
       <template v-if="actions[key] && actions[key].actionName == 'link'">
         <router-link
           class="text-sm text-blue-600 hover:text-blue-900"
-          :to="`${item[actions[key].actionArgument].substr(1)}`"
+          :to="`${entity}/${item[actions[key].actionArgument]}`"
           >{{ item[key] }}</router-link
         >
       </template>
@@ -48,10 +48,10 @@
 
 <script>
 import {get} from "lodash"
-import Button from './Button.vue';
+/* import Button from './Button.vue'; */
 import PaginationNav from './PaginationNav.vue'
 export default {
-  components: { Button, PaginationNav },
+  components: { /* Button, */ PaginationNav },
   props: ["entity", "columns", "titles"],
   emits:["changeSelected"],
   data() {
@@ -105,7 +105,7 @@ export default {
       },
       setUpBoxes(){
           this.content.forEach((item)=>{
-              this.checkBoxValues[item["@id"]] = false
+              this.checkBoxValues[item["id"]] = false
           })
       },
       goToPage(i){
@@ -125,8 +125,8 @@ export default {
             this.getItems();
             return
         }
-        this.content = response.data["hydra:member"];
-        this.totalItems = response.data["hydra:totalItems"];
+        this.content = response.data.data;
+        this.totalItems = response.data.meta.total;
         if(this.content.length>this.itemsPerPage){
             this.itemsPerPage = this.content.length;
         }
