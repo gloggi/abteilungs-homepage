@@ -25,7 +25,6 @@ export default {
           formData.append('file', this.imagesArray, this.imagesArray.name)
           try{
               const response = await this.callApi("post", "/media_objects", formData)
-              console.log(response)
           }catch(e){
               console.log(e)
           }

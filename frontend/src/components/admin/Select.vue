@@ -23,7 +23,6 @@ export default {
   props:["options", "selection", "value"],
   methods:{
     handleChange(event){
-      console.log(event.target.value)
       this.$emit(`select${this.selection}`, event.target.value);
     }
   }

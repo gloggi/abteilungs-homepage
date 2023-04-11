@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PageItem extends Model
 {
-    protected $fillable = ['type', 'page_id'];
+    protected $fillable = ['type', 'page_id', 'sort'];
     
     public function page()
     {

@@ -87,9 +87,14 @@ class PageController extends Controller
                         'path' => $page_item['path']
                     ]);
                 }
+                $state = PageItem::find($page_item["page_item_id"])->update(['sort'=>$page_item['sort']]);
+            error_log($state);
             } else {
                 $this->createPageItem($page_item, $page->id);
             }
+            
+            
+            
 
         }
 
@@ -132,7 +137,9 @@ class PageController extends Controller
     {
         $pageItem = PageItem::create([
             'type' => $itemData['type'],
+            'sort' => $itemData['sort'],
             'page_id' => $pageId,
+           
         ]);
 
         if ($itemData['type'] === 'text') {

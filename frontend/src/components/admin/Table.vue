@@ -119,7 +119,6 @@ export default {
           "get",
           `/${this.entity}/?page=${this.page}`
         );
-        console.log(this.entity)
         if(response.status==204){
             this.page = 1
             this.getItems();
@@ -132,7 +131,6 @@ export default {
         }
         this.tableKey++
         this.paginationKey++;
-        console.log(this.content);
       } catch (e) {
         console.log(e);
       }

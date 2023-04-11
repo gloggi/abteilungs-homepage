@@ -13,6 +13,6 @@ class Page extends Model
     public function pageItems()
     {
 
-        return $this->hasMany(PageItem::class);
+        return $this->hasMany(PageItem::class)->orderBy('sort');
     }
 }

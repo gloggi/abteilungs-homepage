@@ -23,8 +23,8 @@ export const pageInEdit = {
               }
               this.dispatch("pageInEdit/updatePage")
         },
-        addItem(state, type){
-            state.page.page_items.push({type})
+        addItem(state, item){
+            state.page.page_items.push(item)
             this.dispatch("pageInEdit/updatePage")
         }
     },
@@ -40,6 +40,10 @@ export const pageInEdit = {
             
         },
         async updatePage({state, dispatch}){
+             state.page.page_items.sort((a, b) => a.sort - b.sort);
+            for (let i = 0; i < state.page.page_items.length; i++) {
+                state.page.page_items[i].sort = i;
+            } 
             try{
                 await api({method:"put", url:`pages/${state.page.id}`, data: state.page})
                 dispatch("getPage",state.page.id)

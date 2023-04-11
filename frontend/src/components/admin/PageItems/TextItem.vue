@@ -32,6 +32,7 @@ export default {
     },
     async deleteItem() {
       this.$store.commit("pageInEdit/updateItem", {id: this.textItem.id})
+      this.notifyUser("Item was deleted")
     },
     
   },
@@ -41,8 +42,8 @@ export default {
         if(!oldval){
           return
         }
-        //console.log(this.$store)
         this.$store.commit("pageInEdit/updateItem",newVal)
+        this.notifyUser("The Item was updated")
       },
       deep: true
     }

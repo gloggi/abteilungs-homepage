@@ -34,11 +34,9 @@ export default {
       try {
         const formData = new FormData();
         for(const file of this.files){
-            console.log(file)
         formData.append("file", file, file.name);
         formData.append("category", "general")
         const response = await this.callApi("post", "/files", formData);
-        console.log(response);
         }
         this.files = [];
         this.$emit("uploadedFile", true);

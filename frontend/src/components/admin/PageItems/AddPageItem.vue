@@ -43,12 +43,12 @@ export default {
     props: ["position"],
     methods:{
         emit(type){
-            console.log(type)
             this.$emit("addComponent", {type, position: this.position})
 
         },
         async createNewItem(type){
-            await this.$store.commit("pageInEdit/addItem",type)
+            await this.$store.commit("pageInEdit/addItem",{type, sort: this.position-0.5})
+            this.notifyUser("Item was addded to the page")
         }
     }
 };

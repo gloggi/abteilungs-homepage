@@ -49,10 +49,8 @@ export default {
     },
     async deletePages() {
       try {
-        console.log("HAPPPPENED")
         await Promise.all(
           this.selected.map(async (page) => {
-            console.log("selected one")
             await this.callApi("delete", `pages/${page}`);
           })
         );

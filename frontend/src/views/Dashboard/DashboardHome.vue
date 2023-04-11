@@ -15,7 +15,7 @@ export default {
     },
     methods:{
       notify(){
-        this.$store.dispatch("notification/notify","This is a test Message")
+        this.notifyUser("This is a test Message")
       }
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <div :key="loadedKey" v-if="pageInEdit">
+  <div  v-if="pageInEdit">
     <Card class="flex justify-between items-center mb-2">
       <h2 class="font-extrabold text-4xl">{{ pageInEdit.title }}</h2>
     </Card>
@@ -28,7 +28,7 @@
       <TextInput label="Title" v-model="pageInEdit.title" />
       <TextInput class="mt-2" label="Route" v-model="pageInEdit.route" />
     </Card>
-    <div v-for="pageItem in pageInEdit.page_items" :key="pageItem.sort">
+    <div v-for="pageItem in pageInEdit.page_items" :key="pageItem.updated_at">
       <AddPageItem
         :position="pageItem.sort"
         @addComponent="handleAddComponent"
@@ -82,12 +82,8 @@ export default {
   },
   computed: {
     lastPageItemPosition() {
-      /* if (this.content.page_items.length > 0) {
-        return (
-          this.content.page_items[this.content.page_items.length - 1].sort + 1
-        );
-      } */
-      return 0;
+      
+      return this.$store.state.pageInEdit.page.page_items.length;
     },
     pageInEdit(){
       return this.$store.state.pageInEdit.page
@@ -101,10 +97,8 @@ export default {
       this.content.page_items.push({type: event.type})
       this.loadedKey++;
       await this.updatePage()
-      console.log(event.type=="text_item")
     },
     async getPage() {
-      console.log("done")
       await this.$store.dispatch("pageInEdit/getPage",this.$route.params.id)
       this.loadedKey++;
     },
@@ -114,8 +108,8 @@ export default {
     },
     async deletePage() {
       try {
-        await this.callApi("delete", this.content["id"]);
-        this.$store.dispatch("notification/notify", "Page deleted");
+        await this.callApi("delete", `pages/${this.pageInEdit.id}`);
+        this.notifyUser("Page got deleted");
         this.$router.push({ name: "Pages" });
       } catch (e) {
         console.log(e);

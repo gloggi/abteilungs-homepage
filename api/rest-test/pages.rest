@@ -48,29 +48,41 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### PUT request to update a specific entity page by ID
-PUT {{host}}/api/pages/2
+PUT {{host}}/api/pages/1
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-"title": "Updated Entity Page",
-"page_items": [
-{
-"type": "text",
-"title": "Lorem Ipsum",
-"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-},
-{
-"type": "image",
-"path": "https://example.com/image.jpg"
-},
-{
-"type": "text",
-"title": "New Section Title",
-"body": "New section content."
-}
-]
+  "id": 1,
+  "title": "Testpage",
+  "route": null,
+  "created_at": "2023-04-11T19:12:52.000000Z",
+  "updated_at": "2023-04-11T19:12:52.000000Z",
+  "page_items": [
+    {
+      "id": 1,
+      "type": "text",
+      "sort": 10,
+      "created_at": "2023-04-11T19:13:36.000000Z",
+      "updated_at": "2023-04-11T19:13:36.000000Z",
+      "text_item_id": 1,
+      "page_item_id": 1,
+      "title": "kmkmklm",
+      "body": "<h5>iomk asdfasdf adsfasdfasdfa asdf mklml mmkmlmkl<\/h5>"
+    },
+    {
+      "id": 2,
+      "type": "text",
+      "sort": 55,
+      "created_at": "2023-04-11T19:14:01.000000Z",
+      "updated_at": "2023-04-11T19:14:01.000000Z",
+      "text_item_id": 2,
+      "page_item_id": 2,
+      "title": "kmkmklm",
+      "body": "<h5>iomk asdfasdf adsfasdfasdfa asdf mklml mmkmlmkl<\/h5>"
+    }
+  ]
 }
 
 ### DELETE request to delete a specific entity page by ID

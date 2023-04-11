@@ -96,7 +96,6 @@ export default {
           `/contacts/${this.$route.params.id}`
         );
         this.content = response.data;
-        console.log(this.content);
         this.loadedKey++;
       } catch (e) {
         console.log(e);

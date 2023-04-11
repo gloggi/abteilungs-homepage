@@ -61,7 +61,6 @@ export default {
     async getMedia() {
       try {
         const response = await this.callApi("get", "/media_objects?type=image");
-        console.log(response);
         this.content = response.data["hydra:member"];
         this.listKey++;
       } catch (e) {
@@ -72,7 +71,6 @@ export default {
   async created(){
     await this.getMedia()
     this.selected= new Set(this.preselected)
-    console.log("preselected",this.preselected)
     this.setUpBoxes()
   }
 };

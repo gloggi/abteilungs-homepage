@@ -12,7 +12,7 @@ export const mixin = {
             try{
                 const response = await api({method,url,data  })
                 this.$store.commit("message/clear")
-                console.log(response)
+               
                 return response
             }catch(e){
                 console.log(e)
@@ -20,6 +20,9 @@ export const mixin = {
                 return JSON.stringify(e, Object.getOwnPropertyNames(e))
             }
 
+        },
+        notifyUser(message){
+            this.$store.dispatch("notification/notify", message);
         }
     }
 }
