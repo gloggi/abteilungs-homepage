@@ -16,7 +16,7 @@ import Editor from "../Editor/Editor.vue";
 import TextInput from "../TextInput.vue";
 import {
   TrashIcon
-} from "@heroicons/vue/solid";
+} from "@heroicons/vue/24/solid";
 export default {
   components: { TextInput, Editor, Card, TrashIcon },
   props: ["item"],

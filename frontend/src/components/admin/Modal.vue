@@ -40,7 +40,7 @@
 
 <script>
 import Fade from '../../transitions/Fade.vue';
-import { XIcon, ArrowsExpandIcon } from '@heroicons/vue/solid'
+import { XIcon, ArrowsExpandIcon } from '@heroicons/vue/24/solid'
 
 export default {
   components: { XIcon, Fade, ArrowsExpandIcon },

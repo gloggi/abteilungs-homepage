@@ -17,7 +17,7 @@
           <TrashIcon class="h-6 w-6 text-gray-500" />
         </button>
         <button class="rounded-r-lg bg-white p-1" @click="updateGroup">
-          <RefreshIcon class="h-6 w-6 text-gray-500" />
+          <ArrowPathIcon class="h-6 w-6 text-gray-500" />
         </button>
       </div>
     </div>
@@ -37,15 +37,15 @@ import Card from "../../components/admin/Card.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import Select from "../../components/admin/Select.vue";
 import {
-  RefreshIcon,
+  ArrowPathIcon,
   ChevronLeftIcon,
   TrashIcon,
-} from "@heroicons/vue/solid";
+} from "@heroicons/vue/24/solid";
 export default {
   components: {
     Card,
     TextInput,
-    RefreshIcon,
+    ArrowPathIcon,
     ChevronLeftIcon,
     TrashIcon,
     Select

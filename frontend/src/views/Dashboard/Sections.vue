@@ -22,13 +22,13 @@
     entity="sections"
     @changeSelected="changeSelected"
     titles="Name,From Age,To Age"
-    columns="name:link(@id),fromAge,toAge"
+    columns="name:link(id),fromAge,toAge"
   />
 </template>
 
 <script>
 import Table from "../../components/admin/Table.vue";
-import { TrashIcon, PlusIcon } from "@heroicons/vue/solid";
+import { TrashIcon, PlusIcon } from "@heroicons/vue/24/solid";
 export default {
   components: { Table, TrashIcon, PlusIcon },
   data() {

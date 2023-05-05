@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { DocumentAddIcon } from "@heroicons/vue/solid";
+import { DocumentAddIcon } from "@heroicons/vue/24/solid";
 export default {
   components: { DocumentAddIcon },
   emits:["uploadedFile"],
@@ -36,7 +36,7 @@ export default {
         for(const file of this.files){
         formData.append("file", file, file.name);
         formData.append("category", "general")
-        const response = await this.callApi("post", "/files", formData);
+        await this.callApi("post", "/files", formData);
         }
         this.files = [];
         this.$emit("uploadedFile", true);

@@ -36,7 +36,7 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import BookIcon from "../../../icons/BookIcon.vue";
 import Fade from '../../../transitions/Fade.vue';
-import { PhotographIcon } from '@heroicons/vue/solid'
+import { PhotographIcon } from '@heroicons/vue/24/solid'
 
 export default {
     components: { Popover, PopoverButton, PopoverPanel, BookIcon, Fade, PhotographIcon },

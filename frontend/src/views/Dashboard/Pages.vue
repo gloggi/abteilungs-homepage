@@ -28,7 +28,7 @@
 
 <script>
 import Table from "../../components/admin/Table.vue";
-import { TrashIcon, PlusIcon } from "@heroicons/vue/solid";
+import { TrashIcon, PlusIcon } from "@heroicons/vue/24/solid";
 export default {
   components: { Table, TrashIcon, PlusIcon },
   data() {

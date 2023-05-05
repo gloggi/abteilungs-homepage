@@ -22,13 +22,13 @@
     entity="groups"
     @changeSelected="changeSelected"
     titles="Name,Section"
-    columns="name:link(@id),section.name"
+    columns="name:link(id),section.name"
   />
 </template>
 
 <script>
 import Table from "../../components/admin/Table.vue";
-import { TrashIcon, PlusIcon } from "@heroicons/vue/solid";
+import { TrashIcon, PlusIcon } from "@heroicons/vue/24/solid";
 export default {
   components: { Table, TrashIcon, PlusIcon },
   data() {
@@ -51,7 +51,7 @@ export default {
       try {
         await Promise.all(
           this.selected.map(async (group) => {
-            await this.callApi("delete", group);
+            await this.callApi("delete", `groups/${group}`);
           })
         );
         this.tableKey++;

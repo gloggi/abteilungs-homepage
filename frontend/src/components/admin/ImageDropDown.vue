@@ -31,7 +31,7 @@
 
 
 <script>
-import { PencilIcon } from "@heroicons/vue/solid";
+import { PencilIcon } from "@heroicons/vue/24/solid";
 
 import {
   Listbox,

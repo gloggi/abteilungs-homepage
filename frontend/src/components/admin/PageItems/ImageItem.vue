@@ -38,7 +38,7 @@
 import MediaModal from '../MediaModal.vue';
 import {
   XIcon, TrashIcon
-} from "@heroicons/vue/solid";
+} from "@heroicons/vue/24/solid";
 import Button from '../Button.vue';
 import Card from '../Card.vue';
 export default {

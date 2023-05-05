@@ -20,7 +20,7 @@
           <TrashIcon class="h-6 w-6 text-gray-500" />
         </button>
         <button class="rounded-r-lg bg-white p-1" @click="updatePage">
-          <RefreshIcon class="h-6 w-6 text-gray-500" />
+          <ArrowPathIcon class="h-6 w-6 text-gray-500" />
         </button>
       </div>
     </div>
@@ -49,11 +49,11 @@ import TextInput from "../../components/admin/TextInput.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/PageItems/AddPageItem.vue";
 import {
-  RefreshIcon,
+  ArrowPathIcon,
   ChevronLeftIcon,
   TrashIcon,
   SwitchVerticalIcon,
-} from "@heroicons/vue/solid";
+} from "@heroicons/vue/24/solid";
 import TextItem from '../../components/admin/PageItems/TextItem.vue';
 import ImageItem from '../../components/admin/PageItems/ImageItem.vue';
 
@@ -63,7 +63,7 @@ export default {
     Card,
     AddPageItem,
     ChevronLeftIcon,
-    RefreshIcon,
+    ArrowPathIcon,
     TrashIcon,
     SwitchVerticalIcon,
     TextItem,

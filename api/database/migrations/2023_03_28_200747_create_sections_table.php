@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->integer('from_age')->nullable();
+            $table->integer('to_age')->nullable();
+
             $table->timestamps();
         });
     }

@@ -37,7 +37,7 @@
         <router-link to="/dashboard/sections">
         <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
             <div class="px-5">
-                <PuzzleIcon class="h-6 w-6 " />
+                <PuzzlePieceIcon class="h-6 w-6 " />
             </div>
             <div class="text">Sections</div>
         </div>
@@ -45,7 +45,7 @@
         <router-link to="/dashboard/media">
         <div class="p-1 flex text-gray-50 rounded-lg border  border-transparent hover:border-gray-50 m-0.5">
             <div class="px-5">
-                <ArchiveIcon class="h-6 w-6" />
+                <PhotoIcon class="h-6 w-6" />
             </div>
             <div class="text">Media</div>
         </div>
@@ -59,9 +59,9 @@
 </template>
 
 <script>
-import { PuzzleIcon, BookOpenIcon, ArchiveIcon, UserGroupIcon, UserIcon } from "@heroicons/vue/solid";
+import { PuzzlePieceIcon, BookOpenIcon, PhotoIcon, UserGroupIcon, UserIcon } from "@heroicons/vue/24/solid";
 export default {
-  components: { BookOpenIcon, PuzzleIcon, ArchiveIcon, UserGroupIcon, UserIcon },
+  components: { BookOpenIcon, PuzzlePieceIcon, PhotoIcon, UserGroupIcon, UserIcon },
     data(){
         return {
             dMSb: false

@@ -28,14 +28,16 @@ class GroupController extends Controller
             'meta' => $meta
         ]);
     }
-    
-    
+
+
 
     public function store(Request $request)
     {
         $group = new Group;
         $group->name = $request->input('name');
-        $group->section_id = $request->input('section_id');
+        if ($group->section_id) {
+            $group->section_id = $request->input('section_id');
+        }
         $group->save();
         return response()->json($group);
     }

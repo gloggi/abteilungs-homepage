@@ -6,6 +6,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SectionController;
 
 
 
@@ -33,6 +34,12 @@ Route::get('/groups/{id}', [GroupController::class, 'show']);
 Route::post('/groups', [GroupController::class, 'store']);
 Route::put('/groups/{id}', [GroupController::class, 'update']);
 Route::delete('/groups/{id}', [GroupController::class, 'destroy']);
+
+Route::get('/sections', [SectionController::class, 'index']);
+Route::get('/sections/{id}', [SectionController::class, 'show']);
+Route::post('/sections', [SectionController::class, 'store']);
+Route::put('/sections/{id}', [SectionController::class, 'update']);
+Route::delete('/sections/{id}', [SectionController::class, 'destroy']);
 
 Route::get('/pages', [PageController::class, 'index']);
 Route::get('/pages/{id}', [PageController::class, 'show']);

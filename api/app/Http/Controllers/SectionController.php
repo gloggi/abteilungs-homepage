@@ -2,64 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Section;
 use Illuminate\Http\Request;
+use App\Models\Section;
+
 
 class SectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $perPage = $request->input('per_page', 10);
+        $page = $request->input('page', 1);
+        $sections = Section::paginate($perPage, ['*'], 'page', $page);
+        $data = $sections->items();
+        $meta = [
+            'current_page' => $sections->currentPage(),
+            'from' => $sections->firstItem(),
+            'last_page' => $sections->lastPage(),
+            'path' => $sections->path(),
+            'per_page' => $sections->perPage(),
+            'to' => $sections->lastItem(),
+            'total' => $sections->total(),
+        ];
+        return response()->json([
+            'data' => $data,
+            'meta' => $meta
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        $section = new Section;
+        $section->name = $request->input('name');
+        $section->from_age = $request->input('from_age');
+        $section->to_age = $request->input('to_age');
+        $section->save();
+        return response()->json($section);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Section $section)
+    public function show($id)
     {
-        //
+        $section = Section::find($id);
+        return response()->json($section);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Section $section)
+    public function update(Request $request, $id)
     {
-        //
+        $section = Section::find($id);
+        $section->name = $request->input('name');
+        $section->from_age = $request->input('from_age');
+        $section->to_age = $request->input('to_age');
+        $section->save();
+        return response()->json($section);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Section $section)
+    public function destroy($id)
     {
-        //
+        $section = Section::find($id);
+        $section->delete();
+        return response()->json('Section removed successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Section $section)
-    {
-        //
-    }
 }
