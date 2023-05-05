@@ -14,7 +14,7 @@
       "
   >
   <option :selected="!value">-</option>
-    <option :selected="option['@id']==value" v-for="option in options" :value="option['@id']" :key="option['@id']">{{option.name}}</option>
+    <option :selected="option['id']==value" v-for="option in options" :value="option['id']" :key="option['id']">{{option.name}} </option>
   </select>
 </template>
 

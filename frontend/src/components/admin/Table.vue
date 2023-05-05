@@ -104,7 +104,6 @@ export default {
           }
       },
       setUpBoxes(){
-        console.log(Object.keys(this.content))
           this.content.forEach((item)=>{
               this.checkBoxValues[item["id"]] = false
           })

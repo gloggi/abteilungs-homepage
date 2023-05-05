@@ -25,7 +25,7 @@
       <div class="space-y-2">
         <TextInput label="Name" type="text" v-model="content.name" />
         <div class="flex flex-row justify-between space-x-2">
-          <Select @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['@id']:null" selection="Section" :options="sections"/>
+          <Select @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections"/>
         </div>
       </div>
     </Card>
@@ -76,7 +76,8 @@ export default {
           "get",
           `/sections`
         );
-        this.sections = response.data["hydra:member"];
+        this.sections = response.data.data;
+        console.log(this.sections)
       } catch (e) {
         console.log(e);
       }
