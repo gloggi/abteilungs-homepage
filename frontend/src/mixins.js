@@ -26,8 +26,8 @@ export const mixin = {
             this.$store.dispatch("notification/notify", message);
         },
         snakeToCamelObject(obj) {
-            if (!obj) {
-              return null;
+            if (!obj||obj instanceof FormData) {
+              return obj;
             }
           
             if (Array.isArray(obj)) { // if the input is an array
@@ -46,8 +46,8 @@ export const mixin = {
           }
           ,
           camelToSnakeObject(obj) {
-            if(!obj){
-                return null
+            if (!obj||obj instanceof FormData) {
+              return obj;
             }
 
             if (Array.isArray(obj)) { // if the input is an array

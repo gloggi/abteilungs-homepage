@@ -94,7 +94,7 @@ export default {
       }
     },
     handleSection(sectionId){
-      this.content.section = sectionId
+      this.content.sectionId = sectionId
     }
   },
   async created() {

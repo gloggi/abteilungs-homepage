@@ -9,4 +9,9 @@ class Section extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
 }

@@ -9,7 +9,7 @@
       isDragging ? 'bg-gray-50' : ''
     }  border-2 border-gray-400 border-dashed text-center p-5`"
   >
-      <DocumentAddIcon class="h-12 w-12 text-gray-400" />
+      <DocumentPlusIcon class="h-12 w-12 text-gray-400" />
      <div class="flex items-center">
           <label for="file-upload" class="text-sm font-medium text-blue-600 hover:text-blue-800">Upload a File
                <input id="file-upload" type="file" class="sr-only" multiple @change="uploadFile"/> </label>
@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import { DocumentAddIcon } from "@heroicons/vue/24/solid";
+import { DocumentPlusIcon } from "@heroicons/vue/24/solid";
 export default {
-  components: { DocumentAddIcon },
+  components: { DocumentPlusIcon },
   emits:["uploadedFile"],
   data() {
     return {

@@ -12,7 +12,7 @@ class GroupController extends Controller
     {
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
-        $groups = Group::paginate($perPage, ['*'], 'page', $page);
+        $groups = Group::with('section')->paginate($perPage, ['*'], 'page', $page);
         $data = $groups->items();
         $meta = [
             'current_page' => $groups->currentPage(),
@@ -44,7 +44,7 @@ class GroupController extends Controller
 
     public function show($id)
     {
-        $group = Group::find($id);
+        $group = Group::with('section')->find($id);
         return response()->json($group);
     }
 
