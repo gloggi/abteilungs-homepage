@@ -28,7 +28,8 @@ export default {
   props:["options", "selection", "value", "label"],
   methods:{
     handleChange(event){
-      this.$emit(`select${this.selection}`, event.target.value);
+      this.$emit(`select${this.selection}`, parseInt(event.target.value));
+      
     }
   }
 

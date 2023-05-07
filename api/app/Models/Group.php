@@ -13,11 +13,16 @@ class Group extends Model
         'name',
         'section_id',
         'extension',
-        'category'
+        'category',
+        'file_id'
     ];
 
     public function section()
     {
         return $this->belongsTo(Section::class);
+    }
+    public function file()
+    {
+        return $this->belongsTo(File::class);
     }
 }

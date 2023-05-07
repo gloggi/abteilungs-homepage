@@ -35,16 +35,15 @@ class GroupController extends Controller
     {
         $group = new Group;
         $group->name = $request->input('name');
-        if ($group->section_id) {
-            $group->section_id = $request->input('section_id');
-        }
+        $group->section_id = $request->input('section_id') ? $request->input('section_id') : null;
+        $group->section_id = $request->input('file_id') ? $request->input('file_id') : null;
         $group->save();
         return response()->json($group);
     }
 
     public function show($id)
     {
-        $group = Group::with('section')->find($id);
+        $group = Group::with('section')->with('file')->find($id);
         return response()->json($group);
     }
 
@@ -53,6 +52,7 @@ class GroupController extends Controller
         $group = Group::find($id);
         $group->name = $request->input('name');
         $group->section_id = $request->input('section_id');
+        $group->file_id = $request->input('file_id') ? $request->input('file_id') : null;
         $group->save();
         return response()->json($group);
     }

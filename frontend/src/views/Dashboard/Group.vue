@@ -23,7 +23,7 @@
     </div>
     <Card class="mt-4">
       <div class="flex flex-row space-x-2 h-full w-full">
-        <LogoDisplay/>
+        <LogoDisplay :logo="content.file" @selectImage="updateLogo"/>
       <div class="space-y-2 w-full">
         <TextInput label="Name" type="text" v-model="content.name" />
         <div class="flex flex-row justify-between space-x-2">
@@ -63,6 +63,11 @@ export default {
     };
   },
   methods: {
+    updateLogo(id){
+      this.content.file_id = id;
+      this.updateGroup()
+
+    },
     async getGroup() {
       try {
         const response = await this.callApi(

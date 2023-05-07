@@ -14,4 +14,8 @@ class File extends Model
         'path',
         
     ];
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
 }

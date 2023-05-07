@@ -33,12 +33,18 @@ const routes = [
       {
         path: '',
         name: 'DashboardHome',
-        component: DashboardHome
+        component: DashboardHome,
+        meta: {
+          title: "Dashboard",
+        },
       },
       {
         path: 'pages',
         name: 'Pages',
-        component: Pages
+        component: Pages,
+        meta: {
+          title: "Seiten",
+        },
       },
       {
         path: 'pages/:id',
@@ -48,7 +54,10 @@ const routes = [
       {
         path: 'sections',
         name: 'Sections',
-        component: Sections
+        component: Sections,
+        meta: {
+          title: "Stufen",
+        },
       },
       {
         path: 'sections/:id',
@@ -58,7 +67,10 @@ const routes = [
       {
         path: 'groups',
         name: 'Groups',
-        component: Groups
+        component: Groups,
+        meta: {
+          title: "Gruppen",
+        },
       },
       {
         path: 'groups/:id',
@@ -68,7 +80,10 @@ const routes = [
       {
         path: 'contacts',
         name: 'Contacts',
-        component: Contacts
+        component: Contacts,
+        meta: {
+          title: "Kontakte",
+        },
       },
       {
         path: 'contacts/:id',
@@ -83,7 +98,10 @@ const routes = [
       {
         path: 'media',
         name: 'Media',
-        component: Media
+        component: Media,
+        meta: {
+          title: "Medien",
+        },
       }
     ]
   }
@@ -93,5 +111,11 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title; 
+  }
+  next();
+});
 
 export default router

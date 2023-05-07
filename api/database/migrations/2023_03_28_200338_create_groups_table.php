@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('section_id')->nullable();
             $table->foreign('section_id')->references('id')->on('sections');
+            $table->unsignedBigInteger('file_id')->nullable();
+            $table->foreign('file_id')->references('id')->on('files');
             $table->timestamps();
         });
     }
