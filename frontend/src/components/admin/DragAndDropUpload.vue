@@ -5,16 +5,19 @@
     @dragleave="isDragging = false"
     @drop.prevent
     @drop="dragFile"
-    :class="`flex flex-col justify-center items-center rounded-lg ${
+  >
+  <div
+  :class="`flex flex-col justify-center items-center rounded-lg ${
       isDragging ? 'bg-gray-50' : ''
     }  border-2 border-gray-400 border-dashed text-center p-5`"
   >
       <DocumentPlusIcon class="h-12 w-12 text-gray-400" />
      <div class="flex items-center">
-          <label for="file-upload" class="text-sm font-medium text-blue-600 hover:text-blue-800">Upload a File
+          <label for="file-upload" class="text-sm font-medium text-blue-600 hover:text-blue-800">{{ text }}
                <input id="file-upload" type="file" class="sr-only" multiple @change="uploadFile"/> </label>
           <div class="text-sm">&nbsp;or drag and drop</div>
      </div>
+    </div>
   </div>
 </template>
 
@@ -23,6 +26,7 @@ import { DocumentPlusIcon } from "@heroicons/vue/24/solid";
 export default {
   components: { DocumentPlusIcon },
   emits:["uploadedFile"],
+  props: {category:{default: "general"}, text:{default: "Upload a File"}},
   data() {
     return {
       files: [],
@@ -35,7 +39,7 @@ export default {
         const formData = new FormData();
         for(const file of this.files){
         formData.append("file", file, file.name);
-        formData.append("category", "general")
+        formData.append("category", this.category)
         await this.callApi("post", "/files", formData);
         }
         this.files = [];

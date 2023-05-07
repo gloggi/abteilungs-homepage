@@ -22,12 +22,15 @@
       </div>
     </div>
     <Card class="mt-4">
-      <div class="space-y-2">
+      <div class="flex flex-row space-x-2 h-full w-full">
+        <LogoDisplay/>
+      <div class="space-y-2 w-full">
         <TextInput label="Name" type="text" v-model="content.name" />
         <div class="flex flex-row justify-between space-x-2">
-          <Select @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections"/>
+          <Select label="Stufe" @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections"/>
         </div>
       </div>
+    </div>
     </Card>
   </div>
 </template>
@@ -41,6 +44,7 @@ import {
   ChevronLeftIcon,
   TrashIcon,
 } from "@heroicons/vue/24/solid";
+import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 export default {
   components: {
     Card,
@@ -48,13 +52,14 @@ export default {
     ArrowPathIcon,
     ChevronLeftIcon,
     TrashIcon,
-    Select
-    
-  },
+    Select,
+    LogoDisplay
+},
   data() {
     return {
       content: undefined,
-      sections: undefined
+      sections: undefined,
+      showModal: false
     };
   },
   methods: {
