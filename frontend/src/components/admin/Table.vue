@@ -20,7 +20,7 @@
   <div
     v-for="(item, j) in content"
     :key="`row-${j}`"
-    class="bg-white w-full p-3 border-b flex justify-between"
+    class="bg-white w-full p-3 border-b flex justify-between items-center"
   >
   <div class="w-10"><input type="checkbox" @change="(e)=>changeBox(e, item['id'])" v-model="checkBoxValues[item['id']]"
   class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-900"></div>
@@ -36,6 +36,11 @@
           :to="`${entity}/${item[actions[key].actionArgument]}`"
           >{{ item[key] }}</router-link
         >
+      </template>
+      <template v-if="actions[key] && actions[key].actionName == 'image'">
+       <div class="flex justify-start items-center">
+        <img class="h-10" :src="`http://localhost:8000${item[key].thumbnail}`"/>
+      </div>
       </template>
       <template v-else>
         <div class="text-sm text-gray-500">{{ getValue(item, key) }}</div>
