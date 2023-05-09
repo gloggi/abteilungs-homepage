@@ -29,6 +29,8 @@
         <div class="flex flex-row justify-between space-x-2">
           <Select label="Stufe" @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections"/>
         </div>
+        <MultipleSelect label="Vorgängergruppe" v-model="content.predecessors" :options="groups" />
+        <MultipleSelect label="Nachfolgergruppen" v-model="content.successors" :options="groups" />
       </div>
     </div>
     </Card>
@@ -45,6 +47,7 @@ import {
   TrashIcon,
 } from "@heroicons/vue/24/solid";
 import LogoDisplay from "../../components/admin/LogoDisplay.vue";
+import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 export default {
   components: {
     Card,
@@ -53,13 +56,15 @@ export default {
     ChevronLeftIcon,
     TrashIcon,
     Select,
-    LogoDisplay
+    LogoDisplay,
+    MultipleSelect
 },
   data() {
     return {
       content: undefined,
       sections: undefined,
-      showModal: false
+      showModal: false,
+      groups: []
     };
   },
   methods: {
@@ -75,7 +80,24 @@ export default {
           `/groups/${this.$route.params.id}`
         );
         this.content = response.data;
+        if(this.content.predecessors){
+          this.content.predecessors = this.content.predecessors.map(p=>p.id)
+        }
+        if(this.content.successors){
+          this.content.successors = this.content.successors.map(p=>p.id)
+        }
         this.loadedKey++;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getGroups() {
+      try {
+        const response = await this.callApi(
+          "get",
+          `/groups`
+        );
+        this.groups = response.data.data;
       } catch (e) {
         console.log(e);
       }
@@ -109,6 +131,7 @@ export default {
   },
   async created() {
     await this.getSections();
+    await this.getGroups();
     await this.getGroup();
     
   },

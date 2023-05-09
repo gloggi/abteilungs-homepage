@@ -1,6 +1,7 @@
 <template>
   <div :key="`table-${tableKey}`" class="bg-gray-50 w-full flex justify-between items-center p-3 rounded-t-md">
-     <div class="w-10"><input type="checkbox" 
+     <div class="w-10"><input type="checkbox"
+      ref="masterbox" 
      v-model="topCheckboxValue"
      @change="topCheckboxHandler"
   class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-900"></div>
@@ -42,7 +43,7 @@
         <img class="h-10" :src="`http://localhost:8000${item[key].thumbnail}`"/>
       </div>
       </template>
-      <template v-else>
+      <template v-if="!actions[key]">
         <div class="text-sm text-gray-500">{{ getValue(item, key) }}</div>
       </template>
     </div>
@@ -82,6 +83,18 @@ export default {
       return this.titles.split(",");
     },
   },
+  watch: {
+    checkBoxValues: {
+      handler(newValue) {
+        if(Object.values(newValue).every((value) => value === true)){
+          this.$refs.masterbox.checked = true;
+        }else{
+          this.$refs.masterbox.checked = false;
+        }
+      },
+      deep: true
+    }
+  },
   methods: {
     getValue(obj,key){
       return get(obj, key)
@@ -92,6 +105,7 @@ export default {
           }else{
               this.selected.delete(iri)
           }
+
           this.$emit("changeSelected", Array.from(this.selected))
       },
       topCheckboxHandler(){

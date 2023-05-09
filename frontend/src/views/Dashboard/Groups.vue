@@ -21,8 +21,8 @@
     :key="tableKey"
     entity="groups"
     @changeSelected="changeSelected"
-    titles="Name,Section"
-    columns="name:link(id),section.name"
+    titles="Image,Name,Section"
+    columns="file:image(thumbnail),name:link(id),section.name"
   />
 </template>
 

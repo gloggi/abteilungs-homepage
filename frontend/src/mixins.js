@@ -26,7 +26,7 @@ export const mixin = {
             this.$store.dispatch("notification/notify", message);
         },
         snakeToCamelObject(obj) {
-            if (!obj||obj instanceof FormData) {
+            if (!obj||obj instanceof FormData || obj instanceof Array) {
               return obj;
             }
           
@@ -46,7 +46,7 @@ export const mixin = {
           }
           ,
           camelToSnakeObject(obj) {
-            if (!obj||obj instanceof FormData) {
+            if (!obj||obj instanceof FormData || obj instanceof Array) {
               return obj;
             }
 

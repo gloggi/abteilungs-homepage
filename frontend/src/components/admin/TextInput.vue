@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <label class="block text-gray-700 text-sm font-bold mb-1" for="username">
+    <label class="block text-gray-700 text-sm font-bold mb-1" for="">
       {{ label }}
     </label>
     <input
@@ -25,18 +25,18 @@
 </template>
 
 <script>
-import { computed } from "vue";
 export default {
   props: ["label", "type", "modelValue"],
-  setup(props, { emit }) {
-    const payload = computed({
-      get: () => props.modelValue,
-      set: (value) => emit("update:modelValue", value),
-    });
-
-    return {
-      payload,
-    };
+  emits: ["update:modelValue"],
+  computed: {
+    payload: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value);
+      },
+    },
   },
 };
 </script>

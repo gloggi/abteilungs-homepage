@@ -1,5 +1,5 @@
 <template>
-  <Modal @close="handleClose" title="Bilder">
+  <Modal @close="close" title="Bilder">
     
     <DragAndDropUpload @uploadedFile="getMedia" />
     <SelectMediaGrid :maxSelect="maxSelect" :category="category" @selectItems="selectItemsHandler" />
@@ -42,6 +42,9 @@ export default {
     },
     selectAndClose(){
       this.$emit("select", this.selected)
+      this.close()
+    },
+    close(){
       this.$emit("close", true)
     }
 
