@@ -86,14 +86,14 @@ const routes = [
         },
       },
       {
-        path: 'contacts/:id',
-        name: 'Contact',
-        component: Contact
-      },
-      {
         path: 'files',
         name: 'Files',
         component: FileUploadTest
+      },
+      {
+        path: 'contacts/:id',
+        name: 'Contact',
+        component: Contact
       },
       {
         path: 'media',

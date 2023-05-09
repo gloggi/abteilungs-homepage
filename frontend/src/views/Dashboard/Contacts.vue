@@ -21,8 +21,8 @@
     :key="tableKey"
     entity="contacts"
     @changeSelected="changeSelected"
-    titles="Name,Rolle"
-    columns="name:link(@id),role"
+    titles="Image,Nickname,Vorname,Nachname,E-Mail"
+    columns="file:image(thumbnail),nickname:link(id),firstname,lastname,email"
   />
 </template>
 
@@ -51,7 +51,7 @@ export default {
       try {
         await Promise.all(
           this.selected.map(async (contact) => {
-            await this.callApi("delete", contact);
+            await this.callApi("delete", `contacts/${contact}`);
           })
         );
         this.tableKey++;
@@ -66,10 +66,9 @@ export default {
     async createContact() {
       try {
         const response = await this.callApi("post", "/contacts", {
-          name: "",
-          role: "",
-          eMail: "",
-          sort: 0,
+          firstname: "",
+          lastname: "",
+          email: "",
         });
         this.$router.push({ name: "Contact", params: { id: response.data.id } });
       } catch (e) {

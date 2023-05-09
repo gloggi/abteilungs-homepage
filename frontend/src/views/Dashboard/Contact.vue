@@ -1,7 +1,7 @@
 <template>
   <div v-if="content">
     <Card class="flex justify-between items-center mb-2">
-      <h2 class="font-extrabold text-4xl">{{ content.name }}</h2>
+      <h2 class="font-extrabold text-4xl">{{ content.nickname }}</h2>
     </Card>
     <div class="flex justify-between mb-2">
       <router-link :to="{ name: 'Contacts' }">
@@ -22,31 +22,19 @@
       </div>
     </div>
     <Card class="mt-4">
-      <div class="flex flex-col md:flex-row  md:justify-between items-center">
-        <div class="md:w-1/3 p-2">
-        <div  class="relative w-full aspect-square">
-          <ImageDropDown @remove="removeImage" />
-        <img v-if="content.image" :src="content.image.contentUrl" class="w-full rounded-full"/>
-        <div v-else class="w-full h-full rounded-full border border-gray-200 flex justify-center items-center text-gray-200">
-          No image
-        </div>
-        </div>
-          
-        </div>
+      <div class="flex flex-row space-x-2 h-full w-full">
+        <LogoDisplay :logo="content.file" @selectImage="updateLogo"/>
       <div class="space-y-2 w-full">
-        <ColorPicker />
-        <TextInput label="Name" type="text" v-model="content.name" />
-        <TextInput label="Role" type="text" v-model="content.role" />
-        <TextInput label="E-Mail" type="email" v-model="content.eMail" />
-        <TextInput label="Sort" type="number" v-model="content.sort" />
+        <TextInput label="Nickname" type="text" v-model="content.nickname" />
+        <div class="flex flex-row justify-between space-x-2">
+          <TextInput class="w-full" label="Vorname" type="text" v-model="content.firstname" />
+        <TextInput class="w-full" label="Nachname" type="text" v-model="content.lastname" />
         </div>
+        <TextInput label="E-Mail" type="email" v-model="content.email" />
+        <TextInput label="Rolle" type="role" v-model="content.role" />
+        
       </div>
-      <MediaModal
-      v-if="showModal"
-      :preselected="[]"
-      @selectImages="handleImages"
-      @close="() => (showModal = false)"
-    />
+    </div>
     </Card>
   </div>
 </template>
@@ -54,14 +42,12 @@
 <script>
 import Card from "../../components/admin/Card.vue";
 import TextInput from "../../components/admin/TextInput.vue";
-/* import Button  from "../../components/admin/Button.vue" */
-import MediaModal from '../../components/admin/MediaModal.vue';
-import ImageDropDown from '../../components/admin/ImageDropDown.vue'
 import {
   ArrowPathIcon,
   ChevronLeftIcon,
   TrashIcon,
 } from "@heroicons/vue/24/solid";
+import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 export default {
   components: {
     Card,
@@ -69,25 +55,20 @@ export default {
     ArrowPathIcon,
     ChevronLeftIcon,
     TrashIcon,
-    /* Button, */
-    MediaModal,
-    ImageDropDown
-    
-  },
+    LogoDisplay
+},
   data() {
     return {
       content: undefined,
+      sections: undefined,
       showModal: false
     };
   },
   methods: {
-    handleImages(images){
-      if(images.length>0){
-      this.content.image=images[0]
-      }
-    },
-    removeImage(){
-      this.content.image=null
+    updateLogo(id){
+      this.content.file_id = id;
+      this.updateContact()
+
     },
     async getContact() {
       try {
@@ -101,12 +82,19 @@ export default {
         console.log(e);
       }
     },
-    async updateContact() {
-      this.content.sort = parseFloat(this.content.sort)
-      if(this.content.image&&typeof this.content.image != "string"){
-      var tempImg = {...this.content.image}
-      this.content.image = this.content.image["@id"]
+    async getSections() {
+      try {
+        const response = await this.callApi(
+          "get",
+          `/sections`
+        );
+        this.sections = response.data.data;
+        console.log(this.sections)
+      } catch (e) {
+        console.log(e);
       }
+    },
+    async updateContact() {
       try {
         await this.callApi(
           "put",
@@ -116,12 +104,15 @@ export default {
       } catch (e) {
         console.log(e);
       }
-      this.content.image = tempImg
-      this.loadedKey++;
+    },
+    handleSection(sectionId){
+      this.content.sectionId = sectionId
     }
   },
-  created() {
-    this.getContact();
+  async created() {
+    await this.getSections();
+    await this.getContact();
+    
   },
 };
 </script>
