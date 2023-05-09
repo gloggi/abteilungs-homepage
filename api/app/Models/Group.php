@@ -25,4 +25,14 @@ class Group extends Model
     {
         return $this->belongsTo(File::class);
     }
+
+    public function predecessors()
+    {
+        return $this->belongsToMany(Group::class, 'group_predecessor', 'group_id', 'predecessor_id');
+    }
+
+    public function successors()
+    {
+        return $this->belongsToMany(Group::class, 'group_successor', 'group_id', 'successor_id');
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\ContactController;
 
 
 
@@ -52,3 +53,9 @@ Route::post('/files', [FileController::class, 'store']);
 Route::get('/files/{id}', [FileController::class, 'show']);
 Route::put('/files/{id}', [FileController::class, 'update']);
 Route::delete('/files/{id}', [FileController::class, 'destroy']);
+
+Route::get('/contacts', [ContactController::class, 'index']);
+Route::post('/contacts', [ContactController::class, 'store']);
+Route::get('/contacts/{id}', [ContactController::class, 'show']);
+Route::put('/contacts/{id}', [ContactController::class, 'update']);
+Route::delete('/contacts/{id}', [ContactController::class, 'destroy']);

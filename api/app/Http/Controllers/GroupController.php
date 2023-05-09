@@ -12,7 +12,7 @@ class GroupController extends Controller
     {
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
-        $groups = Group::with('section')->paginate($perPage, ['*'], 'page', $page);
+        $groups = Group::with("file")->with('section')->paginate($perPage, ['*'], 'page', $page);
         $data = $groups->items();
         $meta = [
             'current_page' => $groups->currentPage(),
@@ -43,7 +43,11 @@ class GroupController extends Controller
 
     public function show($id)
     {
-        $group = Group::with('section')->with('file')->find($id);
+        $group = Group::with('section')
+                  ->with('file')
+                  ->with('predecessors')
+                  ->with('successors')
+                  ->find($id);
         return response()->json($group);
     }
 
@@ -54,6 +58,12 @@ class GroupController extends Controller
         $group->section_id = $request->input('section_id');
         $group->file_id = $request->input('file_id') ? $request->input('file_id') : null;
         $group->save();
+
+        $predecessors = $request->input('predecessors', []);
+        $group->predecessors()->sync($predecessors);
+
+        $successors = $request->input('successors', []);
+        $group->successors()->sync($successors);
         return response()->json($group);
     }
 
