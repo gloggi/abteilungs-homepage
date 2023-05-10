@@ -8,6 +8,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FormController;
 
 
 
@@ -59,3 +60,9 @@ Route::post('/contacts', [ContactController::class, 'store']);
 Route::get('/contacts/{id}', [ContactController::class, 'show']);
 Route::put('/contacts/{id}', [ContactController::class, 'update']);
 Route::delete('/contacts/{id}', [ContactController::class, 'destroy']);
+
+Route::get('/forms', [FormController::class, 'index']);
+Route::post('/forms', [FormController::class, 'store']);
+Route::get('/forms/{id}', [FormController::class, 'show']);
+Route::put('/forms/{id}', [FormController::class, 'update']);
+Route::delete('/forms/{id}', [FormController::class, 'destroy']);
