@@ -20,7 +20,7 @@
                             "-" }}</option>
         </select>
         <div v-if="showDropdown" class="absolute bg-white z-30 rounded-lg w-full">
-            <div v-for="option in options" class="p-2 m-1 hover:bg-gray-50 rounded-lg flex flex-row space-x-2 items-center">
+            <div v-for="option in options" :key="option.id" class="p-2 m-1 hover:bg-gray-50 rounded-lg flex flex-row space-x-2 items-center">
                 <input :checked="this.payload.includes(option.id)" @change="(event) => select(event, option.id)"
                     class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-900" type="checkbox" />
                 <div>{{ option.name }}</div>
