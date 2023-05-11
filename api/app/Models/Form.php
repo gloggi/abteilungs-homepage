@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Form extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'email', 'subject'];
 
     public function textFields()
     {

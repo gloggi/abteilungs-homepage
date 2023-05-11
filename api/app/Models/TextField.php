@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TextField extends Model
 {
-    protected $fillable = ['form_id','label', 'sort'];
+    protected $fillable = ['form_id','label', 'sort', 'input_type'];
 
     protected $appends = ['type'];
 

@@ -38,7 +38,8 @@ class FormController extends Controller
             'name' => 'required|string|max:255',
             'fields' => 'required|array|min:1',
             'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
-            'fields.*.options' => 'nullable|array|min:1',
+            'fields.*.input_type' => 'nullable',
+            'fields.*.option_fields' => 'nullable|array|min:1',
             'fields.*.label' => 'required|string|max:255',
         ]);
 
@@ -61,14 +62,19 @@ class FormController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'fields' => 'required|array|min:1',
+            'email' => 'nullable',
+            'subject' => 'nullable',
+            'fields.*.input_type' => 'nullable',
             'fields.*.id' => '',
             'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
-            'fields.*.options' => 'nullable|array|min:1',
+            'fields.*.option_fields' => 'nullable|array|min:1',
             'fields.*.label' => 'required|string|max:255',
         ]);
 
         $form = Form::find($id);
         $form->name = $validatedData['name'];
+        $form->email = $validatedData['email'];
+        $form->subject = $validatedData['subject'];
         $form->save();
 
         $this->createFieldsFromValidatedData($form, $validatedData);
@@ -99,12 +105,9 @@ class FormController extends Controller
     public function show($id)
     {
         $form = Form::find($id);
-        return response()->json([
-            
-            'id' => $form->id,
-            'name' => $form->name,
+        return response()->json(array_merge($form->toArray(),[
             'fields' => $form->getAllFields(),
-    ], 200);
+    ]), 200);
 
     }
 
@@ -122,7 +125,8 @@ class FormController extends Controller
                         ['id' => $fieldData['id'] ?? null],
                         [
                             'label' => $fieldData['label'],
-                            'form_id' => $form->id
+                            'form_id' => $form->id,
+                            'input_type' => $fieldData['input_type']
                         ]
                     );
                     break;
@@ -143,8 +147,11 @@ class FormController extends Controller
                             'form_id' => $form->id
                         ]
                     );
-                    if(isset($fieldData['options'])){
-                    foreach($fieldData['options'] as $option){
+                    if(isset($fieldData['option_fields'])){
+                        
+                       
+                    foreach($fieldData['option_fields'] as $option){
+                       
                         OptionField::updateOrCreate(
                             ['id' => $option['id'] ?? null],
                             [

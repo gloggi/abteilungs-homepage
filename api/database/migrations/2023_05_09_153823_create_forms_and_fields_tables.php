@@ -10,16 +10,17 @@ return new class extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('subject');
-            $table->string('message');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('subject')->nullable();
+            $table->string('message')->nullable();
             $table->timestamps();
         });
 
         Schema::create('text_fields', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
+            $table->string('label')->nullable();
+            $table->string('input_type')->nullable();
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('form_id');
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
@@ -28,7 +29,7 @@ return new class extends Migration
 
         Schema::create('textarea_fields', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
+            $table->string('label')->nullable();
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('form_id');
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
@@ -37,7 +38,7 @@ return new class extends Migration
 
         Schema::create('select_fields', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
+            $table->string('label')->nullable();
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('form_id');
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
@@ -46,7 +47,7 @@ return new class extends Migration
 
         Schema::create('option_fields', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('select_field_id');
             $table->foreign('select_field_id')->references('id')->on('select_fields')->onDelete('cascade');

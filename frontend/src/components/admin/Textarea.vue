@@ -20,6 +20,7 @@
       :id="label"
       :type="type"
       :placeholder="label"
+      :disabled="disabled"
     ></textarea>
   </div>
 </template>
@@ -27,7 +28,7 @@
 <script>
 import { computed } from "vue";
 export default {
-  props: ["label", "type", "content", "modelValue"],
+  props: ["label", "type", "content", "modelValue", "disabled"],
   setup(props, { emit }) {
     const payload = computed({
       get: () => props.modelValue,

@@ -20,13 +20,14 @@
       :id="label"
       :type="type"
       :placeholder="label"
+      :disabled="disabled"
     />
   </div>
 </template>
 
 <script>
 export default {
-  props: ["label", "type", "modelValue"],
+  props: ["label", "type", "modelValue", "disabled"],
   emits: ["update:modelValue"],
   computed: {
     payload: {

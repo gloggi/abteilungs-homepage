@@ -18,11 +18,13 @@ Authorization: Bearer {{token}}
     "fields": [
         {
             "type": "textField",
-            "label": "Name"
+            "label": "Name",
+            "input_type": "text"
         },
         {
             "type": "textField",
-            "label": "Email"
+            "label": "Email",
+            "input_type": "email"
         },
         {
             "type": "textareaField",

@@ -13,6 +13,8 @@ import Groups from '../views/Dashboard/Groups'
 import Group from '../views/Dashboard/Group'
 import Contacts from '../views/Dashboard/Contacts'
 import Contact from '../views/Dashboard/Contact'
+import Forms from '../views/Dashboard/Forms'
+import Form from '../views/Dashboard/Form'
 
 const routes = [
   {
@@ -102,7 +104,20 @@ const routes = [
         meta: {
           title: "Medien",
         },
-      }
+      },
+      {
+        path: 'forms',
+        name: 'Forms',
+        component: Forms,
+        meta: {
+          title: "Formulare",
+        }
+      },
+      {
+        path: 'forms/:id',
+        name: 'Form',
+        component: Form
+      },
     ]
   }
 ]
