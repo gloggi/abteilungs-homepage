@@ -11,7 +11,8 @@
       isDragging ? 'bg-gray-50' : ''
     }  border-2 border-gray-400 border-dashed text-center p-5`"
   >
-      <DocumentPlusIcon class="h-12 w-12 text-gray-400" />
+  <font-awesome-icon :icon="icons.faFileCirclePlus" class="h-12 w-12 text-gray-400" />
+
      <div class="flex items-center">
           <label for="file-upload" class="text-sm font-medium text-blue-600 hover:text-blue-800">{{ text }}
                <input id="file-upload" type="file" class="sr-only" multiple @change="uploadFile"/> </label>
@@ -22,15 +23,17 @@
 </template>
 
 <script>
-import { DocumentPlusIcon } from "@heroicons/vue/24/solid";
+import { faFileCirclePlus } from "@fortawesome/free-solid-svg-icons";
 export default {
-  components: { DocumentPlusIcon },
   emits:["uploadedFile"],
   props: {category:{default: "general"}, text:{default: "Upload a File"}},
   data() {
     return {
       files: [],
       isDragging: false,
+      icons: {
+        faFileCirclePlus
+      }
     };
   },
   methods: {

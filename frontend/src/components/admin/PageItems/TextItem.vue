@@ -2,7 +2,7 @@
   <Card v-if="textItem" class="relative">
     <div class="absolute right-0 top-0">
           <button @click="deleteItem" class="border-l p-1 border-b border-gray-200 rounded-bl-lg">
-            <TrashIcon class="h-6 w-6 text-gray-500" />
+            <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
             </button>
       </div>
     <TextInput  label="Title" v-model.lazy="textItem.title" />
@@ -14,16 +14,17 @@
 import Card from "../Card.vue";
 import Editor from "../Editor/Editor.vue";
 import TextInput from "../TextInput.vue";
-import {
-  TrashIcon
-} from "@heroicons/vue/24/solid";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 export default {
-  components: { TextInput, Editor, Card, TrashIcon },
+  components: { TextInput, Editor, Card },
   props: ["item"],
   emits: ["updatePage"],
   data() {
     return {
       textItem: undefined,
+      icons:{
+        faTrash
+      }
     };
   },
   methods: {

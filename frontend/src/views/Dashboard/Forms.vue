@@ -10,11 +10,11 @@
         @click="deleteForms"
         class="bg-white p-1 rounded-l-lg"
       >
-        <TrashIcon class="h-6 w-6 text-gray-500" />
+      <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
       </button>
   
       <button class="rounded-r-lg bg-white p-1" @click="createGroup">
-        <PlusIcon class="h-6 w-6 text-gray-500" />
+        <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 text-gray-500" />
       </button>
     </div>
     <Table
@@ -28,14 +28,18 @@
   
   <script>
   import Table from "../../components/admin/Table.vue";
-  import { TrashIcon, PlusIcon } from "@heroicons/vue/24/solid";
+  import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
   export default {
-    components: { Table, TrashIcon, PlusIcon },
+    components: { Table },
     data() {
       return {
         content: undefined,
         selected: [],
         tableKey: 0,
+        icons: {
+        faTrash,
+        faPlus
+      }
       };
     },
     computed: {

@@ -6,7 +6,7 @@
     <div class="flex justify-between mb-2">
       <router-link :to="{ name: 'Pages' }">
         <button class="rounded-l-lg bg-white p-1">
-          <ChevronLeftIcon class="h-6 w-6 text-gray-500" />
+          <font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6 text-gray-500" />
         </button>
       </router-link>
       <div>
@@ -17,10 +17,10 @@
           @click="deletePage"
           class="bg-white p-1 border-r border-l border-gray-200"
         >
-          <TrashIcon class="h-6 w-6 text-gray-500" />
+        <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
         </button>
         <button class="rounded-r-lg bg-white p-1" @click="updatePage">
-          <ArrowPathIcon class="h-6 w-6 text-gray-500" />
+          <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6 text-gray-500" />
         </button>
       </div>
     </div>
@@ -48,12 +48,7 @@
 import TextInput from "../../components/admin/TextInput.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/PageItems/AddPageItem.vue";
-import {
-  ArrowPathIcon,
-  ChevronLeftIcon,
-  TrashIcon,
-  SwitchVerticalIcon,
-} from "@heroicons/vue/24/solid";
+import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import TextItem from '../../components/admin/PageItems/TextItem.vue';
 import ImageItem from '../../components/admin/PageItems/ImageItem.vue';
 
@@ -62,10 +57,6 @@ export default {
     TextInput,
     Card,
     AddPageItem,
-    ChevronLeftIcon,
-    ArrowPathIcon,
-    TrashIcon,
-    SwitchVerticalIcon,
     TextItem,
     ImageItem,
   },
@@ -74,7 +65,13 @@ export default {
       content: undefined,
       loadedKey: 0,
       activeItemIri: undefined,
-      preSelectedImages: undefined
+      preSelectedImages: undefined,
+      icons: {
+        faTrash,
+        faPlus,
+        faArrowsRotate,
+        faChevronLeft
+      }
     };
   },
   async created() {

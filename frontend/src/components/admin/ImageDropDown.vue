@@ -4,7 +4,7 @@
       <div class="flex flex-col items-end">
         <ListboxButton
           ><div class="rounded-full bg-white p-1 border border-gray-200">
-            <PencilIcon class="h-5 w-5 text-gray-500" /></div
+            <font-awesome-icon :icon="icons.faPencil" class="h-5 w-5 text-gray-500" /></div
         ></ListboxButton>
         <ListboxOptions class="rounded-lg bg-white p-1">
           <ListboxOption
@@ -31,7 +31,7 @@
 
 
 <script>
-import { PencilIcon } from "@heroicons/vue/24/solid";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
 import {
   Listbox,
@@ -44,8 +44,7 @@ export default {
     Listbox,
     ListboxButton,
     ListboxOptions,
-    ListboxOption,
-    PencilIcon,
+    ListboxOption
   },
   data() {
     return {
@@ -53,6 +52,9 @@ export default {
         { id: 1, name: "Replace" },
         { id: 2, name: "Remove" },
       ],
+      icons: {
+        faPencil
+      }
     };
   },
   created(){

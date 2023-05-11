@@ -14,7 +14,7 @@
                         class="rounded-lg p-2 hover:bg-gray-200 flex justify-center w-full"
                         @click="createNewItem('text')"
                     >
-                         <BookIcon />
+                         <font-awesome-icon :icon="icons.faBookOpen" />
                         <div class="ml-2">Add Text item</div>
                     </button>
                     <button
@@ -22,7 +22,7 @@
                         @click="createNewItem('image')"
                     >
                        
-                        <PhotographIcon class="h-6 w-6 " />
+                        <font-awesome-icon :icon="icons.faPhotoVideo" class="h-6 w-6 " />
                         <div class="ml-2">Add Image item</div>
                     </button>
                 
@@ -34,13 +34,20 @@
 
 <script>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import BookIcon from "../../../icons/BookIcon.vue";
 import Fade from '../../../transitions/Fade.vue';
-import { PhotographIcon } from '@heroicons/vue/24/solid'
+import { faPhotoVideo, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 
 export default {
-    components: { Popover, PopoverButton, PopoverPanel, BookIcon, Fade, PhotographIcon },
+    components: { Popover, PopoverButton, PopoverPanel, Fade },
     props: ["position"],
+    data() {
+        return {
+            icons:{
+                faPhotoVideo,
+                faBookOpen
+            }
+        }
+    },
     methods:{
         emit(type){
             this.$emit("addComponent", {type, position: this.position})

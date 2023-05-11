@@ -25,7 +25,7 @@
 
    <div class="text-4xl font-bold rounded-t-lg px-5 pt-5 flex justify-between">
        <div>{{title}}</div>
-       <button @click="handleClose" class="rounded-bl-lg text-gray-400"><XMarkIcon class="h-6 w-6 text-gray-400"/></button>
+       <button @click="handleClose" class="rounded-bl-lg text-gray-400"><font-awesome-icon :icon="icons.faXmark" class="h-6 w-6 text-gray-400"/></button>
    </div>
    
  
@@ -43,16 +43,20 @@
 
 <script>
 import Fade from '../../transitions/Fade.vue';
-import { XMarkIcon } from '@heroicons/vue/24/solid'
+
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default {
-  components: { XMarkIcon, Fade },
+  components: { Fade },
   emits:["close"],
   props: ["title"],
   data(){
     return{
       expanded: false,
-      key: 0
+      key: 0,
+      icons: {
+        faXmark
+      }
     }
   },
   methods:{

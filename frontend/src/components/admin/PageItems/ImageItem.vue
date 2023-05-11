@@ -2,7 +2,7 @@
   <Card v-if="imageItem" class="relative">
       <div class="absolute right-0 top-0">
           <button @click="deleteItem" class="border-l p-1 border-b border-gray-200 rounded-bl-lg">
-            <TrashIcon class="h-6 w-6 text-gray-500" />
+            <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
             </button>
       </div>
         <div class="grid grid-cols-2 gap-2 mt-3">
@@ -12,7 +12,7 @@
             :key="image['@id']"
           >
             <button class="absolute top-1 right-1" @click="()=>removeImage(image['@id'])">
-              <XIcon class="h-6 w-6 text-gray-500" />
+              <font-awesome-icon :icon="icons.faXmark" class="h-6 w-6 text-gray-500" />
             </button>
             <img
               :src="image.contentUrl"
@@ -36,20 +36,22 @@
 
 <script>
 import MediaModal from '../MediaModal.vue';
-import {
-  XIcon, TrashIcon
-} from "@heroicons/vue/24/solid";
+import { faXmark, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from '../Button.vue';
 import Card from '../Card.vue';
 export default {
-  components: { MediaModal, XIcon, Button, Card, TrashIcon },
+  components: { MediaModal, Button, Card },
     props: ["item"],
     emits: ["updatePage"],
   data() {
     return {
       imageItem: undefined,
       showModal: false,
-      preSelectedImages: undefined
+      preSelectedImages: undefined,
+      icons:{
+        faXmark,
+        faTrash
+      }
     };
   },
   methods: {
