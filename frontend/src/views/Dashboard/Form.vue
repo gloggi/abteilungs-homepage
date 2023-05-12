@@ -1,5 +1,5 @@
 <template>
-  <div v-if="content">
+  <div v-if="content" :key="loadedKey">
     <Card class="flex justify-between items-center mb-2">
       <h2 class="font-extrabold text-4xl">{{ content.name }}</h2>
     </Card>
@@ -25,28 +25,32 @@
         <TextInput label="E-Mail" type="text" v-model="content.email" />
         <TextInput label="Subject" type="text" v-model="content.subject" />
         <h2 class="font-semibold text-2xl">Form Fields</h2>
-        <AddFormField />
+        <AddFormField @changeOrder="changeOrder" @select="addField" :dragging="isDragging" :sortKey="-1" />
         <template v-for="field in content.fields" :key="field.id">
-          <FormItemBox v-if="field.type == 'textField'" :title="field.input_type || field.type">
+          <FormItemBox :field="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" v-if="field.type == 'textField'" :title="field.input_type || field.type">
               <TextInput type="text" v-model="field.label" label="Label" />
+             
           </FormItemBox>
-          <ItemBox v-if="field.type == 'textareaField'" :title="field.type">
+          <FormItemBox v-if="field.type == 'textareaField'" :field="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :title="field.type">
             <TextInput type="text" v-model="field.label" label="Label" />
-          </ItemBox>
-          <ItemBox v-if="field.type == 'selectField'" :title="field.type">
+           
+          </FormItemBox>
+          <FormItemBox v-if="field.type == 'selectField'" :field="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :title="field.type">
             <TextInput type="text" v-model="field.label" label="Label" />
-            <ItemBox class="space-y-2 pl-5 mt-3" title="Options" :key="field.option_fields.length">
-              <div v-for="(option, i) in field.option_fields" :key="option.id">
-                <TextInput type="text" v-model="option.name" :label="`Option ${i + 1}`" />
+              <div class="space-y-2 mt-4">
+              <div class="flex space-x-2 items-center" v-for="(option, i) in field.optionFields" :key="option.id">
+                <font-awesome-icon :icon="icons.faCircle"/>
+                <TextInput :id="`selectFieldOption-${field.id}-${i}`" class="w-full" type="text" v-model="option.name" :placeholder="`Option ${i + 1}`" />
               </div>
               <div>
-                <button @click="addOption(field.id + field.label)"
-                  class="p-3 rounded-lg border flex justify-center items-center w-full hover:bg-gray-200"><font-awesome-icon
-                    :icon="icons.faPlus" class="h-5 w-5" /></button>
+                <div class="flex space-x-2 items-center" >
+                <font-awesome-icon :icon="icons.faCircle"/>
+                <TextInput class="w-full" type="text" @keyup="(e)=>addOption(e, field)"  :placeholder="`Another Option?`" />
               </div>
-            </ItemBox>
-          </ItemBox>
-          <AddFormField />
+              </div>
+            </div>
+          </FormItemBox>
+          <AddFormField @changeOrder="changeOrder" @select="addField" :dragging="isDragging" :sortKey="field.sort" />
         </template>
       </div>
     </Card>
@@ -57,6 +61,7 @@
 import Card from "../../components/admin/Card.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import { faArrowsRotate, faChevronLeft, faTrash, faPlus, faGripVertical } from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import AddFormField from "../../components/admin/AddFormField.vue";
 import ItemBox from "../../components/admin/ItemBox.vue";
 import FormItemBox from "../../components/admin/FormItemBox.vue";
@@ -74,26 +79,43 @@ export default {
       content: undefined,
       sections: undefined,
       showModal: false,
+      loadedKey: 0,
       forms: [],
+      dragKey:0,
+      isDragging: false,
       icons: {
         faArrowsRotate,
         faChevronLeft,
         faTrash,
         faPlus,
-        faGripVertical
+        faGripVertical,
+        faCircle
       }
     };
   },
   methods: {
-    updateLogo(id) {
-      this.content.file_id = id;
+    async addOption(event, field){
+      const changeFieldIndex = this.content.fields.findIndex(f=>field.id==f.id)
+      const optionFields = this.content.fields[changeFieldIndex].optionFields;
+      optionFields.push({name:event.target.value})
+      event.target.value=""
+      await this.$forceUpdate()
+      const target = document.getElementById(`selectFieldOption-${field.id}-${this.content.fields[changeFieldIndex].optionFields.length-1}`).getElementsByTagName('input')[0]
+      console.log(target.focus())
+    },
+    changeOrder(newField){
+      const fieldIndex = this.content.fields.findIndex(f=>f.id==newField.id);
+      this.content.fields[fieldIndex] = newField
       this.updateForm()
 
     },
-    addOption(fieldIdAndLabel) {
-      const field = this.content.fields.find(f => f.id + f.label == fieldIdAndLabel)
-      console.log(field)
-      field.option_fields.push({ name: "" })
+    addField(field){
+      this.content.fields.push(field)
+      this.updateForm();
+    },
+    deleteField(id){
+      this.content.fields= this.content.fields.filter(f=>f.id!==id)
+      this.updateForm()
     },
     async getForm() {
       try {
@@ -102,12 +124,6 @@ export default {
           `/forms/${this.$route.params.id}`
         );
         this.content = response.data;
-        if (this.content.predecessors) {
-          this.content.predecessors = this.content.predecessors.map(p => p.id)
-        }
-        if (this.content.successors) {
-          this.content.successors = this.content.successors.map(p => p.id)
-        }
         this.loadedKey++;
       } catch (e) {
         console.log(e);
@@ -131,7 +147,6 @@ export default {
           `/sections`
         );
         this.sections = response.data.data;
-        console.log(this.sections)
       } catch (e) {
         console.log(e);
       }
@@ -143,9 +158,11 @@ export default {
           `/forms/${this.$route.params.id}`,
           this.content
         );
+        this.notifyUser("The Form was updated")
       } catch (e) {
         console.log(e);
       }
+      this.getForm();
     },
     handleSection(sectionId) {
       this.content.sectionId = sectionId

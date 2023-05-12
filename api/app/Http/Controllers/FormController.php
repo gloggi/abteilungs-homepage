@@ -35,12 +35,13 @@ class FormController extends Controller
     {
 
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'fields' => 'required|array|min:1',
+            'name' => 'nullable|string|max:255',
+            'fields' => 'nullable|array',
             'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
             'fields.*.input_type' => 'nullable',
+            'fields.*.sort' => 'nullable',
             'fields.*.option_fields' => 'nullable|array|min:1',
-            'fields.*.label' => 'required|string|max:255',
+            'fields.*.label' => 'nullable|string|max:255',
         ]);
 
         $form = Form::create([
@@ -60,15 +61,16 @@ class FormController extends Controller
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'fields' => 'required|array|min:1',
+            'name' => 'nullable|string|max:255',
+            'fields' => 'nullable|array',
             'email' => 'nullable',
             'subject' => 'nullable',
             'fields.*.input_type' => 'nullable',
             'fields.*.id' => '',
+            'fields.*.sort' => 'nullable',
             'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
             'fields.*.option_fields' => 'nullable|array|min:1',
-            'fields.*.label' => 'required|string|max:255',
+            'fields.*.label' => 'nullable|string|max:255',
         ]);
 
         $form = Form::find($id);
@@ -118,15 +120,18 @@ class FormController extends Controller
         return response()->json('Form removed successfully');
     }
     private function createFieldsFromValidatedData(Form $form, $validatedData){
+        $validatedData['fields'] = collect($validatedData['fields'])->sortBy('sort')->values()->all();
+        $sort_counter =0;
         foreach ($validatedData['fields'] as $fieldData) {
             switch ($fieldData['type']) {
                 case 'textField':
                     TextField::updateOrCreate(
                         ['id' => $fieldData['id'] ?? null],
                         [
-                            'label' => $fieldData['label'],
+                            'label' => $fieldData['label']??'',
                             'form_id' => $form->id,
-                            'input_type' => $fieldData['input_type']
+                            'input_type' => $fieldData['input_type'],
+                            'sort' =>  $sort_counter
                         ]
                     );
                     break;
@@ -134,8 +139,9 @@ class FormController extends Controller
                     TextareaField::updateOrCreate(
                         ['id' => $fieldData['id'] ?? null],
                         [
-                            'label' => $fieldData['label'],
-                            'form_id' => $form->id
+                            'label' => $fieldData['label']??'',
+                            'form_id' => $form->id,
+                            'sort' =>  $sort_counter
                         ]
                     );
                     break;
@@ -143,8 +149,9 @@ class FormController extends Controller
                     $selectField = SelectField::updateOrCreate(
                         ['id' => $fieldData['id'] ?? null],
                         [
-                            'label' => $fieldData['label'],
-                            'form_id' => $form->id
+                            'label' => $fieldData['label']??'',
+                            'form_id' => $form->id,
+                            'sort' =>  $sort_counter
                         ]
                     );
                     if(isset($fieldData['option_fields'])){
@@ -165,6 +172,7 @@ class FormController extends Controller
                 default:
                     throw new \InvalidArgumentException("Unsupported field type: {$fieldData['type']}");
             }
+            $sort_counter++;
         }
     }
 

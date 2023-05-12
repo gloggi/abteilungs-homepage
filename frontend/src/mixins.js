@@ -26,12 +26,17 @@ export const mixin = {
             this.$store.dispatch("notification/notify", message);
         },
         snakeToCamelObject(obj) {
-            if (!obj||obj instanceof FormData || obj instanceof Array) {
+            if (!obj||obj instanceof FormData) {
               return obj;
             }
           
-            if (Array.isArray(obj)) { // if the input is an array
-              return obj.map((element) => this.snakeToCamelObject(element)); // iterate over the array elements and convert them to camelCase
+            if (Array.isArray(obj)) {
+              return obj.map((element) => {
+                if (typeof element === 'object' && element !== null) {
+                  return this.snakeToCamelObject(element);
+                }
+                return this.camelCase(element); 
+              });
             }
           
             const result = {};
@@ -46,13 +51,18 @@ export const mixin = {
           }
           ,
           camelToSnakeObject(obj) {
-            if (!obj||obj instanceof FormData || obj instanceof Array) {
+            if (!obj||obj instanceof FormData) {
               return obj;
             }
 
-            if (Array.isArray(obj)) { // if the input is an array
-                return obj.map((element) => this.camelToSnakeObject(element)); // iterate over the array elements and convert them to camelCase
-              }
+            if (Array.isArray(obj)) {
+              return obj.map((element) => {
+                if (typeof element === 'object' && element !== null) {
+                  return this.camelToSnakeObject(element);
+                }
+                return this.snakeCase(element); 
+              });
+            }
             const result = {};
             for (const [key, value] of Object.entries(obj)) {
                 if(typeof value == "function"){

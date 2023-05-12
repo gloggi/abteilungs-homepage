@@ -17,7 +17,8 @@
       shadow-lg
       rounded-lg
       w-full
-      m-48
+      lg:m-48
+      m-3
       min-h-[75%]
      h-full
     "

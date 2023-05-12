@@ -1,5 +1,12 @@
 <template>
-    <button @click="showModal = true" class="bg-gray-300 hover:bg-gray-400 rounded-lg my-1 h-1.5 w-full text-xs">
+    <button @click="showModal = true" 
+    @dragenter.prevent="increaseHeight=true" 
+    @dragleave.prevent="increaseHeight=false"
+    @dragover.prevent
+    @drop="handleDrop" 
+    :class="`${dragging?'bg-red-500':'bg-gray-300 hover:bg-gray-400'} 
+    ${increaseHeight?'h-48':'h-1.5'}
+    rounded-lg my-1 h-1.5 w-full text-xs`">
     </button>
     <Modal v-if="showModal" @close="close" title="Form Fields">
        <div class="grid grid-cols-4 gap-4">
@@ -20,6 +27,7 @@ export default{
     data() {
         return {
             showModal: false,
+            increaseHeight: false,
             fields: [
                 {name: "Textfeld", type: "textField", inputType: "text"},
                 {name: "Zahlenfeld", type: "textField", inputType: "number"},
@@ -31,13 +39,26 @@ export default{
             ]
         };
     },
+    computed:{
+        isDragging(){
+            return this.$store.state.drag.dragging
+        }
+    },
     components: { Modal },
+    props:["sortKey", "dragging"],
+    emits: ["select", "changeOrder"],
     methods:{
+        handleDrop(e){
+            this.increaseHeight=false
+            const field = JSON.parse(e.dataTransfer.getData("text"))
+            field.sort = this.sortKey+0.5
+            this.$emit("changeOrder", field)
+        },
         close(){
             this.showModal= false
         },
         select(field){
-            this.$emit("select", field);
+            this.$emit("select", {...field, sort: this.sortKey+0.5});
             this.showModal= false
         }
     }

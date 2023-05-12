@@ -35,6 +35,8 @@ class Form extends Model
         $fields = $fields->concat($textareaFields);
         $fields = $fields->concat($selectFields);
 
+        $fields = $fields->sortBy('sort')->values()->all();;
+
         return $fields;
     }
 }

@@ -5,6 +5,7 @@ import { user } from './modules/user'
 import { modal} from './modules/modal'
 import { notification } from './modules/notification'
 import {pageInEdit} from './modules/pageInEdit'
+import { drag} from './modules/drag'
 
 export default createStore({
   modules: {
@@ -13,6 +14,7 @@ export default createStore({
     user,
     modal,
     notification,
-    pageInEdit
+    pageInEdit,
+    drag
   }
 })

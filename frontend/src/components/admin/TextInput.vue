@@ -19,16 +19,17 @@
       "
       :id="label"
       :type="type"
-      :placeholder="label"
+      :placeholder="placeholder||label"
       :disabled="disabled"
+      @keyup="e=>$emit('keyup',e)"
     />
   </div>
 </template>
 
 <script>
 export default {
-  props: ["label", "type", "modelValue", "disabled"],
-  emits: ["update:modelValue"],
+  props: ["label", "type", "modelValue", "disabled", "placeholder"],
+  emits: ["update:modelValue", "keyup"],
   computed: {
     payload: {
       get() {

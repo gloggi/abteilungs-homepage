@@ -13,7 +13,7 @@
       <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
       </button>
   
-      <button class="rounded-r-lg bg-white p-1" @click="createGroup">
+      <button class="rounded-r-lg bg-white p-1" @click="createForm">
         <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 text-gray-500" />
       </button>
     </div>
@@ -54,8 +54,8 @@
       async deleteForms() {
         try {
           await Promise.all(
-            this.selected.map(async (group) => {
-              await this.callApi("delete", `forms/${group}`);
+            this.selected.map(async (form) => {
+              await this.callApi("delete", `forms/${form}`);
             })
           );
           this.tableKey++;
@@ -67,12 +67,13 @@
           console.log(e);
         }
       },
-      async createGroup() {
+      async createForm() {
         try {
           const response = await this.callApi("post", "/forms", {
-            name: ""
+            name: "",
+            fields:[]
           });
-          this.$router.push({ name: "Group", params: { id: response.data.id } });
+          this.$router.push({ name: "Form", params: { id: response.data.id } });
         } catch (e) {
           console.log(e);
         }

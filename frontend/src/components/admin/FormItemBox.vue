@@ -1,25 +1,58 @@
 <template>
-<ItemBox class="flex items-center justify-center space-x-2 p-0 py-3">
-            <div class=""><font-awesome-icon :icon="icons.faGripVertical"/></div>
-            <div class="w-full">
-             <slot></slot>
+    <ItemBox class="flex flex-col items-stretch px-0 pb-1  pt-1 space-y-2 " draggable="true" @dragstart="dragStart" @dragend="dragEnd" >
+        <div id="dragbutton" class="w-full flex justify-center text-gray-300" @mouseover="mouseIsOver" >
+            <font-awesome-icon :icon="icons.faGripHorizontal" />
+        </div>
+        <div class="w-full rounded-l-lg px-3">
+            <slot></slot>
+        </div>
+        <hr />
+        <div class="w-full px-3 flex justify-end">
+            <div class="">
+                <button @click="$emit('delete', field.id)">
+                    <font-awesome-icon :icon="icons.faTrash" class="h-4 w-4 hover:text-gray-400 text-gray-500" />
+                </button>
             </div>
-            <div class="p-3"><font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" /></div>
-          </ItemBox>
+        </div>
+    </ItemBox>
 </template>
 <script>
 import ItemBox from './ItemBox.vue';
-import { faTrash, faGripVertical } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faGripHorizontal } from "@fortawesome/free-solid-svg-icons";
 
 export default {
     components: { ItemBox },
+    props: ["field"],
+    emits: ["delete", "startedDragging", "endedDragging"],
     data() {
         return {
-            icons:{
-                faGripVertical,
+            allowDrag: false,
+            icons: {
+                faGripHorizontal,
                 faTrash
-
             }
+        }
+    },
+    methods: {
+        mouseIsOver(){
+            this.allowDrag=true
+
+        },
+        dragStart(e){
+            if(!this.allowDrag){
+                console.log("forbidden")
+                //e.preventDefault();
+                return
+            }
+            e.dataTransfer.setData("text/plain", JSON.stringify(this.field) );
+            console.log("allow")
+            this.$emit("startedDragging", true)
+        },
+        dragEnd(){
+            console.log("end")
+            this.allowDrag = false
+            this.$emit("endedDragging", true)
+            //this.$store.commit("drag/stopDragging")
         }
     },
 }
