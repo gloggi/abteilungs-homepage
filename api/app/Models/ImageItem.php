@@ -9,11 +9,16 @@ class ImageItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['file_id', 'page_item_id'];
+    protected $fillable = ['file_id', 'page_id'];
 
-    public function pageItem()
+    protected $appends = ['type'];
+
+    public function getTypeAttribute(){
+        return "imageItem";
+    }
+    public function page()
     {
-        return $this->belongsTo(PageItem::class);
+        return $this->belongsTo(Page::class);
     }
 
     public function file()

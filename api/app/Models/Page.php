@@ -10,9 +10,29 @@ class Page extends Model
 {
     protected $fillable = ['title', 'route'];
     
-    public function pageItems()
+    public function textItems()
     {
 
-        return $this->hasMany(PageItem::class)->orderBy('sort');
+        return $this->hasMany(TextItem::class);
+    }
+    public function imageItems()
+    {
+
+        return $this->hasMany(ImageItem::class);
+    }
+
+    public function getAllItems()
+    {
+        $items = collect([]);
+
+        $textItems = $this->textItems;
+        $imageItems = $this->imageItems;
+
+        $items = $items->concat($textItems);
+        $items = $items->concat($imageItems);
+
+        $items = $items->sortBy('sort')->values()->all();;
+
+        return $items;
     }
 }

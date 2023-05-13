@@ -14,32 +14,24 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-"title": "My Awesome Entity Page",
-"page_items": [
-{
-"type": "text",
-"title": "Lorem Ipsum",
-"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-},
-{
-"type": "image",
-"path": "https://example.com/image.jpg"
-},
-{
-"type": "image",
-"path": "https://example.com/image.jpg"
-},
-{
-"type": "text",
-"title": "Lorem Ipsum",
-"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-},
-{
-"type": "text",
-"title": "Lorem Ipsum",
-"body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-}
-]
+    "title": "New Page 2",
+    "route": "new-page-2",
+    "page_items": [
+        {
+            "type": "textItem",
+            "title": "Heading",
+            "body": "<h1>Welcome to our new page!</h1>"
+        },
+        {
+            "type": "imageItem",
+            "file_id": null
+        },
+        {
+            "type": "textItem",
+            "title": "Description",
+            "body": "<p>This is a description of our new page.</p>"
+        }
+    ]
 }
 
 ### GET request to retrieve a specific entity page by ID

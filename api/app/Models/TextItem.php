@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class TextItem extends Model
 {
-    protected $fillable = ['title', 'body', 'page_item_id'];
+    protected $fillable = ['title', 'body', 'page_id'];
+
+    protected $appends = ['type'];
+
+    public function getTypeAttribute(){
+        return "textItem";
+    }
     
-    public function pageItem()
+    public function page()
     {
-        return $this->belongsTo(PageItem::class);
+        return $this->belongsTo(Page::class);
     }
 }

@@ -14,26 +14,23 @@ class CreatePagesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('page_items', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('page_id')->constrained()->onDelete('cascade');
-            $table->integer('sort')->default(0);
-            $table->string('type');
-            $table->timestamps();
-        });
 
         Schema::create('text_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('page_item_id')->constrained()->onDelete('cascade');
             $table->string('title')->nullable();
             $table->text('body')->nullable();
+            $table->integer('sort')->nullable();
+            $table->unsignedBigInteger('page_id');
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->timestamps();
         });
 
         Schema::create('image_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('page_item_id')->constrained()->onDelete('cascade');
-            $table->foreignId('file_id')->constrained()->onDelete('cascade');
+            $table->foreignId('file_id')->nullable()->default(null);
+            $table->integer('sort')->nullable();
+            $table->unsignedBigInteger('page_id');
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -41,7 +38,6 @@ class CreatePagesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('pages');
-        Schema::dropIfExists('page_items');
         Schema::dropIfExists('text_items');
         Schema::dropIfExists('image_items');
     }
