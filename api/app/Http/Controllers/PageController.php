@@ -7,11 +7,9 @@ use App\Models\TextItem;
 use Illuminate\Http\Request;
 use App\Models\Page;
 
-class PageController extends Controller
-{
+class PageController extends Controller {
 
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
         $pages = Page::paginate($perPage, ['*'], 'page', $page);
@@ -30,8 +28,7 @@ class PageController extends Controller
             'meta' => $meta
         ]);
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
 
         $validatedData = $request->validate([
             'title' => 'nullable|string|max:255',
@@ -60,8 +57,7 @@ class PageController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         // Validate the incoming request data
         $validatedData = $request->validate([
             'title' => 'nullable|string|max:255',
@@ -72,7 +68,7 @@ class PageController extends Controller
             'page_items.*.type' => 'required|string|in:textItem,imageItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
-            'page_items.*.file_id' => 'nullable'
+            'page_items.*.files' => 'nullable'
         ]);
 
         $page = Page::find($id);
@@ -83,15 +79,15 @@ class PageController extends Controller
         $this->createPageItemsFromValidatedData($page, $validatedData);
 
         $currentPageItems = $page->getAllItems();
-        foreach ($currentPageItems as $currentField) {
+        foreach($currentPageItems as $currentField) {
             $found = false;
-            foreach ($validatedData['page_items'] as $pageItemData) {
-                if (!isset($pageItemData['id']) || $currentField->id == $pageItemData['id']) {
+            foreach($validatedData['page_items'] as $pageItemData) {
+                if(!isset($pageItemData['id']) || $currentField->id == $pageItemData['id']) {
                     $found = true;
                     break;
                 }
             }
-            if (!$found) {
+            if(!$found) {
                 $currentField->delete();
             }
         }
@@ -105,8 +101,7 @@ class PageController extends Controller
         ], 200);
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         $page = Page::find($id);
         return response()->json(array_merge($page->toArray(), [
             'page_items' => $page->getAllItems(),
@@ -114,18 +109,16 @@ class PageController extends Controller
 
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $page = Page::find($id);
         $page->delete();
         return response()->json('Page removed successfully');
     }
-    private function createPageItemsFromValidatedData(Page $page, $validatedData)
-    {
+    private function createPageItemsFromValidatedData(Page $page, $validatedData) {
         $validatedData['page_items'] = collect($validatedData['page_items'])->sortBy('sort')->values()->all();
         $sort_counter = 0;
-        foreach ($validatedData['page_items'] as $pageItemData) {
-            switch ($pageItemData['type']) {
+        foreach($validatedData['page_items'] as $pageItemData) {
+            switch($pageItemData['type']) {
                 case 'textItem':
                     TextItem::updateOrCreate(
                         ['id' => $pageItemData['id'] ?? null],
@@ -138,14 +131,20 @@ class PageController extends Controller
                     );
                     break;
                 case 'imageItem':
-                    ImageItem::updateOrCreate(
+                    $imageItem = ImageItem::updateOrCreate(
                         ['id' => $pageItemData['id'] ?? null],
                         [
-                            'file_id' => $pageItemData['file_id'] ?? '',
                             'page_id' => $page->id,
                             'sort' => $sort_counter
                         ]
                     );
+                    $fileIds = array_column($pageItemData['files'], 'id') ?? [];
+
+                    if(isset($pageItemData['id'])) {
+                        $imageItem->files()->sync($fileIds);
+                    } else {
+                        $imageItem->files()->attach($fileIds);
+                    }
                     break;
                 default:
                     throw new \InvalidArgumentException("Unsupported field type: {$pageItemData['type']}");

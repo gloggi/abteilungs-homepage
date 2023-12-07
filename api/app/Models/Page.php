@@ -18,7 +18,7 @@ class Page extends Model
     public function imageItems()
     {
 
-        return $this->hasMany(ImageItem::class);
+        return $this->hasMany(ImageItem::class)->with('files');
     }
 
     public function getAllItems()

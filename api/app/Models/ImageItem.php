@@ -9,7 +9,7 @@ class ImageItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['file_id', 'page_id', 'sort'];
+    protected $fillable = ['file_ids', 'page_id', 'sort'];
 
     protected $appends = ['type'];
 
@@ -21,8 +21,10 @@ class ImageItem extends Model
         return $this->belongsTo(Page::class);
     }
 
-    public function file()
+    public function files()
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsToMany(File::class, 'image_item_file');
+        
     }
+
 }

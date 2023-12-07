@@ -27,12 +27,18 @@ class CreatePagesTable extends Migration
 
         Schema::create('image_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('file_id')->nullable()->default(null);
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('page_id');
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->timestamps();
         });
+
+        Schema::create('image_item_file', function (Blueprint $table) {
+            $table->foreignId('image_item_id')->constrained()->onDelete('cascade');
+            $table->foreignId('file_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+        });
+        
     }
 
     public function down()
