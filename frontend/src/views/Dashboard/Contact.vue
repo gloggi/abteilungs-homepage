@@ -100,6 +100,10 @@ export default {
           `/contacts/${this.$route.params.id}`,
           this.content
         );
+        this.$store.dispatch(
+          "notification/notify",
+          "The Contact was successfully updated!"
+        );
       } catch (e) {
         console.log(e);
       }

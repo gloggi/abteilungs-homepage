@@ -1,58 +1,67 @@
 <template>
-  <Card class="relative">
-      <div class="absolute right-0 top-0">
-          <button @click="deleteItem" class="border-l p-1 border-b border-gray-200 rounded-bl-lg">
-            <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
-            </button>
+  <Card class="space-y-2">
+    <div class="grid grid-cols-2 gap-2 mt-3">
+      <div v-for="(image, i) in preSelectedImages" :key="i" class="relative">
+        <button @click="removeSelectedImage(image)" class="absolute bottom-1 right-1">
+        <font-awesome-icon :icon="icons.faTrash" class="w-3 p-1 text-white" />  
+        </button>
+      <img  :src="`http://localhost:8000${image.thumbnail}`"
+        class="w-full h-32 object-cover rounded-md" />
       </div>
-        <div class="grid grid-cols-2 gap-2 mt-3">
-          
-        </div>
-      <div class="flex justify-end mt-2">
-        <Button @click="showModal=true"
-            >Add Images</Button
-          >
-      </div>
-      </Card>
-      <MediaModal v-if="showModal" @close="showModal=false" @select="selectHandler" :max-select="2"/>
+      <button @click="showModal = true" class="rounded-md border border-gray-200 flex justify-center items-center h-32">
+        <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 p-5 text-gray-500" />
+      </button>
+    </div>
+    <hr />
+    <div class="flex justify-end space-x-2 px-5 pb-5 text-gray-500">
+      <button @click="deleteItem"><font-awesome-icon :icon="icons.faTrash" /> </button>
+
+    </div>
+  </Card>
+  <MediaModal v-if="showModal" @close="showModal = false" :pre-selected="preSelectedImages" @select="selectHandler" :max-select="2" />
 </template>
 
 <script>
 import MediaModal from '../MediaModal.vue';
-import { faXmark, faTrash } from "@fortawesome/free-solid-svg-icons";
-import Button from '../Button.vue';
+import { faXmark, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Card from '../Card.vue';
 
 export default {
-  components: { MediaModal, Button, Card },
-    props: ["item"],
-    emits: ["updatePage"],
+  components: { MediaModal, Card },
+  props: ["item", "modelValue"],
+  emits: ["updatePage", "changeImages"],
   data() {
     return {
       imageItem: undefined,
       showModal: false,
       preSelectedImages: undefined,
-      icons:{
+      selectedImages: undefined,
+      icons: {
         faXmark,
-        faTrash
+        faTrash,
+        faPlus
       }
     };
   },
   methods: {
-    selectHandler(selectedImages){
-      console.log(selectedImages)
+    selectHandler(selectedImages) {
+      this.preSelectedImages = selectedImages;
+      this.$emit("changeImages", { id: this.item.id, files: selectedImages })
+    },
+    removeSelectedImage(image) {
+      this.preSelectedImages = this.preSelectedImages.filter(i => i.id !== image.id)
+      this.selectHandler(this.preSelectedImages)
+    },
 
-    }
-  
-    
   },
-  mounted() {
-   
+  computed: {
+  },
+  created() {
+    this.preSelectedImages = this.item.files
+
   },
 
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

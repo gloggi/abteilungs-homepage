@@ -4,7 +4,7 @@
       <img v-if="file" :src="`http://localhost:8000${file.thumbnail}`" class="object-cover" />
   </div>
     <div class="absolute top-3 right-3 flex justify-center items-center">
-      <button @click="showModal=true" class="rounded-full p-2 aspect-square bg-white border">
+      <button @click="showModal=true" class="rounded-full w-7  aspect-square bg-white border">
         <font-awesome-icon :icon="icons.faPencil" class="text-gray-700 h-4 w-4"/>
       </button>
     </div>

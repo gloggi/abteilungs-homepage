@@ -2,7 +2,7 @@
   <Modal @close="close" title="Bilder">
     
     <DragAndDropUpload @uploadedFile="gridKey++" />
-    <SelectMediaGrid :key="gridKey" :maxSelect="maxSelect" :category="category" @selectItems="selectItemsHandler" />
+    <SelectMediaGrid :key="gridKey" :maxSelect="maxSelect" :category="category" :pre-selected="preSelected" @selectItems="selectItemsHandler" />
    
     
     <div v-if="selected.length>0" class="absolute  bottom-0 z-50 right-48 left-48 bg-gray-50  h-fit p-5 flex justify-end">
@@ -29,6 +29,9 @@ export default {
         maxSelect:{
             type: Number,
             default: 1
+        },
+        preSelected:{
+            type: Array,
         }
     },
   data() {

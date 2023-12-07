@@ -28,7 +28,7 @@
     <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="-1" />
     <div v-for="(pageItem, i) in content.pageItems" :key="i">
       <TextItem  v-if="pageItem.type == 'textItem'" @delete="deleteItem" :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body" :key="i" />
-      <ImageItem  v-if="pageItem.type == 'imageItem'" :item="pageItem" />
+      <ImageItem  v-if="pageItem.type == 'imageItem'" @changeImages="changeImageItem" :item="pageItem" />
       <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="pageItem.sort" />
     </div>
     
@@ -43,6 +43,7 @@ import AddPageItem from "../../components/admin/AddPageItem.vue";
 import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import TextItem from '../../components/admin/PageItems/TextItem.vue';
 import ImageItem from '../../components/admin/PageItems/ImageItem.vue';
+import {kebabCase} from 'lodash';
 
 export default {
   components: {
@@ -95,6 +96,10 @@ export default {
           this.content
         );
         this.getPage();
+        this.$store.dispatch(
+          "notification/notify",
+          "The page has been successfully updated"
+        );
       } catch (e) {
         console.log(e);
       }
@@ -113,8 +118,23 @@ export default {
       this.content.fields= this.content.pageItems.filter(p=>p.id+p.type!==idAndType)
       this.updatePage()
     },
+    changeImageItem(event){
+      const pageItemId = event.id;
+      const files = event.files;
+      const itemIndex = this.content.pageItems.findIndex(p=>p.id==pageItemId);
+      this.content.pageItems[itemIndex].files = files;
+      console.log(this.content)
+    },
+    slugyfy(text){
+      return kebabCase(text)
+    },
     
     
+  },
+  watch: {
+    'content.title'(newVal) {
+      this.content.route = this.slugyfy(newVal)
+    }
   },
 };
 </script>
