@@ -1,6 +1,0 @@
-App\Entity\Page:
-    page_{1..100}:
-        title: <sentence(4)>
-        route: <slug()>
-        createdAt: <identity(new \DateTimeImmutable('now'))>
-        updatedAt: <identity(new \DateTimeImmutable('now'))>
