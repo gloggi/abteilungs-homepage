@@ -1,8 +1,8 @@
 <template>
   <Modal @close="close" title="Bilder">
     
-    <DragAndDropUpload @uploadedFile="getMedia" />
-    <SelectMediaGrid :maxSelect="maxSelect" :category="category" @selectItems="selectItemsHandler" />
+    <DragAndDropUpload @uploadedFile="gridKey++" />
+    <SelectMediaGrid :key="gridKey" :maxSelect="maxSelect" :category="category" @selectItems="selectItemsHandler" />
    
     
     <div v-if="selected.length>0" class="absolute  bottom-0 z-50 right-48 left-48 bg-gray-50  h-fit p-5 flex justify-end">
@@ -33,7 +33,8 @@ export default {
     },
   data() {
     return {
-     selected: []
+     selected: [],
+     gridKey: 0
     };
   },
   methods: {

@@ -63,7 +63,6 @@ import TextInput from "../../components/admin/TextInput.vue";
 import { faArrowsRotate, faChevronLeft, faTrash, faPlus, faGripVertical } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import AddFormField from "../../components/admin/AddFormField.vue";
-import ItemBox from "../../components/admin/ItemBox.vue";
 import FormItemBox from "../../components/admin/FormItemBox.vue";
 
 export default {
@@ -71,7 +70,6 @@ export default {
     Card,
     TextInput,
     AddFormField,
-    ItemBox,
     FormItemBox
 },
   data() {

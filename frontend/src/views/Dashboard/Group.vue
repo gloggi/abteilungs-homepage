@@ -67,8 +67,8 @@ export default {
     };
   },
   methods: {
-    updateLogo(id){
-      this.content.file_id = id;
+    updateLogo(file){
+      this.content.file_id = file.id;
       this.updateGroup()
 
     },

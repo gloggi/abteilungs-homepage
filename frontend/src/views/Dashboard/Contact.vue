@@ -64,8 +64,8 @@ export default {
     };
   },
   methods: {
-    updateLogo(id){
-      this.content.file_id = id;
+    updateLogo(file){
+      this.content.fileId = file.id;
       this.updateContact()
 
     },

@@ -35,11 +35,11 @@ export default {
         this.showModal = false
       },
       async selectHandler(selected){
-        const fileId = selected[0];
-        this.$emit("selectImage", fileId)
+        const file = selected[0];
+        this.$emit("selectImage", file)
         const response = await this.callApi(
           "get",
-          `/files/${fileId}`
+          `/files/${file.id}`
         );
         this.file = response.data;
 

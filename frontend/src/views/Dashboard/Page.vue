@@ -1,7 +1,7 @@
 <template>
-  <div  v-if="pageInEdit">
+  <div v-if="content"  :key="loadedKey">
     <Card class="flex justify-between items-center mb-2">
-      <h2 class="font-extrabold text-4xl">{{ pageInEdit.title }}</h2>
+      <h2 class="font-extrabold text-4xl">{{ content.title }}</h2>
     </Card>
     <div class="flex justify-between mb-2">
       <router-link :to="{ name: 'Pages' }">
@@ -10,9 +10,6 @@
         </button>
       </router-link>
       <div>
-        <button class="rounded-l-lg bg-white p-1">
-          <SwitchVerticalIcon class="h-6 w-6 text-gray-500" />
-        </button>
         <button
           @click="deletePage"
           class="bg-white p-1 border-r border-l border-gray-200"
@@ -25,21 +22,16 @@
       </div>
     </div>
     <Card>
-      <TextInput label="Title" v-model="pageInEdit.title" />
-      <TextInput class="mt-2" label="Route" v-model="pageInEdit.route" />
+      <TextInput label="Title" v-model="content.title" />
+      <TextInput class="mt-2" label="Route" v-model="content.route" />
     </Card>
-    <div v-for="pageItem in pageInEdit.page_items" :key="pageItem.updated_at">
-      <AddPageItem
-        :position="pageItem.sort"
-        @addComponent="handleAddComponent"
-      />
-      <TextItem  v-if="pageItem['type'] == 'text'"  :item="pageItem" />
-      <ImageItem  v-if="pageItem['type'] == 'image'" :item="pageItem" />
+    <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="-1" />
+    <div v-for="(pageItem, i) in content.pageItems" :key="i">
+      <TextItem  v-if="pageItem.type == 'textItem'" @delete="deleteItem" :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body" :key="i" />
+      <ImageItem  v-if="pageItem.type == 'imageItem'" :item="pageItem" />
+      <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="pageItem.sort" />
     </div>
-    <AddPageItem
-      :position="lastPageItemPosition"
-      @addComponent="handleAddComponent"
-    />
+    
   </div>
 </template>
 
@@ -47,7 +39,7 @@
 //import Textarea from "../../components/admin/Textarea.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import Card from "../../components/admin/Card.vue";
-import AddPageItem from "../../components/admin/PageItems/AddPageItem.vue";
+import AddPageItem from "../../components/admin/AddPageItem.vue";
 import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import TextItem from '../../components/admin/PageItems/TextItem.vue';
 import ImageItem from '../../components/admin/PageItems/ImageItem.vue';
@@ -66,6 +58,7 @@ export default {
       loadedKey: 0,
       activeItemIri: undefined,
       preSelectedImages: undefined,
+      isDragging: false,
       icons: {
         faTrash,
         faPlus,
@@ -78,48 +71,50 @@ export default {
     await this.getPage();
   },
   computed: {
-    lastPageItemPosition() {
-      
-      return this.$store.state.pageInEdit.page.page_items.length;
-    },
-    pageInEdit(){
-      return this.$store.state.pageInEdit.page
-    }
+
   },
   methods: {
-    async updateComponent(newItem){
-      this.$store.commit("pageInEdit/updateItem",newItem)
-    },
-    async handleAddComponent(event) {
-      this.content.page_items.push({type: event.type})
-      this.loadedKey++;
-      await this.updatePage()
-    },
     async getPage() {
-      await this.$store.dispatch("pageInEdit/getPage",this.$route.params.id)
-      this.loadedKey++;
-    },
-    async updatePage() {
-      this.$store.dispatch("pageInEdit/updatePage")
-      
-    },
-    async deletePage() {
       try {
-        await this.callApi("delete", `pages/${this.pageInEdit.id}`);
-        this.notifyUser("Page got deleted");
-        this.$router.push({ name: "Pages" });
+        const response = await this.callApi(
+          "get",
+          `/pages/${this.$route.params.id}`
+        );
+        this.content = response.data;
+        console.log(this.content.pageItems.length)
+        this.loadedKey++;
       } catch (e) {
         console.log(e);
       }
     },
-    async deleteItem(id) {
+    async updatePage() {
       try {
-        await this.callApi("delete", `pages/${id}`);
+        await this.callApi(
+          "put",
+          `/pages/${this.$route.params.id}`,
+          this.content
+        );
         this.getPage();
       } catch (e) {
         console.log(e);
       }
     },
+    addItem(field){
+      this.content.pageItems.push(field)
+      this.updatePage();
+    },
+    changeOrder(newItem){
+      const itemIndex = this.content.pageItems.findIndex(p=>p.id==newItem.id);
+      this.content.pageItems[itemIndex] = newItem
+      this.updatePage()
+
+    },
+    deleteItem(idAndType){
+      this.content.fields= this.content.pageItems.filter(p=>p.id+p.type!==idAndType)
+      this.updatePage()
+    },
+    
+    
   },
 };
 </script>

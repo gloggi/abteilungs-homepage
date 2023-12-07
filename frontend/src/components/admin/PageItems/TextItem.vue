@@ -1,12 +1,15 @@
 <template>
-  <Card v-if="textItem" class="relative">
-    <div class="absolute right-0 top-0">
-          <button @click="deleteItem" class="border-l p-1 border-b border-gray-200 rounded-bl-lg">
-            <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
-            </button>
-      </div>
-    <TextInput  label="Title" v-model.lazy="textItem.title" />
-    <Editor class="mt-2" v-model.lazy="textItem.body" />
+  <Card class="p-0 space-y-2">
+    <div class="px-5 pt-5">
+    <TextInput  label="Title" v-model.lazy="titleValue" />
+    <Editor class="mt-2" v-model.lazy="bodyValue" />
+  </div>
+  <hr/>
+  <div class="flex justify-end space-x-2 px-5 pb-5 text-gray-500">
+    <button @click="deleteItem"><font-awesome-icon :icon="icons.faTrash"/> </button>
+
+  </div>
+
   </Card>
 </template>
 
@@ -17,8 +20,8 @@ import TextInput from "../TextInput.vue";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 export default {
   components: { TextInput, Editor, Card },
-  props: ["item"],
-  emits: ["updatePage"],
+  props: [ "title", "body", "item"],
+  emits: ["updatePage", "update:title", "update:body", "delete"],
   data() {
     return {
       textItem: undefined,
@@ -32,25 +35,31 @@ export default {
       console.log("Change")
     },
     async deleteItem() {
-      this.$store.commit("pageInEdit/updateItem", {id: this.textItem.id})
-      this.notifyUser("Item was deleted")
+     this.$emit("delete", this.item.type+this.item.id)
     },
     
   },
-  watch: {
-    textItem: {
-      handler: function(newVal, oldval) {
-        if(!oldval){
-          return
-        }
-        this.$store.commit("pageInEdit/updateItem",newVal)
-        this.notifyUser("The Item was updated")
+  computed: {
+    titleValue: {
+      get() {
+        return this.title;
       },
-      deep: true
-    }
+      set(value) {
+        this.$emit("update:title", value);
+      },
+    },
+    bodyValue: {
+      get() {
+        return this.body;
+      },
+      set(value) {
+        this.$emit("update:body", value);
+      },
+    },
   },
-  mounted() {
-    this.textItem = {...this.item}
+  created() {
+    
+  
   },
 };
 </script>
