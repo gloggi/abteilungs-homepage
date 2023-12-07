@@ -1,28 +1,10 @@
 <template>
-<div class="bg-black opacity-50 top-0 w-screen h-screen left-0 fixed z-10">
-    </div>
+<div class="fixed inset-0 z-30 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    
 <Fade>
-  <div class="
-  fixed
-      z-20
-      inset-0
-      flex
-      justify-center
-      items-center
-      p-20
-      ">
-  <div
-    class="
-    relative
-      bg-white
-      border-gray-100
-      shadow-lg
-      rounded-lg
-      w-full
-     h-full
-     overflow-hidden
-    "
-  >
+  <div class="flex w-full h-full justy-center items-center p-56">
+  <div class="relative w-full mx-auto p-5 border shadow-lg rounded-lg bg-white">
+  
   <button @click="handleClose" class="absolute top-2 right-2 rounded-bl-lg text-gray-400"><font-awesome-icon :icon="icons.faXmark" class="h-6 w-6 text-gray-400"/></button>
 
    <div v-if="title" class="text-4xl font-bold rounded-t-lg px-5 pt-5 flex justify-between">
@@ -34,13 +16,13 @@
    <div class="px-5 overflow-y-auto h-full">
       <slot ></slot>
    </div>
-   
+   </div>
   </div>
  
- 
-  
-</div>
+
 </Fade>
+
+</div>
 </template>
 
 <script>

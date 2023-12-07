@@ -1,15 +1,9 @@
 <template>
   <Card class="p-0 space-y-2">
-    <div class="px-5 pt-5">
+    <div class="">
     <TextInput  label="Title" v-model.lazy="titleValue" />
     <Editor class="mt-2" v-model.lazy="bodyValue" />
   </div>
-  <hr/>
-  <div class="flex justify-end space-x-2 px-5 pb-5 text-gray-500">
-    <button @click="deleteItem"><font-awesome-icon :icon="icons.faTrash"/> </button>
-
-  </div>
-
   </Card>
 </template>
 

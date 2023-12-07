@@ -27,15 +27,15 @@
         <h2 class="font-semibold text-2xl">Form Fields</h2>
         <AddFormField @changeOrder="changeOrder" @select="addField" :dragging="isDragging" :sortKey="-1" />
         <template v-for="field in content.fields" :key="field.id">
-          <FormItemBox :field="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" v-if="field.type == 'textField'" :title="field.input_type || field.type">
+          <DragItemBox :item="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" v-if="field.type == 'textField'" :title="field.input_type || field.type">
               <TextInput type="text" v-model="field.label" label="Label" />
              
-          </FormItemBox>
-          <FormItemBox v-if="field.type == 'textareaField'" :field="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :title="field.type">
+          </DragItemBox>
+          <DragItemBox v-if="field.type == 'textareaField'" :item="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :title="field.type">
             <TextInput type="text" v-model="field.label" label="Label" />
            
-          </FormItemBox>
-          <FormItemBox v-if="field.type == 'selectField'" :field="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :title="field.type">
+          </DragItemBox>
+          <DragItemBox v-if="field.type == 'selectField'" :item="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :title="field.type">
             <TextInput type="text" v-model="field.label" label="Label" />
               <div class="space-y-2 mt-4">
               <div class="flex space-x-2 items-center" v-for="(option, i) in field.optionFields" :key="option.id">
@@ -49,7 +49,7 @@
               </div>
               </div>
             </div>
-          </FormItemBox>
+          </DragItemBox>
           <AddFormField @changeOrder="changeOrder" @select="addField" :dragging="isDragging" :sortKey="field.sort" />
         </template>
       </div>
@@ -63,14 +63,14 @@ import TextInput from "../../components/admin/TextInput.vue";
 import { faArrowsRotate, faChevronLeft, faTrash, faPlus, faGripVertical } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import AddFormField from "../../components/admin/AddFormField.vue";
-import FormItemBox from "../../components/admin/FormItemBox.vue";
+import DragItemBox from "../../components/admin/DragItemBox.vue";
 
 export default {
   components: {
     Card,
     TextInput,
     AddFormField,
-    FormItemBox
+    DragItemBox
 },
   data() {
     return {
@@ -111,8 +111,8 @@ export default {
       this.content.fields.push(field)
       this.updateForm();
     },
-    deleteField(id){
-      this.content.fields= this.content.fields.filter(f=>f.id!==id)
+    deleteField(idAndType){
+      this.content.fields= this.content.fields.filter(f=>`${f.id}${f.type}`!==idAndType)
       this.updateForm()
     },
     async getForm() {

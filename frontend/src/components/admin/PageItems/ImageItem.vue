@@ -12,11 +12,7 @@
         <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 p-5 text-gray-500" />
       </button>
     </div>
-    <hr />
-    <div class="flex justify-end space-x-2 px-5 pb-5 text-gray-500">
-      <button @click="deleteItem"><font-awesome-icon :icon="icons.faTrash" /> </button>
-
-    </div>
+   
   </Card>
   <MediaModal v-if="showModal" @close="showModal = false" :pre-selected="preSelectedImages" @select="selectHandler" :max-select="2" />
 </template>

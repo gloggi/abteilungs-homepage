@@ -27,8 +27,12 @@
     </Card>
     <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="-1" />
     <div v-for="(pageItem, i) in content.pageItems" :key="i">
-      <TextItem  v-if="pageItem.type == 'textItem'" @delete="deleteItem" :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body" :key="i" />
-      <ImageItem  v-if="pageItem.type == 'imageItem'" @changeImages="changeImageItem" :item="pageItem" />
+      <DragItemBox  v-if="pageItem.type == 'textItem'" :item="pageItem" title="Text Item" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i">
+      <TextItem  :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body"  />
+    </DragItemBox>
+    <DragItemBox  v-if="pageItem.type == 'imageItem'" title="Image Item" :item="pageItem" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i">
+      <ImageItem  @changeImages="changeImageItem" :item="pageItem" />
+      </DragItemBox>
       <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="pageItem.sort" />
     </div>
     
@@ -44,6 +48,7 @@ import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/fre
 import TextItem from '../../components/admin/PageItems/TextItem.vue';
 import ImageItem from '../../components/admin/PageItems/ImageItem.vue';
 import {kebabCase} from 'lodash';
+import DragItemBox from "../../components/admin/DragItemBox.vue";
 
 export default {
   components: {
@@ -52,7 +57,8 @@ export default {
     AddPageItem,
     TextItem,
     ImageItem,
-  },
+    DragItemBox
+},
   data() {
     return {
       content: undefined,
@@ -82,7 +88,6 @@ export default {
           `/pages/${this.$route.params.id}`
         );
         this.content = response.data;
-        console.log(this.content.pageItems.length)
         this.loadedKey++;
       } catch (e) {
         console.log(e);
@@ -115,7 +120,8 @@ export default {
 
     },
     deleteItem(idAndType){
-      this.content.fields= this.content.pageItems.filter(p=>p.id+p.type!==idAndType)
+      this.content.pageItems= this.content.pageItems.filter(p=>`${p.id}${p.type}`!==idAndType)
+      console.log(this.content.pageItems.length)
       this.updatePage()
     },
     changeImageItem(event){
@@ -123,7 +129,6 @@ export default {
       const files = event.files;
       const itemIndex = this.content.pageItems.findIndex(p=>p.id==pageItemId);
       this.content.pageItems[itemIndex].files = files;
-      console.log(this.content)
     },
     slugyfy(text){
       return kebabCase(text)

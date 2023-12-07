@@ -1,5 +1,5 @@
 <template>
-    <ItemBox class="flex flex-col items-stretch px-0 pb-1  pt-1 space-y-2 " draggable="true" @dragstart="dragStart" @dragend="dragEnd" >
+    <ItemBox class="flex flex-col items-stretch px-0 pb-1  pt-1 space-y-2 " draggable="true" :title="title" @dragstart="dragStart" @dragend="dragEnd" >
         <div id="dragbutton" class="w-full flex justify-center text-gray-300" @mouseover="mouseIsOver" >
             <font-awesome-icon :icon="icons.faGripHorizontal" />
         </div>
@@ -9,7 +9,7 @@
         <hr />
         <div class="w-full px-3 flex justify-end">
             <div class="">
-                <button @click="$emit('delete', field.id)">
+                <button @click="$emit('delete', `${item.id}${item.type}`)">
                     <font-awesome-icon :icon="icons.faTrash" class="h-4 w-4 hover:text-gray-400 text-gray-500" />
                 </button>
             </div>
@@ -22,7 +22,7 @@ import { faTrash, faGripHorizontal } from "@fortawesome/free-solid-svg-icons";
 
 export default {
     components: { ItemBox },
-    props: ["field"],
+    props: ["item", "title"],
     emits: ["delete", "startedDragging", "endedDragging"],
     data() {
         return {
@@ -44,7 +44,7 @@ export default {
                 //e.preventDefault();
                 return
             }
-            e.dataTransfer.setData("text/plain", JSON.stringify(this.field) );
+            e.dataTransfer.setData("text/plain", JSON.stringify(this.item) );
             console.log("allow")
             this.$emit("startedDragging", true)
         },
