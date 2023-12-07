@@ -1,14 +1,23 @@
 import axios from 'axios'
 import {camelCase, snakeCase} from 'change-case'
+import {format } from 'date-fns'
 export const api = axios.create({
-    baseURL: 'http://localhost:8000/api',
+    baseURL: `${process.env.VUE_APP_BACKEND_URL}/api`,
     headers:{
         'Accept': 'application/json'
     },
     timeout: 1000
   });
 export const mixin = {
+  computed:{
+    backendURL(){
+      return process.env.VUE_APP_BACKEND_URL
+    }
+  },
     methods:{
+      formatDateTime(datetime){
+        return format(new Date(datetime), 'dd.MM.yyyy HH:mm')
+      },
         async callApi(method, url, data){
             try{
                 const response = await api({method,url,data: this.camelToSnakeObject(data)  })

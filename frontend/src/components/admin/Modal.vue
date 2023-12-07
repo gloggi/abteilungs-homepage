@@ -9,24 +9,25 @@
       flex
       justify-center
       items-center
+      p-20
       ">
   <div
     class="
+    relative
       bg-white
       border-gray-100
       shadow-lg
       rounded-lg
       w-full
-      lg:m-48
-      m-3
-      min-h-[75%]
      h-full
+     overflow-hidden
     "
   >
+  <button @click="handleClose" class="absolute top-2 right-2 rounded-bl-lg text-gray-400"><font-awesome-icon :icon="icons.faXmark" class="h-6 w-6 text-gray-400"/></button>
 
-   <div class="text-4xl font-bold rounded-t-lg px-5 pt-5 flex justify-between">
+   <div v-if="title" class="text-4xl font-bold rounded-t-lg px-5 pt-5 flex justify-between">
        <div>{{title}}</div>
-       <button @click="handleClose" class="rounded-bl-lg text-gray-400"><font-awesome-icon :icon="icons.faXmark" class="h-6 w-6 text-gray-400"/></button>
+       
    </div>
    
  

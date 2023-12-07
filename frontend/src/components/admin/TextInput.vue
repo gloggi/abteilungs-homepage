@@ -19,6 +19,7 @@
       "
       :id="label"
       :type="type"
+      :readonly="readonly"
       :placeholder="placeholder||label"
       :disabled="disabled"
       @keyup="e=>$emit('keyup',e)"
@@ -28,7 +29,7 @@
 
 <script>
 export default {
-  props: ["label", "type", "modelValue", "disabled", "placeholder"],
+  props: ["label", "type", "modelValue", "disabled", "placeholder", "readonly"],
   emits: ["update:modelValue", "keyup"],
   computed: {
     payload: {

@@ -1,7 +1,7 @@
 <template>
 <div class="relative">
     <div class="rounded-full h-48 w-48 border aspect-square bg-gray-200">
-      <img v-if="file" :src="`http://localhost:8000${file.thumbnail}`" class="object-cover" />
+      <img v-if="file" :src="`${backendURL}${file.thumbnail}`" class="object-cover" />
   </div>
     <div class="absolute top-3 right-3 flex justify-center items-center">
       <button @click="showModal=true" class="rounded-full w-7  aspect-square bg-white border">

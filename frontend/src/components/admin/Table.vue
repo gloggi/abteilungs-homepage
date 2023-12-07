@@ -40,7 +40,7 @@
       </template>
       <template v-if="actions[key] && actions[key].actionName == 'image'">
        <div v-if="item[key]" class="flex justify-start items-center">
-        <img class="h-10" :src="`http://localhost:8000${item[key].thumbnail}`"/>
+        <img class="h-10" :src="`${backendURL}${item[key].thumbnail}`"/>
       </div>
       </template>
       <template v-if="!actions[key]">

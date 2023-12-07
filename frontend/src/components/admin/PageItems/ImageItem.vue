@@ -5,7 +5,7 @@
         <button @click="removeSelectedImage(image)" class="absolute bottom-1 right-1">
         <font-awesome-icon :icon="icons.faTrash" class="w-3 p-1 text-white" />  
         </button>
-      <img  :src="`http://localhost:8000${image.thumbnail}`"
+      <img  :src="`${backendURL}${image.thumbnail}`"
         class="w-full h-32 object-cover rounded-md" />
       </div>
       <button @click="showModal = true" class="rounded-md border border-gray-200 flex justify-center items-center h-32">

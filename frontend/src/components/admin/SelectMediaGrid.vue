@@ -5,7 +5,7 @@
         @click="selectItem(file)">
            
                 
-                <img :src="`http://localhost:8000${file.thumbnail}`" class="w-full rounded-t-lg object-cover aspect-square" />
+                <img :src="`${backendURL}${file.thumbnail}`" class="w-full rounded-t-lg object-cover aspect-square" />
            
         </div>
     </div>
