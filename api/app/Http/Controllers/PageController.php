@@ -37,8 +37,12 @@ class PageController extends Controller
             'title' => 'nullable|string|max:255',
             'route' => 'nullable|string|max:255',
             'page_items' => 'nullable|array',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem',
+            'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem',
+            'page_items.*.title' => 'nullable',
+            'page_items.*.body' => 'nullable',
+            'page_items.*.file_id' => 'nullable'
         ]);
 
         $page = Page::create([
@@ -46,13 +50,13 @@ class PageController extends Controller
             'route' => $validatedData['route'],
         ]);
 
-        $this->createFieldsFromValidatedData($page, $validatedData);
+        $this->createPageItemsFromValidatedData($page, $validatedData);
 
         return response()->json([
-                'id' => $page->id,
-                'title' => $page->title,
-                'route' => $page->route,
-                'page_items' => $page->getAllItems(),
+            'id' => $page->id,
+            'title' => $page->title,
+            'route' => $page->route,
+            'page_items' => $page->getAllItems(),
         ], 201);
     }
 
@@ -63,8 +67,12 @@ class PageController extends Controller
             'title' => 'nullable|string|max:255',
             'route' => 'nullable|string|max:255',
             'page_items' => 'nullable|array',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem',
+            'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem',
+            'page_items.*.title' => 'nullable',
+            'page_items.*.body' => 'nullable',
+            'page_items.*.file_id' => 'nullable'
         ]);
 
         $page = Page::find($id);
@@ -72,10 +80,10 @@ class PageController extends Controller
         $page->route = $validatedData['route'];
         $page->save();
 
-        $this->createFieldsFromValidatedData($page, $validatedData);
+        $this->createPageItemsFromValidatedData($page, $validatedData);
 
-        $currentFields = $page->getAllFields();
-        foreach ($currentFields as $currentField) {
+        $currentPageItems = $page->getAllItems();
+        foreach ($currentPageItems as $currentField) {
             $found = false;
             foreach ($validatedData['page_items'] as $pageItemData) {
                 if (!isset($pageItemData['id']) || $currentField->id == $pageItemData['id']) {
@@ -94,15 +102,15 @@ class PageController extends Controller
             'title' => $page->title,
             'route' => $page->route,
             'page_items' => $page->getAllItems(),
-    ], 200);
+        ], 200);
     }
 
     public function show($id)
     {
         $page = Page::find($id);
-        return response()->json(array_merge($page->toArray(),[
+        return response()->json(array_merge($page->toArray(), [
             'page_items' => $page->getAllItems(),
-    ]), 200);
+        ]), 200);
 
     }
 
@@ -112,19 +120,20 @@ class PageController extends Controller
         $page->delete();
         return response()->json('Page removed successfully');
     }
-    private function createFieldsFromValidatedData(Page $page, $validatedData){
+    private function createPageItemsFromValidatedData(Page $page, $validatedData)
+    {
         $validatedData['page_items'] = collect($validatedData['page_items'])->sortBy('sort')->values()->all();
-        $sort_counter =0;
+        $sort_counter = 0;
         foreach ($validatedData['page_items'] as $pageItemData) {
             switch ($pageItemData['type']) {
                 case 'textItem':
                     TextItem::updateOrCreate(
                         ['id' => $pageItemData['id'] ?? null],
                         [
-                            'title' => $pageItemData['title']??'',
-                            'body' => $pageItemData['body']??'',
+                            'title' => $pageItemData['title'] ?? '',
+                            'body' => $pageItemData['body'] ?? '',
                             'page_id' => $page->id,
-                            'sort' =>  $sort_counter
+                            'sort' => $sort_counter
                         ]
                     );
                     break;
@@ -132,9 +141,9 @@ class PageController extends Controller
                     ImageItem::updateOrCreate(
                         ['id' => $pageItemData['id'] ?? null],
                         [
-                            'file_id' => $pageItemData['file_id']??'',
+                            'file_id' => $pageItemData['file_id'] ?? '',
                             'page_id' => $page->id,
-                            'sort' =>  $sort_counter
+                            'sort' => $sort_counter
                         ]
                     );
                     break;

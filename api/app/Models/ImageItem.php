@@ -9,7 +9,7 @@ class ImageItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['file_id', 'page_id'];
+    protected $fillable = ['file_id', 'page_id', 'sort'];
 
     protected $appends = ['type'];
 
