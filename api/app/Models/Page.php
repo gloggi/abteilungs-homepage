@@ -21,15 +21,23 @@ class Page extends Model
         return $this->hasMany(ImageItem::class)->with('files');
     }
 
+    public function formItems()
+    {
+
+        return $this->hasMany(FormItem::class)->with('form');
+    }
+
     public function getAllItems()
     {
         $items = collect([]);
 
         $textItems = $this->textItems;
         $imageItems = $this->imageItems;
+        $formItems = $this->formItems;
 
         $items = $items->concat($textItems);
         $items = $items->concat($imageItems);
+        $items = $items->concat($formItems);
 
         $items = $items->sortBy('sort')->values()->all();;
 

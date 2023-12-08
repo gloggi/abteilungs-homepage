@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\FormItem;
 use App\Models\ImageItem;
 use App\Models\TextItem;
 use Illuminate\Http\Request;
@@ -65,10 +66,11 @@ class PageController extends Controller {
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
-            'page_items.*.files' => 'nullable'
+            'page_items.*.files' => 'nullable',
+            'page_items.*.form_id' => 'nullable',
         ]);
 
         $page = Page::find($id);
@@ -82,8 +84,10 @@ class PageController extends Controller {
         foreach($currentPageItems as $currentField) {
             $found = false;
             foreach($validatedData['page_items'] as $pageItemData) {
-                if(!isset($pageItemData['id']) || $currentField->id == $pageItemData['id']) {
+                error_log($found);
+                if(!isset($pageItemData['id']) || ($currentField->id == $pageItemData['id'] && $currentField->type == $pageItemData['type'])) {
                     $found = true;
+                    
                     break;
                 }
             }
@@ -138,7 +142,7 @@ class PageController extends Controller {
                             'sort' => $sort_counter
                         ]
                     );
-                    $fileIds = array_column($pageItemData['files'], 'id') ?? [];
+                    $fileIds = isset($pageItemData['files']) ? array_column($pageItemData['files'], 'id') : [];
 
                     if(isset($pageItemData['id'])) {
                         $imageItem->files()->sync($fileIds);
@@ -146,6 +150,18 @@ class PageController extends Controller {
                         $imageItem->files()->attach($fileIds);
                     }
                     break;
+                    case 'formItem':
+                        FormItem::updateOrCreate(
+                            ['id' => $pageItemData['id'] ?? null],
+                            [
+                                'page_id' => $page->id,
+                                'sort' => $sort_counter,
+                                'form_id' => $pageItemData['form_id']??null, 
+                            ]
+                        );
+                       
+                    
+                        break;
                 default:
                     throw new \InvalidArgumentException("Unsupported field type: {$pageItemData['type']}");
             }

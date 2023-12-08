@@ -38,6 +38,15 @@ class CreatePagesTable extends Migration
             $table->foreignId('file_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
+
+        Schema::create('form_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('form_id')->nullable()->constrained()->onDelete('cascade');
+            $table->integer('sort')->nullable();
+            $table->unsignedBigInteger('page_id');
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
+            $table->timestamps();
+        });
         
     }
 
@@ -46,5 +55,7 @@ class CreatePagesTable extends Migration
         Schema::dropIfExists('pages');
         Schema::dropIfExists('text_items');
         Schema::dropIfExists('image_items');
+        Schema::dropIfExists('image_item_file');
+        Schema::dropIfExists('form_items');
     }
 }
