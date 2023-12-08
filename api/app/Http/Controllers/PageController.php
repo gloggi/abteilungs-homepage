@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FormItem;
 use App\Models\ImageItem;
 use App\Models\TextItem;
+use App\Models\GenericItem;
 use Illuminate\Http\Request;
 use App\Models\Page;
 
@@ -66,7 +67,7 @@ class PageController extends Controller {
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,contactItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
             'page_items.*.files' => 'nullable',
@@ -159,7 +160,15 @@ class PageController extends Controller {
                                 'form_id' => $pageItemData['form_id']??null, 
                             ]
                         );
-                       
+                    case 'contactItem':
+                        GenericItem::updateOrCreate(
+                            ['id' => $pageItemData['id'] ?? null],
+                            [
+                                'page_id' => $page->id,
+                                'sort' => $sort_counter,
+                                'type' => 'contactItem'
+                            ]
+                        );
                     
                         break;
                 default:
