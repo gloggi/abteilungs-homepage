@@ -26,6 +26,11 @@ class Page extends Model
 
         return $this->hasMany(FormItem::class)->with('form');
     }
+    public function genericItems()
+    {
+
+        return $this->hasMany(GenericItem::class);
+    }
 
     public function getAllItems()
     {
@@ -34,10 +39,12 @@ class Page extends Model
         $textItems = $this->textItems;
         $imageItems = $this->imageItems;
         $formItems = $this->formItems;
+        $genericItems = $this->genericItems;
 
         $items = $items->concat($textItems);
         $items = $items->concat($imageItems);
         $items = $items->concat($formItems);
+        $items = $items->concat($genericItems);
 
         $items = $items->sortBy('sort')->values()->all();;
 

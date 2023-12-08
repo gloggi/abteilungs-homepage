@@ -27,15 +27,11 @@
     </Card>
     <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="-1" />
     <div v-for="(pageItem, i) in content.pageItems" :key="i">
-      <DragItemBox  v-if="pageItem.type == 'textItem'" :item="pageItem" title="Text Item" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i">
-      <TextItem  :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body"  />
-    </DragItemBox>
-    <DragItemBox  v-if="pageItem.type == 'imageItem'" title="Image Item" :item="pageItem" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i">
-      <ImageItem  @changeImages="changeImageItem" :item="pageItem" />
-      </DragItemBox>
-      <DragItemBox  v-if="pageItem.type == 'formItem'" title="Form Item" :item="pageItem" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i">
-      <FormItem  @changeForm="changeFormItem" :item="pageItem" />
-      </DragItemBox>
+      
+      <TextItem v-if="pageItem.type == 'textItem'" boxTitle="Text Item" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i"   :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body"  />
+      <ImageItem v-if="pageItem.type == 'imageItem'" boxTitle="Image Item"  @changeImages="changeImageItem" :item="pageItem" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" />
+      <FormItem v-if="pageItem.type == 'formItem'" boxTitle="Form Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i"  @changeForm="changeFormItem" :item="pageItem" />
+      <ContactItem v-if="pageItem.type == 'contactItem'" boxTitle="Contact Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" :item="pageItem"  />
       <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="pageItem.sort" />
     </div>
     
@@ -51,8 +47,9 @@ import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/fre
 import TextItem from '../../components/admin/PageItems/TextItem.vue';
 import ImageItem from '../../components/admin/PageItems/ImageItem.vue';
 import {kebabCase} from 'lodash';
-import DragItemBox from "../../components/admin/DragItemBox.vue";
+
 import FormItem from "../../components/admin/PageItems/FormItem.vue";
+import ContactItem from "../../components/admin/PageItems/ContactItem.vue";
 
 export default {
   components: {
@@ -61,8 +58,8 @@ export default {
     AddPageItem,
     TextItem,
     ImageItem,
-    DragItemBox,
-    FormItem
+    FormItem,
+    ContactItem
 },
   data() {
     return {

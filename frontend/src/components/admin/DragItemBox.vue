@@ -1,5 +1,5 @@
 <template>
-    <ItemBox class="flex flex-col items-stretch px-0 pb-1  pt-1 space-y-2 " draggable="true" :title="title" @dragstart="dragStart" @dragend="dragEnd" >
+    <ItemBox class="flex flex-col items-stretch px-0 pb-1  pt-1 space-y-2 " draggable="true" :title="boxTitle" @dragstart="dragStart" @dragend="dragEnd" >
         <div id="dragbutton" class="w-full flex justify-center text-gray-300" @mouseover="mouseIsOver" >
             <font-awesome-icon :icon="icons.faGripHorizontal" />
         </div>
@@ -22,7 +22,7 @@ import { faTrash, faGripHorizontal } from "@fortawesome/free-solid-svg-icons";
 
 export default {
     components: { ItemBox },
-    props: ["item", "title"],
+    props: ["item", "boxTitle"],
     emits: ["delete", "startedDragging", "endedDragging"],
     data() {
         return {

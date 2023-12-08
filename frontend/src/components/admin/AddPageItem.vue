@@ -31,7 +31,8 @@ export default{
             fields: [
                 {name: "Text", type: "textItem"},
                 {name: "Image", type: "imageItem"},
-                {name: "Form", type: "formItem"}  
+                {name: "Form", type: "formItem"},
+                {name: "Contact", type: "contactItem"}   
             ]
         };
     },

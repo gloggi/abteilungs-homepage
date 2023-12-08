@@ -1,21 +1,24 @@
 <template>
+  <DragItemBox :boxTitle="boxTitle" :item="item" @delete="event=>$emit('delete', event)" @startedDragging="$emit('startedDragging')" @endedDragging="$emit('endedDragging')" >
   <Card class="p-0 space-y-2">
     <div class="">
     <TextInput  label="Title" v-model.lazy="titleValue" />
     <Editor class="mt-2" v-model.lazy="bodyValue" />
   </div>
   </Card>
+</DragItemBox>
 </template>
 
 <script>
 import Card from "../Card.vue";
+import DragItemBox from "../DragItemBox.vue";
 import Editor from "../Editor/Editor.vue";
 import TextInput from "../TextInput.vue";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 export default {
-  components: { TextInput, Editor, Card },
-  props: [ "title", "body", "item"],
-  emits: ["updatePage", "update:title", "update:body", "delete"],
+  components: { TextInput, Editor, Card, DragItemBox },
+  props: [ "title", "body", "item", "boxTitle" ],
+  emits: ["updatePage", "update:title", "update:body", "delete", "startedDragging", "endedDragging"],
   data() {
     return {
       textItem: undefined,
@@ -27,10 +30,7 @@ export default {
   methods: {
     change(){
       console.log("Change")
-    },
-    async deleteItem() {
-     this.$emit("delete", this.item.type+this.item.id)
-    },
+    }
     
   },
   computed: {

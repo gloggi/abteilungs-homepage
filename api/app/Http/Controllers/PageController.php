@@ -38,7 +38,7 @@ class PageController extends Controller {
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,contactItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
             'page_items.*.file_id' => 'nullable'
@@ -73,6 +73,7 @@ class PageController extends Controller {
             'page_items.*.files' => 'nullable',
             'page_items.*.form_id' => 'nullable',
         ]);
+        
 
         $page = Page::find($id);
         $page->title = $validatedData['title'];
@@ -85,7 +86,6 @@ class PageController extends Controller {
         foreach($currentPageItems as $currentField) {
             $found = false;
             foreach($validatedData['page_items'] as $pageItemData) {
-                error_log($found);
                 if(!isset($pageItemData['id']) || ($currentField->id == $pageItemData['id'] && $currentField->type == $pageItemData['type'])) {
                     $found = true;
                     
@@ -161,6 +161,7 @@ class PageController extends Controller {
                             ]
                         );
                     case 'contactItem':
+                        error_log("came here");
                         GenericItem::updateOrCreate(
                             ['id' => $pageItemData['id'] ?? null],
                             [

@@ -1,4 +1,5 @@
 <template>
+  <DragItemBox :boxTitle="boxTitle" :item="item" @delete="event=>$emit('delete', event)" @startedDragging="$emit('startedDragging')" @endedDragging="$emit('endedDragging')" >
   <Card class="space-y-2">
     <div class="grid grid-cols-2 gap-2 mt-3">
       <div v-for="(image, i) in preSelectedImages" :key="i" class="relative">
@@ -14,6 +15,7 @@
     </div>
    
   </Card>
+</DragItemBox>
   <MediaModal v-if="showModal" @close="showModal = false" :pre-selected="preSelectedImages" @select="selectHandler" :max-select="2" />
 </template>
 
@@ -21,11 +23,12 @@
 import MediaModal from '../MediaModal.vue';
 import { faXmark, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Card from '../Card.vue';
+import DragItemBox from '../DragItemBox.vue';
 
 export default {
-  components: { MediaModal, Card },
-  props: ["item", "modelValue"],
-  emits: ["updatePage", "changeImages"],
+  components: { MediaModal, Card, DragItemBox },
+  props: ["item", "modelValue", "boxTitle"],
+  emits: ["updatePage", "changeImages","delete", "startedDragging", "endedDragging"],
   data() {
     return {
       imageItem: undefined,

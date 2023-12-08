@@ -1,9 +1,9 @@
 <template>
+  <DragItemBox :boxTitle="boxTitle" :item="item" @delete="event=>$emit('delete', event)" @startedDragging="$emit('startedDragging')" @endedDragging="$emit('endedDragging')" >
     <Card class="space-y-2">
       <Select selection="FormItem" @selectFormItem="handleChange" :value="item.formId" :options="options" />
-      
-     
     </Card>
+  </DragItemBox>
 
   </template>
   
@@ -12,12 +12,13 @@
 
   import Card from '../Card.vue';
   import Select from '../Select.vue';
+  import DragItemBox from '../DragItemBox.vue';
 
   
   export default {
-    components: {  Card, Select },
-    props: ["item"],
-    emits: ["updatePage", "changeForm"],
+    components: {  Card, Select, DragItemBox },
+    props: ["item", "boxTitle"],
+    emits: ["updatePage", "changeForm", "delete", "startedDragging", "endedDragging"],
     data() {
       return {
         options: []
