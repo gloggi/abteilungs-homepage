@@ -1,14 +1,16 @@
 <template>
   <Modal @close="close" title="Bilder">
+    <div class="relative">
     
     <DragAndDropUpload @uploadedFile="gridKey++" />
     <SelectMediaGrid :key="gridKey" :maxSelect="maxSelect" :category="category" :pre-selected="preSelected" @selectItems="selectItemsHandler" />
    
     
-    <div v-if="selected.length>0" class="absolute  bottom-0 z-50 right-48 left-48 bg-gray-50  h-fit p-5 flex justify-end">
+    
       
-      <Button @click="selectAndClose">Auswählen</Button>
+      <Button v-if="selected.length>0" class="absolute right-0 bottom-0" @click="selectAndClose">Auswählen</Button>
     </div>
+
   </Modal>
   
 </template>

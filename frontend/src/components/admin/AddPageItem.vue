@@ -30,7 +30,8 @@ export default{
             increaseHeight: false,
             fields: [
                 {name: "Text", type: "textItem"},
-                {name: "Bild", type: "imageItem"} 
+                {name: "Image", type: "imageItem"},
+                {name: "Form", type: "formItem"}  
             ]
         };
     },

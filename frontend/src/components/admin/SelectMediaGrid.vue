@@ -50,6 +50,8 @@ export default {
         selectItem(item){
             if(this.items.includes(item)){
                 this.items = this.items.filter(i => i !== item);
+                this.$emit("selectItems", [...this.items])
+                console.log("unselected")
                 return
             }else if(this.items.length==this.maxSelect){
                 this.items.shift()
