@@ -16,7 +16,7 @@
   </div>
   <hr />
   <div v-if="totalItems==0" class="bg-white w-full p-3 border-b ">
-    No items avaiable
+    No items available.
   </div>
   <div
     v-for="(item, j) in content"

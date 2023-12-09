@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MenuitemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GroupController;
@@ -66,3 +67,7 @@ Route::post('/forms', [FormController::class, 'store']);
 Route::get('/forms/{id}', [FormController::class, 'show']);
 Route::put('/forms/{id}', [FormController::class, 'update']);
 Route::delete('/forms/{id}', [FormController::class, 'destroy']);
+
+Route::get('/menuitems', [MenuitemController::class, 'index']);
+Route::post('/menuitems', [MenuitemController::class, 'store']);
+Route::delete('/menuitems/{id}', [MenuitemController::class, 'destroy']);

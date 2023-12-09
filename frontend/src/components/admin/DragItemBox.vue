@@ -41,7 +41,6 @@ export default {
         dragStart(e){
             if(!this.allowDrag){
                 console.log("forbidden")
-                //e.preventDefault();
                 return
             }
             e.dataTransfer.setData("text/plain", JSON.stringify(this.item) );

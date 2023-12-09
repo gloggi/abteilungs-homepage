@@ -11,6 +11,14 @@
                 A
             </div>
         </router-link>
+        <router-link to="/dashboard/menu">
+            <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
+                <div class="px-5">
+                    <font-awesome-icon :icon="icons.faEllipsis" class="h-6 w-6" />
+                </div>
+                <div class="text">Menu</div>
+            </div>
+        </router-link>
         <router-link to="/dashboard/pages">
             <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
                 <div class="px-5">
@@ -68,7 +76,7 @@
 </template>
 
 <script>
-import { faStairs, faBookOpen, faPhotoVideo, faUsers, faUser, faRectangleList } from "@fortawesome/free-solid-svg-icons";
+import { faStairs, faBookOpen, faPhotoVideo, faUsers, faUser, faRectangleList, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 export default {
     components: {  },
     data() {
@@ -80,7 +88,9 @@ export default {
                faPhotoVideo,
                 faUsers,
                faUser,
-                faRectangleList
+                faRectangleList,
+                faEllipsis
+                
             }
         }
     }

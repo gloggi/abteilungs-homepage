@@ -15,6 +15,7 @@ import Contacts from '../views/Dashboard/Contacts'
 import Contact from '../views/Dashboard/Contact'
 import Forms from '../views/Dashboard/Forms'
 import Form from '../views/Dashboard/Form'
+import Menu from '../views/Dashboard/Menu'
 
 const routes = [
   {
@@ -38,6 +39,14 @@ const routes = [
         component: DashboardHome,
         meta: {
           title: "Dashboard",
+        },
+      },
+      {
+        path: 'menu',
+        name: 'Menu',
+        component: Menu,
+        meta: {
+          title: "Menü",
         },
       },
       {
@@ -128,7 +137,7 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
-    document.title = to.meta.title; 
+    document.title = to.meta.title;
   }
   next();
 });
