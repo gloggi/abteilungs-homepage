@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MenuitemController;
 use App\Http\Controllers\SettingController;
@@ -82,3 +83,9 @@ Route::post('/locations', [LocationController::class, 'store']);
 Route::get('/locations/{id}', [LocationController::class, 'show']);
 Route::put('/locations/{id}', [LocationController::class, 'update']);
 Route::delete('/locations/{id}', [LocationController::class, 'destroy']);
+
+Route::get('/events', [EventController::class, 'index']);
+Route::post('/events', [EventController::class, 'store']);
+Route::get('/events/{id}', [EventController::class, 'show']);
+Route::put('/events/{id}', [EventController::class, 'update']);
+Route::delete('/events/{id}', [EventController::class, 'destroy']);

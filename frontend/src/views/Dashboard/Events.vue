@@ -1,28 +1,28 @@
 <template>
     <div class="bg-gray-50 rounded-lg p-5 flex items-center mb-2">
-      <h2 class="font-extrabold text-4xl">Locations</h2>
+      <h2 class="font-extrabold text-4xl">Events</h2>
     </div>
     <div
       :class="`flex ${itemsSelected ? 'justify-between' : 'justify-end'} mb-2`"
     >
       <button
         v-if="itemsSelected"
-        @click="deleteLocations"
+        @click="deleteEvents"
         class="bg-white p-1 rounded-l-lg"
       >
       <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
       </button>
   
-      <button class="rounded-r-lg bg-white p-1" @click="createLocation">
+      <button class="rounded-r-lg bg-white p-1" @click="createEvent">
         <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 text-gray-500" />
       </button>
     </div>
     <Table
       :key="tableKey"
-      entity="locations"
+      entity="events"
       @changeSelected="changeSelected"
-      titles="Name,lat,long"
-      columns="name:link(id),lat,long"
+      titles="Title,Start,End"
+      columns="title:link(id),startTime,endTime"
     />
   </template>
   
@@ -51,29 +51,29 @@
       changeSelected(event) {
         this.selected = event;
       },
-      async deleteLocations() {
+      async deleteEvents() {
         try {
           await Promise.all(
-            this.selected.map(async (location) => {
-              await this.callApi("delete", `locations/${location}`);
+            this.selected.map(async (event) => {
+              await this.callApi("delete", `events/${event}`);
             })
           );
           this.selected = []
           this.tableKey++;
           this.$store.dispatch(
             "notification/notify",
-            "All selected Locations were deleted"
+            "All selected Events were deleted"
           );
         } catch (e) {
           console.log(e);
         }
       },
-      async createLocation() {
+      async createEvent() {
         try {
-          const response = await this.callApi("post", "/locations", {
+          const response = await this.callApi("post", "/events", {
             
           });
-          this.$router.push({ name: "Location", params: { id: response.data.id } });
+          this.$router.push({ name: "Event", params: { id: response.data.id } });
         } catch (e) {
           console.log(e);
         }

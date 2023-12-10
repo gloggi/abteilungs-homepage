@@ -19,6 +19,8 @@ import Menu from '../views/Dashboard/Menu'
 import Settings from '../views/Dashboard/Settings'
 import Locations from '../views/Dashboard/Locations'
 import Location from '../views/Dashboard/Location'
+import Events from '../views/Dashboard/Events'
+import Event from '../views/Dashboard/Event'
 
 const routes = [
   {
@@ -148,6 +150,19 @@ const routes = [
         path: 'locations/:id',
         name: 'Location',
         component: Location
+      },
+      {
+        path: 'events',
+        name: 'Events',
+        component: Events,
+        meta: {
+          title: "Events",
+        }
+      },
+      {
+        path: 'events/:id',
+        name: 'Event',
+        component: Event
       },
       {
         path: 'settings',
