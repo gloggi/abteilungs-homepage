@@ -26,6 +26,9 @@
         <SidebarItem to="/dashboard/sections" :icon="icons.faStairs">
             Sections
         </SidebarItem>
+        <SidebarItem to="/dashboard/locations" :icon="icons.faLocationDot">
+            Locations
+        </SidebarItem>
         <SidebarItem to="/dashboard/forms" :icon="icons.faRectangleList">
             Forms
         </SidebarItem>
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-import { faStairs, faBookOpen, faPhotoVideo, faUsers, faUser, faRectangleList, faEllipsis, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faStairs, faBookOpen, faPhotoVideo, faUsers, faUser, faRectangleList, faEllipsis, faGear, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 export default {
     components: { SidebarItem },
@@ -60,7 +63,8 @@ export default {
                 faUser,
                 faRectangleList,
                 faEllipsis,
-                faGear
+                faGear,
+                faLocationDot
 
             }
         }

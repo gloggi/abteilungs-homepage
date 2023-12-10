@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MenuitemController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Http\Request;
@@ -75,3 +76,9 @@ Route::delete('/menuitems/{id}', [MenuitemController::class, 'destroy']);
 
 Route::get('/settings', [SettingController::class, 'show']);
 Route::put('/settings', [SettingController::class, 'update']);
+
+Route::get('/locations', [LocationController::class, 'index']);
+Route::post('/locations', [LocationController::class, 'store']);
+Route::get('/locations/{id}', [LocationController::class, 'show']);
+Route::put('/locations/{id}', [LocationController::class, 'update']);
+Route::delete('/locations/{id}', [LocationController::class, 'destroy']);

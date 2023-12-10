@@ -17,6 +17,8 @@ import Forms from '../views/Dashboard/Forms'
 import Form from '../views/Dashboard/Form'
 import Menu from '../views/Dashboard/Menu'
 import Settings from '../views/Dashboard/Settings'
+import Locations from '../views/Dashboard/Locations'
+import Location from '../views/Dashboard/Location'
 
 const routes = [
   {
@@ -133,6 +135,19 @@ const routes = [
         path: 'forms/:id',
         name: 'Form',
         component: Form
+      },
+      {
+        path: 'locations',
+        name: 'Locations',
+        component: Locations,
+        meta: {
+          title: "Locations",
+        }
+      },
+      {
+        path: 'locations/:id',
+        name: 'Location',
+        component: Location
       },
       {
         path: 'settings',
