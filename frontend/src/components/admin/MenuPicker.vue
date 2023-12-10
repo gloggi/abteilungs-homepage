@@ -120,10 +120,8 @@ export default {
     async created() {
         await this.getMenuItems();
         await this.getPages();
-        for (let menuItem of this.menuItems) {
-            // this.deleteMenuItem(menuItem)
-        }
-    }
+
+}
 }
 
 </script>

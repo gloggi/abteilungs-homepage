@@ -1,8 +1,8 @@
 <template>
   <div class="">
-    <label class="block text-gray-700 text-sm font-bold mb-1" for="">
+   <FormLabel>
       {{ label }}
-    </label>
+    </FormLabel>
     <input
       v-model.lazy="payload"
       :lazy="true"
@@ -28,19 +28,22 @@
 </template>
 
 <script>
+import FormLabel from './FormLabel.vue';
+
 export default {
-  props: ["label", "type", "modelValue", "disabled", "placeholder", "readonly"],
-  emits: ["update:modelValue", "keyup"],
-  computed: {
-    payload: {
-      get() {
-        return this.modelValue;
-      },
-      set(value) {
-        this.$emit("update:modelValue", value);
-      },
+    props: ["label", "type", "modelValue", "disabled", "placeholder", "readonly"],
+    emits: ["update:modelValue", "keyup"],
+    computed: {
+        payload: {
+            get() {
+                return this.modelValue;
+            },
+            set(value) {
+                this.$emit("update:modelValue", value);
+            },
+        },
     },
-  },
+    components: { FormLabel }
 };
 </script>
 

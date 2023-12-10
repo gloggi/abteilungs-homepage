@@ -1,5 +1,5 @@
 <template>
-<div class="fixed inset-0 z-30 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+<div class="fixed inset-0 z-30 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full ">
     
 <Fade>
   <div class="flex w-full h-full justy-center items-center p-56">
@@ -13,7 +13,7 @@
    </div>
    
  
-   <div class="px-5 overflow-y-auto h-full">
+   <div class="px-5 overflow-y-auto h-full ">
       <slot ></slot>
    </div>
    </div>

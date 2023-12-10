@@ -16,6 +16,7 @@ import Contact from '../views/Dashboard/Contact'
 import Forms from '../views/Dashboard/Forms'
 import Form from '../views/Dashboard/Form'
 import Menu from '../views/Dashboard/Menu'
+import Settings from '../views/Dashboard/Settings'
 
 const routes = [
   {
@@ -46,7 +47,7 @@ const routes = [
         name: 'Menu',
         component: Menu,
         meta: {
-          title: "Menü",
+          title: "Menu",
         },
       },
       {
@@ -54,7 +55,7 @@ const routes = [
         name: 'Pages',
         component: Pages,
         meta: {
-          title: "Seiten",
+          title: "Pages",
         },
       },
       {
@@ -67,7 +68,7 @@ const routes = [
         name: 'Sections',
         component: Sections,
         meta: {
-          title: "Stufen",
+          title: "Sections",
         },
       },
       {
@@ -80,7 +81,7 @@ const routes = [
         name: 'Groups',
         component: Groups,
         meta: {
-          title: "Gruppen",
+          title: "Groups",
         },
       },
       {
@@ -93,25 +94,31 @@ const routes = [
         name: 'Contacts',
         component: Contacts,
         meta: {
-          title: "Kontakte",
+          title: "Contacts",
         },
       },
       {
         path: 'files',
         name: 'Files',
-        component: FileUploadTest
+        component: FileUploadTest,
+        meta: {
+          title: "Files",
+        },
       },
       {
         path: 'contacts/:id',
         name: 'Contact',
-        component: Contact
+        component: Contact,
+        meta: {
+          title: "Contact",
+        },
       },
       {
         path: 'media',
         name: 'Media',
         component: Media,
         meta: {
-          title: "Medien",
+          title: "Media",
         },
       },
       {
@@ -119,13 +126,21 @@ const routes = [
         name: 'Forms',
         component: Forms,
         meta: {
-          title: "Formulare",
+          title: "Forms",
         }
       },
       {
         path: 'forms/:id',
         name: 'Form',
         component: Form
+      },
+      {
+        path: 'settings',
+        name: 'Settings',
+        component: Settings,
+        meta: {
+          title: "Settings",
+        }
       },
     ]
   }

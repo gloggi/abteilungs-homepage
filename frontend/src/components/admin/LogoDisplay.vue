@@ -1,13 +1,14 @@
 <template>
 <div class="relative">
-    <div class="rounded-full h-48 w-48 border aspect-square bg-gray-200">
-      <img v-if="file" :src="`${backendURL}${file.thumbnail}`" class="object-cover" />
-  </div>
-    <div class="absolute top-3 right-3 flex justify-center items-center">
+    <div class="relative rounded-lg h-48 w-48 border aspect-square bg-gray-200">
+      <img v-if="file" :src="`${backendURL}${file.thumbnail}`" class="aspect-square object-cover rounded-lg" />
+      <div class="absolute top-3 right-3 flex justify-center items-center">
       <button @click="showModal=true" class="rounded-full w-7  aspect-square bg-white border">
         <font-awesome-icon :icon="icons.faPencil" class="text-gray-700 h-4 w-4"/>
       </button>
     </div>
+  </div>
+    
   </div>
   <MediaModal v-if="showModal" @close="closeHandler" @select="selectHandler" :max-select="1"/>
 </template>
@@ -23,7 +24,7 @@ export default {
       return {
         showModal: false,
         fileId: undefined,
-        file: this.logo,
+        file: undefined,
         icons: {
           faPencil
         }
@@ -36,15 +37,15 @@ export default {
       },
       async selectHandler(selected){
         const file = selected[0];
+        this.file=file
+        console.log(file)
         this.$emit("selectImage", file)
-        const response = await this.callApi(
-          "get",
-          `/files/${file.id}`
-        );
-        this.file = response.data;
 
       }
 
+    },
+    created(){
+      this.file = this.logo
     }
 }
 </script>

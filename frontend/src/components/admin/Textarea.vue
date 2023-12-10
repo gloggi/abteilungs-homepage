@@ -1,8 +1,8 @@
 <template>
   <div class="">
-    <label class="block text-gray-700 text-sm font-bold mb-1" for="username">
+    <FormLabel>
       {{ label }}
-    </label>
+    </FormLabel>
     <textarea
     rows="7"
       v-model="payload"
@@ -27,18 +27,19 @@
 
 <script>
 import { computed } from "vue";
+import FormLabel from "./FormLabel.vue";
 export default {
-  props: ["label", "type", "content", "modelValue", "disabled"],
-  setup(props, { emit }) {
-    const payload = computed({
-      get: () => props.modelValue,
-      set: (value) => emit("update:modelValue", value),
-    });
-
-    return {
-      payload,
-    };
-  },
+    props: ["label", "type", "content", "modelValue", "disabled"],
+    setup(props, { emit }) {
+        const payload = computed({
+            get: () => props.modelValue,
+            set: (value) => emit("update:modelValue", value),
+        });
+        return {
+            payload,
+        };
+    },
+    components: { FormLabel }
 };
 </script>
 

@@ -10,13 +10,16 @@
     <Modal v-if="showModal" @close="showModal = false">
        <div v-if="content" class="flex h-full p-3 space-x-2">
         <div  class="flex justify-center items-center w-2/3">
-            <img  :src="`${backendURL}${selectedFile.path}`" class=" w-auto max-h-full" />
+            <img v-if="isImage()"  :src="`${backendURL}${selectedFile.path}`" class="w-auto" style="max-height: 90vh;" />
+            <object v-if="selectedFile.extension=='pdf'" :data="`${backendURL}${selectedFile.path}`" height="550px"  type="application/pdf" style="aspect-ratio: 1 / 1.42;"
+            />
         </div>
         <div class="w-1/3">
             <div class="flex flex-col space-y-2 pt-8 w-full">
                 <CopyField label="URL" :value="`${backendURL}${selectedFile.path}`" />
                 <CopyField label="Thumbnail URL" :value="`${backendURL}${selectedFile.thumbnail}`" />
-                <TextInput label="Category" v-model="selectedFile.category" />  
+                <TextInput label="Category" v-model="selectedFile.category" /> 
+                
             </div>
             <div class="flex justify-between pt-5">
                 <div class="font-cursive text-gray-400">Created at {{ formatDateTime(selectedFile.createdAt) }}</div>
@@ -48,6 +51,10 @@ export default {
         };
     },
     methods: {
+        isImage() {
+            const imageTypes = ["png", "jpeg", "gif"];
+            return imageTypes.includes(this.selectedFile.extension);
+        },
         async getMedia() {
             try {
                 const response = await this.callApi("get", "/files");

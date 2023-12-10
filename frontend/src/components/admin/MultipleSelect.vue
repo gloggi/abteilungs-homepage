@@ -1,7 +1,7 @@
 <template>
-    <label class="block text-gray-700 text-sm font-bold mb-1" for="">
+    <FormLabel>
       {{ label }}
-    </label>
+    </FormLabel>
     <div class="relative" @mouseleave="showDropdown = false">
         <select @mousedown.prevent @click="handleClickSelect" class="appearance-none
         border
@@ -29,9 +29,11 @@
     </div>
 </template>
 <script>
+import FormLabel from './FormLabel.vue';
+
 
 export default {
-    components: {},
+    components: { FormLabel },
     emits: ["update:modelValue"],
     props: {
         label: {

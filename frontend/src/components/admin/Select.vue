@@ -1,8 +1,8 @@
 <template>
   <div class="w-full">
-   <label class="block text-gray-700 text-sm font-bold mb-1" for="">
+   <FormLabel>
       {{ label }}
-    </label>
+    </FormLabel>
   <select
   @change="(event)=>handleChange(event)"
   class="
@@ -24,15 +24,16 @@
 </template>
 
 <script>
-export default {
-  props:["options", "selection", "value", "label"],
-  methods:{
-    handleChange(event){
-      this.$emit(`select${this.selection}`, parseInt(event.target.value));
-      
-    }
-  }
+import FormLabel from './FormLabel.vue';
 
+export default {
+    props: ["options", "selection", "value", "label"],
+    methods: {
+        handleChange(event) {
+            this.$emit(`select${this.selection}`, parseInt(event.target.value));
+        }
+    },
+    components: { FormLabel }
 }
 </script>
 

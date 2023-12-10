@@ -11,62 +11,31 @@
                 A
             </div>
         </router-link>
-        <router-link to="/dashboard/menu">
-            <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
-                <div class="px-5">
-                    <font-awesome-icon :icon="icons.faEllipsis" class="h-6 w-6" />
-                </div>
-                <div class="text">Menu</div>
-            </div>
-        </router-link>
-        <router-link to="/dashboard/pages">
-            <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
-                <div class="px-5">
-                    <font-awesome-icon :icon="icons.faBookOpen" class="h-6 w-6" />
-                </div>
-                <div class="text">Pages</div>
-            </div>
-        </router-link>
-        <router-link to="/dashboard/groups">
-            <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
-                <div class="px-5">
-                    <font-awesome-icon :icon="icons.faUsers" class="h-6 w-6" />
-                </div>
-                <div class="text">Groups</div>
-            </div>
-        </router-link>
-        <router-link to="/dashboard/contacts">
-            <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
-                <div class="px-5">
-                    <font-awesome-icon :icon="icons.faUser" class="h-6 w-6" />
-                </div>
-                <div class="text">Contacts</div>
-            </div>
-        </router-link>
-        <router-link to="/dashboard/sections">
-            <div class="p-1 flex text-gray-50 rounded-lg border border-transparent hover:border-gray-50 m-0.5">
-                <div class="px-5">
-                    <font-awesome-icon :icon="icons.faStairs" class="h-6 w-6" />
-                </div>
-                <div class="text">Sections</div>
-            </div>
-        </router-link>
-        <router-link to="/dashboard/forms">
-            <div class="p-1 flex text-gray-50 rounded-lg border  border-transparent hover:border-gray-50 m-0.5">
-                <div class="px-5">
-                    <font-awesome-icon :icon="icons.faRectangleList" class="h-6 w-6" />
-                </div>
-                <div class="text">Forms</div>
-            </div>
-        </router-link>
-        <router-link to="/dashboard/media">
-            <div class="p-1 flex text-gray-50 rounded-lg border  border-transparent hover:border-gray-50 m-0.5">
-                <div class="px-5">
-                    <font-awesome-icon :icon="icons.faPhotoVideo" class="h-6 w-6" />
-                </div>
-                <div class="text">Media</div>
-            </div>
-        </router-link>
+        <SidebarItem to="/dashboard/menu" :icon="icons.faEllipsis">
+            Menu
+        </SidebarItem>
+        <SidebarItem to="/dashboard/pages" :icon="icons.faBookOpen">
+            Pages
+        </SidebarItem>
+        <SidebarItem to="/dashboard/groups" :icon="icons.faUsers">
+            Groups
+        </SidebarItem>
+        <SidebarItem to="/dashboard/contacts" :icon="icons.faUser">
+            Contacts
+        </SidebarItem>
+        <SidebarItem to="/dashboard/sections" :icon="icons.faStairs">
+            Sections
+        </SidebarItem>
+        <SidebarItem to="/dashboard/forms" :icon="icons.faRectangleList">
+            Forms
+        </SidebarItem>
+        <SidebarItem to="/dashboard/media" :icon="icons.faPhotoVideo">
+            Media
+        </SidebarItem>
+        <SidebarItem to="/dashboard/settings" :icon="icons.faGear">
+            Settings
+        </SidebarItem>
+
     </div>
     <div @click="dMSb = !dMSb" :class="`flex items-center ${!dMSb ? 'hidden' : 'md:hidden'} bg-gray-900 text-white w-3`">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,21 +45,23 @@
 </template>
 
 <script>
-import { faStairs, faBookOpen, faPhotoVideo, faUsers, faUser, faRectangleList, faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faStairs, faBookOpen, faPhotoVideo, faUsers, faUser, faRectangleList, faEllipsis, faGear } from "@fortawesome/free-solid-svg-icons";
+import SidebarItem from "./SidebarItem.vue";
 export default {
-    components: {  },
+    components: { SidebarItem },
     data() {
         return {
             dMSb: false,
             icons: {
-               faStairs,
+                faStairs,
                 faBookOpen,
-               faPhotoVideo,
+                faPhotoVideo,
                 faUsers,
-               faUser,
+                faUser,
                 faRectangleList,
-                faEllipsis
-                
+                faEllipsis,
+                faGear
+
             }
         }
     }
