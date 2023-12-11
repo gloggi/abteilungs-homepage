@@ -37,6 +37,7 @@ class EventController extends Controller
         $event->title = $request->input('title');
         $event->start_time = $request->input('start_time');
         $event->end_time = $request->input('end_time');
+        $event->group_id = $request->input('group_id');
         $event->start_location_id = $request->input('start_location_id');
         $event->end_location_id = $request->input('end_location_id');
         $event->description = $request->input('description');
@@ -56,6 +57,7 @@ class EventController extends Controller
         $event->title = $request->input('title');
         $event->start_time = $request->input('start_time');
         $event->end_time = $request->input('end_time');
+        $event->group_id = $request->input('group_id');
         $event->start_location_id = $request->input('start_location_id');
         $event->end_location_id = $request->input('end_location_id');
         $event->description = $request->input('description');

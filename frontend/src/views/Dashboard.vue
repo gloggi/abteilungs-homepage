@@ -22,6 +22,9 @@ export default {
         user(){
             return this.$store.state.user.user
         }
+    },
+    async created(){
+        await this.$store.dispatch('settings/getSettings');
     }
 
 }

@@ -24,6 +24,7 @@
                 <TextInput label="Title" type="text" v-model="content.title" />
                 <TextInput label="Start" type="datetime-local" v-model="content.startTime" />
                 <TextInput label="End" type="datetime-local" v-model="content.endTime" />
+                <Select label="Group" selection="Group" @selectGroup="handleSelectGroup" :options="groups" :value="content.groupId" />
                 <Select label="Start Location" selection="StartLocation" @selectStartLocation="handleSelectStartLocation" :options="locations" :value="content.startLocationId" />
                 <Select label="End Location" selection="EndLocation" @selectEndLocation="handleSelectEndLocation" :options="locations" :value="content.endLocationId" />
             </div>
@@ -55,6 +56,7 @@ export default {
                 faPlus
             },
             locations: [],
+            groups: [],
         };
     },
     methods: {
@@ -100,17 +102,32 @@ export default {
                 console.log(e);
             }
         },
+        async getGroups() {
+            try {
+                const response = await this.callApi(
+                    "get",
+                    `/groups`
+                );
+                this.groups = response.data.data;
+            } catch (e) {
+                console.log(e);
+            }
+        },
         handleSelectStartLocation(event){
             this.content.startLocationId = event;
         },
         handleSelectEndLocation(event){
             this.content.endLocationId = event;
         },
+        handleSelectGroup(event){
+            this.content.groupId = event;
+        },
 
     },
     async created() {
         await this.getEvent();
         await this.getLocations();
+        await this.getGroups();
 
     },
 };

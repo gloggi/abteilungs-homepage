@@ -37,7 +37,7 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,ico',
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,ico,svg',
             'category' => 'string|max:255'
         ]);
 
@@ -59,7 +59,7 @@ class FileController extends Controller
         $newFile->category = $category;
 
 
-        if (in_array($newFile->extension, ['jpg', 'jpeg', 'png', 'gif', 'svg'])) {
+        if (in_array($newFile->extension, ['jpg', 'jpeg', 'png', 'gif'])) {
             $thumbnailPath = 'public/thumbnails/' . $filename;
             $thumbnail = Image::make($file)->resize(200, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -72,6 +72,8 @@ class FileController extends Controller
             $pdf->setResolution(72);
             $pdf->saveImage(storage_path('app/' . $thumbnailPath));
             $newFile->thumbnail = Storage::url($thumbnailPath);
+        }elseif ($newFile->extension === 'svg') {
+            $newFile->thumbnail = $fileUrl;
         }
 
         $newFile->save();

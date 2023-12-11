@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreign('start_location_id')->references('id')->on('locations')->onDelete('set null');
             $table->unsignedBigInteger('end_location_id')->nullable();
             $table->foreign('end_location_id')->references('id')->on('locations')->onDelete('set null');
+            $table->unsignedBigInteger('group_id')->nullable();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
             $table->text('description')->nullable();
             $table->timestamps();
         });

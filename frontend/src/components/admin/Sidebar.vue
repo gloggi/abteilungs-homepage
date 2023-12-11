@@ -6,9 +6,12 @@
     </div>
     <div :class="`bg-gray-900 w-64 md:flex flex-col md:rounded-r-lg ${dMSb ? 'flex' : 'hidden'}`">
         <router-link to="/dashboard">
-            <div
+            <div v-if="settings.division_logo?.path" class="w-full flex flex-col justify-center">
+                <img class="h-32" :src="`${backendURL}${settings.division_logo?.path}`" />
+            </div>
+            <div v-else
                 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 text-center mx-auto p-5 cursor-pointer">
-                A
+               A
             </div>
         </router-link>
         <SidebarItem to="/dashboard/menu" :icon="icons.faEllipsis">
@@ -72,7 +75,12 @@ export default {
 
             }
         }
-    }
+    },
+    computed: {
+        settings() {
+            return this.$store.state.settings.settings ||{};
+        }
+    },
 };
 </script>
 

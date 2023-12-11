@@ -6,6 +6,7 @@ import { modal} from './modules/modal'
 import { notification } from './modules/notification'
 import {pageInEdit} from './modules/pageInEdit'
 import { drag} from './modules/drag'
+import { settings} from './modules/settings'
 
 export default createStore({
   modules: {
@@ -15,6 +16,7 @@ export default createStore({
     modal,
     notification,
     pageInEdit,
-    drag
+    drag,
+    settings
   }
 })
