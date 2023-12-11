@@ -15,7 +15,7 @@ class FileController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 100);
         $page = $request->input('page', 1);
         $files = File::paginate($perPage, ['*'], 'page', $page);
         $data = $files->items();
@@ -42,7 +42,7 @@ class FileController extends Controller
         ]);
 
         $file = $request->file('file');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $filename = time(). '_'. rand() . '.' . $file->getClientOriginalExtension();
         $category = $validatedData['category'];
         $filePath = 'public/uploads/' . $filename;
 

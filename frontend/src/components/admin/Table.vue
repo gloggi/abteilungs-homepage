@@ -35,12 +35,12 @@
         <router-link
           class="text-sm text-blue-600 hover:text-blue-900"
           :to="`${entity}/${item[actions[key].actionArgument]}`"
-          >{{ item[key] }}</router-link
+          >{{ item[key] || 'No name provided' }}</router-link
         >
       </template>
       <template v-if="actions[key] && actions[key].actionName == 'image'">
        <div v-if="item[key]" class="flex justify-start items-center">
-        <img class="h-10" :src="`${backendURL}${item[key].thumbnail}`"/>
+        <img class="h-10 rounded-lg" :src="`${backendURL}${item[key].thumbnail}`"/>
       </div>
       </template>
       <template v-if="!actions[key]">
@@ -134,6 +134,7 @@ export default {
       },
     async getItems() {
       try {
+        console.log("entity", this.entity)
         const response = await this.callApi(
           "get",
           `/${this.entity}/?page=${this.page}`

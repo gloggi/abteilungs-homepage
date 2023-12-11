@@ -45,8 +45,8 @@ class PageController extends Controller {
         ]);
 
         $page = Page::create([
-            'title' => $validatedData['title'],
-            'route' => $validatedData['route'],
+            'title' => isset($validatedData['title']) ? $validatedData['title'] : null,
+            'route' => isset($validatedData['route']) ? $validatedData['route'] : null,
         ]);
 
         $this->createPageItemsFromValidatedData($page, $validatedData);
@@ -120,6 +120,9 @@ class PageController extends Controller {
         return response()->json('Page removed successfully');
     }
     private function createPageItemsFromValidatedData(Page $page, $validatedData) {
+        if( !isset($validatedData['page_items'])) {
+            return;
+        }
         $validatedData['page_items'] = collect($validatedData['page_items'])->sortBy('sort')->values()->all();
         $sort_counter = 0;
         foreach($validatedData['page_items'] as $pageItemData) {

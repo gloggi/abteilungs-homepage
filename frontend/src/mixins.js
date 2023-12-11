@@ -1,86 +1,63 @@
 import axios from 'axios'
-import {camelCase, snakeCase} from 'change-case'
-import {format } from 'date-fns'
+import { mapKeys, isPlainObject, isArray, snakeCase, camelCase } from 'lodash'
+import { format } from 'date-fns'
 export const api = axios.create({
-    baseURL: `${process.env.VUE_APP_BACKEND_URL}/api`,
-    headers:{
-        'Accept': 'application/json'
-    },
-    timeout: 1000
-  });
+  baseURL: `${process.env.VUE_APP_BACKEND_URL}/api`,
+  headers: {
+    'Accept': 'application/json'
+  },
+  timeout: 1000
+});
 export const mixin = {
-  computed:{
-    backendURL(){
+  computed: {
+    backendURL() {
       return process.env.VUE_APP_BACKEND_URL
     }
   },
-    methods:{
-      formatDateTime(datetime){
-        return format(new Date(datetime), 'dd.MM.yyyy HH:mm')
-      },
-        async callApi(method, url, data){
-            try{
-                const response = await api({method,url,data: this.camelToSnakeObject(data)  })
-                this.$store.commit("message/clear")
-                response.data = this.snakeToCamelObject(response.data)
-                return response
-            }catch(e){
-                console.log(e)
-                this.$store.commit("message/setError", e)
-                return JSON.stringify(e, Object.getOwnPropertyNames(e))
-            }
+  methods: {
+    formatDateTime(datetime) {
+      return format(new Date(datetime), 'dd.MM.yyyy HH:mm')
+    },
+    async callApi(method, url, data) {
+      try {
+        const response = await api({ method, url, data: this.camelToSnakeObject(data) })
+        this.$store.commit("message/clear")
+        response.data = this.snakeToCamelObject(response.data)
+        return response
+      } catch (e) {
+        console.log(e)
+        this.$store.commit("message/setError", e)
+        return JSON.stringify(e, Object.getOwnPropertyNames(e))
+      }
 
-        },
-        notifyUser(message){
-            this.$store.dispatch("notification/notify", message);
-        },
-        snakeToCamelObject(obj) {
-            if (!obj||obj instanceof FormData) {
-              return obj;
-            }
-          
-            if (Array.isArray(obj)) {
-              return obj.map((element) => {
-                if (typeof element === 'object' && element !== null) {
-                  return this.snakeToCamelObject(element);
-                }
-                return this.camelCase(element); 
-              });
-            }
-          
-            const result = {};
-            for (const [key, value] of Object.entries(obj)) {
-              if (typeof value == "function") {
-                continue;
-              }
-              const camelCaseKey = camelCase(key);
-              result[camelCaseKey] = typeof value === "object" ? this.snakeToCamelObject(value) : value;
-            }
-            return result;
-          }
-          ,
-          camelToSnakeObject(obj) {
-            if (!obj||obj instanceof FormData) {
-              return obj;
-            }
-
-            if (Array.isArray(obj)) {
-              return obj.map((element) => {
-                if (typeof element === 'object' && element !== null) {
-                  return this.camelToSnakeObject(element);
-                }
-                return this.snakeCase(element); 
-              });
-            }
-            const result = {};
-            for (const [key, value] of Object.entries(obj)) {
-                if(typeof value == "function"){
-                    continue
-                }
-              const camelCaseKey = snakeCase(key);
-              result[camelCaseKey] = typeof value === 'object' ? this.camelToSnakeObject(value) : value;
-            }
-            return result;
-          }
+    },
+    notifyUser(message) {
+      this.$store.dispatch("notification/notify", message);
+    },
+    snakeToCamelObject(obj) {
+      if (isPlainObject(obj)) {
+        const newObject = mapKeys(obj, (_, key) => camelCase(key));
+        Object.keys(newObject).forEach(key => {
+          newObject[key] = this.snakeToCamelObject(newObject[key]);
+        });
+        return newObject;
+      } else if (Array.isArray(obj)) {
+        return obj.map(element => this.snakeToCamelObject(element));
+      }
+      return obj;
     }
+    ,
+    camelToSnakeObject(obj) {
+      if (isPlainObject(obj)) {
+        const newObject = mapKeys(obj, (_, key) => snakeCase(key));
+        Object.keys(newObject).forEach(key => {
+          newObject[key] = this.camelToSnakeObject(newObject[key]);
+        });
+        return newObject;
+      } else if (Array.isArray(obj)) {
+        return obj.map(element => this.camelToSnakeObject(element));
+      }
+      return obj;
+    }
+  }
 }

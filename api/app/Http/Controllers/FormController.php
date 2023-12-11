@@ -45,7 +45,7 @@ class FormController extends Controller
         ]);
 
         $form = Form::create([
-            'name' => $validatedData['name'],
+            isset($validatedData['name']) ? $validatedData['name'] : null,
         ]);
 
         $this->createFieldsFromValidatedData($form, $validatedData);
@@ -120,6 +120,9 @@ class FormController extends Controller
         return response()->json('Form removed successfully');
     }
     private function createFieldsFromValidatedData(Form $form, $validatedData){
+        if( !isset($validatedData['fields'])) {
+            return;
+        }
         $validatedData['fields'] = collect($validatedData['fields'])->sortBy('sort')->values()->all();
         $sort_counter =0;
         foreach ($validatedData['fields'] as $fieldData) {
