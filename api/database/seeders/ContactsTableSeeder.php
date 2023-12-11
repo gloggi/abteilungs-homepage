@@ -79,10 +79,10 @@ class ContactsTableSeeder extends Seeder
                 'nickname' => 'Kaya',
                 'email' => 'kaya@pfadi-lagom.ch',
                 'role' => 'Roverstufenleiterin',
-                'file_id' => NULL,
+                'file_id' => 38,
                 'sort' => 0.0,
                 'created_at' => '2023-12-11 13:33:53',
-                'updated_at' => '2023-12-11 14:16:15',
+                'updated_at' => '2023-12-11 18:19:09',
             ),
             5 => 
             array (
@@ -105,10 +105,10 @@ class ContactsTableSeeder extends Seeder
                 'nickname' => 'Rissi',
                 'email' => 'rissi@pfadi-lagom.ch',
                 'role' => 'Abteilungsleiterin',
-                'file_id' => NULL,
+                'file_id' => 39,
                 'sort' => 0.0,
                 'created_at' => '2023-12-11 13:37:03',
-                'updated_at' => '2023-12-11 13:43:49',
+                'updated_at' => '2023-12-11 18:20:09',
             ),
         ));
         

@@ -40,7 +40,6 @@ export default {
         async getMedia() {
             try {
                 const response = await this.callApi("get", "/files");
-                console.log(response);
                 this.content = response.data.data;
                 this.listKey++;
             } catch (e) {
@@ -51,7 +50,6 @@ export default {
             if(this.items.includes(item)){
                 this.items = this.items.filter(i => i !== item);
                 this.$emit("selectItems", [...this.items])
-                console.log("unselected")
                 return
             }else if(this.items.length==this.maxSelect){
                 this.items.shift()

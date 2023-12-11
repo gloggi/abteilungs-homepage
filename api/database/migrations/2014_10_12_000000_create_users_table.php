@@ -14,7 +14,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nickname');
+            $table->string('firstname');
+            $table->string('lastname');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -23,7 +25,9 @@ return new class extends Migration
         });
 
         User::create([
-            'name' => 'Default User',
+            'nickname' => 'Admin',
+            'firstname' => 'Admin',
+            'lastname' => 'Admin',
             'email' => 'admin@gloggi.ch',
             'password' => bcrypt('123456'),
         ]);

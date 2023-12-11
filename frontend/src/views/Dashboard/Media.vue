@@ -58,7 +58,6 @@ export default {
         async getMedia() {
             try {
                 const response = await this.callApi("get", "/files");
-                console.log(response);
                 this.content = response.data.data;
                 this.listKey++;
             } catch (e) {

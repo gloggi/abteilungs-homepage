@@ -70,7 +70,6 @@ export default {
           `/sections`
         );
         this.sections = response.data.data;
-        console.log(this.sections)
       } catch (e) {
         console.log(e);
       }

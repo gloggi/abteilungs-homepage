@@ -37,17 +37,14 @@ export default {
   },
   methods:{
       printCredentials(){
-          console.log(this.form)
       },
       async login(){
           try{
           const response = await this.callApi("post", "/auth/login", this.form)
-          console.log(response.headers.location)
           await this.$store.dispatch("user/storeUser",response.headers.location)
           this.$router.push("/dashboard")
           }catch(e){
               console.log(e)
-             console.log("Error occured")
           }
       }
   }

@@ -139,6 +139,26 @@ class FilesTableSeeder extends Seeder
                 'created_at' => '2023-12-11 14:31:25',
                 'updated_at' => '2023-12-11 14:31:25',
             ),
+            12 => 
+            array (
+                'id' => 38,
+                'path' => '/storage/uploads/1702318745_1257752853.png',
+                'thumbnail' => '/storage/thumbnails/1702318745_1257752853.png',
+                'extension' => 'png',
+                'category' => 'general',
+                'created_at' => '2023-12-11 18:19:05',
+                'updated_at' => '2023-12-11 18:19:05',
+            ),
+            13 => 
+            array (
+                'id' => 39,
+                'path' => '/storage/uploads/1702318794_1110055061.png',
+                'thumbnail' => '/storage/thumbnails/1702318794_1110055061.png',
+                'extension' => 'png',
+                'category' => 'general',
+                'created_at' => '2023-12-11 18:19:54',
+                'updated_at' => '2023-12-11 18:19:54',
+            ),
         ));
         
         

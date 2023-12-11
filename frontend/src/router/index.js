@@ -21,6 +21,8 @@ import Locations from '../views/Dashboard/Locations'
 import Location from '../views/Dashboard/Location'
 import Events from '../views/Dashboard/Events'
 import Event from '../views/Dashboard/Event'
+import Users from '../views/Dashboard/Users'
+import User from '../views/Dashboard/User'
 
 const routes = [
   {
@@ -163,6 +165,19 @@ const routes = [
         path: 'events/:id',
         name: 'Event',
         component: Event
+      },
+      {
+        path: 'users',
+        name: 'Users',
+        component: Users,
+        meta: {
+          title: "Users",
+        }
+      },
+      {
+        path: 'users/:id',
+        name: 'User',
+        component: User
       },
       {
         path: 'settings',

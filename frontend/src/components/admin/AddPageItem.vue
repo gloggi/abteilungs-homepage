@@ -56,7 +56,6 @@ export default{
         },
         select(field){
             this.$emit("select", {...field, sort: this.sortKey+0.5});
-            console.log(this.sortKey+0.5)
             this.showModal= false
         },
         

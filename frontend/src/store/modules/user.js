@@ -22,7 +22,6 @@ export const user = {
             }catch(e){
                 console.log(e)
                 localStorage.removeItem("user")
-                console.log("Couldn't store the user")
             }
             
 

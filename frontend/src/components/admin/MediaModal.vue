@@ -1,12 +1,9 @@
 <template>
-  <Modal @close="close" title="Bilder">
-    <div class="relative">
+  <Modal @close="close" title="Bilder" class="overflow-y-scroll">
+    <div>
     
     <DragAndDropUpload @uploadedFile="gridKey++" />
-    <SelectMediaGrid :key="gridKey" :maxSelect="maxSelect" :category="category" :pre-selected="preSelected" @selectItems="selectItemsHandler" />
-   
-    
-    
+    <SelectMediaGrid class="overflow-y-scroll" style="max-height: 70vh;" :key="gridKey" :maxSelect="maxSelect" :category="category" :pre-selected="preSelected" @selectItems="selectItemsHandler" />
       
       <Button v-if="selected.length>0" class="absolute right-0 bottom-0" @click="selectAndClose">Auswählen</Button>
     </div>

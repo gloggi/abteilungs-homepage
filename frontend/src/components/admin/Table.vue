@@ -134,7 +134,6 @@ export default {
       },
     async getItems() {
       try {
-        console.log("entity", this.entity)
         const response = await this.callApi(
           "get",
           `/${this.entity}/?page=${this.page}`

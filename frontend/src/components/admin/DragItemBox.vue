@@ -40,15 +40,12 @@ export default {
         },
         dragStart(e){
             if(!this.allowDrag){
-                console.log("forbidden")
                 return
             }
             e.dataTransfer.setData("text/plain", JSON.stringify(this.item) );
-            console.log("allow")
             this.$emit("startedDragging", true)
         },
         dragEnd(){
-            console.log("end")
             this.allowDrag = false
             this.$emit("endedDragging", true)
             //this.$store.commit("drag/stopDragging")

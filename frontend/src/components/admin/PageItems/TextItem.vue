@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     change(){
-      console.log("Change")
     }
     
   },

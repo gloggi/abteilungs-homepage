@@ -58,7 +58,9 @@ export default {
 },
   data() {
     return {
-      content: undefined,
+      content: {
+        fields: []
+      },
       sections: undefined,
       showModal: false,
       loadedKey: 0,
@@ -82,8 +84,6 @@ export default {
       optionFields.push({name:event.target.value})
       event.target.value=""
       await this.$forceUpdate()
-      const target = document.getElementById(`selectFieldOption-${field.id}-${this.content.fields[changeFieldIndex].optionFields.length-1}`).getElementsByTagName('input')[0]
-      console.log(target.focus())
     },
     changeOrder(newField){
       const fieldIndex = this.content.fields.findIndex(f=>f.id==newField.id);
@@ -98,29 +98,6 @@ export default {
     deleteField(idAndType){
       this.content.fields= this.content.fields.filter(f=>`${f.id}${f.type}`!==idAndType)
       this.updateForm()
-    },
-    async getForm() {
-      try {
-        const response = await this.callApi(
-          "get",
-          `/forms/${this.$route.params.id}`
-        );
-        this.content = response.data;
-        this.loadedKey++;
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    async getForms() {
-      try {
-        const response = await this.callApi(
-          "get",
-          `/forms`
-        );
-        this.forms = response.data.data;
-      } catch (e) {
-        console.log(e);
-      }
     },
     async getSections() {
       try {
@@ -152,8 +129,6 @@ export default {
   },
   async created() {
     await this.getSections();
-    await this.getForms();
-    await this.getForm();
 
   },
 };

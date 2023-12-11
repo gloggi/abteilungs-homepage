@@ -25,14 +25,13 @@ export const mixin = {
         response.data = this.snakeToCamelObject(response.data)
         return response
       } catch (e) {
-        console.log(e)
-        this.$store.commit("message/setError", e)
+        this.notifyUser(e.response.data.message, true)
         return JSON.stringify(e, Object.getOwnPropertyNames(e))
       }
 
     },
-    notifyUser(message) {
-      this.$store.dispatch("notification/notify", message);
+    notifyUser(message, error=false) {
+      this.$store.dispatch("notification/notify", {message, error});
     },
     snakeToCamelObject(obj) {
       if (isPlainObject(obj)) {

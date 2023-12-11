@@ -3,7 +3,8 @@ export const notification = {
     state() {
         return {
             show: false,
-            message: undefined
+            message: undefined,
+            error: false
         }
     },
     mutations: {
@@ -15,11 +16,15 @@ export const notification = {
         },
         setMessage(state, message){
             state.message = message
+        },
+        setError(state, error){
+            state.error = error
         }
     },
     actions: {
-        notify(context, message){
+        notify(context, {message, error}){
             context.commit("setMessage", message)
+            context.commit("setError", error)
             context.commit("show")
             setTimeout(()=>{context.commit("hide")}, 3000)
         }

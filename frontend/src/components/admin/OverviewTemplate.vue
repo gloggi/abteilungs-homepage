@@ -59,8 +59,8 @@ export default {
         },
         async createEntity() {
             try {
-                const response = await this.callApi("post", `/${this.entity}`, {});
-                this.$router.push({ name: this.pushAfterCreationTo, params: { id: response.data.id } });
+                //const response = await this.callApi("post", `/${this.entity}`, {});
+                this.$router.push({ name: this.pushAfterCreationTo, params: { id: "new" } });
             } catch (e) {
                 console.log(e);
             }

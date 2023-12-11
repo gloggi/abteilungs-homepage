@@ -45,7 +45,9 @@ export default {
 },
   data() {
     return {
-      content: undefined,
+      content: {
+        pageItems: []
+      },
       loadedKey: 0,
       activeItemIri: undefined,
       preSelectedImages: undefined,
@@ -67,6 +69,9 @@ export default {
   methods: {
     async getPage() {
       try {
+        if(this.$route.params.id==="new"){
+          return;
+        }
         const response = await this.callApi(
           "get",
           `/pages/${this.$route.params.id}`
@@ -104,9 +109,7 @@ export default {
 
     },
     deleteItem(idAndType){
-      console.log(this.content.pageItems.length)
       this.content.pageItems= this.content.pageItems.filter(p=>`${p.id}${p.type}`!==idAndType)
-      console.log(this.content.pageItems.length)
       this.updatePage()
     },
     changeImageItem(event){
@@ -116,10 +119,8 @@ export default {
       this.content.pageItems[itemIndex].files = files;
     },
     changeFormItem(event){
-      console.log(event)
       const pageItemId = event.id;
       const formId = event.formId;
-      console.log(pageItemId, formId)
       const itemIndex = this.content.pageItems.findIndex(p=>p.id==pageItemId&&p.type=="formItem");
 
       this.content.pageItems[itemIndex].formId = formId;

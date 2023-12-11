@@ -39,11 +39,11 @@ export default {
     methods: {
         dragStart(e) {
             e.dataTransfer.setData("text/plain", JSON.stringify(this.customMenuItem));
-            console.log("allow")
+           
             this.$emit("startedDragging", true)
         },
         dragEnd() {
-            console.log("end")
+           
             this.allowDrag = false
             this.$emit("endedDragging", true)
         }

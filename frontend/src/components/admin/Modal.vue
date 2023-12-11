@@ -3,7 +3,7 @@
     
 <Fade>
   <div class="flex w-full h-full justy-center items-center p-56">
-  <div class="relative w-full mx-auto p-5 border shadow-lg rounded-lg bg-white">
+  <div class="relative w-full mx-auto p-5 border shadow-lg rounded-lg bg-white max-h-screen">
   
   <button @click="handleClose" class="absolute top-2 right-2 rounded-bl-lg text-gray-400"><font-awesome-icon :icon="icons.faXmark" class="h-6 w-6 text-gray-400"/></button>
 
@@ -13,7 +13,7 @@
    </div>
    
  
-   <div class="px-5 overflow-y-auto h-full ">
+   <div class="px-5 overflow-y-scroll h-full">
       <slot ></slot>
    </div>
    </div>

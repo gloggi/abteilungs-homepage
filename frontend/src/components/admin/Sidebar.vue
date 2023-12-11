@@ -11,7 +11,7 @@
             </div>
             <div v-else
                 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 text-center mx-auto p-5 cursor-pointer">
-               A
+               {{settings.division_name || "Abteilungshomepage"}}
             </div>
         </router-link>
         <SidebarItem to="/dashboard/menu" :icon="icons.faEllipsis">
@@ -23,7 +23,7 @@
         <SidebarItem to="/dashboard/groups" :icon="icons.faUsers">
             Groups
         </SidebarItem>
-        <SidebarItem to="/dashboard/contacts" :icon="icons.faUser">
+        <SidebarItem to="/dashboard/contacts" :icon="icons.faAddressCard">
             Contacts
         </SidebarItem>
         <SidebarItem to="/dashboard/sections" :icon="icons.faStairs">
@@ -41,6 +41,9 @@
         <SidebarItem to="/dashboard/media" :icon="icons.faPhotoVideo">
             Media
         </SidebarItem>
+        <SidebarItem to="/dashboard/users" :icon="icons.faUser">
+            Users
+        </SidebarItem>
         <SidebarItem to="/dashboard/settings" :icon="icons.faGear">
             Settings
         </SidebarItem>
@@ -54,7 +57,7 @@
 </template>
 
 <script>
-import { faStairs, faBookOpen, faPhotoVideo, faUsers, faUser, faRectangleList, faEllipsis, faGear, faLocationDot, faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import { faStairs, faBookOpen, faPhotoVideo, faUsers, faUser, faRectangleList, faEllipsis, faGear, faLocationDot, faCalendarDays, faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 export default {
     components: { SidebarItem },
@@ -71,7 +74,8 @@ export default {
                 faEllipsis,
                 faGear,
                 faLocationDot,
-                faCalendarDays
+                faCalendarDays,
+                faAddressCard
 
             }
         }

@@ -33,8 +33,8 @@ class PageController extends Controller {
     public function store(Request $request) {
 
         $validatedData = $request->validate([
-            'title' => 'nullable|string|max:255',
-            'route' => 'nullable|string|max:255',
+            'title' => 'string|max:255|required',
+            'route' => 'string|max:255|required',
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
