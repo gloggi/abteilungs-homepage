@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         isImage() {
-            const imageTypes = ["png", "jpeg", "gif"];
+            const imageTypes = ["png", "jpeg", "gif","svg"];
             return imageTypes.includes(this.selectedFile.extension);
         },
         async getMedia() {

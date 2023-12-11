@@ -1,26 +1,6 @@
 <template>
   <div v-if="content">
-    <Card class="flex justify-between items-center mb-2">
-      <h2 class="font-extrabold text-4xl">{{ content.name }}</h2>
-    </Card>
-    <div class="flex justify-between mb-2">
-      <router-link :to="{ name: 'Groups' }">
-        <button class="rounded-l-lg bg-white p-1">
-          <font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6 text-gray-500" />
-        </button>
-      </router-link>
-      <div>
-        <button
-          @click="deletePage"
-          class="bg-white p-1 border-r border-l border-gray-200"
-        >
-        <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
-        </button>
-        <button class="rounded-r-lg bg-white p-1" @click="updateGroup">
-          <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6 text-gray-500" />
-        </button>
-      </div>
-    </div>
+    <ItemHeaderTemplate :title="content.name" :content="content" entity="groups" backLinkTo="Groups" />
     <Card class="mt-4">
       <div class="flex flex-row space-x-2 h-full w-full">
         <LogoDisplay :logo="content.file" @selectImage="updateLogo"/>
@@ -44,13 +24,15 @@ import Select from "../../components/admin/Select.vue";
 import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 import MultipleSelect from "../../components/admin/MultipleSelect.vue";
+import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 export default {
   components: {
     Card,
     TextInput,
     Select,
     LogoDisplay,
-    MultipleSelect
+    MultipleSelect,
+    ItemHeaderTemplate
 },
   data() {
     return {

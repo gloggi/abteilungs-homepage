@@ -3,7 +3,7 @@
     name="Pages"
     entity="pages"
     titles="Titel,Permalink"
-    columns="Titel,Permalink"
+    columns="title:link(id),route"
     pushAfterCreationTo="Page" />
 </template>
 

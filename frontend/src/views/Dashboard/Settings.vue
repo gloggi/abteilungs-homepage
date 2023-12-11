@@ -3,7 +3,6 @@
         <h2 class="font-extrabold text-4xl">Settings</h2>
     </div>
     <div class="flex justify-end mb-2">
-        
       <div>
         <button class="rounded-r-lg bg-white p-1" @click="updateSettings">
           <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6 text-gray-500" />

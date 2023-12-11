@@ -1,25 +1,7 @@
 <template>
   <div v-if="content" :key="loadedKey">
-    <Card class="flex justify-between items-center mb-2">
-      <h2 class="font-extrabold text-4xl">{{ content.name }}</h2>
-    </Card>
-    <div class="flex justify-between mb-2">
-      <router-link :to="{ name: 'Forms' }">
-        <button class="rounded-l-lg bg-white p-1">
-          <font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6 text-gray-500" />
-        </button>
-      </router-link>
-      <div>
-        <button @click="deletePage" class="bg-white p-1 border-r border-l border-gray-200">
-          <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
-        </button>
-        <button class="rounded-r-lg bg-white p-1" @click="updateForm">
-          <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6 text-gray-500" />
-        </button>
-      </div>
-    </div>
+    <ItemHeaderTemplate :title="content.name" :content="content" entity="forms" backLinkTo="Forms" />
     <Card class="mt-4">
-
       <div class="space-y-2 w-full">
         <TextInput label="Name" type="text" v-model="content.name" />
         <TextInput label="E-Mail" type="text" v-model="content.email" />
@@ -64,13 +46,15 @@ import { faArrowsRotate, faChevronLeft, faTrash, faPlus, faGripVertical } from "
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import AddFormField from "../../components/admin/AddFormField.vue";
 import DragItemBox from "../../components/admin/DragItemBox.vue";
+import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 
 export default {
   components: {
     Card,
     TextInput,
     AddFormField,
-    DragItemBox
+    DragItemBox,
+    ItemHeaderTemplate
 },
   data() {
     return {
