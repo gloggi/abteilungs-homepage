@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { mapKeys, isPlainObject, isArray, snakeCase, camelCase } from 'lodash'
+import { mapKeys, isPlainObject, snakeCase, camelCase } from 'lodash'
 import { format } from 'date-fns'
 export const api = axios.create({
-  baseURL: `${process.env.VUE_APP_BACKEND_URL}/api`,
+  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
   headers: {
     'Accept': 'application/json'
   },
@@ -11,7 +11,7 @@ export const api = axios.create({
 export const mixin = {
   computed: {
     backendURL() {
-      return process.env.VUE_APP_BACKEND_URL
+      return import.meta.env.VITE_BACKEND_URL
     }
   },
   methods: {

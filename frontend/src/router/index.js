@@ -7,22 +7,22 @@ import Pages from '../views/Dashboard/Pages.vue'
 import Page from '../views/Dashboard/Page.vue'
 import FileUploadTest from '../views/Dashboard/FileUploadTest.vue'
 import Media from '../views/Dashboard/Media.vue'
-import Sections from '../views/Dashboard/Sections'
-import Section from '../views/Dashboard/Section'
-import Groups from '../views/Dashboard/Groups'
-import Group from '../views/Dashboard/Group'
-import Contacts from '../views/Dashboard/Contacts'
-import Contact from '../views/Dashboard/Contact'
-import Forms from '../views/Dashboard/Forms'
-import Form from '../views/Dashboard/Form'
-import Menu from '../views/Dashboard/Menu'
-import Settings from '../views/Dashboard/Settings'
-import Locations from '../views/Dashboard/Locations'
-import Location from '../views/Dashboard/Location'
-import Events from '../views/Dashboard/Events'
-import Event from '../views/Dashboard/Event'
-import Users from '../views/Dashboard/Users'
-import User from '../views/Dashboard/User'
+import Sections from '../views/Dashboard/Sections.vue'
+import Section from '../views/Dashboard/Section.vue'
+import Groups from '../views/Dashboard/Groups.vue'
+import Group from '../views/Dashboard/Group.vue'
+import Contacts from '../views/Dashboard/Contacts.vue'
+import Contact from '../views/Dashboard/Contact.vue'
+import Forms from '../views/Dashboard/Forms.vue'
+import Form from '../views/Dashboard/Form.vue'
+import Menu from '../views/Dashboard/Menu.vue'
+import Settings from '../views/Dashboard/Settings.vue'
+import Locations from '../views/Dashboard/Locations.vue'
+import Location from '../views/Dashboard/Location.vue'
+import Events from '../views/Dashboard/Events.vue'
+import Event from '../views/Dashboard/Event.vue'
+import Users from '../views/Dashboard/Users.vue'
+import User from '../views/Dashboard/User.vue'
 
 const routes = [
   {
@@ -192,7 +192,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 router.beforeEach((to, from, next) => {
