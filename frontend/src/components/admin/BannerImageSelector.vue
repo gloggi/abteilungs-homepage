@@ -13,7 +13,7 @@
         </button>
       </div>
     </Card>
-    <MediaModal v-if="showModal" @close="showModal = false" :pre-selected="preSelectedImages" @select="selectHandler" :max-select="2" />
+    <MediaModal v-if="showModal" @close="showModal = false" :pre-selected="preSelectedImages" @select="selectHandler" :max-select="1000" />
   </template>
   
   <script>

@@ -22,8 +22,12 @@ export default {
     },
     methods: {
         async getPage() {
+            var pageRoute = this.$route.path.substring(1)
+            if(pageRoute===""){
+                pageRoute = 0
+            }
             try {
-                const response = await this.callApi('get', `/pages/${this.pageId}`);
+                const response = await this.callApi('get', `/pages/${pageRoute}`);
                 this.page = response.data;
             } catch (error) {
                 console.log(error);
@@ -44,11 +48,17 @@ export default {
 
 
     },
+    watch: {
+    '$route'() {
+      this.getPage()
+    },
+},
     async created() {
         await this.getMenuItems();
         if (!this.pageId && this.menuItems.length > 0) {
             this.pageId = this.menuItems.find(item => item.pageId).pageId;
         }
+        console.log(this.$route.path.substring(1))
         await this.getPage();
         document.title = this.page.title;
         

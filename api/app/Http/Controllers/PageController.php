@@ -108,8 +108,15 @@ class PageController extends Controller {
         ], 200);
     }
 
-    public function show($id) {
-        $page = Page::with('files')->find($id);
+    public function show($page) {
+        if($page=="0"){
+            $page = null;
+        }
+        if (is_numeric($page)) {
+            $page = Page::with('files')->find($page);
+        } else {
+            $page = Page::with('files')->where('route', $page)->first();
+        }
         return response()->json(array_merge($page->toArray(), [
             'page_items' => $page->getAllItems(),
         ]), 200);

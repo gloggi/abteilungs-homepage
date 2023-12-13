@@ -3,12 +3,14 @@
         <div class="w-full md:w-[900px] bg-white py-12">
             <template v-for="pageItem in page.pageItems" :key="pageItem.id">
                 <TextItem v-if="pageItem.type=='textItem'" :item="pageItem" />
+                <ImageItem v-if="pageItem.type=='imageItem'" :item="pageItem" />
             </template>
         </div>
         
     </div>
 </template>
 <script>
+import ImageItem from './ImageItem.vue';
 import TextItem from './TextItem.vue';
 
 export default {
@@ -19,6 +21,6 @@ export default {
     methods: {},
     async created() {
     },
-    components: { TextItem }
+    components: { TextItem, ImageItem }
 }
 </script>
