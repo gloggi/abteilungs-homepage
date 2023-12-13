@@ -1,3 +1,5 @@
+import { api } from '../../mixins';
+import { snakeToCamelObject } from '../../utils/caseConversionUtils';
 export const user = {
     namespaced: true,
     state() {
@@ -14,18 +16,14 @@ export const user = {
         },
     },
     actions: {
-        async storeUser(context, user){
-            try{
-                
-                context.commit("setUser", user)
-                localStorage.user = user
-            }catch(e){
-                console.log(e)
-                localStorage.removeItem("user")
-            }
-            
-
-        }
+            async getUser({ commit }) {
+              try {
+                const response = await api.get('user/info');
+                commit('setUser', snakeToCamelObject(response.data));
+              } catch (error) {
+                console.error( error);
+              }
+          }
     },
     getters: {}
 }

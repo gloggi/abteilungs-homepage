@@ -9,6 +9,7 @@ use App\Models\Invite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -18,23 +19,25 @@ class AuthController extends Controller
      */
     public function createUser(Request $request)
     {
-        if(!Invite::where('token', $request->get('token'))->first()){
+        if (!Invite::where('token', $request->get('token'))->first()) {
             return response()->json([
                 'status' => false,
                 'message' => 'Token is invalid'
             ], 404);
         }
-        
+
         try {
             //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'name' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make($request->all(),
+                [
+                    'nickname' => '',
+                    'firstname' => 'required',
+                    'lastname' => 'required',
+                    'email' => 'required|email|unique:users,email',
+                    'password' => 'required'
+                ]);
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -43,7 +46,9 @@ class AuthController extends Controller
             }
 
             $user = User::create([
-                'name' => $request->name,
+                'nickname' => $request->nickname,
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
@@ -71,13 +76,13 @@ class AuthController extends Controller
     public function loginUser(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(), 
-            [
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make($request->all(),
+                [
+                    'email' => 'required|email',
+                    'password' => 'required'
+                ]);
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -85,7 +90,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt($request->only(['email', 'password']))){
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
@@ -107,4 +112,41 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    public function redirectToProvider(Request $request)
+    {
+        $url = Socialite::driver('midata')->stateless()->redirect()->getTargetUrl();
+        return response()->json(['url' => $url]);
+    }
+
+    public function handleProviderCallback(Request $request)
+    {
+        
+            $tokenResponse = Socialite::driver('midata')->getAccessTokenResponse($request->code);
+            $accessToken = $tokenResponse['access_token'];
+            $midataUser = Socialite::driver('midata')->userFromToken($accessToken);
+
+            $user = User::where('midata_id', $midataUser->id)->first();
+           
+            if(!$user){
+                $user = User::create([
+                    'nickname' => $midataUser->attributes['nickname'],
+                    'firstname' => $midataUser->attributes['firstname'],
+                    'lastname' => $midataUser->attributes['lastname'],
+                    'email' => $midataUser->attributes['email'],
+                    'password' => '',
+                    'midata_id'=> $midataUser->attributes['id']
+                ]);
+            }
+            
+            return response()->json([
+                'status' => true,
+                'message' => 'User Logged In Successfully',
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200);
+
+        
+    }
+
+
 }

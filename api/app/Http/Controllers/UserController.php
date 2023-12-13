@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 
@@ -44,6 +45,19 @@ class UserController extends Controller
     {
         $user = User::find($id);
         return response()->json($user);
+    }
+
+    public function getUserInfo(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+            ], 404);
+        }
+
+        return response()->json($user, 200);
     }
 
     public function update(Request $request, $id)

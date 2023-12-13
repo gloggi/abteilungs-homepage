@@ -17,7 +17,7 @@ export default {
     
   },
   async created(){
-    await this.$store.dispatch("user/storeUser",localStorage.user)
+    await this.$store.dispatch('user/getUser');
     await this.$store.dispatch('settings/getSettings');
     this.setupStyles()
    

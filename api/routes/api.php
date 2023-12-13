@@ -35,6 +35,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
+Route::get('/auth/midata', [AuthController::class, 'redirectToProvider']);
+Route::post('/auth/midata/callback', [AuthController::class, 'handleProviderCallback']);
+
+Route::middleware('auth:sanctum')->get('/user/info', [UserController::class, 'getUserInfo']);
+
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);

@@ -4,7 +4,8 @@ import { snakeToCamelObject as sToCO, camelToSnakeObject as cToSO } from './util
 export const api = axios.create({
   baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
   headers: {
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
   },
   timeout: 1000
 });
