@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { mapKeys, isPlainObject, snakeCase, camelCase } from 'lodash'
 import { format } from 'date-fns'
+import { snakeToCamelObject as sToCO, camelToSnakeObject as cToSO } from './utils/caseConversionUtils';
 export const api = axios.create({
   baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
   headers: {
@@ -12,6 +12,9 @@ export const mixin = {
   computed: {
     backendURL() {
       return import.meta.env.VITE_BACKEND_URL
+    },
+    settings(){
+      return this.$store.state.settings.settings || {}
     }
   },
   methods: {
@@ -34,29 +37,21 @@ export const mixin = {
       this.$store.dispatch("notification/notify", {message, error});
     },
     snakeToCamelObject(obj) {
-      if (isPlainObject(obj)) {
-        const newObject = mapKeys(obj, (_, key) => camelCase(key));
-        Object.keys(newObject).forEach(key => {
-          newObject[key] = this.snakeToCamelObject(newObject[key]);
-        });
-        return newObject;
-      } else if (Array.isArray(obj)) {
-        return obj.map(element => this.snakeToCamelObject(element));
-      }
-      return obj;
+      return sToCO(obj);
     }
     ,
     camelToSnakeObject(obj) {
-      if (isPlainObject(obj)) {
-        const newObject = mapKeys(obj, (_, key) => snakeCase(key));
-        Object.keys(newObject).forEach(key => {
-          newObject[key] = this.camelToSnakeObject(newObject[key]);
-        });
-        return newObject;
-      } else if (Array.isArray(obj)) {
-        return obj.map(element => this.camelToSnakeObject(element));
+      return cToSO(obj);
+    },
+    createNewCssClass(className, styles) {
+      const styleTag = document.createElement('style');
+      document.head.appendChild(styleTag);
+      const styleSheet = styleTag.sheet || styleTag.styleSheet;
+      if (styleSheet.insertRule) {
+          styleSheet.insertRule(`.${className} { ${styles} }`, styleSheet.cssRules.length);
+      } else if (styleSheet.addRule) {
+          styleSheet.addRule(`.${className}`, styles);
       }
-      return obj;
-    }
+  },
   }
 }

@@ -1,32 +1,16 @@
 <template>
   <DragItemBox :boxTitle="boxTitle" :item="item" @delete="event=>$emit('delete', event)" @startedDragging="$emit('startedDragging')" @endedDragging="$emit('endedDragging')" >
-  <Card class="space-y-2">
-    <div class="grid grid-cols-2 gap-2 mt-3">
-      <div v-for="(image, i) in preSelectedImages" :key="i" class="relative">
-        <button @click="removeSelectedImage(image)" class="absolute bottom-1 right-1">
-        <font-awesome-icon :icon="icons.faTrash" class="w-3 p-1 text-white" />  
-        </button>
-      <img  :src="`${backendURL}${image.thumbnail}`"
-        class="w-full h-32 object-cover rounded-md" />
-      </div>
-      <button @click="showModal = true" class="rounded-md border border-gray-200 flex justify-center items-center h-32">
-        <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 p-5 text-gray-500" />
-      </button>
-    </div>
-   
-  </Card>
+  <BannerImageSelector :item="item" @changeImages="changeImages" />
 </DragItemBox>
-  <MediaModal v-if="showModal" @close="showModal = false" :pre-selected="preSelectedImages" @select="selectHandler" :max-select="2" />
 </template>
 
 <script>
-import MediaModal from '../MediaModal.vue';
 import { faXmark, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
-import Card from '../Card.vue';
 import DragItemBox from '../DragItemBox.vue';
+import BannerImageSelector from '../BannerImageSelector.vue';
 
 export default {
-  components: { MediaModal, Card, DragItemBox },
+  components: { DragItemBox, BannerImageSelector },
   props: ["item", "modelValue", "boxTitle"],
   emits: ["updatePage", "changeImages","delete", "startedDragging", "endedDragging"],
   data() {

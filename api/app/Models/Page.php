@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    protected $fillable = ['title', 'route'];
+    protected $fillable = ['title', 'route','file_ids'];
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'page_file');
+        
+    }
     
     public function textItems()
     {

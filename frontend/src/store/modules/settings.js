@@ -1,4 +1,5 @@
 import { api } from '../../mixins';
+import { snakeToCamelObject } from '../../utils/caseConversionUtils';
 
 export const settings = {
     namespaced: true,
@@ -16,7 +17,7 @@ export const settings = {
         async getSettings({ commit }) {
           try {
             const response = await api.get('settings');
-            commit('setSettings', response.data);
+            commit('setSettings', snakeToCamelObject(response.data));
           } catch (error) {
             console.error( error);
           }

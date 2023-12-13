@@ -26,7 +26,7 @@ import User from '../views/Dashboard/User.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '',
     name: 'Home',
     component: Home
   },
@@ -187,8 +187,15 @@ const routes = [
           title: "Settings",
         }
       },
-    ]
-  }
+    ],
+    
+  },
+  {
+    path: '/:path',
+    name: 'Home2',
+    component: Home
+  },
+  
 ]
 
 const router = createRouter({

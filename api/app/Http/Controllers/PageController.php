@@ -34,7 +34,7 @@ class PageController extends Controller {
 
         $validatedData = $request->validate([
             'title' => 'string|max:255|required',
-            'route' => 'string|max:255|required',
+            'route' => 'string|max:255|unique:pages|nullable',
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
@@ -64,6 +64,7 @@ class PageController extends Controller {
         $validatedData = $request->validate([
             'title' => 'nullable|string|max:255',
             'route' => 'nullable|string|max:255',
+            'files' => 'nullable',
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
@@ -77,9 +78,10 @@ class PageController extends Controller {
 
         $page = Page::find($id);
         $page->title = $validatedData['title'];
-        $page->route = $validatedData['route'];
+        $page->route = $validatedData['route']==null ? null : $validatedData['route'];
+        $fileIds = isset($validatedData['files']) ? array_column($validatedData['files'], 'id') : [];
+        $page->files()->sync($fileIds);
         $page->save();
-
         $this->createPageItemsFromValidatedData($page, $validatedData);
 
         $currentPageItems = $page->getAllItems();
@@ -107,7 +109,7 @@ class PageController extends Controller {
     }
 
     public function show($id) {
-        $page = Page::find($id);
+        $page = Page::with('files')->find($id);
         return response()->json(array_merge($page->toArray(), [
             'page_items' => $page->getAllItems(),
         ]), 200);

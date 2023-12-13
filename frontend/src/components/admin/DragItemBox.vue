@@ -1,6 +1,6 @@
 <template>
-    <ItemBox class="flex flex-col items-stretch px-0 pb-1  pt-1 space-y-2 " draggable="true" :title="boxTitle" @dragstart="dragStart" @dragend="dragEnd" >
-        <div id="dragbutton" class="w-full flex justify-center text-gray-300" @mouseover="mouseIsOver" >
+    <ItemBox class="flex flex-col items-stretch px-0 pb-1  pt-1 space-y-2 " :draggable="allowDrag" :title="boxTitle" @dragstart="dragStart" @dragend="dragEnd" >
+        <div id="dragbutton" class="w-full flex justify-center text-gray-300" @mouseover="allowDrag=true" @mouseleave="allowDrag=false" >
             <font-awesome-icon :icon="icons.faGripHorizontal" />
         </div>
         <div class="w-full rounded-l-lg px-3">
@@ -34,10 +34,6 @@ export default {
         }
     },
     methods: {
-        mouseIsOver(){
-            this.allowDrag=true
-
-        },
         dragStart(e){
             if(!this.allowDrag){
                 return

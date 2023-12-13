@@ -4,6 +4,11 @@
     <Card>
       <TextInput label="Title" v-model="content.title" />
       <TextInput class="mt-2" label="Route" v-model="content.route" />
+      <div class="pt-2">
+        <FormLabel>Header Images</FormLabel>
+        <BannerImageSelector :item="content" @changeImages="changeHeaderImages" />
+      </div>
+      
     </Card>
     <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="-1" />
     <div v-for="(pageItem, i) in content.pageItems" :key="i">
@@ -31,6 +36,8 @@ import {kebabCase} from 'lodash';
 import FormItem from "../../components/admin/PageItems/FormItem.vue";
 import ContactItem from "../../components/admin/PageItems/ContactItem.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
+import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
+import FormLabel from "../../components/admin/FormLabel.vue";
 
 export default {
   components: {
@@ -41,11 +48,14 @@ export default {
     ImageItem,
     FormItem,
     ContactItem,
-    ItemHeaderTemplate
+    ItemHeaderTemplate,
+    BannerImageSelector,
+    FormLabel
 },
   data() {
     return {
       content: {
+        files: [],
         pageItems: []
       },
       loadedKey: 0,
@@ -124,6 +134,10 @@ export default {
       const itemIndex = this.content.pageItems.findIndex(p=>p.id==pageItemId&&p.type=="formItem");
 
       this.content.pageItems[itemIndex].formId = formId;
+    },
+    changeHeaderImages(event){
+      this.content.files = event.files;
+      this.updatePage()
     },
     slugyfy(text){
       return kebabCase(text)

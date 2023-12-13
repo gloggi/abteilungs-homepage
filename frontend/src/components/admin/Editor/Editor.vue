@@ -41,11 +41,14 @@
             :active="editor.isActive('strike')">
             strike
           </EditorButton>
+          <EditorButton @click="editor.chain().focus().toggleBulletList().run()" :active="editor.isActive('bulletList')">
+            <font-awesome-icon class="h-5 w-5" :icon="icons.faList" />
+          </EditorButton>
           <EditorButton @click="addImage">
             Add Image
           </EditorButton>
-          <EditorButton @click="swapEditorContent">
-            HTML
+          <EditorButton @click="swapEditorContent" :active="showHTML">
+            <font-awesome-icon class="h-5 w-5" :icon="icons.faCode" />
           </EditorButton>
         </div>
       </div>
@@ -94,10 +97,9 @@
       </EditorButton>
 
     </div>
-    <editor-content v-if="!showHTML" :editor="editor" />
-    <textarea v-else :value="editor.getHTML()"
+    <editor-content v-if="!showHTML" :editor="editor" class="bg-white rounded-lg" />
+    <textarea v-else v-model="inputModel"
       class="appearance-none border-0 w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 h-48 overflow-scroll">
-
     </textarea>
   </div>
 </template>
@@ -106,10 +108,12 @@
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import HeadingExtension from '@tiptap/extension-heading';
+import ParagraphExtension from '@tiptap/extension-paragraph';
+import BulletlistExtension from '@tiptap/extension-bullet-list';
 import Image from '@tiptap/extension-image'
 import { mergeAttributes } from '@tiptap/core'
 import EditorButton from './EditorButton.vue'
-import { faArrowRotateLeft, faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateLeft, faArrowRotateRight, faList, faCode } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   props: ["modelValue"],
@@ -122,9 +126,11 @@ export default {
     return {
       editor: null,
       showHTML: false,
-      icons:{
-        faArrowRotateLeft, 
-        faArrowRotateRight
+      icons: {
+        faArrowRotateLeft,
+        faArrowRotateRight,
+        faList,
+        faCode
       }
     }
   },
@@ -156,9 +162,23 @@ export default {
       this.editor.commands.setContent(value, false)
     },
   },
+  computed: {
+    inputModel: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit('update:modelValue', value);
+      }
+    }
+  },
   mounted() {
     this.editor = new Editor({
-      content: this.modelValue,
+      content: this.inputModel,
+      attributes: {
+      class: 'h-full',
+    },
+      
       onBlur: () => {
         // HTML
         this.$emit('update:modelValue', this.editor.getHTML())
@@ -169,6 +189,11 @@ export default {
       extensions: [
         StarterKit,
         Image,
+        ParagraphExtension.configure({
+          HTMLAttributes: {
+            class: 'main-text',
+          },
+        }),
         HeadingExtension.configure({ levels: [1, 2] }).extend({
           levels: [1, 2],
           renderHTML({ node, HTMLAttributes }) {
@@ -176,7 +201,7 @@ export default {
               ? node.attrs.level
               : this.options.levels[0]
             const classes = {
-              1: 'font-bold text-4xl',
+              1: 'font-bold text-4xl text-primary',
               2: 'font-bold text-2xl',
               3: 'font-bold text-xl',
             }
@@ -188,11 +213,16 @@ export default {
               0,
             ]
           },
+        }),
+        BulletlistExtension.configure({
+          HTMLAttributes: {
+            class: 'list-disc pl-6',
+          },
         })
       ],
       editorProps: {
         attributes: {
-          class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 h-48 overflow-scroll',
+          class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 min-h-[12rem] overflow-scroll',
         },
       },
     })
@@ -203,3 +233,4 @@ export default {
   },
 }
 </script>
+<style></style>

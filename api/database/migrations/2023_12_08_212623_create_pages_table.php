@@ -9,8 +9,14 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('route')->nullable();
+            $table->string('title');
+            $table->string('route')->unique()->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('page_file', function (Blueprint $table) {
+            $table->foreignId('page_id')->constrained()->onDelete('cascade');
+            $table->foreignId('file_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -61,6 +67,7 @@ class CreatePagesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('pages');
+        Schema::dropIfExists('page_file');
         Schema::dropIfExists('text_items');
         Schema::dropIfExists('image_items');
         Schema::dropIfExists('image_item_file');
