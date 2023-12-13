@@ -1,13 +1,22 @@
 import axios from 'axios'
 import { format } from 'date-fns'
 import { snakeToCamelObject as sToCO, camelToSnakeObject as cToSO } from './utils/caseConversionUtils';
+
 export const api = axios.create({
   baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
   headers: {
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('token')}`
+    'Accept': 'application/json'
   },
   timeout: 1000
+});
+api.interceptors.request.use(function (config) {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, function (error) {
+  return Promise.reject(error);
 });
 export const mixin = {
   computed: {

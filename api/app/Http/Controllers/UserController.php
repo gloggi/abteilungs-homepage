@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
-        $users = User::paginate($perPage, ['*'], 'page', $page);
+        $users = User::with('roles')->paginate($perPage, ['*'], 'page', $page);
         $data = $users->items();
         $meta = [
             'current_page' => $users->currentPage(),

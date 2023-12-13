@@ -121,31 +121,50 @@ class AuthController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
-        
-            $tokenResponse = Socialite::driver('midata')->getAccessTokenResponse($request->code);
-            $accessToken = $tokenResponse['access_token'];
-            $midataUser = Socialite::driver('midata')->userFromToken($accessToken);
 
-            $user = User::where('midata_id', $midataUser->id)->first();
-           
-            if(!$user){
-                $user = User::create([
-                    'nickname' => $midataUser->attributes['nickname'],
-                    'firstname' => $midataUser->attributes['firstname'],
-                    'lastname' => $midataUser->attributes['lastname'],
-                    'email' => $midataUser->attributes['email'],
-                    'password' => '',
-                    'midata_id'=> $midataUser->attributes['id']
-                ]);
+        $tokenResponse = Socialite::driver('midata')->getAccessTokenResponse($request->code);
+        $accessToken = $tokenResponse['access_token'];
+        $midataUser = Socialite::driver('midata')->userFromToken($accessToken);
+
+        $user = User::where('midata_id', $midataUser->id)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'nickname' => $midataUser->attributes['nickname'],
+                'firstname' => $midataUser->attributes['firstname'],
+                'lastname' => $midataUser->attributes['lastname'],
+                'email' => $midataUser->attributes['email'],
+                'password' => '',
+                'midata_id' => $midataUser->attributes['id']
+            ]);
+            if ($this->hasRole($midataUser->user, 'PowerUser')) {
+                $user->assignRole('admin');
+            } else if ($this->hasRole($midataUser->user, 'Abteilungsleiter*in')) {
+                $user->assignRole('al');
+            } else if ($this->hasRole($midataUser->user, 'Einheitsleiter*in')) {
+                $user->assignRole('einheitsleiter');
             }
-            
-            return response()->json([
-                'status' => true,
-                'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
+        }
+        return response()->json([
+            'status' => true,
+            'message' => 'User Logged In Successfully',
+            'token' => $user->createToken("API TOKEN")->plainTextToken
+        ], 200);
 
-        
+
+    }
+
+    protected function hasRole($data, $roleName)
+    {
+        if (isset($data['roles']) && is_array($data['roles'])) {
+            foreach ($data['roles'] as $role) { 
+                
+                if (isset($role['role_name']) && $role['role_name'] === $roleName) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

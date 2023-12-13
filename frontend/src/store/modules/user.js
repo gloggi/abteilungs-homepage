@@ -5,11 +5,15 @@ export const user = {
     state() {
         return {
             user: undefined,
+            token: undefined
         }
     },
     mutations: {
         setUser(state, user){
             state.user = user
+        },
+        setToken(state, token){
+            state.token = token
         },
         clear(state){
             state.user = undefined

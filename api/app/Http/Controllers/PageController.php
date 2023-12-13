@@ -166,7 +166,6 @@ class PageController extends Controller {
                             ]
                         );
                     case 'contactItem':
-                        error_log("came here");
                         GenericItem::updateOrCreate(
                             ['id' => $pageItemData['id'] ?? null],
                             [
