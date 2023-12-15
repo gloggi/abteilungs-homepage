@@ -1,7 +1,7 @@
 <template>
 <div class="relative">
-    <div class="relative rounded-lg h-48 w-48 border aspect-square bg-gray-200">
-      <img v-if="file" :src="`${backendURL}${file.thumbnail}`" class="aspect-square object-cover rounded-lg" />
+    <div class="relative rounded-full h-48 w-48 border bg-gray-200 ">
+      <img v-if="file" :src="`${backendURL}${file.thumbnail}`" class="aspect-square  h-full w-full rounded-full" :class="`${objectContain?'object-contain':'object-cover'}`" />
       <div class="absolute top-3 right-3 flex justify-center items-center">
       <button @click="showModal=true" class="rounded-full w-7  aspect-square bg-white border">
         <font-awesome-icon :icon="icons.faPencil" class="text-gray-700 h-4 w-4"/>
@@ -19,7 +19,7 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 export default {
     components: {  MediaModal },
     emits: ["selectImage"],
-    props: ["logo"],
+    props: ["logo", "objectContain"],
     data(){
       return {
         showModal: false,

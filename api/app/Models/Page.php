@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    protected $fillable = ['title', 'route','file_ids'];
+    protected $fillable = ['title', 'route', 'file_ids', 'big_header'];
 
     public function files()
     {
         return $this->belongsToMany(File::class, 'page_file');
-        
+
     }
-    
+
     public function textItems()
     {
 
@@ -32,6 +32,18 @@ class Page extends Model
 
         return $this->hasMany(FormItem::class)->with('form');
     }
+    public function formItemsWithFields()
+    {
+        $formItems = $this->formItems()->get();
+
+        foreach ($formItems as $formItem) {
+            if ($form = $formItem->form) {
+                $form->fields = $form->getAllFields();
+            }
+        }
+
+        return $formItems;
+    }
     public function genericItems()
     {
 
@@ -45,6 +57,7 @@ class Page extends Model
         $textItems = $this->textItems;
         $imageItems = $this->imageItems;
         $formItems = $this->formItems;
+        //$formItems = $this->formItemsWithFields();
         $genericItems = $this->genericItems;
 
         $items = $items->concat($textItems);
@@ -52,7 +65,8 @@ class Page extends Model
         $items = $items->concat($formItems);
         $items = $items->concat($genericItems);
 
-        $items = $items->sortBy('sort')->values()->all();;
+        $items = $items->sortBy('sort')->values()->all();
+        ;
 
         return $items;
     }

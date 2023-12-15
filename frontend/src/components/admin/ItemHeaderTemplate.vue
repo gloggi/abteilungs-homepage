@@ -5,15 +5,15 @@
   <div class="flex justify-between mb-2">
     <router-link :to="{ name: backLinkTo }">
       <button class="rounded-l-lg bg-white p-1">
-        <font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6 text-gray-500" />
+        <font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6 text-gray-400" />
       </button>
     </router-link>
     <div>
       <button v-if="!noDelete" @click="deleteItem" class="bg-white p-1 border-r border-l border-gray-200">
-        <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
+        <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-400" />
       </button>
       <button class="rounded-r-lg bg-white p-1" @click="updateItem">
-        <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6 text-gray-500" />
+        <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6 text-gray-400" />
       </button>
     </div>
   </div>

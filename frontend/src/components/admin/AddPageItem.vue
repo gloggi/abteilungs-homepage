@@ -8,8 +8,9 @@
     ${increaseHeight?'h-48':'h-1.5'}
     rounded-lg my-1 h-1.5 w-full text-xs`">
     </button>
-    <Modal v-if="showModal" @close="close" title="Page Items">
-       <div class="grid grid-cols-4 gap-4">
+    <Modal v-if="showModal" @close="close">
+        <h1 class="text-4xl font-bold pb-2">Page Items</h1>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div v-for="field in fields" :key="field.type" @click="select(field)" class="flex flex-col  bg-gray-200 hover:bg-gray-300 rounded-lg p-3">
             <div class="aspect-square bg-white rounded-lg flex justify-center items-center">
                 <p class="font-serif text-8xl">{{ field.name.substring(0,1) }}</p>
@@ -32,7 +33,9 @@ export default{
                 {name: "Text", type: "textItem"},
                 {name: "Image", type: "imageItem"},
                 {name: "Form", type: "formItem"},
-                {name: "Contact", type: "contactItem"}   
+                {name: "Contact", type: "contactItem"},
+                {name: "Groups", type: "groupsItem"},
+                {name: "Sections", type: "sectionsItem"}   
             ]
         };
     },

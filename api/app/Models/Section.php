@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Section extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description', 'from_age', 'to_age', 'file_id'];
+
+    public function file()
+    {
+        return $this->belongsTo(File::class);
+    }
 
     public function groups()
     {

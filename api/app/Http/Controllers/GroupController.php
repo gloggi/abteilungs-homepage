@@ -36,7 +36,7 @@ class GroupController extends Controller
         $group = new Group;
         $group->name = $request->input('name');
         $group->section_id = $request->input('section_id') ? $request->input('section_id') : null;
-        $group->section_id = $request->input('file_id') ? $request->input('file_id') : null;
+        $group->file_id = $request->input('file_id') ? $request->input('file_id') : null;
         $group->save();
         return response()->json($group);
     }

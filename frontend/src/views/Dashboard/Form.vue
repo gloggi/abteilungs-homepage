@@ -9,26 +9,40 @@
         <h2 class="font-semibold text-2xl">Form Fields</h2>
         <AddFormField @changeOrder="changeOrder" @select="addField" :dragging="isDragging" :sortKey="-1" />
         <template v-for="field in content.fields" :key="field.id">
-          <DragItemBox :item="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" v-if="field.type == 'textField'" :title="field.input_type || field.type">
-              <TextInput type="text" v-model="field.label" label="Label" />
-             
+          <DragItemBox :item="field" @delete="deleteField" @startedDragging="isDragging = true"
+            @endedDragging="isDragging = false" v-if="field.type == 'textField'" :title="field.input_type || field.type">
+            <div class="flex space-x-2">
+              <TextInput class="w-full" type="text" v-model="field.label" label="Label" />
+              <CheckBox label="Required?" v-model="field.required" />
+            </div>
+
           </DragItemBox>
-          <DragItemBox v-if="field.type == 'textareaField'" :item="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :title="field.type">
-            <TextInput type="text" v-model="field.label" label="Label" />
-           
+          <DragItemBox v-if="field.type == 'textareaField'" :item="field" @delete="deleteField"
+            @startedDragging="isDragging = true" @endedDragging="isDragging = false" :title="field.type">
+            <div class="flex space-x-2">
+              <TextInput class="w-full" type="text" v-model="field.label" label="Label" />
+              <CheckBox label="Required?" v-model="field.required" />
+            </div>
+
           </DragItemBox>
-          <DragItemBox v-if="field.type == 'selectField'" :item="field" @delete="deleteField" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :title="field.type">
-            <TextInput type="text" v-model="field.label" label="Label" />
-              <div class="space-y-2 mt-4">
+          <DragItemBox v-if="field.type == 'selectField'" :item="field" @delete="deleteField"
+            @startedDragging="isDragging = true" @endedDragging="isDragging = false" :title="field.type">
+            <div class="flex space-x-2">
+              <TextInput class="w-full" type="text" v-model="field.label" label="Label" />
+              <CheckBox label="Required?" v-model="field.required" />
+            </div>
+            <div class="space-y-2 mt-4">
               <div class="flex space-x-2 items-center" v-for="(option, i) in field.optionFields" :key="option.id">
-                <font-awesome-icon :icon="icons.faCircle"/>
-                <TextInput :id="`selectFieldOption-${field.id}-${i}`" class="w-full" type="text" v-model="option.name" :placeholder="`Option ${i + 1}`" />
+                <font-awesome-icon :icon="icons.faCircle" />
+                <TextInput :id="`selectFieldOption-${field.id}-${i}`" class="w-full" type="text" v-model="option.name"
+                  :placeholder="`Option ${i + 1}`" />
               </div>
               <div>
-                <div class="flex space-x-2 items-center" >
-                <font-awesome-icon :icon="icons.faCircle"/>
-                <TextInput class="w-full" type="text" @keyup="(e)=>addOption(e, field)"  :placeholder="`Another Option?`" />
-              </div>
+                <div class="flex space-x-2 items-center">
+                  <font-awesome-icon :icon="icons.faCircle" />
+                  <TextInput class="w-full" type="text" @keyup="(e) => addOption(e, field)"
+                    :placeholder="`Another Option?`" />
+                </div>
               </div>
             </div>
           </DragItemBox>
@@ -47,6 +61,7 @@ import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import AddFormField from "../../components/admin/AddFormField.vue";
 import DragItemBox from "../../components/admin/DragItemBox.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
+import CheckBox from "../../components/admin/CheckBox.vue";
 
 export default {
   components: {
@@ -54,8 +69,9 @@ export default {
     TextInput,
     AddFormField,
     DragItemBox,
-    ItemHeaderTemplate
-},
+    ItemHeaderTemplate,
+    CheckBox
+  },
   data() {
     return {
       content: {
@@ -65,7 +81,7 @@ export default {
       showModal: false,
       loadedKey: 0,
       forms: [],
-      dragKey:0,
+      dragKey: 0,
       isDragging: false,
       icons: {
         faArrowsRotate,
@@ -78,34 +94,41 @@ export default {
     };
   },
   methods: {
-    async addOption(event, field){
-      const changeFieldIndex = this.content.fields.findIndex(f=>field.id==f.id)
+    async addOption(event, field) {
+      const changeFieldIndex = this.content.fields.findIndex(f => field.id == f.id)
       const optionFields = this.content.fields[changeFieldIndex].optionFields;
-      optionFields.push({name:event.target.value})
-      event.target.value=""
-      await this.$forceUpdate()
+      optionFields.push({ name: event.target.value })
+      event.target.value = ""
+      await new Promise(resolve => { setTimeout(resolve, 10); });
+      const parent = event.target.parentNode.parentNode.parentNode.parentNode
+      const inputElements = parent.querySelectorAll("input")
+      inputElements[inputElements.length - 2].focus()
     },
-    changeOrder(newField){
-      const fieldIndex = this.content.fields.findIndex(f=>f.id==newField.id);
+    changeOrder(newField) {
+      const fieldIndex = this.content.fields.findIndex(f => f.id == newField.id);
       this.content.fields[fieldIndex] = newField
       this.updateForm()
 
     },
-    addField(field){
+    addField(field) {
       this.content.fields.push(field)
       this.updateForm();
     },
-    deleteField(idAndType){
-      this.content.fields= this.content.fields.filter(f=>`${f.id}${f.type}`!==idAndType)
+    deleteField(idAndType) {
+      this.content.fields = this.content.fields.filter(f => `${f.id}${f.type}` !== idAndType)
       this.updateForm()
     },
-    async getSections() {
+    async getForm() {
       try {
+        if (this.$route.params.id === "new") {
+          return;
+        }
         const response = await this.callApi(
           "get",
-          `/sections`
+          `/forms/${this.$route.params.id}`
         );
-        this.sections = response.data.data;
+        this.content = response.data;
+        this.loadedKey++;
       } catch (e) {
         console.log(e);
       }
@@ -122,13 +145,10 @@ export default {
         console.log(e);
       }
       this.getForm();
-    },
-    handleSection(sectionId) {
-      this.content.sectionId = sectionId
     }
   },
   async created() {
-    await this.getSections();
+    await this.getForm();
 
   },
 };

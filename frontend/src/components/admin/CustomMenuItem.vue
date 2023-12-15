@@ -3,7 +3,7 @@
         class="flex flex-col rounded-md bg-white text-left">
 
         <div class="rounded-t-lg bg-gray-200 p-3">
-            <div id="dragbutton" class="w-full flex justify-center text-gray-300" @mouseover="allowDrag = true"
+            <div id="dragbutton" class="w-full flex justify-center text-gray-400" @mouseover="allowDrag = true"
                 @mouseleave="allowDrag = false">
                 <font-awesome-icon :icon="icons.faGripHorizontal" />
             </div>

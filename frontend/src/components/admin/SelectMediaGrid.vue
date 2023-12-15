@@ -1,11 +1,11 @@
 <template>
-<div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 mt-2" :key="listKey">
+<div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 py-3" :key="listKey">
         <div v-for="file in content" :key="file.id" 
-        :class="`bg-gray-200 rounded-lg h-full ${isItemIncluded(file)?'ring-4 ring-offset-2 ring-blue-400': ''}`" 
+        :class="`bg-gray-200 rounded-lg h-w-full ${isItemIncluded(file)?'ring-4 ring-offset-2 ring-blue-400': ''}`" 
         @click="selectItem(file)">
            
                 
-                <img :src="`${backendURL}${file.thumbnail}`" class="w-full rounded-t-lg object-cover aspect-square" />
+                <img :src="`${backendURL}${file.thumbnail}`" class="w-full rounded-lg object-contain p-1 roundd-lg aspect-square" />
            
         </div>
     </div>

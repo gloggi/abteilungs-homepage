@@ -11,6 +11,7 @@ class CreatePagesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('route')->unique()->nullable();
+            $table->boolean('big_header')->default(false);
             $table->timestamps();
         });
 

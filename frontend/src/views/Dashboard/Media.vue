@@ -1,9 +1,9 @@
 <template>
     <DragAndDropUpload @uploadedFile="getMedia" />
-    <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 mt-2" :key="listKey">
+    <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 mt-2 py-2" :key="listKey">
         <button v-for="file in content" target="_blank" :key="file.id" @click="openFile(file)">
-            <div class="bg-gray-50 rounded-lg h-full">
-                <img :src="`${backendURL}${file.thumbnail}`" class="w-full rounded-lg object-cover aspect-square" />
+            <div class="bg-gray-50 rounded-lg w-full">
+                <img :src="`${backendURL}${file.thumbnail}`" class="w-full rounded-lg object-contain p-1 roundd-lg aspect-square " />
             </div>
         </button>
     </div>

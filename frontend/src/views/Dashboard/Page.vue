@@ -17,6 +17,8 @@
       <ImageItem v-if="pageItem.type == 'imageItem'" boxTitle="Image Item"  @changeImages="changeImageItem" :item="pageItem" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" />
       <FormItem v-if="pageItem.type == 'formItem'" boxTitle="Form Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i"  @changeForm="changeFormItem" :item="pageItem" />
       <ContactItem v-if="pageItem.type == 'contactItem'" boxTitle="Contact Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" :item="pageItem"  />
+      <GroupsItem v-if="pageItem.type == 'groupsItem'" boxTitle="Groups Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" :item="pageItem"  />
+      <SectionsItem v-if="pageItem.type == 'sectionsItem'" boxTitle="Sections Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" :item="pageItem"  />
       <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="pageItem.sort" />
     </div>
     
@@ -38,6 +40,8 @@ import ContactItem from "../../components/admin/PageItems/ContactItem.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
+import GroupsItem from "../../components/admin/PageItems/GroupsItem.vue";
+import SectionsItem from "../../components/admin/PageItems/SectionsItem.vue";
 
 export default {
   components: {
@@ -50,7 +54,9 @@ export default {
     ContactItem,
     ItemHeaderTemplate,
     BannerImageSelector,
-    FormLabel
+    FormLabel,
+    GroupsItem,
+    SectionsItem
 },
   data() {
     return {
@@ -96,7 +102,7 @@ export default {
       try {
         await this.callApi(
           "put",
-          `/pages/${this.$route.params.id}`,
+          `/pages/${this.content.id}`,
           this.content
         );
         this.getPage();
@@ -136,8 +142,7 @@ export default {
       this.content.pageItems[itemIndex].formId = formId;
     },
     changeHeaderImages(event){
-      this.content.files = event.files;
-      this.updatePage()
+      this.content.files= event.files;
     },
     slugyfy(text){
       return kebabCase(text)
@@ -147,7 +152,10 @@ export default {
   },
   watch: {
     'content.title'(newVal) {
-      this.content.route = this.slugyfy(newVal)
+      if(this.$route.params.id=="new"){
+        this.content.route = this.slugyfy(newVal)
+      }
+      
     }
   },
 };

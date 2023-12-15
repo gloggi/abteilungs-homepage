@@ -2,7 +2,7 @@
   <div v-if="content">
     <ItemHeaderTemplate :title="content.name" :content="content" entity="groups" backLinkTo="Groups" />
     <Card class="mt-4">
-      <div class="flex flex-row space-x-2 h-full w-full">
+      <div class="flex flex-row space-x-5 h-full w-full">
         <LogoDisplay :logo="content.file" @selectImage="updateLogo"/>
       <div class="space-y-2 w-full">
         <TextInput label="Name" type="text" v-model="content.name" />

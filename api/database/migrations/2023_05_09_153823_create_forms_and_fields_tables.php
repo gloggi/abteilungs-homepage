@@ -21,6 +21,7 @@ return new class extends Migration
             $table->id();
             $table->string('label')->nullable();
             $table->string('input_type')->nullable();
+            $table->boolean('required')->default(false);
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('form_id');
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
@@ -30,6 +31,7 @@ return new class extends Migration
         Schema::create('textarea_fields', function (Blueprint $table) {
             $table->id();
             $table->string('label')->nullable();
+            $table->boolean('required')->default(false);
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('form_id');
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
@@ -39,6 +41,7 @@ return new class extends Migration
         Schema::create('select_fields', function (Blueprint $table) {
             $table->id();
             $table->string('label')->nullable();
+            $table->boolean('required')->default(false);
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('form_id');
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');

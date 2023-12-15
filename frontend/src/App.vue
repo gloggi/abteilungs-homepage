@@ -8,9 +8,12 @@ export default {
             this.createNewCssClass('bg-primary', `background-color: ${this.settings.primaryColor};`);
             this.createNewCssClass('text-primary', `color: ${this.settings.primaryColor};`);
             this.createNewCssClass('hover\\:text-primary:hover', `color: ${this.settings.primaryColor};`);
+            this.createNewCssClass('border-primary', `border-color: ${this.settings.primaryColor};`);
             this.createNewCssClass('bg-secondary', `background-color: ${this.settings.secondaryColor};`);
             this.createNewCssClass('text-secondary', `color: ${this.settings.secondaryColor};`);
             this.createNewCssClass('hover\\:text-secondary:hover', `color: ${this.settings.secondaryColor};`);
+            this.createNewCssClass('border-secondary', `border-color: ${this.settings.secondaryColor};`);
+            this.createNewCssClass('focus\\:border-secondary:focus', `border-color: ${this.settings.secondaryColor};`);
         }
   },
   computed:{
@@ -46,6 +49,10 @@ export default {
 .text-header-3 {
   font-family: "Source Sans Pro", "system-ui", -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+}
+
+.link {
+  color: #337ab7;
 }
 
 

@@ -1,11 +1,15 @@
 <template>
-  <Modal @close="close" title="Bilder" class="overflow-y-scroll">
-    <div>
-    
+  <Modal @close="close" class="overflow-y-scroll">
+    <div class="flex flex-col space-y-2">
+      <h1 class="text-4xl font-bold pb-2">Bilder</h1>
     <DragAndDropUpload @uploadedFile="gridKey++" />
-    <SelectMediaGrid class="overflow-y-scroll" style="max-height: 70vh;" :key="gridKey" :maxSelect="maxSelect" :category="category" :pre-selected="preSelected" @selectItems="selectItemsHandler" />
-      
-      <Button v-if="selected.length>0" class="absolute right-0 bottom-0" @click="selectAndClose">Auswählen</Button>
+    
+    <SelectMediaGrid class="overflow-y-scroll" style="max-height: 65vh;" :key="gridKey" :maxSelect="maxSelect" :category="category" :pre-selected="preSelected" @selectItems="selectItemsHandler" />
+      <div class="pt-3 w-full flex justify-end h-13">
+      <button v-if="selected.length>0" @click="selectAndClose" class="rounded-lg h-9 w-9 bg-gray-400 p-1" >
+        <font-awesome-icon :icon="icons.faCheck" class="h-6 w-6 text-white" />
+      </button>
+    </div>
     </div>
 
   </Modal>
@@ -13,12 +17,12 @@
 </template>
 
 <script>
-import Button from './Button.vue';
 import DragAndDropUpload from './DragAndDropUpload.vue';
 import Modal from "./Modal.vue";
 import SelectMediaGrid from './SelectMediaGrid.vue';
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 export default {
-  components: { Modal, Button, DragAndDropUpload, SelectMediaGrid },
+  components: { Modal, DragAndDropUpload, SelectMediaGrid },
   emits: ["close", "select"],
   props: {
         category: {
@@ -36,7 +40,10 @@ export default {
   data() {
     return {
      selected: [],
-     gridKey: 0
+     gridKey: 0,
+      icons: {
+        faCheck
+      }
     };
   },
   methods: {

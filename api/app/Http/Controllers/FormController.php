@@ -39,6 +39,7 @@ class FormController extends Controller
             'fields' => 'nullable|array',
             'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
             'fields.*.input_type' => 'nullable',
+            'fields.*.required' => 'nullable',
             'fields.*.sort' => 'nullable',
             'fields.*.option_fields' => 'nullable|array|min:1',
             'fields.*.label' => 'nullable|string|max:255',
@@ -68,11 +69,12 @@ class FormController extends Controller
             'fields.*.input_type' => 'nullable',
             'fields.*.id' => '',
             'fields.*.sort' => 'nullable',
+            'fields.*.required' => 'nullable',
             'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
             'fields.*.option_fields' => 'nullable|array|min:1',
             'fields.*.label' => 'nullable|string|max:255',
         ]);
-
+        
         $form = Form::find($id);
         $form->name = $validatedData['name'];
         $form->email = $validatedData['email'];
@@ -85,8 +87,9 @@ class FormController extends Controller
         foreach ($currentFields as $currentField) {
             $found = false;
             foreach ($validatedData['fields'] as $fieldData) {
-                if (!isset($fieldData['id']) || $currentField->id == $fieldData['id']) {
+                if(!isset($fieldData['id']) || ($currentField->id == $fieldData['id'] && $currentField->type == $fieldData['type'])) {
                     $found = true;
+                    
                     break;
                 }
             }
@@ -133,6 +136,7 @@ class FormController extends Controller
                         [
                             'label' => $fieldData['label']??'',
                             'form_id' => $form->id,
+                            'required' => $fieldData['required']??false,
                             'input_type' => $fieldData['input_type'],
                             'sort' =>  $sort_counter
                         ]
@@ -144,6 +148,7 @@ class FormController extends Controller
                         [
                             'label' => $fieldData['label']??'',
                             'form_id' => $form->id,
+                            'required' => $fieldData['required']??false,
                             'sort' =>  $sort_counter
                         ]
                     );
@@ -154,6 +159,7 @@ class FormController extends Controller
                         [
                             'label' => $fieldData['label']??'',
                             'form_id' => $form->id,
+                            'required' => $fieldData['required']??false,
                             'sort' =>  $sort_counter
                         ]
                     );

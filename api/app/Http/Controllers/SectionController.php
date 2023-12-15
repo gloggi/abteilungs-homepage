@@ -12,7 +12,7 @@ class SectionController extends Controller
     {
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
-        $sections = Section::paginate($perPage, ['*'], 'page', $page);
+        $sections = Section::with('file')->paginate($perPage, ['*'], 'page', $page);
         $data = $sections->items();
         $meta = [
             'current_page' => $sections->currentPage(),
@@ -37,13 +37,15 @@ class SectionController extends Controller
         $section->name = $request->input('name');
         $section->from_age = $request->input('from_age');
         $section->to_age = $request->input('to_age');
+        $section->file_id = $request->input('file_id');
+        $section->description = $request->input('description');
         $section->save();
         return response()->json($section);
     }
 
     public function show($id)
     {
-        $section = Section::find($id);
+        $section = Section::with('file')->find($id);
         return response()->json($section);
     }
 
@@ -53,6 +55,8 @@ class SectionController extends Controller
         $section->name = $request->input('name');
         $section->from_age = $request->input('from_age');
         $section->to_age = $request->input('to_age');
+        $section->file_id = $request->input('file_id');
+        $section->description = $request->input('description');
         $section->save();
         return response()->json($section);
     }
