@@ -23,5 +23,19 @@ class DatabaseSeeder extends Seeder
         $this->call(GroupsTableSeeder::class);
         $this->call(ContactsTableSeeder::class);
         $this->call(PermissionsSeeder::class);
+        $this->call(PagesTableSeeder::class);
+        $this->call(PageFileTableSeeder::class);
+        $this->call(SectionFileTableSeeder::class);
+        $this->call(TextItemsTableSeeder::class);
+        $this->call(GenericItemsTableSeeder::class);
+        $this->call(ImageItemsTableSeeder::class);
+        $this->call(FormsTableSeeder::class);
+        $this->call(FormItemsTableSeeder::class);
+        $this->call(SettingsTableSeeder::class);
+        $this->call(TextFieldsTableSeeder::class);
+        $this->call(TextareaFieldsTableSeeder::class);
+        $this->call(SelectFieldsTableSeeder::class);
+        $this->call(OptionFieldsTableSeeder::class);
+        $this->call(MenuItemsTableSeeder::class);
     }
 }

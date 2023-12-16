@@ -1,5 +1,5 @@
 <template>
-    <div v-if="content">
+    <div>
         <ItemHeaderTemplate :title="content.title" :content="content" entity="events" backLinkTo="Events" />
         <Card class="mt-4">
             <LocationPicker v-if="false" :lat="content.lat" :long="content.long" @event-selected="selectEvent" class="h-96 w-full" />
@@ -33,7 +33,7 @@ export default {
     },
     data() {
         return {
-            content: undefined,
+            content: {},
             icons: {
                 faArrowsRotate,
                 faChevronLeft,
@@ -46,6 +46,9 @@ export default {
     },
     methods: {
         async getEvent() {
+            if(this.$route.params.id==="new"){
+          return;
+        }
             try {
                 const response = await this.callApi(
                     "get",

@@ -159,6 +159,106 @@ class FilesTableSeeder extends Seeder
                 'created_at' => '2023-12-11 18:19:54',
                 'updated_at' => '2023-12-11 18:19:54',
             ),
+            14 => 
+            array (
+                'id' => 41,
+                'path' => '/storage/uploads/1702659409_673036604.svg',
+                'thumbnail' => '/storage/uploads/1702659409_673036604.svg',
+                'extension' => 'svg',
+                'category' => 'general',
+                'created_at' => '2023-12-15 16:56:49',
+                'updated_at' => '2023-12-15 16:56:49',
+            ),
+            15 => 
+            array (
+                'id' => 42,
+                'path' => '/storage/uploads/1702659409_1005082847.svg',
+                'thumbnail' => '/storage/uploads/1702659409_1005082847.svg',
+                'extension' => 'svg',
+                'category' => 'general',
+                'created_at' => '2023-12-15 16:56:49',
+                'updated_at' => '2023-12-15 16:56:49',
+            ),
+            16 => 
+            array (
+                'id' => 43,
+                'path' => '/storage/uploads/1702659409_1686456051.svg',
+                'thumbnail' => '/storage/uploads/1702659409_1686456051.svg',
+                'extension' => 'svg',
+                'category' => 'general',
+                'created_at' => '2023-12-15 16:56:49',
+                'updated_at' => '2023-12-15 16:56:49',
+            ),
+            17 => 
+            array (
+                'id' => 44,
+                'path' => '/storage/uploads/1702659409_1843966963.svg',
+                'thumbnail' => '/storage/uploads/1702659409_1843966963.svg',
+                'extension' => 'svg',
+                'category' => 'general',
+                'created_at' => '2023-12-15 16:56:49',
+                'updated_at' => '2023-12-15 16:56:49',
+            ),
+            18 => 
+            array (
+                'id' => 49,
+                'path' => '/storage/uploads/1702668145_737055189.svg',
+                'thumbnail' => '/storage/uploads/1702668145_737055189.svg',
+                'extension' => 'svg',
+                'category' => 'general',
+                'created_at' => '2023-12-15 19:22:25',
+                'updated_at' => '2023-12-15 19:22:25',
+            ),
+            19 => 
+            array (
+                'id' => 50,
+                'path' => '/storage/uploads/1702668958_2016739301.png',
+                'thumbnail' => '/storage/thumbnails/1702668958_2016739301.png',
+                'extension' => 'png',
+                'category' => 'general',
+                'created_at' => '2023-12-15 19:35:58',
+                'updated_at' => '2023-12-15 19:35:58',
+            ),
+            20 => 
+            array (
+                'id' => 51,
+                'path' => '/storage/uploads/1702669388_1344823360.png',
+                'thumbnail' => '/storage/thumbnails/1702669388_1344823360.png',
+                'extension' => 'png',
+                'category' => 'general',
+                'created_at' => '2023-12-15 19:43:08',
+                'updated_at' => '2023-12-15 19:43:08',
+            ),
+            21 => 
+            array (
+                'id' => 52,
+                'path' => '/storage/uploads/1702669391_437260422.png',
+                'thumbnail' => '/storage/thumbnails/1702669391_437260422.png',
+                'extension' => 'png',
+                'category' => 'general',
+                'created_at' => '2023-12-15 19:43:11',
+                'updated_at' => '2023-12-15 19:43:11',
+            ),
+            22 => 
+            array (
+                'id' => 53,
+                'path' => '/storage/uploads/1702669426_1106350492.png',
+                'thumbnail' => '/storage/thumbnails/1702669426_1106350492.png',
+                'extension' => 'png',
+                'category' => 'general',
+                'created_at' => '2023-12-15 19:43:46',
+                'updated_at' => '2023-12-15 19:43:46',
+            ),
+            23 => 
+            array (
+                'id' => 54,
+                'path' => '/storage/uploads/1702669725_1145736819.png',
+                'thumbnail' => '/storage/thumbnails/1702669725_1145736819.png',
+                'extension' => 'png',
+                'category' => 'general',
+                'created_at' => '2023-12-15 19:48:45',
+                'updated_at' => '2023-12-15 19:48:45',
+            ),
         ));
         
         

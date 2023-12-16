@@ -4,72 +4,60 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
-
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 
 class EventController extends Controller
 {
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $page = $request->input('page', 1);
-        $events = Event::paginate($perPage, ['*'], 'page', $page);
-        $data = $events->items();
-        $meta = [
-            'current_page' => $events->currentPage(),
-            'from' => $events->firstItem(),
-            'last_page' => $events->lastPage(),
-            'path' => $events->path(),
-            'per_page' => $events->perPage(),
-            'to' => $events->lastItem(),
-            'total' => $events->total(),
-        ];
-        return response()->json([
-            'data' => $data,
-            'meta' => $meta
-        ]);
+        $events = Event::paginate($perPage);
+
+        return response()->json($events);
     }
 
-
-
-    public function store(Request $request)
+    public function store(StoreEventRequest $request)
     {
-        $event = new Event;
-        $event->title = $request->input('title');
-        $event->start_time = $request->input('start_time');
-        $event->end_time = $request->input('end_time');
-        $event->group_id = $request->input('group_id');
-        $event->start_location_id = $request->input('start_location_id');
-        $event->end_location_id = $request->input('end_location_id');
-        $event->description = $request->input('description');
-        $event->save();
-        return response()->json($event);
+        $event = Event::create($request->validated());
+
+        return response()->json($event, 201);
     }
 
     public function show($id)
     {
         $event = Event::find($id);
+
+        if (!$event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+
         return response()->json($event);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateEventRequest $request, $id)
     {
         $event = Event::find($id);
-        $event->title = $request->input('title');
-        $event->start_time = $request->input('start_time');
-        $event->end_time = $request->input('end_time');
-        $event->group_id = $request->input('group_id');
-        $event->start_location_id = $request->input('start_location_id');
-        $event->end_location_id = $request->input('end_location_id');
-        $event->description = $request->input('description');
-        $event->save();
+
+        if (!$event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+
+        $event->update($request->validated());
+
         return response()->json($event);
     }
 
     public function destroy($id)
     {
         $event = Event::find($id);
-        $event->delete();
-        return response()->json('Event removed successfully');
-    }
 
+        if (!$event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+
+        $event->delete();
+
+        return response()->json(null, 204);
+    }
 }

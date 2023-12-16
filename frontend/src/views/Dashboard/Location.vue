@@ -1,8 +1,9 @@
 <template>
-    <div v-if="content">
+    <div>
         <ItemHeaderTemplate :title="content.name" :content="content" entity="locations" backLinkTo="Locations" />
         <Card class="mt-4">
-            <LocationPicker v-if="content" :lat="content.lat" :long="content.long" @location-selected="selectLocation" class="h-96 w-full" />
+            <LocationPicker v-if="loaded" :lat="content.lat" :long="content.long" @location-selected="selectLocation"
+                class="h-96 w-full" />
             <div class="flex flex-col space-y-2">
                 <TextInput label="Name" type="text" v-model="content.name" />
                 <TextInput label="Latitude" type="text" v-model="content.lat" />
@@ -28,7 +29,8 @@ export default {
     },
     data() {
         return {
-            content: undefined,
+            content: {},
+            loaded: false,
             icons: {
                 faArrowsRotate,
                 faChevronLeft,
@@ -39,13 +41,16 @@ export default {
     },
     methods: {
         async getLocation() {
+            if (this.$route.params.id === "new") {
+                return;
+            }
             try {
                 const response = await this.callApi(
                     "get",
                     `/locations/${this.$route.params.id}`
                 );
                 this.content = response.data;
-                this.loadedKey++;
+                this.loaded = true;
             } catch (e) {
                 console.log(e);
             }
@@ -65,7 +70,7 @@ export default {
                 console.log(e);
             }
         },
-        selectLocation(event){
+        selectLocation(event) {
             this.content.lat = event.lat;
             this.content.long = event.long;
         },

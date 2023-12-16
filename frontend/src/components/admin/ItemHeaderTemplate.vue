@@ -54,7 +54,9 @@ export default {
     async createItem() {
       try {
         const response = await this.callApi("post", `/${this.entity}`, this.content);
-        this.$router.push({ name: this.$route.name, params: { id: response.data.id } });
+        if(response.data.id){
+          this.$router.push({ name: this.$route.name, params: { id: response.data.id } });
+        }
         this.notifyUser("Item created");
       } catch (e) {
        console.log(e)

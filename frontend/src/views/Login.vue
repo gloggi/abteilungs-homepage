@@ -16,7 +16,7 @@
 
 
                 </form>
-                <Button @click="loginWithMiData" type="submit">MiData Login</Button>
+                <MiDataButton @click="loginWithMiData" type="submit" />
             </div>
 
         </div>
@@ -26,9 +26,10 @@
 import TextInput from '../components/admin/TextInput.vue';
 import Button from '../components/admin/Button.vue';
 import ErrorMessage from '../components/admin/ErrorMessage.vue';
+import MiDataButton from '../components/admin/MiDataButton.vue';
 export default {
     name: 'Login',
-    components: { TextInput, Button, ErrorMessage },
+    components: { TextInput, Button, ErrorMessage, MiDataButton },
     data() {
         return {
             form: {

@@ -13,6 +13,7 @@ import { Icon, Style } from 'ol/style';
 import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
 import { defaults as defaultControls, ScaleLine } from "ol/control";
+import mapMarkerSvg from '@/assets/mapMarker.svg';
 
 export default {
     props: ['lat', 'long'],
@@ -62,7 +63,7 @@ export default {
 
             const iconStyle = new Style({
                 image: new Icon({
-                    src: require('@/assets//mapMarker.svg'), // Replace with the URL to your icon image
+                    src: mapMarkerSvg, // Replace with the URL to your icon image
                     scale: 4, 
                     anchor: [0.5, 1],
                 }),

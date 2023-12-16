@@ -14,7 +14,9 @@ class Group extends Model
         'section_id',
         'extension',
         'category',
-        'file_id'
+        'file_id',
+        'color',
+        'gender'
     ];
 
     public function section()

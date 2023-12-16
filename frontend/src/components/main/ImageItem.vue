@@ -9,7 +9,7 @@
         </div>
     </div>
     <div v-else>
-        <img class="w-full" :src="this.backendURL + currentImage" alt="Slider Image" />
+        <img class="w-full" v-if="currentImage" :src="this.backendURL + currentImage" alt="Slider Image" />
 
     </div>
 </template>
@@ -34,7 +34,7 @@ export default {
         }
     },
     created() {
-        this.currentImage = this.item.files[this.imageIndex].path
+        this.currentImage = this.item.files[this.imageIndex]?.path
         if(this.item.files.length > 1){
             setInterval(this.changeImage, 5000)
         }

@@ -1,16 +1,20 @@
 <template>
-  <div v-if="content">
+  <div>
     <ItemHeaderTemplate :title="content.name" :content="content" entity="groups" backLinkTo="Groups" />
     <Card class="mt-4">
       <div class="flex flex-row space-x-5 h-full w-full">
         <LogoDisplay :logo="content.file" @selectImage="updateLogo"/>
       <div class="space-y-2 w-full">
         <TextInput label="Name" type="text" v-model="content.name" />
-        <div class="flex flex-row justify-between space-x-2">
-          <Select label="Stufe" @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections"/>
+          <Select label="Section" @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections"/>
+              <Select label="Gender" @selectGender="(event)=>handleGender(event)" :value="content.gender" selection="Gender" :options="genders"/>
+        <div class="">
+            <FormLabel>Group Color</FormLabel>
+            <ColorPicker v-model="content.color" />
         </div>
-        <MultipleSelect label="Vorgängergruppe" v-model="content.predecessors" :options="groups" />
-        <MultipleSelect label="Nachfolgergruppen" v-model="content.successors" :options="groups" />
+        <Select label="Parent Group" @selectParentGroup="(event)=>handleParentGroup(event)" :value="content.parent?content.parent['id']:null" selection="ParentGroup" :options="groups"/>
+        <MultipleSelect label="Predecessor Groups" v-model="content.predecessors" :options="groups" />
+        <MultipleSelect label="Successor Groups" v-model="content.successors" :options="groups" />
       </div>
     </div>
     </Card>
@@ -25,6 +29,8 @@ import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/fre
 import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
+import ColorPicker from "../../components/admin/ColorPicker.vue";
+import FormLabel from "../../components/admin/FormLabel.vue";
 export default {
   components: {
     Card,
@@ -32,14 +38,21 @@ export default {
     Select,
     LogoDisplay,
     MultipleSelect,
-    ItemHeaderTemplate
+    ItemHeaderTemplate,
+    ColorPicker,
+    FormLabel
 },
   data() {
     return {
-      content: undefined,
+      content: {},
       sections: undefined,
       showModal: false,
       groups: [],
+      genders: [
+        {id: 1, name: "Mixed"},
+        {id: 2, name: "Male"},
+        {id: 3, name: "Female"}
+      ],
       icons: {
         faArrowsRotate,
         faChevronLeft,
@@ -55,6 +68,9 @@ export default {
 
     },
     async getGroup() {
+      if(this.$route.params.id==="new"){
+          return;
+        }
       try {
         const response = await this.callApi(
           "get",
@@ -108,8 +124,14 @@ export default {
     },
     handleSection(sectionId){
       this.content.sectionId = sectionId
-    }
-  },
+    },
+    handleGender(genderId){
+      this.content.gender = genderId;
+    },
+   handleParentGroup(groupId){
+      this.content.parentId = groupId;
+  }
+},
   async created() {
     await this.getSections();
     await this.getGroups();

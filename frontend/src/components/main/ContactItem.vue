@@ -1,6 +1,6 @@
 <template>
     <div class="w-full px-24">
-        <h1 class="text-primary text-5xl font-light pb-5 text-header-3">Kontakt</h1>
+        <h1 class="text-primary text-5xl pb-2 text-heading-3 w-full">Kontakt</h1>
         <div class="flex flex-col space-y-5">
         <div v-for="contact in contacts" :key="contact.id" class="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-between">
             <div class="flex flex-col main-text">

@@ -28,6 +28,9 @@ export const mixin = {
     }
   },
   methods: {
+    getAsset(asset){
+      return new URL(`/src/assets/${asset}`, import.meta.url).href
+    },
     formatDateTime(datetime) {
       return format(new Date(datetime), 'dd.MM.yyyy HH:mm')
     },

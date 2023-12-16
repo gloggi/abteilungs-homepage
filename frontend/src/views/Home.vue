@@ -29,6 +29,7 @@ export default {
             try {
                 const response = await this.callApi('get', `/pages/${pageRoute}`);
                 this.page = response.data;
+                document.title = this.page.title;
             } catch (error) {
                 console.log(error);
             }
@@ -60,7 +61,7 @@ export default {
         }
         console.log(this.$route.path.substring(1))
         await this.getPage();
-        document.title = this.page.title;
+        
         
 
     },

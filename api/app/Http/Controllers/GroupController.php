@@ -4,74 +4,65 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Group;
-
+use App\Http\Requests\StoreGroupRequest;
+use App\Http\Requests\UpdateGroupRequest;
 
 class GroupController extends Controller
 {
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $page = $request->input('page', 1);
-        $groups = Group::with("file")->with('section')->paginate($perPage, ['*'], 'page', $page);
-        $data = $groups->items();
-        $meta = [
-            'current_page' => $groups->currentPage(),
-            'from' => $groups->firstItem(),
-            'last_page' => $groups->lastPage(),
-            'path' => $groups->path(),
-            'per_page' => $groups->perPage(),
-            'to' => $groups->lastItem(),
-            'total' => $groups->total(),
-        ];
-        return response()->json([
-            'data' => $data,
-            'meta' => $meta
-        ]);
+        $groups = Group::with(['file', 'section'])
+                       ->paginate($perPage);
+
+        return response()->json($groups);
     }
 
-
-
-    public function store(Request $request)
+    public function store(StoreGroupRequest $request)
     {
-        $group = new Group;
-        $group->name = $request->input('name');
-        $group->section_id = $request->input('section_id') ? $request->input('section_id') : null;
-        $group->file_id = $request->input('file_id') ? $request->input('file_id') : null;
-        $group->save();
-        return response()->json($group);
+        $group = Group::create($request->validated());
+
+        return response()->json($group, 201);
     }
 
     public function show($id)
     {
-        $group = Group::with('section')
-                  ->with('file')
-                  ->with('predecessors')
-                  ->with('successors')
-                  ->find($id);
+        $group = Group::with(['section', 'file', 'predecessors', 'successors'])
+                      ->find($id);
+
+        if (!$group) {
+            return response()->json(['message' => 'Group not found'], 404);
+        }
+
         return response()->json($group);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateGroupRequest $request, $id)
     {
         $group = Group::find($id);
-        $group->name = $request->input('name');
-        $group->section_id = $request->input('section_id');
-        $group->file_id = $request->input('file_id') ? $request->input('file_id') : null;
-        $group->save();
 
-        $predecessors = $request->input('predecessors', []);
-        $group->predecessors()->sync($predecessors);
+        if (!$group) {
+            return response()->json(['message' => 'Group not found'], 404);
+        }
 
-        $successors = $request->input('successors', []);
-        $group->successors()->sync($successors);
+        $group->update($request->validated());
+
+        $group->predecessors()->sync($request->input('predecessors', []));
+        $group->successors()->sync($request->input('successors', []));
+
         return response()->json($group);
     }
 
     public function destroy($id)
     {
         $group = Group::find($id);
-        $group->delete();
-        return response()->json('Group removed successfully');
-    }
 
+        if (!$group) {
+            return response()->json(['message' => 'Group not found'], 404);
+        }
+
+        $group->delete();
+
+        return response()->json(null, 204);
+    }
 }

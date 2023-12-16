@@ -1,5 +1,5 @@
 <template>
-  <div v-if="content">
+  <div>
     <ItemHeaderTemplate :title="content.name" :content="content" entity="sections" backLinkTo="Sections" />
     <Card class="mt-4 space-y-5">
       <div class="flex flex-row space-x-5 h-full w-full">
@@ -20,7 +20,16 @@
             v-model="content.toAge"
           />
         </div>
+        <div class="">
+            <FormLabel>Section Color</FormLabel>
+            <ColorPicker v-model="content.color" />
+        </div>
       </div>
+      
+      </div>
+      <div class="flex-space-y-2">
+        <FormLabel>Section Header Images</FormLabel>
+        <BannerImageSelector :item="content" @changeImages="changeHeaderImages" />
       </div>
       <div class="flex-space-y-2">
       <FormLabel>Description</FormLabel>
@@ -38,6 +47,8 @@ import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/fre
 import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
+import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
+import ColorPicker from "../../components/admin/ColorPicker.vue";
 export default {
   components: {
     Card,
@@ -45,11 +56,13 @@ export default {
     ItemHeaderTemplate,
     LogoDisplay,
     Editor,
-    FormLabel
+    FormLabel,
+    BannerImageSelector,
+    ColorPicker
 },
   data() {
     return {
-      content: undefined,
+      content: {},
       icons: {
         faArrowsRotate,
         faChevronLeft,
@@ -60,7 +73,11 @@ export default {
   },
   methods: {
     async getSection() {
+      if(this.$route.params.id==="new"){
+          return;
+        }
       try {
+        
         const response = await this.callApi(
           "get",
           `/sections/${this.$route.params.id}`
@@ -86,6 +103,9 @@ export default {
       this.content.file_id = file.id;
       this.updateGroup()
 
+    },
+    changeHeaderImages(event){
+      this.content.files= event.files;
     }
   },
   created() {

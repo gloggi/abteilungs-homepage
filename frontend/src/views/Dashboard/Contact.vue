@@ -1,5 +1,5 @@
 <template>
-  <div v-if="content">
+  <div>
     <ItemHeaderTemplate :title="content.nickname" :content="content" entity="contacts" backLinkTo="Contacts" />
     <Card class="mt-4">
       <div class="flex flex-row space-x-5 h-full w-full">
@@ -34,7 +34,7 @@ export default {
 },
   data() {
     return {
-      content: undefined,
+      content: {},
       sections: undefined,
       showModal: false,
       icons: {
@@ -52,6 +52,9 @@ export default {
 
     },
     async getContact() {
+      if(this.$route.params.id==="new"){
+          return;
+        }
       try {
         const response = await this.callApi(
           "get",

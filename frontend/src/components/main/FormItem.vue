@@ -1,6 +1,6 @@
 <template>
     <form class="px-24 space-y-5" @submit.prevent="handleForm">
-        <h1 class="text-primary text-4xl text-header-3">{{ item.form.name }}</h1>
+        <h1 class="text-primary text-4xl text-heading-3">{{ item.form.name }}</h1>
    
     <div class="flex flex-col  space-y-5 pl-4">
         <div v-for="field in item.form.fields" class="flex flex-col space-y-2">

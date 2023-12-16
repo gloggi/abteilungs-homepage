@@ -2,7 +2,7 @@
     <div class="flex justify-center w-full background bg-[#4A4A4A]">
         <div class="md:w-[900px] flex justify-between py-6">
             <div>
-                <h2 class="text-header-2 text-primary text-4xl">Abteilungen</h2>
+                <h2 class="text-heading-2 text-primary text-4xl">Abteilungen</h2>
                 <ul class="text-white text-xl main-text space-y-1 pt-5">
                     <li v-for="group in groups" :key="group.id" class="pl-6">
                         <router-link to="/">{{ group.name }}</router-link>
@@ -11,11 +11,11 @@
 
             </div>
             <div>
-                <h2 class="text-header-2 text-primary text-4xl">Links</h2>
+                <h2 class="text-heading-2 text-primary text-4xl">Links</h2>
                 
             </div>
             <div>
-                <h2 class="text-header-2 text-primary text-4xl">Kontakt</h2>
+                <h2 class="text-heading-2 text-primary text-4xl">Kontakt</h2>
                 <div class="text-white" v-html="settings?.contactInFooter"></div>
                 
             </div>

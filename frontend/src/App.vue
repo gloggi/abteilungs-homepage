@@ -37,16 +37,16 @@ export default {
   font-size: 24px;
  line-height: 36px;
 }
-.text-header-1 {
+.text-heading-1 {
   font-family: "Source Sans Pro", "system-ui", -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 600;
   text-shadow: 0px 0px 10px black
 }
-.text-header-2 {
+.text-heading-2 {
   font-family: "Source Sans Pro", "system-ui", -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
 }
-.text-header-3 {
+.text-heading-3 {
   font-family: "Source Sans Pro", "system-ui", -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
 }

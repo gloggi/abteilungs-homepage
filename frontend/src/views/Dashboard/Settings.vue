@@ -25,11 +25,11 @@
         <div class="flex space-x-8">
         <div class="">
             <FormLabel>Primary Color</FormLabel>
-            <ColorPicker label="Primary Color" v-model="settings.primaryColor" />
+            <ColorPicker v-model="settings.primaryColor" />
         </div>
         <div class="">
             <FormLabel>Secondary Color</FormLabel>
-            <ColorPicker label="Primary Color" v-model="settings.secondaryColor" />
+            <ColorPicker v-model="settings.secondaryColor" />
         </div>
         </div>
         <div>
