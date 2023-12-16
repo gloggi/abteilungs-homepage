@@ -3,7 +3,7 @@
     <ItemHeaderTemplate :title="content.name" :content="content" entity="groups" backLinkTo="Groups" />
     <Card class="mt-4">
       <div class="flex flex-row space-x-5 h-full w-full">
-        <LogoDisplay :logo="content.file" @selectImage="updateLogo"/>
+        <LogoDisplay :key="loadedKey" :logo="content.file" @selectImage="updateLogo"/>
       <div class="space-y-2 w-full">
         <TextInput label="Name" type="text" v-model="content.name" />
           <Select label="Section" @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections"/>
@@ -47,6 +47,7 @@ export default {
       content: {},
       sections: undefined,
       showModal: false,
+      loadedKey: 0,
       groups: [],
       genders: [
         {id: 1, name: "Mixed"},

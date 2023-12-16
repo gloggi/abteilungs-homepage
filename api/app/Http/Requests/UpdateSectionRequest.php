@@ -16,7 +16,7 @@ class UpdateSectionRequest extends FormRequest
             'file_id' => 'nullable|integer|exists:files,id',
             'description' => 'nullable|string',
             'files' => 'nullable|array',
-            'files.*' => 'integer|exists:files,id',
+            'files.*' => 'nullable',
         ];
     }
 }

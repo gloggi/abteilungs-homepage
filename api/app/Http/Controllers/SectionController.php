@@ -21,7 +21,7 @@ class SectionController extends Controller
     public function store(StoreSectionRequest $request)
     {
         $section = Section::create($request->validated());
-        $section->files()->sync($request->input('files', []));
+        $section->files()->sync(array_column($request->input('files', []), 'id'));
 
         return response()->json($section, 201);
     }
@@ -46,7 +46,8 @@ class SectionController extends Controller
         }
 
         $section->update($request->validated());
-        $section->files()->sync($request->input('files', []));
+        error_log(json_encode(array_column($request->input('files', []), 'id')));
+        $section->files()->sync(array_column($request->input('files', []), 'id'));
 
         return response()->json($section);
     }
