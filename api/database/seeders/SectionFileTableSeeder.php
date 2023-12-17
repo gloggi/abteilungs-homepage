@@ -18,6 +18,15 @@ class SectionFileTableSeeder extends Seeder
 
         \DB::table('section_file')->delete();
         
+        \DB::table('section_file')->insert(array (
+            0 => 
+            array (
+                'section_id' => 1,
+                'file_id' => 51,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+        ));
         
         
     }

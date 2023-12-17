@@ -38,6 +38,7 @@ class PageController extends Controller
         $validatedData = $request->validate([
             'title' => 'string|max:255|required',
             'route' => 'string|max:255|unique:pages|nullable',
+            'big_header' => 'boolean|nullable',
             'files' => 'array|nullable',
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
@@ -51,6 +52,7 @@ class PageController extends Controller
         $page = Page::create([
             'title' => isset($validatedData['title']) ? $validatedData['title'] : null,
             'route' => isset($validatedData['route']) ? $validatedData['route'] : null,
+            'big_header' => isset($validatedData['big_header']) ? $validatedData['big_header'] : null,
         ]);
         $page->files()->sync($fileIds);
 
@@ -70,6 +72,7 @@ class PageController extends Controller
         $validatedData = $request->validate([
             'title' => 'nullable|string|max:255',
             'route' => 'nullable|string|max:255',
+            'big_header' => 'boolean|nullable',
             'files' => 'nullable',
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
@@ -85,6 +88,7 @@ class PageController extends Controller
         $page = Page::find($id);
         $page->title = $validatedData['title'];
         $page->route = $validatedData['route'] == null ? null : $validatedData['route'];
+        $page->big_header = $validatedData['big_header'];
         $fileIds = isset($validatedData['files']) ? array_column($validatedData['files'], 'id') : [];
         $page->files()->sync($fileIds);
         $page->save();

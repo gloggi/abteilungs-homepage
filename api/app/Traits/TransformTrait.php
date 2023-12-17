@@ -8,13 +8,13 @@ trait TransformTrait
     
         return strtolower($str);
     }
-    public function toKebabCase($str) {
+    public function toSnakeCase($str) {
 
         $str = $this->normalize($str);
 
-        $str = preg_replace('/[^a-z0-9]+/i', '-', $str);
+        $str = preg_replace('/[^a-z0-9]+/i', '_', $str);
 
-        return trim($str, '-');
+        return trim($str, '_');
     }
     
     function toCamelCase($str) {

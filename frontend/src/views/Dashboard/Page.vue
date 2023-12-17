@@ -1,13 +1,14 @@
 <template>
   <div v-if="content"  :key="loadedKey">
     <ItemHeaderTemplate :title="content.title" :content="content" entity="pages" backLinkTo="Pages" />
-    <Card>
+    <Card class="space-y-2">
       <TextInput label="Title" v-model="content.title" />
       <TextInput class="mt-2" label="Route" v-model="content.route" />
-      <div class="pt-2">
+      <CheckBox label="Show Big Header" v-model="content.bigHeader" />
+     
         <FormLabel>Header Images</FormLabel>
         <BannerImageSelector :item="content" @changeImages="changeHeaderImages" />
-      </div>
+   
       
     </Card>
     <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="-1" />
@@ -28,6 +29,7 @@
 <script>
 //import Textarea from "../../components/admin/Textarea.vue";
 import TextInput from "../../components/admin/TextInput.vue";
+import CheckBox from "../../components/admin/CheckBox.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/AddPageItem.vue";
 import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -56,7 +58,8 @@ export default {
     BannerImageSelector,
     FormLabel,
     GroupsItem,
-    SectionsItem
+    SectionsItem,
+    CheckBox
 },
   data() {
     return {

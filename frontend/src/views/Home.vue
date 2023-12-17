@@ -1,5 +1,6 @@
 <template>
-    <BigHeader :page="page" />
+    <BigHeader v-if="page.bigHeader" :page="page" />
+    <SmallHeader v-else :page="page" />
     <NavBar :menuItems="menuItems" @pageChange="handlePageChange" />
     <PageBuilder :page="page" :key="pageId" />
     <Footer />
@@ -9,10 +10,11 @@ import BigHeader from '../components/main/BigHeader.vue';
 import NavBar from '../components/main/NavBar.vue';
 import PageBuilder from '../components/main/PageBuilder.vue';
 import Footer from '../components/main/Footer.vue';
+import SmallHeader from '../components/main/SmallHeader.vue';
 
 export default {
     name: 'App',
-    components: { NavBar, BigHeader, PageBuilder, Footer },
+    components: { NavBar, BigHeader, PageBuilder, Footer, SmallHeader },
     data() {
         return {
             pageId: undefined,

@@ -30,7 +30,7 @@ class SettingsTableSeeder extends Seeder
                 'secondary_color' => '#ffcd00',
                 'contact_in_footer' => '<p class="main-text">Footer Text</p>',
                 'created_at' => '2023-12-15 20:00:21',
-                'updated_at' => '2023-12-15 20:01:38',
+                'updated_at' => '2023-12-16 22:20:41',
             ),
         ));
         

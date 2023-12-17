@@ -71,13 +71,13 @@ class SectionsTableSeeder extends Seeder
             array (
                 'id' => 5,
                 'name' => 'Roverstufe',
-                'color' => NULL,
+                'color' => '#595959',
                 'from_age' => 17,
                 'to_age' => 99,
                 'file_id' => NULL,
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:33:29',
-                'updated_at' => '2023-12-15 17:04:01',
+                'updated_at' => '2023-12-16 22:41:50',
             ),
         ));
         

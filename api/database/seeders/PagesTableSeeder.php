@@ -24,9 +24,9 @@ class PagesTableSeeder extends Seeder
                 'id' => 1,
                 'title' => 'Home',
                 'route' => NULL,
-                'big_header' => 0,
+                'big_header' => 1,
                 'created_at' => '2023-12-15 17:05:11',
-                'updated_at' => '2023-12-15 17:05:11',
+                'updated_at' => '2023-12-16 23:36:36',
             ),
             1 => 
             array (

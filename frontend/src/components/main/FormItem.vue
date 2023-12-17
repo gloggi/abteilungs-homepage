@@ -25,7 +25,14 @@ export default {
         }
     },
     methods:{
-        handleForm(){
+        async handleForm(){
+            try {
+                this.formContent.id = this.item.form.id;
+                const response = await this.callApi('post', '/webforms', this.formContent)
+                console.log(response)
+            }catch (error) {
+                console.log(error)
+            }
             
         }
         

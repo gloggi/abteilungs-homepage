@@ -38,4 +38,5 @@ class DatabaseSeeder extends Seeder
         $this->call(OptionFieldsTableSeeder::class);
         $this->call(MenuItemsTableSeeder::class);
     }
+    // create seeds: php artisan iseed files,sections,groups,contacts,pages,page_file,section_file,text_items,generic_items,image_items,forms,form_items,settings,text_fields,textarea_fields,select_fields,option_fields,menu_items --force
 }

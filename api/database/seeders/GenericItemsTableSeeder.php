@@ -23,19 +23,28 @@ class GenericItemsTableSeeder extends Seeder
             array (
                 'id' => 3,
                 'type' => 'sectionsItem',
-                'sort' => 0,
+                'sort' => 1,
                 'page_id' => 2,
                 'created_at' => '2023-12-15 19:44:11',
-                'updated_at' => '2023-12-15 19:44:11',
+                'updated_at' => '2023-12-16 19:51:51',
             ),
             1 => 
             array (
                 'id' => 4,
                 'type' => 'contactItem',
-                'sort' => 1,
+                'sort' => 2,
                 'page_id' => 2,
                 'created_at' => '2023-12-15 19:44:11',
-                'updated_at' => '2023-12-15 19:44:11',
+                'updated_at' => '2023-12-16 19:51:51',
+            ),
+            2 => 
+            array (
+                'id' => 5,
+                'type' => 'groupsItem',
+                'sort' => 0,
+                'page_id' => 2,
+                'created_at' => '2023-12-16 19:51:51',
+                'updated_at' => '2023-12-16 19:51:51',
             ),
         ));
         
