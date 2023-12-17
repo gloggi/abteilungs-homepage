@@ -1,11 +1,16 @@
-FROM php:8.2.4-fpm-alpine
+FROM php:8.2-apache
 
-RUN docker-php-ext-install pdo pdo_mysql sockets
-RUN curl -sS https://getcomposer.org/installer​ | php -- \
-     --install-dir=/usr/local/bin --filename=composer
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www/html
 
-WORKDIR /app
-COPY . .
-RUN composer install
+RUN docker-php-ext-install pdo pdo_mysql
+
+COPY . /var/www/html
+
+
+RUN chown -R www-data:www-data /var/www/html
+
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
+
+EXPOSE 80

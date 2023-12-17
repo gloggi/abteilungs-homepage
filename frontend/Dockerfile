@@ -1,5 +1,7 @@
-FROM node:16.13-alpine
-
-WORKDIR /app
-
-ENTRYPOINT sh docker-entrypoint.sh
+FROM node:latest
+WORKDIR /usr/app
+COPY package.json .
+RUN npm install --quiet
+COPY . .
+EXPOSE 8080
+CMD ["npm", "run", "dev"]

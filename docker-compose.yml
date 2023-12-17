@@ -3,99 +3,45 @@ version: "3.4"
 services:
 
   frontend:
-    build: ./frontend
-    volumes:
-      - ./frontend:/app
-      - node_modules:/app/node_modules
-      - ./frontend/node_modules:/node_modules-copy-to-host
-    environment:
-      NODE_ENV: development
-      PORT: 80
-
-  php:
     build:
-      context: ./api
-      target: api_platform_php
-    depends_on:
-      - database
-    restart: unless-stopped
+      context: ./frontend
+      dockerfile: Dockerfile
     volumes:
-      - php_socket:/var/run/php
-    healthcheck:
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 30s
-
-  pwa:
-    build:
-      context: ./pwa
-      target: api_platform_pwa_prod
-    environment:
-      API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: http://caddy
-      NEXT_PUBLIC_ENTRYPOINT: http://caddy
-
-  caddy:
-    build:
-      context: api/
-      target: api_platform_caddy
-    depends_on:
-      - php
-      - pwa
-    environment:
-      PWA_UPSTREAM: pwa:3000
-      SERVER_NAME: ${SERVER_NAME:-localhost:80, caddy:80}
-      MERCURE_PUBLISHER_JWT_KEY: ${MERCURE_PUBLISHER_JWT_KEY:-!ChangeMe!}
-      MERCURE_SUBSCRIBER_JWT_KEY: ${MERCURE_SUBSCRIBER_JWT_KEY:-!ChangeMe!}
-    restart: unless-stopped
-    volumes:
-      - php_socket:/var/run/php
-      - caddy_data:/data
-      - caddy_config:/config
+      - ./frontend:/usr/app
+      - /usr/app/node_modules
     ports:
-      # HTTP
-      - target: 80
-        published: 80
-        protocol: tcp
-      # HTTPS
-      - target: 443
-        published: 443
-        protocol: tcp
-      # HTTP/3
-      - target: 443
-        published: 443
-        protocol: udp
-
-  database:
-    image: postgres:13-alpine
-    environment:
-      - POSTGRES_DB=api
-      - POSTGRES_PASSWORD=!ChangeMe!
-      - POSTGRES_USER=api-platform
-    volumes:
-      - db_data:/var/lib/postgresql/data:rw
-      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./api/docker/db/data:/var/lib/postgresql/data:rw
-
-  db:
-    image: mariadb:10.4
-    environment:
-      MYSQL_DATABASE: "api"
-      MYSQL_USER: "gloggi"
-      MYSQL_PASSWORD: "gloggi"
-      MYSQL_ROOT_PASSWORD: "gloggi"
+      - '8080:8080'
+  
+  
+  mariadb:
+    image: mariadb:latest
     ports:
       - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=myappdb
+      - MYSQL_USER=myappuser
+      - MYSQL_PASSWORD=myapppassword
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_USER=myappuser
+      - PMA_PASSWORD=myapppassword
+    depends_on:
+      - mariadb
 
   mail:
     image: schickling/mailcatcher:latest
     container_name: 'abteilungs-mail'
     ports:
       - '1080:1080'
+      - '1025:1025'
 
 volumes:
-  php_socket:
-  db_data:
-  caddy_data:
-  caddy_config:
-  node_modules:
+  mariadb_data:
