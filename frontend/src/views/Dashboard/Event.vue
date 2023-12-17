@@ -1,15 +1,15 @@
 <template>
     <div>
-        <ItemHeaderTemplate :title="content.title" :content="content" entity="events" backLinkTo="Events" />
+        <ItemHeaderTemplate :title="content.title" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="events" backLinkTo="Events" />
         <Card class="mt-4">
             <LocationPicker v-if="false" :lat="content.lat" :long="content.long" @event-selected="selectEvent" class="h-96 w-full" />
             <div class="flex flex-col space-y-2">
-                <TextInput label="Title" type="text" v-model="content.title" />
-                <TextInput label="Start" type="datetime-local" v-model="content.startTime" />
-                <TextInput label="End" type="datetime-local" v-model="content.endTime" />
-                <Select label="Group" selection="Group" @selectGroup="handleSelectGroup" :options="groups" :value="content.groupId" />
-                <Select label="Start Location" selection="StartLocation" @selectStartLocation="handleSelectStartLocation" :options="locations" :value="content.startLocationId" />
-                <Select label="End Location" selection="EndLocation" @selectEndLocation="handleSelectEndLocation" :options="locations" :value="content.endLocationId" />
+                <TextInput label="Title" type="text" v-model="content.title" :errors="errors.title" />
+                <TextInput label="Start" type="datetime-local" v-model="content.startTime" :errors="errors.startTime" />
+                <TextInput label="End" type="datetime-local" v-model="content.endTime" :errors="errors.endTime" />
+                <Select label="Group" selection="Group" @selectGroup="handleSelectGroup" :options="groups" :value="content.groupId" :errors="errors.groupId" />
+                <Select label="Start Location" selection="StartLocation" @selectStartLocation="handleSelectStartLocation" :options="locations" :value="content.startLocationId" :errors="errors.startLocationId" />
+                <Select label="End Location" selection="EndLocation" @selectEndLocation="handleSelectEndLocation" :options="locations" :value="content.endLocationId" :errors="errors.endLocationId" />
             </div>
 
         </Card>
@@ -34,6 +34,7 @@ export default {
     data() {
         return {
             content: {},
+            errors: {},
             icons: {
                 faArrowsRotate,
                 faChevronLeft,
@@ -109,6 +110,9 @@ export default {
         },
         handleSelectGroup(event){
             this.content.groupId = event;
+        },
+        handleErrors(errors) {
+            this.errors = errors;
         },
 
     },

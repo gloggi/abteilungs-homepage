@@ -16,7 +16,8 @@ class Group extends Model
         'category',
         'file_id',
         'color',
-        'gender'
+        'gender',
+        'parent_id'
     ];
 
     public function section()
@@ -26,6 +27,11 @@ class Group extends Model
     public function file()
     {
         return $this->belongsTo(File::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Group::class);
     }
 
     public function predecessors()

@@ -25,13 +25,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        User::create([
-            'nickname' => 'Admin',
-            'firstname' => 'Admin',
-            'lastname' => 'Admin',
-            'email' => 'admin@gloggi.ch',
-            'password' => bcrypt('123456'),
-        ]);
     }
 
     /**

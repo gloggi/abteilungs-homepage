@@ -1,9 +1,9 @@
 <template>
   <div v-if="content"  :key="loadedKey">
-    <ItemHeaderTemplate :title="content.title" :content="content" entity="pages" backLinkTo="Pages" />
+    <ItemHeaderTemplate :title="content.title" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="pages" backLinkTo="Pages" />
     <Card class="space-y-2">
-      <TextInput label="Title" v-model="content.title" />
-      <TextInput class="mt-2" label="Route" v-model="content.route" />
+      <TextInput label="Title" v-model="content.title" :errors="errors.title" />
+      <TextInput class="mt-2" label="Route" v-model="content.route" :errors="errors.route" />
       <CheckBox label="Show Big Header" v-model="content.bigHeader" />
      
         <FormLabel>Header Images</FormLabel>
@@ -68,6 +68,7 @@ export default {
         pageItems: []
       },
       loadedKey: 0,
+      errors: {},
       activeItemIri: undefined,
       preSelectedImages: undefined,
       isDragging: false,
@@ -149,6 +150,9 @@ export default {
     },
     slugyfy(text){
       return kebabCase(text)
+    },
+    handleErrors(errors) {
+      this.errors = errors;
     },
     
     

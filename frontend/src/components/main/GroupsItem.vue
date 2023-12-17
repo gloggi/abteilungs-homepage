@@ -14,7 +14,7 @@
                 </div>
                 <div class="flex justify-around w-full items-center">
                     <template v-for="group in groups" :key="group.id">
-                    <div v-if="group.section.id===section.id" class="relative rounded-full aspect-square w-[150px] flex justify-center items-center" :style="`background-color: ${group.color}`">
+                    <div v-if="group.section.id===section.id&&!group.parentId" class="relative rounded-full aspect-square w-[150px] flex justify-center items-center" :style="`background-color: ${group.color}`">
                         <div class="absolute top-0 right-0 rounded-full w-10 h-10 bg-secondary flex justify-center items-center">
                             <img :src="selectGenderIcon(group.gender)" class="w-[65%] h-[65%]">
                         </div>

@@ -1,29 +1,35 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 <script>
 export default {
-  methods:{
-    setupStyles(){
-            this.createNewCssClass('bg-primary', `background-color: ${this.settings.primaryColor};`);
-            this.createNewCssClass('text-primary', `color: ${this.settings.primaryColor};`);
-            this.createNewCssClass('hover\\:text-primary:hover', `color: ${this.settings.primaryColor};`);
-            this.createNewCssClass('border-primary', `border-color: ${this.settings.primaryColor};`);
-            this.createNewCssClass('bg-secondary', `background-color: ${this.settings.secondaryColor};`);
-            this.createNewCssClass('text-secondary', `color: ${this.settings.secondaryColor};`);
-            this.createNewCssClass('hover\\:text-secondary:hover', `color: ${this.settings.secondaryColor};`);
-            this.createNewCssClass('border-secondary', `border-color: ${this.settings.secondaryColor};`);
-            this.createNewCssClass('focus\\:border-secondary:focus', `border-color: ${this.settings.secondaryColor};`);
-        }
+  methods: {
+    setupStyles() {
+      this.createNewCssClass('bg-primary', `background-color: ${this.settings.primaryColor};`);
+      this.createNewCssClass('text-primary', `color: ${this.settings.primaryColor};`);
+      this.createNewCssClass('hover\\:text-primary:hover', `color: ${this.settings.primaryColor};`);
+      this.createNewCssClass('border-primary', `border-color: ${this.settings.primaryColor};`);
+      this.createNewCssClass('bg-secondary', `background-color: ${this.settings.secondaryColor};`);
+      this.createNewCssClass('text-secondary', `color: ${this.settings.secondaryColor};`);
+      this.createNewCssClass('hover\\:text-secondary:hover', `color: ${this.settings.secondaryColor};`);
+      this.createNewCssClass('border-secondary', `border-color: ${this.settings.secondaryColor};`);
+      this.createNewCssClass('focus\\:border-secondary:focus', `border-color: ${this.settings.secondaryColor};`);
+      if (this.settings.websiteIcon?.path) {
+        var link = document.createElement('link');
+        link.rel = 'icon';
+        link.href = `${this.backendURL}${this.settings.websiteIcon.path}`;
+        document.head.appendChild(link);
+      }
+    }
   },
-  computed:{
-    
+  computed: {
+
   },
-  async created(){
+  async created() {
     await this.$store.dispatch('user/getUser');
     await this.$store.dispatch('settings/getSettings');
     this.setupStyles()
-   
+
   }
 
 }
@@ -31,21 +37,25 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,300italic,600italic');
- .main-text {
+
+.main-text {
   color: #333333;
   font-family: "Source Sans Pro", "system-ui", -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 24px;
- line-height: 36px;
+  line-height: 36px;
 }
+
 .text-heading-1 {
   font-family: "Source Sans Pro", "system-ui", -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 600;
   text-shadow: 0px 0px 10px black
 }
+
 .text-heading-2 {
   font-family: "Source Sans Pro", "system-ui", -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
 }
+
 .text-heading-3 {
   font-family: "Source Sans Pro", "system-ui", -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
@@ -54,8 +64,4 @@ export default {
 .link {
   color: #337ab7;
 }
-
-
-
-
 </style>

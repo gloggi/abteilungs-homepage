@@ -1,17 +1,17 @@
 <template>
   <div>
-    <ItemHeaderTemplate :title="content.nickname" :content="content" entity="contacts" backLinkTo="Contacts" />
+    <ItemHeaderTemplate @errors="handleErrors" @clearErrors="errors={}" :title="content.nickname" :content="content" entity="contacts" backLinkTo="Contacts" />
     <Card class="mt-4">
       <div class="flex flex-row space-x-5 h-full w-full">
         <LogoDisplay :logo="content.file" @selectImage="updateLogo"/>
       <div class="space-y-2 w-full">
-        <TextInput label="Nickname" type="text" v-model="content.nickname" />
+        <TextInput label="Nickname" type="text" v-model="content.nickname" :errors="errors.nickname" />
         <div class="flex flex-row justify-between space-x-2">
-          <TextInput class="w-full" label="Vorname" type="text" v-model="content.firstname" />
-        <TextInput class="w-full" label="Nachname" type="text" v-model="content.lastname" />
+          <TextInput class="w-full" label="Vorname" type="text" v-model="content.firstname" :errors="errors.firstname" />
+        <TextInput class="w-full" label="Nachname" type="text" v-model="content.lastname" :errors="errors.lastname" />
         </div>
-        <TextInput label="E-Mail" type="email" v-model="content.email" />
-        <TextInput label="Rolle" type="role" v-model="content.role" />
+        <TextInput label="E-Mail" type="email" v-model="content.email" :errors="errors.email" />
+        <TextInput label="Rolle" type="role" v-model="content.role" :errors="errors.role" />
         
       </div>
     </div>
@@ -37,6 +37,7 @@ export default {
       content: {},
       sections: undefined,
       showModal: false,
+      errors: {},
       icons: {
         faArrowsRotate,
         faChevronLeft,
@@ -94,6 +95,9 @@ export default {
     },
     handleSection(sectionId){
       this.content.sectionId = sectionId
+    },
+    handleErrors(errors){
+     this.errors = errors
     }
   },
   async created() {

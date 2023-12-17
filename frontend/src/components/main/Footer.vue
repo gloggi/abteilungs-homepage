@@ -2,11 +2,18 @@
     <div class="flex justify-center w-full background bg-[#4A4A4A]">
         <div class="md:w-[900px] flex justify-between py-6">
             <div>
-                <h2 class="text-heading-2 text-primary text-4xl">Abteilungen</h2>
+                <h2 class="text-heading-2 text-primary text-4xl">Gruppen</h2>
                 <ul class="text-white text-xl main-text space-y-1 pt-5">
-                    <li v-for="group in groups" :key="group.id" class="pl-6">
+                    <template v-for="group in transformedGroups" :key="group.id">
+                    <li v-if="!group.parentId"  class="pl-6">
                         <router-link to="/">{{ group.name }}</router-link>
+                        <ul v-if="group.children.length>0" class="text-white text-xl main-text space-y-1">
+                            <li v-for="child in group.children" :key="child.id" class="pl-6">
+                                <router-link to="/">{{ child.name }}</router-link>
+                            </li>
+                        </ul>
                     </li>
+                </template>
                 </ul>
 
             </div>
@@ -35,12 +42,18 @@ export default {
             try {
                 const response = await this.callApi('get', '/groups');
                 this.groups = response.data.data;
+
             } catch (error) {
                 console.log(error);
             }
         },
+        
     },
-
+    computed: {
+        transformedGroups(){
+            return this.groups.map(group => ({ ...group, children: this.groups.filter(g => g.parentId === group.id) }));
+         }
+    },
     async created() {
         await this.getGroups();
     },

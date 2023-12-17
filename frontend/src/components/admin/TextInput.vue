@@ -17,6 +17,7 @@
         leading-tight
         focus:outline-none focus:shadow-outline
       "
+      :class="`${errors? ' border-red-400':''}`"
       :id="label"
       :type="type"
       :readonly="readonly"
@@ -24,6 +25,9 @@
       :disabled="disabled"
       @keyup="e=>$emit('keyup',e)"
     />
+   <div v-if="errors" class="text-red-400 text-xs">
+    {{ errors.join(" ") }}
+  </div>
   </div>
 </template>
 
@@ -31,7 +35,7 @@
 import FormLabel from './FormLabel.vue';
 
 export default {
-    props: ["label", "type", "modelValue", "disabled", "placeholder", "readonly"],
+    props: ["label", "type", "modelValue", "disabled", "placeholder", "readonly", "errors"],
     emits: ["update:modelValue", "keyup"],
     computed: {
         payload: {

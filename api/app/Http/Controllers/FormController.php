@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFormRequest;
 use App\Models\OptionField;
 use Illuminate\Http\Request;
 use App\Models\Form;
@@ -14,40 +15,15 @@ class FormController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $page = $request->input('page', 1);
-        $forms = Form::paginate($perPage, ['*'], 'page', $page);
-        $data = $forms->items();
-        $meta = [
-            'current_page' => $forms->currentPage(),
-            'from' => $forms->firstItem(),
-            'last_page' => $forms->lastPage(),
-            'path' => $forms->path(),
-            'per_page' => $forms->perPage(),
-            'to' => $forms->lastItem(),
-            'total' => $forms->total(),
-        ];
-        return response()->json([
-            'data' => $data,
-            'meta' => $meta
-        ]);
+        $forms = Form::paginate($perPage);
+        return response()->json($forms);
     }
-    public function store(Request $request)
+    public function store(StoreFormRequest $request)
     {
 
-        $validatedData = $request->validate([
-            'name' => 'nullable|string|max:255',
-            'fields' => 'nullable|array',
-            'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
-            'fields.*.input_type' => 'nullable',
-            'fields.*.required' => 'nullable',
-            'fields.*.sort' => 'nullable',
-            'fields.*.option_fields' => 'nullable|array|min:1',
-            'fields.*.label' => 'nullable|string|max:255',
-        ]);
+        $validatedData = $request->validated();
 
-        $form = Form::create([
-            isset($validatedData['name']) ? $validatedData['name'] : null,
-        ]);
+        $form = Form::create($validatedData);
 
         $this->createFieldsFromValidatedData($form, $validatedData);
 
@@ -60,26 +36,13 @@ class FormController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'name' => 'nullable|string|max:255',
-            'fields' => 'nullable|array',
-            'email' => 'nullable',
-            'subject' => 'nullable',
-            'fields.*.input_type' => 'nullable',
-            'fields.*.id' => '',
-            'fields.*.sort' => 'nullable',
-            'fields.*.required' => 'nullable',
-            'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
-            'fields.*.option_fields' => 'nullable|array|min:1',
-            'fields.*.label' => 'nullable|string|max:255',
-        ]);
-        
         $form = Form::find($id);
-        $form->name = $validatedData['name'];
-        $form->email = $validatedData['email'];
-        $form->subject = $validatedData['subject'];
-        $form->save();
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+        $validatedData = $request->validated();
+
+        $form->update($validatedData);
 
         $this->createFieldsFromValidatedData($form, $validatedData);
 
@@ -119,8 +82,14 @@ class FormController extends Controller
     public function destroy($id)
     {
         $form = Form::find($id);
+
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+
         $form->delete();
-        return response()->json('Form removed successfully');
+
+        return response()->json(null, 204);
     }
     private function createFieldsFromValidatedData(Form $form, $validatedData){
         if( !isset($validatedData['fields'])) {

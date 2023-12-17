@@ -35,16 +35,14 @@ export const mixin = {
       return format(new Date(datetime), 'dd.MM.yyyy HH:mm')
     },
     async callApi(method, url, data) {
-      try {
+      try{
         const response = await api({ method, url, data: this.camelToSnakeObject(data) })
-        this.$store.commit("message/clear")
         response.data = this.snakeToCamelObject(response.data)
         return response
-      } catch (e) {
-        this.notifyUser(e.response.data.message, true)
-        return JSON.stringify(e, Object.getOwnPropertyNames(e))
+      }catch(error){
+        error.response.data = this.snakeToCamelObject(error.response.data)
+        throw error
       }
-
     },
     notifyUser(message, error=false) {
       this.$store.dispatch("notification/notify", {message, error});

@@ -13,7 +13,7 @@ class StoreEventRequest extends FormRequest
             'start_time' => 'required|date',
             'end_time' => 'required|date',
             'group_id' => 'required|integer|exists:groups,id',
-            'start_location_id' => 'nullable|integer|exists:locations,id',
+            'start_location_id' => 'required|integer|exists:locations,id',
             'end_location_id' => 'nullable|integer|exists:locations,id',
             'description' => 'nullable|string',
         ];

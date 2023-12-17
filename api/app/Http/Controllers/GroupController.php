@@ -27,7 +27,7 @@ class GroupController extends Controller
 
     public function show($id)
     {
-        $group = Group::with(['section', 'file', 'predecessors', 'successors'])
+        $group = Group::with(['section', 'file', 'predecessors', 'successors', 'parent'])
                       ->find($id);
 
         if (!$group) {

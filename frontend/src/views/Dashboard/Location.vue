@@ -1,13 +1,13 @@
 <template>
     <div>
-        <ItemHeaderTemplate :title="content.name" :content="content" entity="locations" backLinkTo="Locations" />
+        <ItemHeaderTemplate :title="content.name" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="locations" backLinkTo="Locations" />
         <Card class="mt-4">
-            <LocationPicker v-if="loaded" :lat="content.lat" :long="content.long" @location-selected="selectLocation"
+            <LocationPicker :key="loadedKey" :lat="content.lat" :long="content.long" @location-selected="selectLocation"
                 class="h-96 w-full" />
             <div class="flex flex-col space-y-2">
-                <TextInput label="Name" type="text" v-model="content.name" />
-                <TextInput label="Latitude" type="text" v-model="content.lat" />
-                <TextInput label="Longitude" type="text" v-model="content.long" />
+                <TextInput label="Name" type="text" v-model="content.name" :errors="errors.name" />
+                <TextInput label="Latitude" type="text" v-model="content.lat" :errors="errors.lat"/>
+                <TextInput label="Longitude" type="text" v-model="content.long" :errors="errors.long" />
             </div>
 
         </Card>
@@ -30,7 +30,8 @@ export default {
     data() {
         return {
             content: {},
-            loaded: false,
+            loadedKey: 0,
+            errors: {},
             icons: {
                 faArrowsRotate,
                 faChevronLeft,
@@ -50,7 +51,7 @@ export default {
                     `/locations/${this.$route.params.id}`
                 );
                 this.content = response.data;
-                this.loaded = true;
+                this.loadedKey++;
             } catch (e) {
                 console.log(e);
             }
@@ -74,6 +75,9 @@ export default {
             this.content.lat = event.lat;
             this.content.long = event.long;
         },
+        handleErrors(errors) {
+            this.errors = errors;
+        }
 
     },
     async created() {

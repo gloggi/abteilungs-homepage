@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\StorePageRequest;
+use App\Http\Requests\UpdatePageRequest;
 use App\Models\FormItem;
 use App\Models\ImageItem;
 use App\Models\TextItem;
@@ -15,46 +17,18 @@ class PageController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $page = $request->input('page', 1);
-        $pages = Page::paginate($perPage, ['*'], 'page', $page);
-        $data = $pages->items();
-        $meta = [
-            'current_page' => $pages->currentPage(),
-            'from' => $pages->firstItem(),
-            'last_page' => $pages->lastPage(),
-            'path' => $pages->path(),
-            'per_page' => $pages->perPage(),
-            'to' => $pages->lastItem(),
-            'total' => $pages->total(),
-        ];
-        return response()->json([
-            'data' => $data,
-            'meta' => $meta
-        ]);
-    }
-    public function store(Request $request)
-    {
+        $pages = Page::with(['files'])
+                       ->paginate($perPage);
 
-        $validatedData = $request->validate([
-            'title' => 'string|max:255|required',
-            'route' => 'string|max:255|unique:pages|nullable',
-            'big_header' => 'boolean|nullable',
-            'files' => 'array|nullable',
-            'page_items' => 'nullable|array',
-            'page_items.*.id' => 'nullable',
-            'page_items.*.sort' => 'nullable',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,contactItem,groupsItem,sectionsItem',
-            'page_items.*.title' => 'nullable',
-            'page_items.*.body' => 'nullable',
-            'page_items.*.file_id' => 'nullable'
-        ]);
-        $fileIds = isset($validatedData['files']) ? array_column($validatedData['files'], 'id') : [];
-        $page = Page::create([
-            'title' => isset($validatedData['title']) ? $validatedData['title'] : null,
-            'route' => isset($validatedData['route']) ? $validatedData['route'] : null,
-            'big_header' => isset($validatedData['big_header']) ? $validatedData['big_header'] : null,
-        ]);
-        $page->files()->sync($fileIds);
+        return response()->json($pages);
+    }
+    public function store(StorePageRequest $request)
+    {
+        $validatedData = $request->validated();
+       
+        $page = Page::create($validatedData);
+
+        $page->files()->sync(array_column($request->input('files', []), 'id'));
 
         $this->createPageItemsFromValidatedData($page, $validatedData);
 
@@ -66,32 +40,15 @@ class PageController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePageRequest $request, $id)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'title' => 'nullable|string|max:255',
-            'route' => 'nullable|string|max:255',
-            'big_header' => 'boolean|nullable',
-            'files' => 'nullable',
-            'page_items' => 'nullable|array',
-            'page_items.*.id' => 'nullable',
-            'page_items.*.sort' => 'nullable',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,contactItem,groupsItem,sectionsItem',
-            'page_items.*.title' => 'nullable',
-            'page_items.*.body' => 'nullable',
-            'page_items.*.files' => 'nullable',
-            'page_items.*.form_id' => 'nullable',
-        ]);
-
-
         $page = Page::find($id);
-        $page->title = $validatedData['title'];
-        $page->route = $validatedData['route'] == null ? null : $validatedData['route'];
-        $page->big_header = $validatedData['big_header'];
-        $fileIds = isset($validatedData['files']) ? array_column($validatedData['files'], 'id') : [];
-        $page->files()->sync($fileIds);
-        $page->save();
+        if (!$page) {
+            return response()->json(['message' => 'Page not found'], 404);
+        }
+        $validatedData = $request->validated();
+        $page->update($validatedData);
+        $page->files()->sync(array_column($request->input('files', []), 'id'));
         $this->createPageItemsFromValidatedData($page, $validatedData);
 
         $currentPageItems = $page->getAllItems();
@@ -143,8 +100,14 @@ class PageController extends Controller
     public function destroy($id)
     {
         $page = Page::find($id);
+
+        if (!$page) {
+            return response()->json(['message' => 'Page not found'], 404);
+        }
+
         $page->delete();
-        return response()->json('Page removed successfully');
+
+        return response()->json(null, 204);
     }
     private function createPageItemsFromValidatedData(Page $page, $validatedData)
     {

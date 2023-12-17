@@ -1,28 +1,30 @@
 <template>
   <div>
-    <ItemHeaderTemplate :title="content.name" :content="content" entity="sections" backLinkTo="Sections" />
+    <ItemHeaderTemplate :title="content.name" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="sections" backLinkTo="Sections" />
     <Card class="mt-4 space-y-5">
       <div class="flex flex-row space-x-5 h-full w-full">
         <LogoDisplay :key="loadedKey" :logo="content.file" :objectContain="true" @selectImage="updateLogo"/>
       <div class="space-y-2 w-full">
-        <TextInput label="Name" type="text" v-model="content.name" />
+        <TextInput label="Name" type="text" v-model="content.name" :errors="errors.name" />
         <div class="flex flex-row justify-between space-x-2">
           <TextInput
             class="w-full"
             label="From Age"
             type="number"
             v-model="content.fromAge"
+            :errors="errors.fromAge"
           />
           <TextInput
             class="w-full"
             label="To Age"
             type="number"
             v-model="content.toAge"
+            :errors="errors.toAge"
           />
         </div>
         <div class="">
             <FormLabel>Section Color</FormLabel>
-            <ColorPicker v-model="content.color" />
+            <ColorPicker v-model="content.color" :errors="errors.color" />
         </div>
       </div>
       
@@ -64,6 +66,7 @@ export default {
     return {
       content: {},
       loadedKey: 0,
+      errors: {},
       icons: {
         faArrowsRotate,
         faChevronLeft,
@@ -107,7 +110,10 @@ export default {
     },
     changeHeaderImages(event){
       this.content.files= event.files;
-    }
+    },
+    handleErrors(errors) {
+      this.errors = errors;
+    },
   },
   async created() {
     await this.getSection();

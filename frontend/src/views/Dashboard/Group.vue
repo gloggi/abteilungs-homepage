@@ -1,18 +1,18 @@
 <template>
   <div>
-    <ItemHeaderTemplate :title="content.name" :content="content" entity="groups" backLinkTo="Groups" />
+    <ItemHeaderTemplate :title="content.name" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="groups" backLinkTo="Groups" />
     <Card class="mt-4">
       <div class="flex flex-row space-x-5 h-full w-full">
         <LogoDisplay :key="loadedKey" :logo="content.file" @selectImage="updateLogo"/>
       <div class="space-y-2 w-full">
-        <TextInput label="Name" type="text" v-model="content.name" />
-          <Select label="Section" @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections"/>
-              <Select label="Gender" @selectGender="(event)=>handleGender(event)" :value="content.gender" selection="Gender" :options="genders"/>
+        <TextInput label="Name" type="text" v-model="content.name" :errors="errors.name" />
+          <Select label="Section" @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections" :errors="errors.sectionId"/>
+              <Select label="Gender" @selectGender="(event)=>handleGender(event)" :value="content.gender" selection="Gender" :options="genders" :errors="errors.gender"/>
         <div class="">
             <FormLabel>Group Color</FormLabel>
-            <ColorPicker v-model="content.color" />
+            <ColorPicker v-model="content.color" :errors="errors.color" />
         </div>
-        <Select label="Parent Group" @selectParentGroup="(event)=>handleParentGroup(event)" :value="content.parent?content.parent['id']:null" selection="ParentGroup" :options="groups"/>
+        <Select label="Parent Group" @selectParentGroup="(event)=>handleParentGroup(event)" :value="content.parentId?content.parentId:null" selection="ParentGroup" :options="groups"/>
         <MultipleSelect label="Predecessor Groups" v-model="content.predecessors" :options="groups" />
         <MultipleSelect label="Successor Groups" v-model="content.successors" :options="groups" />
       </div>
@@ -48,6 +48,7 @@ export default {
       sections: undefined,
       showModal: false,
       loadedKey: 0,
+      errors: {},
       groups: [],
       genders: [
         {id: 1, name: "Mixed"},
@@ -131,6 +132,9 @@ export default {
     },
    handleParentGroup(groupId){
       this.content.parentId = groupId;
+  },
+  handleErrors(errors){
+   this.errors = errors
   }
 },
   async created() {

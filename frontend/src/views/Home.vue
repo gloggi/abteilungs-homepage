@@ -31,7 +31,7 @@ export default {
             try {
                 const response = await this.callApi('get', `/pages/${pageRoute}`);
                 this.page = response.data;
-                document.title = this.page.title;
+                document.title = `${this.page.title} | ${this.settings.divisionName}`;
             } catch (error) {
                 console.log(error);
             }

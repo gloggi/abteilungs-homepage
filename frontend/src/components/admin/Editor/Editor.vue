@@ -5,27 +5,19 @@
         <div class="flex">
           <EditorButton @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
             :active="editor.isActive('heading', { level: 1 })">
-            h1
+            <font-awesome-icon class="h-4 w-4" :icon="icons.faHeading" /><sub class="font-bold">1</sub>
           </EditorButton>
           <EditorButton @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
             :active="editor.isActive('heading', { level: 2 })">
-            h2
+            <font-awesome-icon class="h-4 w-4" :icon="icons.faHeading" /><sub class="font-bold">2</sub>
           </EditorButton>
           <EditorButton @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
             :active="editor.isActive('heading', { level: 3 })">
-            h3
+            <font-awesome-icon class="h-4 w-4" :icon="icons.faHeading" /><sub class="font-bold">3</sub>
           </EditorButton>
-          <EditorButton @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-            :active="editor.isActive('heading', { level: 4 })">
-            h4
-          </EditorButton>
-          <EditorButton @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-            :active="editor.isActive('heading', { level: 5 })">
-            h5
-          </EditorButton>
-          <EditorButton @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-            :active="editor.isActive('heading', { level: 6 })">
-            h6
+          <EditorButton @click.self>
+          <input type="color" @input="editor.chain().focus().setColor($event.target.value).run()"
+            :value="editor.getAttributes('textStyle').color">
           </EditorButton>
         </div>
         <div class="flex">
@@ -45,7 +37,13 @@
             <font-awesome-icon class="h-5 w-5" :icon="icons.faList" />
           </EditorButton>
           <EditorButton @click="addImage">
-            Add Image
+            <font-awesome-icon class="h-5 w-5" :icon="icons.faImage" />
+          </EditorButton>
+          <EditorButton v-if="!editor.isActive('link')" @click="setLink">
+            <font-awesome-icon class="h-5 w-5" :icon="icons.faLink" />
+          </EditorButton>
+          <EditorButton v-if="editor.isActive('link')" @click="editor.chain().focus().unsetLink().run()">
+            <font-awesome-icon class="h-5 w-5" :icon="icons.faLinkSlash" />
           </EditorButton>
           <EditorButton @click="swapEditorContent" :active="showHTML">
             <font-awesome-icon class="h-5 w-5" :icon="icons.faCode" />
@@ -111,10 +109,13 @@ import HeadingExtension from '@tiptap/extension-heading';
 import ParagraphExtension from '@tiptap/extension-paragraph';
 import BulletlistExtension from '@tiptap/extension-bullet-list';
 import Image from '@tiptap/extension-image'
+import LinkExtension from '@tiptap/extension-link'
+import { Color } from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
 import { mergeAttributes } from '@tiptap/core'
 import EditorButton from './EditorButton.vue'
-import { faArrowRotateLeft, faArrowRotateRight, faList, faCode } from "@fortawesome/free-solid-svg-icons";
-
+import { faArrowRotateLeft, faArrowRotateRight, faList, faCode, faLink, faLinkSlash, faImage, faHeading } from "@fortawesome/free-solid-svg-icons";
+import prettify from 'html-prettify';
 export default {
   props: ["modelValue"],
   components: {
@@ -130,12 +131,18 @@ export default {
         faArrowRotateLeft,
         faArrowRotateRight,
         faList,
-        faCode
+        faCode,
+        faLink,
+        faLinkSlash,
+        faImage,
+        faHeading
       }
     }
   },
   methods: {
     swapEditorContent() {
+      this.inputModel = prettify(this.inputModel)
+      console.log(prettify(this.inputModel))
       this.showHTML = !this.showHTML
     },
     addImage() {
@@ -145,20 +152,43 @@ export default {
         this.editor.chain().focus().setImage({ src: url }).run()
       }
     },
+    setLink() {
+      const previousUrl = this.editor.getAttributes('link').href
+      const url = window.prompt('URL', previousUrl)
+
+      // cancelled
+      if (url === null) {
+        return
+      }
+
+      // empty
+      if (url === '') {
+        this.editor
+          .chain()
+          .focus()
+          .extendMarkRange('link')
+          .unsetLink()
+          .run()
+
+        return
+      }
+
+      // update link
+      this.editor
+        .chain()
+        .focus()
+        .extendMarkRange('link')
+        .setLink({ href: url })
+        .run()
+    },
 
   },
   watch: {
     modelValue(value) {
-      // HTML
       const isSame = this.editor.getHTML() === value
-
-      // JSON
-      // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
-
       if (isSame) {
         return
       }
-
       this.editor.commands.setContent(value, false)
     },
   },
@@ -176,9 +206,9 @@ export default {
     this.editor = new Editor({
       content: this.inputModel,
       attributes: {
-      class: 'h-full',
-    },
-      
+        class: 'h-full',
+      },
+
       onBlur: () => {
         // HTML
         this.$emit('update:modelValue', this.editor.getHTML())
@@ -218,7 +248,15 @@ export default {
           HTMLAttributes: {
             class: 'list-disc pl-6',
           },
-        })
+        }),
+        LinkExtension.configure({
+          openOnClick: false,
+          HTMLAttributes: {
+            class: 'link hover:text-secondary',
+          },
+        }),
+        TextStyle,
+        Color,
       ],
       editorProps: {
         attributes: {

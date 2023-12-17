@@ -1,11 +1,11 @@
 <template>
   <div v-if="content" :key="loadedKey">
-    <ItemHeaderTemplate :title="content.name" :content="content" entity="forms" backLinkTo="Forms" />
+    <ItemHeaderTemplate :title="content.name" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="forms" backLinkTo="Forms" />
     <Card class="mt-4">
       <div class="space-y-2 w-full">
-        <TextInput label="Name" type="text" v-model="content.name" />
-        <TextInput label="E-Mail" type="text" v-model="content.email" />
-        <TextInput label="Subject" type="text" v-model="content.subject" />
+        <TextInput label="Name" type="text" v-model="content.name" :errors="errors.name" />
+        <TextInput label="E-Mail" type="text" v-model="content.email" :errors="errors.email" />
+        <TextInput label="Subject" type="text" v-model="content.subject" :errors="errors.subject" />
         <h2 class="font-semibold text-2xl">Form Fields</h2>
         <AddFormField @changeOrder="changeOrder" @select="addField" :dragging="isDragging" :sortKey="-1" />
         <template v-for="field in content.fields" :key="field.id">
@@ -83,6 +83,7 @@ export default {
       forms: [],
       dragKey: 0,
       isDragging: false,
+      errors: {},
       icons: {
         faArrowsRotate,
         faChevronLeft,
@@ -145,7 +146,10 @@ export default {
         console.log(e);
       }
       this.getForm();
-    }
+    },
+    handleErrors(errors) {
+      this.errors = errors;
+    },
   },
   async created() {
     await this.getForm();

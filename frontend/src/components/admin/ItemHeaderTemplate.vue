@@ -26,6 +26,7 @@ export default {
     Card,
   },
   props: ["title", "content", "backLinkTo", "entity", "noDelete"],
+  emits: ["errors", "clearErrors"],
   data() {
     return {
       icons: {
@@ -52,6 +53,7 @@ export default {
       }
     },
     async createItem() {
+      this.$emit("clearErrors")
       try {
         const response = await this.callApi("post", `/${this.entity}`, this.content);
         if(response.data.id){
@@ -59,7 +61,9 @@ export default {
         }
         this.notifyUser("Item created");
       } catch (e) {
-       console.log(e)
+        if(e.response.status === 422){
+          this.$emit("errors", e.response.data.errors)
+        }
       }
     },
     async updateItem() {

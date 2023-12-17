@@ -25,8 +25,8 @@ export default {
     data() {
         return {
             customMenuItem: {
-                title: "Google",
-                url: "https://google.com",
+                title: undefined,
+                url: undefined,
                 type: "customItem"
             },
             allowDrag: false,
