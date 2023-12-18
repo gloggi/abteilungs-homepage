@@ -1,9 +1,11 @@
 <template>
+    <template v-if="page">
     <BigHeader v-if="page.bigHeader" :page="page" />
     <SmallHeader v-else :page="page" />
     <NavBar :menuItems="menuItems" @pageChange="handlePageChange" />
     <PageBuilder :page="page" :key="pageId" />
     <Footer />
+</template>
 </template>
 <script>
 import BigHeader from '../components/main/BigHeader.vue';

@@ -15,6 +15,7 @@
         <Select label="Parent Group" @selectParentGroup="(event)=>handleParentGroup(event)" :value="content.parentId?content.parentId:null" selection="ParentGroup" :options="groups"/>
         <MultipleSelect label="Predecessor Groups" v-model="content.predecessors" :options="groups" />
         <MultipleSelect label="Successor Groups" v-model="content.successors" :options="groups" />
+        <TextInput label="MiData Id" type="number" v-model="content.midataId" :errors="errors.midataId" />
       </div>
     </div>
     </Card>

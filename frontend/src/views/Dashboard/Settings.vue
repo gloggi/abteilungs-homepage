@@ -3,11 +3,11 @@
         <h2 class="font-extrabold text-4xl">Settings</h2>
     </div>
     <div class="flex justify-end mb-2">
-      <div>
-        <button class="rounded-r-lg bg-white p-1" @click="updateSettings">
-          <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6 text-gray-400" />
-        </button>
-      </div>
+        <div>
+            <button class="rounded-r-lg bg-white p-1" @click="updateSettings">
+                <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6 text-gray-400" />
+            </button>
+        </div>
     </div>
     <div v-if="this.settings" class="bg-gray-50 rounded-lg p-3 flex flex-col space-y-2">
         <TextInput label="Site Title" v-model="settings.siteTitle" />
@@ -15,27 +15,29 @@
         <div class="flex">
             <div class="w-1/2">
                 <FormLabel>Division Logo</FormLabel>
-                <LogoDisplay :logo="settings.divisionLogo" @selectImage="e=>updateLogo('divisionLogo',e)" />
+                <LogoDisplay :logo="settings.divisionLogo" @selectImage="e => updateLogo('divisionLogo', e)" />
             </div>
             <div class="w-1/2">
                 <FormLabel>Website Icon</FormLabel>
-                <LogoDisplay :logo="settings.websiteIcon" @selectImage="e=>updateLogo('websiteIcon',e)" />
+                <LogoDisplay :logo="settings.websiteIcon" @selectImage="e => updateLogo('websiteIcon', e)" />
             </div>
         </div>
         <div class="flex space-x-8">
-        <div class="">
-            <FormLabel>Primary Color</FormLabel>
-            <ColorPicker v-model="settings.primaryColor" />
+            <div class="">
+                <FormLabel>Primary Color</FormLabel>
+                <ColorPicker v-model="settings.primaryColor" />
+            </div>
+            <div class="">
+                <FormLabel>Secondary Color</FormLabel>
+                <ColorPicker v-model="settings.secondaryColor" />
+            </div>
         </div>
-        <div class="">
-            <FormLabel>Secondary Color</FormLabel>
-            <ColorPicker v-model="settings.secondaryColor" />
-        </div>
-        </div>
+        <TextInput label="MiData Id" type="number" v-model="settings.midataId" />
+        <TextInput label="MiData API Key" type="text" v-model="settings.midataApiKey" />
         <div>
-        <FormLabel>Contact in Footer</FormLabel>
-        <Editor v-model="settings.contactInFooter" />
-    </div>
+            <FormLabel>Contact in Footer</FormLabel>
+            <Editor v-model="settings.contactInFooter" />
+        </div>
 
 
     </div>
@@ -62,24 +64,24 @@ export default {
         updateLogo(key, file) {
             this.settings[`${key}Id`] = file.id;
         },
-        async getSettings(){
-            try{
-                const response = await this.callApi('get','settings');
+        async getSettings() {
+            try {
+                const response = await this.callApi('get', 'settings');
                 this.settings = response.data;
-            }catch(error){
+            } catch (error) {
                 console.log(error);
             }
         },
-        async updateSettings(){
-            try{
-                await this.callApi('put','settings',this.settings);
+        async updateSettings() {
+            try {
+                await this.callApi('put', 'settings', this.settings);
                 this.notifyUser("Settings Updated");
-            }catch(error){
+            } catch (error) {
                 console.log(error);
             }
         },
     },
-    async created(){
+    async created() {
         await this.getSettings();
     }
 

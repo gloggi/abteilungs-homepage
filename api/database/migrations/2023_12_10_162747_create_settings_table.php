@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('site_title')->nullable();
             $table->string('division_name')->nullable();
+            $table->integer('midata_id')->nullable();
+            $table->string('midata_api_key')->nullable();
             $table->unsignedBigInteger('division_logo_id')->nullable();
             $table->foreign('division_logo_id')->references('id')->on('files')->onDelete('set null');
             $table->unsignedBigInteger('website_icon_id')->nullable();

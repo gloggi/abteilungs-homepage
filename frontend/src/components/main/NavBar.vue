@@ -1,7 +1,7 @@
 
 <template>
     
-    <nav class="relative md:static bg-primary w-full flex h-[75px] -mt-[75px] px-5 flex-col md:flex-row justify-between items-center text-white">
+    <nav class="relative z-0 md:static bg-primary w-full flex h-[75px] -mt-[75px] px-5 flex-col md:flex-row justify-between items-center text-white">
         <div class="flex justify-between items-center w-full h-full md:w-auto">
             <div class="flex items-center"><router-link to="/"><img class="h-14" :src="`${backendURL}${settings?.divisionLogo?.path}`" /></router-link></div>
             <button v-if="!isDesktop" @click="showMobileMenu = !showMobileMenu" class="px-3"><font-awesome-icon :icon="icons.faBars" /></button>

@@ -13,6 +13,7 @@ class UpdateGroupRequest extends FormRequest
         return [
             'name' => 'sometimes|required|string|max:255',
             'color' => 'sometimes|required|string|max:255',
+            'midata_id' => 'nullable|integer',
             'gender' => 'nullable|integer',
             'section_id' => 'required|integer|exists:sections,id',
             'file_id' => 'nullable|integer|exists:files,id',

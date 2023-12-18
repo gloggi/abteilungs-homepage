@@ -12,7 +12,7 @@ class GroupController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $groups = Group::with(['file', 'section'])
+        $groups = Group::with(['file', 'section','predecessors', 'successors', 'parent'])
                        ->paginate($perPage);
 
         return response()->json($groups);
