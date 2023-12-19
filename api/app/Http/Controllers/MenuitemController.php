@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\MenuItem;
 
 
-class MenuitemController extends Controller
+class MenuItemController extends Controller
 {
     public function index(Request $request)
     {
@@ -44,6 +44,7 @@ class MenuitemController extends Controller
         {
             $existingMenuItemOfPage = MenuItem::where('page_id', $request->input('page_id'))->first();
             $existingMenuItemOfCustom = MenuItem::where('url', $request->input('url'))->first();
+            $existingMenuItemOfSpecial = MenuItem::where('special', $request->input('special'))->first();
             if ($existingMenuItemOfPage&& $request->input('page_id')) {
                 $existingMenuItemOfPage->sort = $request->input('sort');
                 $existingMenuItemOfPage->save();
@@ -54,11 +55,17 @@ class MenuitemController extends Controller
                 $existingMenuItemOfCustom->save();
                 return response()->json($existingMenuItemOfCustom);
             }
+            if($existingMenuItemOfSpecial&& $request->input('special')){
+                $existingMenuItemOfSpecial->sort = $request->input('sort');
+                $existingMenuItemOfSpecial->save();
+                return response()->json($existingMenuItemOfSpecial);
+            }
             $menuItem = new MenuItem;
-            $menuItem->title = $request->input('title')?? null;
-            $menuItem->url = $request->input('url')?? null;
+            $menuItem->title = $request->input('title');
+            $menuItem->url = $request->input('url');
+            $menuItem->special = $request->input('special');
             $menuItem->sort = $request->input('sort');
-            $menuItem->page_id = $request->input('page_id')?? null;
+            $menuItem->page_id = $request->input('page_id');
             $menuItem->save();
             return response()->json($menuItem);
         }

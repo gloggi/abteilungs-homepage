@@ -16,7 +16,8 @@ class Setting extends Model
         'secondaryColor',
         'contact_in_footer',
         'midata_id',
-        'midata_api_key'
+        'midata_api_key',
+        'midata_parent_id'
     ];
 
  

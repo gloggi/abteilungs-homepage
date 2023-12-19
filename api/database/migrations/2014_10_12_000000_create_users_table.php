@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->integer('midata_id')->nullable();
+            $table->integer('midata_group_id')->nullable();
             $table->timestamps();
         });
 

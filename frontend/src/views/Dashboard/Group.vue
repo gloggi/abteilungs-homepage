@@ -1,23 +1,36 @@
 <template>
   <div>
-    <ItemHeaderTemplate :title="content.name" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="groups" backLinkTo="Groups" />
+    <ItemHeaderTemplate :title="content.name" :content="content" @errors="handleErrors" @clearErrors="errors = {}"
+      entity="groups" backLinkTo="Groups" />
     <Card class="mt-4">
       <div class="flex flex-row space-x-5 h-full w-full">
-        <LogoDisplay :key="loadedKey" :logo="content.file" @selectImage="updateLogo"/>
-      <div class="space-y-2 w-full">
-        <TextInput label="Name" type="text" v-model="content.name" :errors="errors.name" />
-          <Select label="Section" @selectSection="(event)=>handleSection(event)" :value="content.section?content.section['id']:null" selection="Section" :options="sections" :errors="errors.sectionId"/>
-              <Select label="Gender" @selectGender="(event)=>handleGender(event)" :value="content.gender" selection="Gender" :options="genders" :errors="errors.gender"/>
-        <div class="">
+        <LogoDisplay :key="loadedKey" :logo="content.file" @selectImage="updateLogo" />
+        <div class="space-y-2 w-full">
+          <TextInput label="Name" type="text" v-model="content.name" :errors="errors.name" />
+          <Select label="Section" @selectSection="(event) => handleSection(event)"
+            :value="content.section ? content.section['id'] : null" selection="Section" :options="sections"
+            :errors="errors.sectionId" />
+          <Select label="Gender" @selectGender="(event) => handleGender(event)" :value="content.gender" selection="Gender"
+            :options="genders" :errors="errors.gender" />
+          <div class="">
             <FormLabel>Group Color</FormLabel>
             <ColorPicker v-model="content.color" :errors="errors.color" />
+          </div>
+          <Select label="Parent Group" @selectParentGroup="(event) => handleParentGroup(event)"
+            :value="content.parentId ? content.parentId : null" selection="ParentGroup" :options="groups" />
+          <MultipleSelect label="Predecessor Groups" v-model="content.predecessors" :options="groups" />
+          <MultipleSelect label="Successor Groups" v-model="content.successors" :options="groups" />
+          <TextInput label="MiData Id" type="number" v-model="content.midataId" :errors="errors.midataId" />
+          <div class="flex flex-col space-y-2">
+          <FormLabel>Header Images</FormLabel>
+        <BannerImageSelector info="The perfect aspect ratio is 32:9." :key="loadedKey" :item="{files: content.headerImages}" @changeImages="changeHeaderImages" />
+      </div>  
+        <div class="flex flex-col space-y-2">
+            <FormLabel>Description</FormLabel>
+            <Editor v-model="content.description" />
+          </div>
         </div>
-        <Select label="Parent Group" @selectParentGroup="(event)=>handleParentGroup(event)" :value="content.parentId?content.parentId:null" selection="ParentGroup" :options="groups"/>
-        <MultipleSelect label="Predecessor Groups" v-model="content.predecessors" :options="groups" />
-        <MultipleSelect label="Successor Groups" v-model="content.successors" :options="groups" />
-        <TextInput label="MiData Id" type="number" v-model="content.midataId" :errors="errors.midataId" />
       </div>
-    </div>
     </Card>
   </div>
 </template>
@@ -32,6 +45,8 @@ import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import ColorPicker from "../../components/admin/ColorPicker.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
+import Editor from "../../components/admin/Editor/Editor.vue";
+import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
 export default {
   components: {
     Card,
@@ -41,7 +56,9 @@ export default {
     MultipleSelect,
     ItemHeaderTemplate,
     ColorPicker,
-    FormLabel
+    FormLabel,
+    Editor,
+    BannerImageSelector
 },
   data() {
     return {
@@ -52,9 +69,9 @@ export default {
       errors: {},
       groups: [],
       genders: [
-        {id: 1, name: "Mixed"},
-        {id: 2, name: "Male"},
-        {id: 3, name: "Female"}
+        { id: 1, name: "Mixed" },
+        { id: 2, name: "Male" },
+        { id: 3, name: "Female" }
       ],
       icons: {
         faArrowsRotate,
@@ -65,26 +82,26 @@ export default {
     };
   },
   methods: {
-    updateLogo(file){
+    updateLogo(file) {
       this.content.file_id = file.id;
       this.updateGroup()
 
     },
     async getGroup() {
-      if(this.$route.params.id==="new"){
-          return;
-        }
+      if (this.$route.params.id === "new") {
+        return;
+      }
       try {
         const response = await this.callApi(
           "get",
           `/groups/${this.$route.params.id}`
         );
         this.content = response.data;
-        if(this.content.predecessors){
-          this.content.predecessors = this.content.predecessors.map(p=>p.id)
+        if (this.content.predecessors) {
+          this.content.predecessors = this.content.predecessors.map(p => p.id)
         }
-        if(this.content.successors){
-          this.content.successors = this.content.successors.map(p=>p.id)
+        if (this.content.successors) {
+          this.content.successors = this.content.successors.map(p => p.id)
         }
         this.loadedKey++;
       } catch (e) {
@@ -125,27 +142,29 @@ export default {
         console.log(e);
       }
     },
-    handleSection(sectionId){
+    handleSection(sectionId) {
       this.content.sectionId = sectionId
     },
-    handleGender(genderId){
+    handleGender(genderId) {
       this.content.gender = genderId;
     },
-   handleParentGroup(groupId){
+    handleParentGroup(groupId) {
       this.content.parentId = groupId;
+    },
+    handleErrors(errors) {
+      this.errors = errors
+    },
+    changeHeaderImages(event){
+      this.content.headerImages= event.files;
+    }
   },
-  handleErrors(errors){
-   this.errors = errors
-  }
-},
   async created() {
     await this.getSections();
     await this.getGroups();
     await this.getGroup();
-    
+
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

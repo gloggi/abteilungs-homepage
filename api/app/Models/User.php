@@ -24,7 +24,8 @@ class User extends Authenticatable
         'lastname',
         'email',
         'password',
-        'midata_id'
+        'midata_id',
+        'midata_group_id'
     ];
 
     /**

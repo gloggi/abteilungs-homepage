@@ -29,8 +29,8 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('group_file', function (Blueprint $table) {
-            $table->foreignId('section_id')->constrained()->onDelete('cascade');
+        Schema::create('group_headers', function (Blueprint $table) {
+            $table->foreignId('group_id')->constrained()->onDelete('cascade');
             $table->foreignId('file_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -42,6 +42,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('groups');
-        Schema::dropIfExists('group_file');
+        Schema::dropIfExists('group_headers');
     }
 };

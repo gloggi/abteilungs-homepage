@@ -14,6 +14,8 @@ class UpdateGroupRequest extends FormRequest
             'name' => 'sometimes|required|string|max:255',
             'color' => 'sometimes|required|string|max:255',
             'midata_id' => 'nullable|integer',
+            'header_images' => 'array|nullable',
+            'description' => 'nullable|string',
             'gender' => 'nullable|integer',
             'section_id' => 'required|integer|exists:sections,id',
             'file_id' => 'nullable|integer|exists:files,id',

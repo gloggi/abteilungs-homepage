@@ -27,6 +27,14 @@ export default {
             markerPoint: undefined,
         };
     },
+    watch:{
+        lat: function(val) {
+            this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]))
+        },
+        long: function(val) {
+            this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]))
+        }
+    },
     methods: {
         initializeMap() {
             const vectorlayer = this.initializeIcon();

@@ -34,9 +34,9 @@ export const mixin = {
     formatDateTime(datetime) {
       return format(new Date(datetime), 'dd.MM.yyyy HH:mm')
     },
-    async callApi(method, url, data) {
+    async callApi(method, url, data, options) {
       try{
-        const response = await api({ method, url, data: this.camelToSnakeObject(data) })
+        const response = await api({ method, url, data: this.camelToSnakeObject(data), ...options})
         response.data = this.snakeToCamelObject(response.data)
         return response
       }catch(error){

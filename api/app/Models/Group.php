@@ -17,8 +17,16 @@ class Group extends Model
         'file_id',
         'color',
         'gender',
-        'parent_id'
+        'parent_id',
+        'midata_id',
+        'description'
     ];
+
+    public function headerImages()
+    {
+        return $this->belongsToMany(File::class, 'group_headers');
+
+    }
 
     public function section()
     {

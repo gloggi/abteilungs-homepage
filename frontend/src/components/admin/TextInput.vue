@@ -25,6 +25,7 @@
       :disabled="disabled"
       @keyup="e=>$emit('keyup',e)"
     />
+    <InfoField v-if="info" :info="info" />
    <div v-if="errors" class="text-red-400 text-xs">
     {{ errors.join(" ") }}
   </div>
@@ -33,9 +34,10 @@
 
 <script>
 import FormLabel from './FormLabel.vue';
+import InfoField from './InfoField.vue';
 
 export default {
-    props: ["label", "type", "modelValue", "disabled", "placeholder", "readonly", "errors"],
+    props: ["label", "type", "modelValue", "disabled", "placeholder", "readonly", "errors", "info"],
     emits: ["update:modelValue", "keyup"],
     computed: {
         payload: {
@@ -47,7 +49,7 @@ export default {
             },
         },
     },
-    components: { FormLabel }
+    components: { FormLabel, InfoField }
 };
 </script>
 

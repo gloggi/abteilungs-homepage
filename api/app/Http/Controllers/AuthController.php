@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Invite;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -125,8 +127,10 @@ class AuthController extends Controller
         $tokenResponse = Socialite::driver('midata')->getAccessTokenResponse($request->code);
         $accessToken = $tokenResponse['access_token'];
         $midataUser = Socialite::driver('midata')->userFromToken($accessToken);
-
+        
         $user = User::where('midata_id', $midataUser->id)->first();
+        $setting = Setting::find(1);
+        $groupIds = Group::pluck('midata_id')->toArray();
 
         if (!$user) {
             $user = User::create([
@@ -137,14 +141,18 @@ class AuthController extends Controller
                 'password' => '',
                 'midata_id' => $midataUser->attributes['id']
             ]);
-            if ($this->hasRole($midataUser->user, 'PowerUser')) {
+            if ($midata_group_id = $this->hasRole($midataUser->user, 'PowerUser',[$setting->midata_parent_id])) {
                 $user->assignRole('admin');
-            } else if ($this->hasRole($midataUser->user, 'Abteilungsleiter*in')) {
+            } else if ($midata_group_id = $this->hasRole($midataUser->user, 'Abteilungsleiter*in', [$setting->midata_id])) {
                 $user->assignRole('al');
-            } else if ($this->hasRole($midataUser->user, 'Einheitsleiter*in')) {
+            } else if ($midata_group_id = $this->hasRole($midataUser->user, 'Einheitsleiter*in', $groupIds)) {
                 $user->assignRole('einheitsleiter');
             }
+            $user->midata_group_id = $midata_group_id;
+            $user->save();
+            
         }
+        error_log(json_encode($midataUser->user));
         return response()->json([
             'status' => true,
             'message' => 'User Logged In Successfully',
@@ -154,17 +162,17 @@ class AuthController extends Controller
 
     }
 
-    protected function hasRole($data, $roleName)
+    protected function hasRole($data, $roleName, $groupIds)
     {
         if (isset($data['roles']) && is_array($data['roles'])) {
             foreach ($data['roles'] as $role) { 
                 
-                if (isset($role['role_name']) && $role['role_name'] === $roleName) {
-                    return true;
+                if (isset($role['role_name']) && $role['role_name'] === $roleName && in_array($role['group_id'], $groupIds, true)) {
+                    return $role['group_id'];
                 }
             }
         }
-        return false;
+        return null;
     }
 
 

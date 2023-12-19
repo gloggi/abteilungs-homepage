@@ -13,7 +13,8 @@ class MenuItem extends Model
         'title',
         'url',
         'page_id',
-        'sort'
+        'sort',
+        'special'
     ];
     protected $appends = ['type'];
 

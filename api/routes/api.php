@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\MenuitemController;
+use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebFormController;
@@ -85,9 +85,9 @@ Route::get('/forms/{id}', [FormController::class, 'show']);
 Route::put('/forms/{id}', [FormController::class, 'update']);
 Route::delete('/forms/{id}', [FormController::class, 'destroy']);
 
-Route::get('/menuitems', [MenuitemController::class, 'index']);
-Route::post('/menuitems', [MenuitemController::class, 'store']);
-Route::delete('/menuitems/{id}', [MenuitemController::class, 'destroy']);
+Route::get('/menuitems', [MenuItemController::class, 'index']);
+Route::post('/menuitems', [MenuItemController::class, 'store']);
+Route::delete('/menuitems/{id}', [MenuItemController::class, 'destroy']);
 
 Route::get('/settings', [SettingController::class, 'show']);
 Route::put('/settings', [SettingController::class, 'update']);

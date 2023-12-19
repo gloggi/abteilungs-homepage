@@ -1,6 +1,8 @@
 <template>
   <DragItemBox :boxTitle="boxTitle" :item="item" @delete="event=>$emit('delete', event)" @startedDragging="$emit('startedDragging')" @endedDragging="$emit('endedDragging')" >
-  <BannerImageSelector :item="item" @changeImages="changeImages" />
+  <Card>
+    <BannerImageSelector :item="item" @changeImages="changeImages" />
+    </Card>
 </DragItemBox>
 </template>
 
@@ -8,9 +10,10 @@
 import { faXmark, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import DragItemBox from '../DragItemBox.vue';
 import BannerImageSelector from '../BannerImageSelector.vue';
+import Card from "../Card.vue";
 
 export default {
-  components: { DragItemBox, BannerImageSelector },
+  components: { DragItemBox, BannerImageSelector, Card },
   props: ["item", "modelValue", "boxTitle"],
   emits: ["updatePage", "changeImages","delete", "startedDragging", "endedDragging"],
   data() {

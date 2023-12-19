@@ -12,7 +12,7 @@
                         <p class="main-text text-lg text-white">{{ section.fromAge }} - {{ section.toAge }} Jahre</p>
                     </div>
                 </div>
-                <div class="flex justify-around w-full items-center">
+                <div class="flex flex-wrap justify-around w-full items-center">
                     <template v-for="group in groups" :key="group.id">
                         <div v-if="group.section.id === section.id && !group.parentId" @click="currentGroup=group"
                             class="relative cursor-pointer rounded-full aspect-square w-[150px] flex justify-center items-center"
@@ -21,7 +21,7 @@
                                 class="absolute top-0 right-0 rounded-full w-10 h-10 bg-secondary flex justify-center items-center">
                                 <img :src="selectGenderIcon(group.gender)" class="w-[65%] h-[65%]">
                             </div>
-                            <img :src="this.backendURL + group.file?.path" class="w-[60%] h-[60%]">
+                            <img v-if="group.file?.path" :src="this.backendURL + group.file?.path" class="w-[60%] h-[60%]">
                         </div>
                     </template>
                 </div>

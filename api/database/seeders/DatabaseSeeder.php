@@ -37,6 +37,10 @@ class DatabaseSeeder extends Seeder
         $this->call(SelectFieldsTableSeeder::class);
         $this->call(OptionFieldsTableSeeder::class);
         $this->call(MenuItemsTableSeeder::class);
+        $this->call(GroupPredecessorTableSeeder::class);
+        $this->call(GroupSuccessorTableSeeder::class);
+        $this->call(GroupHeadersTableSeeder::class);
+        $this->call(ImageItemFileTableSeeder::class);
     }
-    // create seeds: php artisan iseed files,sections,groups,contacts,pages,page_file,section_file,text_items,generic_items,image_items,forms,form_items,settings,text_fields,textarea_fields,select_fields,option_fields,menu_items --force
+    // create seeds: php artisan iseed files,sections,groups,group_predecessor,group_successor,group_headers,contacts,pages,page_file,section_file,text_items,generic_items,image_items,image_item_file,forms,form_items,settings,text_fields,textarea_fields,select_fields,option_fields,menu_items --force
 }

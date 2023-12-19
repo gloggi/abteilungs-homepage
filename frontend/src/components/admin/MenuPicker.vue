@@ -6,6 +6,13 @@
                 class="border-2 border-gray-400 border-dashed text-center p-5 rounded-lg">
                 <CustomMenuItem />
             </div>
+            <p class="text-2xl font-semibold">Special Items</p>
+            <div @dragenter.prevent="" @dragover.prevent @drop="handleDeleteDrop"
+                class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg">
+                <DragableMenuItem v-if="showGroupPagesItem" :item="{special: 'groupPages'}" >
+                   Group Pages Dropdown
+                </DragableMenuItem>
+            </div>
             <p class="text-2xl font-semibold">Pages</p>
             <div @dragenter.prevent="" @dragover.prevent @drop="handleDeleteDrop"
                 class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg">
@@ -50,6 +57,11 @@ export default {
             }
         }
     },
+    computed: {
+        showGroupPagesItem() {
+            return !this.menuItems.find(m => m.special === "groupPages")
+        }
+    },
     methods: {
         async getPages() {
             try {
@@ -88,7 +100,14 @@ export default {
         async handleMenuZoneDrop(menuItem) {
             if (menuItem.type === "menuItem") {
                 this.menuItems = this.menuItems.filter(mI => mI.id !== menuItem.id)
-            } else {
+            } else if(menuItem.special === "groupPages"){
+                menuItem = {
+                    title: "Group Dropdown",
+                    sort: menuItem.sort,
+                    special: "groupPages"
+                }
+                
+            }else {
                 menuItem = {
                     page_id: menuItem.id,
                     title: menuItem.id ? undefined : menuItem.title,

@@ -24,6 +24,7 @@ class MenuItemsTableSeeder extends Seeder
                 'id' => 1,
                 'title' => NULL,
                 'url' => NULL,
+                'special' => NULL,
                 'page_id' => 1,
                 'sort' => 0,
                 'created_at' => '2023-12-15 20:07:51',
@@ -34,6 +35,7 @@ class MenuItemsTableSeeder extends Seeder
                 'id' => 2,
                 'title' => NULL,
                 'url' => NULL,
+                'special' => NULL,
                 'page_id' => 2,
                 'sort' => 1,
                 'created_at' => '2023-12-15 20:07:55',
@@ -44,10 +46,22 @@ class MenuItemsTableSeeder extends Seeder
                 'id' => 3,
                 'title' => NULL,
                 'url' => NULL,
+                'special' => NULL,
                 'page_id' => 3,
                 'sort' => 2,
                 'created_at' => '2023-12-15 20:07:58',
                 'updated_at' => '2023-12-15 20:07:58',
+            ),
+            3 => 
+            array (
+                'id' => 4,
+                'title' => 'Group Dropdown',
+                'url' => NULL,
+                'special' => 'groupPages',
+                'page_id' => NULL,
+                'sort' => 3,
+                'created_at' => '2023-12-19 21:48:39',
+                'updated_at' => '2023-12-19 21:48:39',
             ),
         ));
         

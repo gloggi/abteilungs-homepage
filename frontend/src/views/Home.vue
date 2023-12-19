@@ -1,9 +1,10 @@
 <template>
-    <template v-if="page">
-    <BigHeader v-if="page.bigHeader" :page="page" />
-    <SmallHeader v-else :page="page" />
+    <template v-if="page||group">
+    <BigHeader v-if="!isGroupPage&&page.bigHeader" :page="page" />
+    <SmallHeader v-if="!page?.bigHeader" :page="isGroupPage? {title: group.name, files: group.headerImages} : page" />
     <NavBar :menuItems="menuItems" @pageChange="handlePageChange" />
-    <PageBuilder :page="page" :key="pageId" />
+    <PageBuilder v-if="!isGroupPage" :page="page" :key="pageId" />
+    <GroupPage v-if="isGroupPage" :group="group" />
     <Footer />
 </template>
 </template>
@@ -13,15 +14,18 @@ import NavBar from '../components/main/NavBar.vue';
 import PageBuilder from '../components/main/PageBuilder.vue';
 import Footer from '../components/main/Footer.vue';
 import SmallHeader from '../components/main/SmallHeader.vue';
+import GroupPage from '../components/main/GroupPage.vue';
 
 export default {
     name: 'App',
-    components: { NavBar, BigHeader, PageBuilder, Footer, SmallHeader },
+    components: { NavBar, BigHeader, PageBuilder, Footer, SmallHeader, GroupPage },
     data() {
         return {
             pageId: undefined,
             page: undefined,
-            menuItems: []
+            menuItems: [],
+            isGroupPage: false,
+            group: undefined
         }
     },
     methods: {
@@ -29,6 +33,11 @@ export default {
             var pageRoute = this.$route.path.substring(1)
             if(pageRoute===""){
                 pageRoute = 0
+            }
+            if(this.$route.name==="GroupPage"){
+                this.isGroupPage = true
+                this.getGroup()
+                return
             }
             try {
                 const response = await this.callApi('get', `/pages/${pageRoute}`);
@@ -43,6 +52,15 @@ export default {
                 const response = await this.callApi('get', '/menuitems');
                 this.menuItems = response.data.data;
             } catch (error) {
+                console.log(error);
+            }
+        },
+        async getGroup() {
+            try {
+                const response = await this.callApi('get', `/groups/${this.$route.params.id}`);
+                this.group = response.data;
+            }
+            catch (error) {
                 console.log(error);
             }
         },
@@ -63,7 +81,6 @@ export default {
         if (!this.pageId && this.menuItems.length > 0) {
             this.pageId = this.menuItems.find(item => item.pageId).pageId;
         }
-        console.log(this.$route.path.substring(1))
         await this.getPage();
         
         

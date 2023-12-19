@@ -12,7 +12,7 @@ class GroupController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $groups = Group::with(['file', 'section','predecessors', 'successors', 'parent'])
+        $groups = Group::with(['file', 'section','predecessors', 'successors', 'parent', 'headerImages'])
                        ->paginate($perPage);
 
         return response()->json($groups);
@@ -21,13 +21,14 @@ class GroupController extends Controller
     public function store(StoreGroupRequest $request)
     {
         $group = Group::create($request->validated());
+        $group->headerImages()->sync(array_column($request->input('header_images', []), 'id'));
 
         return response()->json($group, 201);
     }
 
     public function show($id)
     {
-        $group = Group::with(['section', 'file', 'predecessors', 'successors', 'parent'])
+        $group = Group::with(['section', 'file', 'predecessors', 'successors', 'parent','headerImages'])
                       ->find($id);
 
         if (!$group) {
@@ -46,6 +47,8 @@ class GroupController extends Controller
         }
 
         $group->update($request->validated());
+        $group->headerImages()->sync(array_column($request->input('header_images', []), 'id'));
+        error_log(json_encode($request->input('header_images')));
 
         $group->predecessors()->sync($request->input('predecessors', []));
         $group->successors()->sync($request->input('successors', []));

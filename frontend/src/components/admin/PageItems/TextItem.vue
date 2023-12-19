@@ -1,6 +1,6 @@
 <template>
   <DragItemBox :boxTitle="boxTitle" :item="item" @delete="event=>$emit('delete', event)" @startedDragging="$emit('startedDragging')" @endedDragging="$emit('endedDragging')" >
-  <Card class="p-0 space-y-2">
+  <Card class="space-y-2">
     <div class="">
     <TextInput  label="Title" v-model.lazy="titleValue" />
     <Editor class="mt-2" v-model.lazy="bodyValue" />

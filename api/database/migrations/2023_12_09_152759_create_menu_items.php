@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('url')->nullable();
+            $table->string('special')->nullable();
             $table->foreignId('page_id')->nullable()->constrained()->onDelete('cascade');
             $table->integer('sort');
             $table->timestamps();

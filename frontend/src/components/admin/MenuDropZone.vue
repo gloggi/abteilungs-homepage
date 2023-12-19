@@ -1,6 +1,6 @@
 <template>
     <div :dropzone="true" @dragenter.prevent="" @dragover.prevent @drop="handleDrop" @dragenter="dragging=true" @dragleave="dragging=false" 
-    :class="`${dragging?'h-48':'h-1.5'} bg-gray-400 rounded-lg`">
+    :class="`${dragging?'h-10':'h-1.5'} bg-gray-400 rounded-lg`">
  </div>
 </template>
 <script>

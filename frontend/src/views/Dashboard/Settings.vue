@@ -33,7 +33,8 @@
             </div>
         </div>
         <TextInput label="MiData Id" type="number" v-model="settings.midataId" />
-        <TextInput label="MiData API Key" type="text" v-model="settings.midataApiKey" />
+        <TextInput label="MiData Parent Id" type="number" v-model="settings.midataParentId" />
+        <TextInput label="MiData API Key" info="Is required to fetch camps from MiData" type="text" v-model="settings.midataApiKey" />
         <div>
             <FormLabel>Contact in Footer</FormLabel>
             <Editor v-model="settings.contactInFooter" />

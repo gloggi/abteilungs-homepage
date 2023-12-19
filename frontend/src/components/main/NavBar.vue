@@ -1,14 +1,18 @@
 
 <template>
     
-    <nav class="relative z-0 md:static bg-primary w-full flex h-[75px] -mt-[75px] px-5 flex-col md:flex-row justify-between items-center text-white">
+    <nav class="relative z-10 md:static bg-primary w-full flex h-[75px] -mt-[75px] px-5 flex-col md:flex-row justify-between items-center text-white">
         <div class="flex justify-between items-center w-full h-full md:w-auto">
             <div class="flex items-center"><router-link to="/"><img class="h-14" :src="`${backendURL}${settings?.divisionLogo?.path}`" /></router-link></div>
             <button v-if="!isDesktop" @click="showMobileMenu = !showMobileMenu" class="px-3"><font-awesome-icon :icon="icons.faBars" /></button>
         </div>
         <Transition name="menu-fade">
             <ul if="togglemenu" class="flex flex-col md:flex-row md:space-x-5 w-full md:w-auto absolute z-10 md:static top-[75px] md:top-0 bg-primary" v-if="showMobileMenu || isDesktop">
-                <NavLinkItem v-for="menuItem in menuItems" :menuItem="menuItem" :key="menuItem.id" @pageChange="e=>$emit('pageChange',e)">{{ menuItem.title }}</NavLinkItem>
+                <template v-for="menuItem in menuItems" :key="menuItem.id">
+                    <NavLinkItem v-if="!menuItem.special"  :menuItem="menuItem"  @pageChange="e=>$emit('pageChange',e)">{{ menuItem.title }}</NavLinkItem>
+                    <GroupDropdown v-else />
+                </template>
+               
 
             </ul>
         </Transition>
@@ -17,11 +21,12 @@
 
 </template>
 <script>
+import GroupDropdown from './GroupDropdown.vue';
 import NavLinkItem from './NavLinkItem.vue';
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default {
-    components: { NavLinkItem },
+    components: { NavLinkItem, GroupDropdown },
     emits: ['pageChange'],
     props: {
         menuItems: {

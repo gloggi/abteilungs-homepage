@@ -191,6 +191,11 @@ const routes = [
     
   },
   {
+    path: '/group/:id',
+    name: 'GroupPage',
+    component: Home
+  },
+  {
     path: '/:path',
     name: 'Home2',
     component: Home

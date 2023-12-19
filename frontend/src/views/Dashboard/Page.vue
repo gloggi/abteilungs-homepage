@@ -3,11 +3,11 @@
     <ItemHeaderTemplate :title="content.title" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="pages" backLinkTo="Pages" />
     <Card class="space-y-2">
       <TextInput label="Title" v-model="content.title" :errors="errors.title" />
-      <TextInput class="mt-2" label="Route" v-model="content.route" :errors="errors.route" />
+      <TextInput class="mt-2" label="Route" info="If left blank, this field points to the root directory of the website" v-model="content.route" :errors="errors.route" />
       <CheckBox label="Show Big Header" v-model="content.bigHeader" />
      
         <FormLabel>Header Images</FormLabel>
-        <BannerImageSelector :item="content" @changeImages="changeHeaderImages" />
+        <BannerImageSelector info="If the 'Show Big Header' is selected, the perfect aspect ratio is 16:9, otherwise the perfect aspect ratio is 32:9." :item="content" @changeImages="changeHeaderImages" />
    
       
     </Card>
