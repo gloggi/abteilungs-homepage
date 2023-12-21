@@ -1,6 +1,6 @@
 <template>
     <div class="w-full px-24">
-        <FleurDeLis v-if="item.showFleurDeLis"/>
+        <FleurDeLis class="hidden md:flex" v-if="item.showFleurDeLis"/>
         <HeadingOne class="text-primary">{{ item.title }}</HeadingOne>
         <div v-html="item.body" v-router-link></div>
         

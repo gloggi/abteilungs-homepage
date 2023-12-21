@@ -6,10 +6,11 @@
                 <ul class="text-white text-xl main-text space-y-1 pt-5">
                     <template v-for="group in transformedGroups" :key="group.id">
                     <li v-if="!group.parentId"  class="pl-6">
-                        <router-link to="/">{{ group.name }}</router-link>
+                        <router-link v-if="group.children.length==0" :to="`/group/${group.id}`">{{ group.name }}</router-link>
+                        <p v-else>{{ group.name }}</p>
                         <ul v-if="group.children.length>0" class="text-white text-xl main-text space-y-1">
                             <li v-for="child in group.children" :key="child.id" class="pl-6">
-                                <router-link to="/">{{ child.name }}</router-link>
+                                <router-link :to="`/group/${child.id}`">{{ child.name }}</router-link>
                             </li>
                         </ul>
                     </li>
