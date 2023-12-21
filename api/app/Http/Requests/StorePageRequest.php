@@ -19,6 +19,7 @@ class StorePageRequest extends FormRequest
             'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,contactItem,groupsItem,sectionsItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
+            'page_items.*.show_fleur_de_lis' => 'nullable',
             'page_items.*.file_id' => 'nullable'
         ];
     }

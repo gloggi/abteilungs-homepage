@@ -30,6 +30,7 @@ export default {
     },
     methods: {
         async getPage() {
+            this.isGroupPage = false
             var pageRoute = this.$route.path.substring(1)
             if(pageRoute===""){
                 pageRoute = 0

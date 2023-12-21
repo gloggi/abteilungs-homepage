@@ -12,7 +12,7 @@ class ContactController extends Controller
 {
     public function index(Request $request)
     {
-        $contacts = Contact::with('file')
+        $contacts = Contact::with('file')->orderBy('sort', 'asc')
                            ->paginate($request->input('per_page', 10));
 
         return response()->json($contacts);

@@ -11,7 +11,8 @@
         <TextInput class="w-full" label="Nachname" type="text" v-model="content.lastname" :errors="errors.lastname" />
         </div>
         <TextInput label="E-Mail" type="email" v-model="content.email" :errors="errors.email" />
-        <TextInput label="Rolle" type="role" v-model="content.role" :errors="errors.role" />
+        <TextInput label="Rolle" type="text" v-model="content.role" :errors="errors.role" />
+        <TextInput label="Sort" type="number" v-model="content.sort" :errors="errors.sort" />
         
       </div>
     </div>

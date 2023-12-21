@@ -13,4 +13,19 @@ router.beforeEach((to, from, next) => {
     next()
   })
 
-createApp(App).use(store).use(router).mixin(mixin).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
+const app = createApp(App).use(store).use(router).mixin(mixin).component("font-awesome-icon", FontAwesomeIcon)
+app.directive('router-link', {
+  mounted(el, binding, vnode) {
+    el.addEventListener('click', (event) => {
+      event.preventDefault();
+      const path = event.target.getAttribute('href');
+      if (path.startsWith('/')) {
+        router.push(path);
+      } else {
+        window.location.href = path;
+      }
+    });
+  }
+});
+
+app.mount('#app');

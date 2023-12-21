@@ -23,7 +23,7 @@
             </div>
             <div>
                 <h2 class="text-heading-2 text-primary text-4xl">Kontakt</h2>
-                <div class="text-white" v-html="settings?.contactInFooter"></div>
+                <div class="text-white" v-html="settings?.contactInFooter" v-router-link></div>
                 
             </div>
         </div>

@@ -1,15 +1,27 @@
 <template>
     <div>
-        <ItemHeaderTemplate :title="content.title" :content="content" @errors="handleErrors" @clearErrors="errors={}" entity="events" backLinkTo="Events" />
+        <ItemHeaderTemplate :title="content.title" :dublicate="true" :content="content" @errors="handleErrors" @clearErrors="errors = {}"
+            entity="events" backLinkTo="Events" />
         <Card class="mt-4">
-            <LocationPicker v-if="false" :lat="content.lat" :long="content.long" @event-selected="selectEvent" class="h-96 w-full" />
+            <LocationPicker v-if="false" :lat="content.lat" :long="content.long" @event-selected="selectEvent"
+                class="h-96 w-full" />
             <div class="flex flex-col space-y-2">
                 <TextInput label="Title" type="text" v-model="content.title" :errors="errors.title" />
                 <TextInput label="Start" type="datetime-local" v-model="content.startTime" :errors="errors.startTime" />
                 <TextInput label="End" type="datetime-local" v-model="content.endTime" :errors="errors.endTime" />
-                <Select label="Group" selection="Group" @selectGroup="handleSelectGroup" :options="groups" :value="content.groupId" :errors="errors.groupId" />
-                <Select label="Start Location" selection="StartLocation" @selectStartLocation="handleSelectStartLocation" :options="locations" :value="content.startLocationId" :errors="errors.startLocationId" />
-                <Select label="End Location" selection="EndLocation" @selectEndLocation="handleSelectEndLocation" :options="locations" :value="content.endLocationId" :errors="errors.endLocationId" />
+                <div class="flex flex-col space-y-2">
+                    <FormLabel>Description</FormLabel>
+                    <Editor v-model="content.description" />
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <FormLabel>Take with you</FormLabel>
+                    <Editor v-model="content.takeWithYou" />
+                </div>
+                <MultipleSelect label="Groups" v-model="content.groups" :options="groups" />
+                <Select label="Start Location" selection="StartLocation" @selectStartLocation="handleSelectStartLocation"
+                    :options="locations" :value="content.startLocationId" :errors="errors.startLocationId" />
+                <Select label="End Location" selection="EndLocation" @selectEndLocation="handleSelectEndLocation"
+                    :options="locations" :value="content.endLocationId" :errors="errors.endLocationId" />
             </div>
 
         </Card>
@@ -23,13 +35,19 @@ import LocationPicker from "../../components/admin/LocationPicker.vue";
 import Select from "../../components/admin/Select.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import { faArrowsRotate, faChevronLeft, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import FormLabel from "../../components/admin/FormLabel.vue";
+import Editor from "../../components/admin/Editor/Editor.vue";
+import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 export default {
     components: {
         Card,
         TextInput,
         LocationPicker,
         Select,
-        ItemHeaderTemplate
+        ItemHeaderTemplate,
+        FormLabel,
+        Editor,
+        MultipleSelect
     },
     data() {
         return {
@@ -47,15 +65,18 @@ export default {
     },
     methods: {
         async getEvent() {
-            if(this.$route.params.id==="new"){
-          return;
-        }
+            if (this.$route.params.id === "new") {
+                return;
+            }
             try {
                 const response = await this.callApi(
                     "get",
                     `/events/${this.$route.params.id}`
                 );
                 this.content = response.data;
+                if (this.content.groups) {
+                    this.content.groups = this.content.groups.map(g => g.id)
+                }
                 this.loadedKey++;
             } catch (e) {
                 console.log(e);
@@ -76,7 +97,7 @@ export default {
                 console.log(e);
             }
         },
-        selectEvent(event){
+        selectEvent(event) {
             this.content.lat = event.lat;
             this.content.long = event.long;
         },
@@ -102,13 +123,13 @@ export default {
                 console.log(e);
             }
         },
-        handleSelectStartLocation(event){
+        handleSelectStartLocation(event) {
             this.content.startLocationId = event;
         },
-        handleSelectEndLocation(event){
+        handleSelectEndLocation(event) {
             this.content.endLocationId = event;
         },
-        handleSelectGroup(event){
+        handleSelectGroup(event) {
             this.content.groupId = event;
         },
         handleErrors(errors) {

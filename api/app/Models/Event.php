@@ -9,7 +9,7 @@ class Event extends Model
 {
 
     protected $fillable = [
-        'title','start_time', 'end_time', 'start_location_id', 'end_location_id', 'group_id', 'description'
+        'title','start_time', 'end_time', 'start_location_id', 'end_location_id', 'description', 'take_with_you'
     ];
 
 
@@ -28,9 +28,9 @@ class Event extends Model
         return Carbon::parse($value)->format('Y-m-d\TH:i');
     }
 
-    public function group()
+    public function groups()
     {
-        return $this->belongsTo(Group::class, 'group_id');
+        return $this->belongsToMany(Group::class, 'event_groups', 'event_id', 'group_id');
     }
 
     public function startLocation()

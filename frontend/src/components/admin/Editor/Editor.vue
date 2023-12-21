@@ -253,6 +253,7 @@ export default {
           openOnClick: false,
           HTMLAttributes: {
             class: 'link hover:text-secondary',
+            target: '_self',
           },
         }),
         TextStyle,

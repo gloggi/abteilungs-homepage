@@ -1,23 +1,23 @@
 <template>
     <div class="w-full px-24">
-        <h1 class="text-primary text-5xl pb-2 text-heading-3">{{ item.title }}</h1>
-        <div v-html="item.body"></div>
-
+        <FleurDeLis v-if="item.showFleurDeLis"/>
+        <HeadingOne class="text-primary">{{ item.title }}</HeadingOne>
+        <div v-html="item.body" v-router-link></div>
+        
     </div>
 </template>
 <script>
+import FleurDeLis from './FleurDeLis.vue';
+import HeadingOne from './HeadingOne.vue';
+
 export default {
     props: ['item'],
     data() {
-        return {
-            
-        }
+        return {};
     },
-    methods:{
-        
-    },
+    methods: {},
     async created() {
-      
     },
+    components: { HeadingOne, FleurDeLis }
 }
 </script>

@@ -3,6 +3,7 @@
         <h1 class="text-primary text-4xl text-heading-3">{{ item.form.name }}</h1>
    
     <div class="flex flex-col  space-y-5 pl-4">
+        <input type="text" tabindex="-1" class="absolute -left-3/4" />
         <div v-for="field in item.form.fields" class="flex flex-col space-y-2">
             <label class="font-bold main-text text-2xl" for="form.label">{{ field.label }} {{ field.required?'*':'' }}</label>
             <input v-if="field.type=='textField'" v-model="formContent[field.key]" :required="field.required" class="border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary" :type="field.inputType" :placeholder="field.placeholder" />

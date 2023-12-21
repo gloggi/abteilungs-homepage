@@ -2,8 +2,8 @@
   <OverviewTemplate
     name="Contacts"
     entity="contacts"
-    titles="Image,Nickname,Vorname,Nachname,E-Mail"
-    columns="file:image(thumbnail),nickname:link(id),firstname,lastname,email"
+    titles="Image,Nickname,Rolle,E-Mail"
+    columns="file:image(thumbnail),nickname:link(id),role,email"
     pushAfterCreationTo="Contact" />
 </template>
 

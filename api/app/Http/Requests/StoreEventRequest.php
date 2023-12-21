@@ -10,12 +10,13 @@ class StoreEventRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'take_with_you' => 'nullable|string',
             'start_time' => 'required|date',
             'end_time' => 'required|date',
-            'group_id' => 'required|integer|exists:groups,id',
+            'groups' => 'nullable|array',
             'start_location_id' => 'required|integer|exists:locations,id',
             'end_location_id' => 'nullable|integer|exists:locations,id',
-            'description' => 'nullable|string',
         ];
     }
 }

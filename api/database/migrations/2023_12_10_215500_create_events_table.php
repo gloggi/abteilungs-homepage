@@ -20,10 +20,18 @@ return new class extends Migration
             $table->foreign('start_location_id')->references('id')->on('locations')->onDelete('set null');
             $table->unsignedBigInteger('end_location_id')->nullable();
             $table->foreign('end_location_id')->references('id')->on('locations')->onDelete('set null');
-            $table->unsignedBigInteger('group_id')->nullable();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
             $table->text('description')->nullable();
+            $table->text('take_with_you')->nullable();
             $table->timestamps();
+        });
+        Schema::create('event_groups', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('event_id');
+            $table->unsignedBigInteger('group_id');
+            $table->timestamps();
+        
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
     }
 
@@ -33,5 +41,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('events');
+        Schema::dropIfExists('event_groups');
     }
 };

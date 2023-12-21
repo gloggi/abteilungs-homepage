@@ -22,6 +22,9 @@ class GroupController extends Controller
     {
         $group = Group::create($request->validated());
         $group->headerImages()->sync(array_column($request->input('header_images', []), 'id'));
+        
+        $group->predecessors()->sync($request->input('predecessors', []));
+        $group->successors()->sync($request->input('successors', []));
 
         return response()->json($group, 201);
     }
@@ -48,7 +51,6 @@ class GroupController extends Controller
 
         $group->update($request->validated());
         $group->headerImages()->sync(array_column($request->input('header_images', []), 'id'));
-        error_log(json_encode($request->input('header_images')));
 
         $group->predecessors()->sync($request->input('predecessors', []));
         $group->successors()->sync($request->input('successors', []));

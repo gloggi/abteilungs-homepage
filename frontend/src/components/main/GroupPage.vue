@@ -1,10 +1,14 @@
 <template >
    <PageWrapper v-if="group">
     <TextItem :item="{title: group.name, body: group.description}" />
+    <HeadingOne class="px-24 text-primary">Anlässe</HeadingOne>
+    <Event v-if="events.length>0" v-for="event in events" :key="event.id" :event="event" />
        
     </PageWrapper>
 </template>
 <script>
+import Event from './Event.vue';
+import HeadingOne from './HeadingOne.vue';
 import PageWrapper from './PageWrapper.vue';
 import TextItem from './TextItem.vue';
 
@@ -12,15 +16,25 @@ export default {
     props: ["group"],
     data() {
         return {
+            events: []
            
         };
     },
     methods: {
+    async getEvents() {
+        try {
+            const response = await this.callApi("get", "/events", {}, {params : {group_id: this.group.id}});
+            this.events = response.data.data;
+        }catch (error) {
+            console.log(error);
+        }
+    }
         
     },
     async created() {
+        this.getEvents();
        
     },
-    components: { PageWrapper, TextItem }
+    components: { PageWrapper, TextItem, Event, HeadingOne }
 }
 </script>

@@ -12,10 +12,11 @@ class UpdateEventRequest extends FormRequest
             'title' => 'sometimes|required|string|max:255',
             'start_time' => 'sometimes|required|date',
             'end_time' => 'sometimes|required|date',
-            'group_id' => 'sometimes|required|integer|exists:groups,id',
+            'groups' => 'nullable|array',
             'start_location_id' => 'sometimes|required|integer|exists:locations,id',
             'end_location_id' => 'sometimes|required|integer|exists:locations,id',
             'description' => 'nullable|string',
+            'take_with_you' => 'nullable|string',
         ];
     }
 }

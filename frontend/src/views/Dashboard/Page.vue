@@ -14,7 +14,7 @@
     <AddPageItem @changeOrder="changeOrder" @select="addItem" :dragging="isDragging" :sortKey="-1" />
     <div v-for="(pageItem, i) in content.pageItems" :key="i">
       
-      <TextItem v-if="pageItem.type == 'textItem'" boxTitle="Text Item" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i"   :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body"  />
+      <TextItem v-if="pageItem.type == 'textItem'" boxTitle="Text Item" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i"   :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body" v-model:fleurDeLis="pageItem.showFleurDeLis"  />
       <ImageItem v-if="pageItem.type == 'imageItem'" boxTitle="Image Item"  @changeImages="changeImageItem" :item="pageItem" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" />
       <FormItem v-if="pageItem.type == 'formItem'" boxTitle="Form Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i"  @changeForm="changeFormItem" :item="pageItem" />
       <ContactItem v-if="pageItem.type == 'contactItem'" boxTitle="Contact Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" :item="pageItem"  />

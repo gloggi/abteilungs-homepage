@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TextItem extends Model
 {
-    protected $fillable = ['title', 'body', 'page_id', 'sort'];
+    protected $fillable = ['title', 'body', 'show_fleur_de_lis', 'page_id', 'sort'];
 
     protected $appends = ['type'];
 

@@ -26,6 +26,7 @@ class CreatePagesTable extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->text('body')->nullable();
+            $table->boolean('show_fleur_de_lis')->default(false);
             $table->integer('sort')->nullable();
             $table->unsignedBigInteger('page_id');
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');

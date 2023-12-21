@@ -1,6 +1,6 @@
 <template>
     <div class="w-full px-24">
-        <h1 class="text-primary text-5xl pb-2 text-heading-3 w-full">Kontakt</h1>
+        <HeadingOne class="w-full text-primary">Kontakt</HeadingOne>
         <div class="flex flex-col space-y-5">
         <div v-for="contact in contacts" :key="contact.id" class="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-between">
             <div class="flex flex-col main-text">
@@ -21,6 +21,8 @@
     </div>
 </template>
 <script>
+import HeadingOne from './HeadingOne.vue';
+
 export default {
     props: ["item"],
     data() {
@@ -41,6 +43,6 @@ export default {
     async created() {
         await this.getContacts()
     },
-    components: {}
+    components: { HeadingOne }
 }
 </script>
