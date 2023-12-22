@@ -10,18 +10,20 @@
             <p class="main-text text-white text-xl"><span class="font-semibold">Ort:</span> {{ event.startLocation.name }}</p>
             <p v-if="event.groups.length>1" class="main-text text-white text-xl"><span class="font-semibold">Gruppen:</span> {{ event.groups.map(g=>g.name).join(", ") }}</p>
             </div>
+            <Map class="w-full h-96" :markers="[event.startLocation, event.endLocation]" />
             <div class="p-3" v-html="event.description" v-router-link></div>
         </div>
     </div>
 </template>
 <script>
 import HeadingOne from './HeadingOne.vue';
+import Map from './Map.vue';
 import {format} from 'date-fns';
 import { de } from 'date-fns/locale'
 
 export default {
     props: ["event"],
-    components: { HeadingOne },
+    components: { HeadingOne, Map },
     methods: {
         formatDate(date){
             return format(new Date(date), 'dd. MMMM yyyy', {locale: de})

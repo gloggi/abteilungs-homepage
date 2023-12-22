@@ -10,34 +10,24 @@ import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { XYZ, Vector as VectorSource } from "ol/source";
 import { fromLonLat, toLonLat } from 'ol/proj';
 import { Icon, Style } from 'ol/style';
+import { boundingExtent } from 'ol/extent';
 import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
 import { defaults as defaultControls, ScaleLine } from "ol/control";
-import mapMarkerSvg from '@/assets/mapMarker.svg';
 
 export default {
-    props: ['lat', 'long'],
-    emits: ['location-selected'],
-    mounted() {
-        this.initializeMap();
+    props: ["markers"],
+    async mounted() {
+        await this.initializeMap();
     },
     data() {
         return {
             map: undefined,
-            markerPoint: undefined,
         };
-    },
-    watch:{
-        lat: function(val) {
-            this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]))
-        },
-        long: function(val) {
-            this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]))
-        }
     },
     methods: {
         initializeMap() {
-            const vectorlayer = this.initializeIcon();
+            const [extent, vectorlayer] = this.initializeMarkers();
             this.map = new Map({
                 target: this.$refs.mapContainer,
                 layers: [
@@ -58,45 +48,57 @@ export default {
                     })
                 ]),
             });
-            this.map.on('singleclick', this.selectLocation);
-            
-
-        },
-        initializeIcon() {
-            const vectorSource = new VectorSource();   
-            this.markerPoint = new Point(fromLonLat([this.long, this.lat])) 
-            const iconFeature = new Feature({
-                geometry: this.markerPoint,
+            this.map.getView().fit(extent, {
+                padding: [50, 50, 50, 50],
+                maxZoom: 16
             });
 
+
+        },
+        formatIcon() {
+            const svgString = `<svg width='26' height='50' version='1.1' viewBox='0 0 26 50' xmlns='http://www.w3.org/2000/svg'>
+                            <path class='svg' d='m8 1-1e-7 20h-7s12 19 12 28c0-9 12-28 12-28h-7v-20z' 
+                            stroke='#fff' fill='${this.settings.primaryColor}' stroke-width='2'/>
+                            </svg>`;
+            const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
+            return URL.createObjectURL(svgBlob);
+
+        },
+        initializeMarkers() {
+            const vectorSource = new VectorSource();
+            var coordinates = this.markers.map((marker) => {
+                return fromLonLat([marker.long, marker.lat]);
+            });
+            const markerIcon = this.formatIcon();
+
+            var extent = boundingExtent(coordinates);
             const iconStyle = new Style({
                 image: new Icon({
-                    src: mapMarkerSvg,
-                    scale: 4, 
+                    src: markerIcon,
+                    scale: 1,
                     anchor: [0.5, 1],
                 }),
             });
 
-            iconFeature.setStyle(iconStyle);
+            for (let marker of this.markers) {
+                const markerPoint = new Point(fromLonLat([marker.long, marker.lat]))
+                const iconFeature = new Feature({
+                    geometry: markerPoint,
+                });
 
-            vectorSource.addFeature(iconFeature);
+
+                iconFeature.setStyle(iconStyle);
+
+                vectorSource.addFeature(iconFeature);
+            }
+
 
             const vectorLayer = new VectorLayer({
                 source: vectorSource,
             });
 
-            return vectorLayer;
+            return [extent, vectorLayer];
 
-        },
-        selectLocation(event) {
-            {
-                const pixel = event.pixel;
-                const coords = this.map.getCoordinateFromPixel(pixel);
-                this.markerPoint.setCoordinates(coords);
-                const lonLat = toLonLat(coords);
-                
-                this.$emit('location-selected', { lat: lonLat[1], long: lonLat[0] });
-            }
         }
     },
 };
