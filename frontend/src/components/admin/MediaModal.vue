@@ -4,9 +4,9 @@
       <h1 class="text-4xl font-bold pb-2">Bilder</h1>
     <DragAndDropUpload @uploadedFile="gridKey++" />
     
-    <SelectMediaGrid class="overflow-y-scroll" style="max-height: 65vh;" :key="gridKey" :maxSelect="maxSelect" :category="category" :pre-selected="preSelected" @selectItems="selectItemsHandler" />
+    <SelectMediaGrid class="overflow-y-scroll" style="max-height: 65vh;" :key="gridKey" :extensions="extensions" :maxSelect="maxSelect" :category="category" :pre-selected="preSelected" @selectItems="selectItemsHandler" />
       <div class="pt-3 w-full flex justify-end h-13">
-      <button v-if="selected.length>0" @click="selectAndClose" class="rounded-lg h-9 w-9 bg-gray-400 p-1" >
+      <button @click="selectAndClose" class="rounded-lg h-9 w-9 bg-gray-400 p-1" >
         <font-awesome-icon :icon="icons.faCheck" class="h-6 w-6 text-white" />
       </button>
     </div>
@@ -35,6 +35,10 @@ export default {
         },
         preSelected:{
             type: Array,
+        },
+        extensions:{
+            type: Array,
+            default: () => []
         }
     },
   data() {

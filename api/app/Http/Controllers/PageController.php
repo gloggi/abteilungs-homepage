@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
+use App\Models\FilesItem;
 use App\Models\FormItem;
 use App\Models\ImageItem;
 use App\Models\TextItem;
@@ -155,6 +156,23 @@ class PageController extends Controller
                             'form_id' => $pageItemData['form_id'] ?? null,
                         ]
                     );
+                    break;
+                case 'filesItem':
+                    $imageItem = FilesItem::updateOrCreate(
+                        ['id' => $pageItemData['id'] ?? null],
+                        [
+                            'page_id' => $page->id,
+                            'title' => $pageItemData['title'] ?? '',
+                            'sort' => $sort_counter
+                        ]
+                    );
+                    $fileIds = isset($pageItemData['files']) ? array_column($pageItemData['files'], 'id') : [];
+
+                    if (isset($pageItemData['id'])) {
+                        $imageItem->files()->sync($fileIds);
+                    } else {
+                        $imageItem->files()->attach($fileIds);
+                    }
                     break;
                 case 'contactItem':
                     GenericItem::updateOrCreate(

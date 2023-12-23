@@ -28,6 +28,24 @@ class LocationsTableSeeder extends Seeder
                 'created_at' => '2023-12-20 21:16:48',
                 'updated_at' => '2023-12-20 21:16:48',
             ),
+            1 => 
+            array (
+                'id' => 2,
+                'name' => 'Bellevue',
+                'lat' => 47.366928324186,
+                'long' => 8.5447274514975,
+                'created_at' => '2023-12-22 20:24:17',
+                'updated_at' => '2023-12-22 20:24:17',
+            ),
+            2 => 
+            array (
+                'id' => 3,
+                'name' => 'Bahnhof Schwerzenbach',
+                'lat' => 47.384163916735,
+                'long' => 8.6593313026431,
+                'created_at' => '2023-12-22 20:27:42',
+                'updated_at' => '2023-12-22 20:27:42',
+            ),
         ));
         
         

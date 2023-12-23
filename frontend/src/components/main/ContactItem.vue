@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full px-24">
+    <ContentWrapper>
         <HeadingOne class="w-full text-primary">Kontakt</HeadingOne>
         <div class="flex flex-col space-y-5">
         <div v-for="contact in contacts" :key="contact.id" class="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-between">
@@ -16,11 +16,10 @@
            
         </div>
     </div>
-
-        
-    </div>
+    </ContentWrapper>
 </template>
 <script>
+import ContentWrapper from './ContentWrapper.vue';
 import HeadingOne from './HeadingOne.vue';
 
 export default {
@@ -43,6 +42,6 @@ export default {
     async created() {
         await this.getContacts()
     },
-    components: { HeadingOne }
+    components: { HeadingOne, ContentWrapper }
 }
 </script>

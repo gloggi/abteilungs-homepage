@@ -16,10 +16,11 @@ class StorePageRequest extends FormRequest
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,contactItem,groupsItem,sectionsItem',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
             'page_items.*.show_fleur_de_lis' => 'nullable',
+            'page_items.*.files' => 'nullable',
             'page_items.*.file_id' => 'nullable'
         ];
     }

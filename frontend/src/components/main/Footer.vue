@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center w-full background bg-[#4A4A4A]">
-        <div class="md:w-[900px] flex justify-between py-6">
+        <div class="md:w-[900px] flex flex-col md:flex-row items-start w-full px-5 md:px-0  md:justify-between py-6">
             <div>
                 <h2 class="text-heading-2 text-primary text-4xl">Gruppen</h2>
                 <ul class="text-white text-xl main-text space-y-1 pt-5">

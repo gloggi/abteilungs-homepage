@@ -7,11 +7,13 @@
                 <FormItem v-if="pageItem.type=='formItem'" :item="pageItem" />
                 <SectionsItem v-if="pageItem.type=='sectionsItem'" :item="pageItem" />
                 <GroupsItem v-if="pageItem.type=='groupsItem'" :item="pageItem" />
+                <FilesItem v-if="pageItem.type=='filesItem'" :item="pageItem" />
             </template>
     </PageWrapper>
 </template>
 <script>
 import ContactItem from './ContactItem.vue';
+import FilesItem from './FilesItem.vue';
 import FormItem from './FormItem.vue';
 import GroupsItem from './GroupsItem.vue';
 import ImageItem from './ImageItem.vue';
@@ -27,6 +29,6 @@ export default {
     methods: {},
     async created() {
     },
-    components: { TextItem, ImageItem, ContactItem, FormItem, SectionsItem, GroupsItem, PageWrapper }
+    components: { TextItem, ImageItem, ContactItem, FormItem, SectionsItem, GroupsItem, PageWrapper, FilesItem }
 }
 </script>

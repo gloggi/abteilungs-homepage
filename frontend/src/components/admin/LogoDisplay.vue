@@ -10,7 +10,7 @@
   </div>
     
   </div>
-  <MediaModal v-if="showModal" @close="closeHandler" @select="selectHandler" :max-select="1"/>
+  <MediaModal v-if="showModal" :pre-selected="[logo]" :extensions="['jpg', 'png', 'gif', 'svg']" @close="closeHandler" @select="selectHandler" :max-select="1"/>
 </template>
 <script>
 
@@ -36,10 +36,14 @@ export default {
         this.showModal = false
       },
       async selectHandler(selected){
-        const file = selected[0];
-        this.file=file
-        console.log(file)
-        this.$emit("selectImage", file)
+        
+        if(selected.length>0){
+          const file = selected[0];
+          this.file=file
+        }else{
+          this.file = undefined
+        }
+        this.$emit("selectImage", this.file)
 
       }
 

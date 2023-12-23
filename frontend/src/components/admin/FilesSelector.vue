@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-2 ">
+    <div class="flex flex-wrap space-x-2 gap-2  ">
       <div v-for="(image, i) in preSelectedImages" :key="i" class="relative">
         <button @click="removeSelectedImage(image)" class="absolute bottom-1 right-1">
           <font-awesome-icon :icon="icons.faTrash" class="w-3 p-1 text-white" />
         </button>
-        <img :src="`${backendURL}${image.thumbnail}`" class="w-full h-32 object-cover rounded-md" />
+        <img :src="`${backendURL}${image.thumbnail}`" class="h-48 object-cover rounded-md" style="aspect-ratio: 1/1.414;" />
       </div>
-      <button @click="showModal = true" class="rounded-md border border-gray-200 flex justify-center items-center h-32">
+      <button @click="showModal = true" class="rounded-md border border-gray-200 flex justify-center items-center h-48" style="aspect-ratio: 1/1.414;">
         <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 p-5 text-gray-500" />
       </button>
     </div>
     <InfoField v-if="info" :info="info" />
-    <MediaModal v-if="showModal" @close="showModal = false" :extensions="['jpg', 'png', 'gif', 'svg']" :pre-selected="preSelectedImages" @select="selectHandler"
+    <MediaModal v-if="showModal" @close="showModal = false" :extensions="['pdf', 'docx', 'xlsx', 'zip']" :pre-selected="preSelectedImages" @select="selectHandler"
       :max-select="1000" />
   </div>
 </template>

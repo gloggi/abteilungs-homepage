@@ -16,6 +16,7 @@
       
       <TextItem v-if="pageItem.type == 'textItem'" boxTitle="Text Item" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i"   :item="pageItem"  v-model:title="pageItem.title"  v-model:body="pageItem.body" v-model:fleurDeLis="pageItem.showFleurDeLis"  />
       <ImageItem v-if="pageItem.type == 'imageItem'" boxTitle="Image Item"  @changeImages="changeImageItem" :item="pageItem" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" />
+      <FilesItem v-if="pageItem.type == 'filesItem'" boxTitle="Files Item"  @changeImages="changeFilesItem" :item="pageItem" @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" />
       <FormItem v-if="pageItem.type == 'formItem'" boxTitle="Form Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i"  @changeForm="changeFormItem" :item="pageItem" />
       <ContactItem v-if="pageItem.type == 'contactItem'" boxTitle="Contact Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" :item="pageItem"  />
       <GroupsItem v-if="pageItem.type == 'groupsItem'" boxTitle="Groups Item"  @delete="deleteItem" @startedDragging="isDragging=true" @endedDragging="isDragging=false" :key="i" :item="pageItem"  />
@@ -44,6 +45,7 @@ import BannerImageSelector from "../../components/admin/BannerImageSelector.vue"
 import FormLabel from "../../components/admin/FormLabel.vue";
 import GroupsItem from "../../components/admin/PageItems/GroupsItem.vue";
 import SectionsItem from "../../components/admin/PageItems/SectionsItem.vue";
+import FilesItem from "../../components/admin/PageItems/FilesItem.vue";
 
 export default {
   components: {
@@ -59,7 +61,8 @@ export default {
     FormLabel,
     GroupsItem,
     SectionsItem,
-    CheckBox
+    CheckBox,
+    FilesItem
 },
   data() {
     return {
@@ -136,6 +139,14 @@ export default {
       const pageItemId = event.id;
       const files = event.files;
       const itemIndex = this.content.pageItems.findIndex(p=>p.id==pageItemId&&p.type=="imageItem");
+      this.content.pageItems[itemIndex].files = files;
+    },
+    changeFilesItem(event){
+      const pageItemId = event.id;
+      const title = event.title;
+      const files = event.files;
+      const itemIndex = this.content.pageItems.findIndex(p=>p.id==pageItemId&&p.type=="filesItem");
+      this.content.pageItems[itemIndex].title = title;
       this.content.pageItems[itemIndex].files = files;
     },
     changeFormItem(event){

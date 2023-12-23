@@ -28,9 +28,9 @@ class ContactsTableSeeder extends Seeder
                 'email' => 'rabli@pfadi-lagom.ch',
                 'role' => 'Biberstufenleiter',
                 'file_id' => 32,
-                'sort' => 0.0,
+                'sort' => 2.0,
                 'created_at' => '2023-12-11 13:29:31',
-                'updated_at' => '2023-12-11 14:32:43',
+                'updated_at' => '2023-12-21 22:16:41',
             ),
             1 => 
             array (
@@ -41,9 +41,9 @@ class ContactsTableSeeder extends Seeder
                 'email' => 'ferix@pfadi-lagom.ch',
                 'role' => 'Wolfsstufenleiterin',
                 'file_id' => 31,
-                'sort' => 0.0,
+                'sort' => 3.0,
                 'created_at' => '2023-12-11 13:30:37',
-                'updated_at' => '2023-12-11 14:32:50',
+                'updated_at' => '2023-12-21 22:16:53',
             ),
             2 => 
             array (
@@ -54,9 +54,9 @@ class ContactsTableSeeder extends Seeder
                 'email' => 'plaesche@pfadi-lagom.ch',
                 'role' => 'Pfadistufenleiter',
                 'file_id' => 34,
-                'sort' => 0.0,
+                'sort' => 4.0,
                 'created_at' => '2023-12-11 13:32:14',
-                'updated_at' => '2023-12-11 14:32:59',
+                'updated_at' => '2023-12-21 22:17:02',
             ),
             3 => 
             array (
@@ -67,9 +67,9 @@ class ContactsTableSeeder extends Seeder
                 'email' => 'wisha@pfadi-lagom.ch',
                 'role' => 'Piostufenleiterin',
                 'file_id' => 33,
-                'sort' => 0.0,
+                'sort' => 5.0,
                 'created_at' => '2023-12-11 13:33:12',
-                'updated_at' => '2023-12-11 14:33:06',
+                'updated_at' => '2023-12-21 22:17:12',
             ),
             4 => 
             array (
@@ -80,9 +80,9 @@ class ContactsTableSeeder extends Seeder
                 'email' => 'kaya@pfadi-lagom.ch',
                 'role' => 'Roverstufenleiterin',
                 'file_id' => 38,
-                'sort' => 0.0,
+                'sort' => 6.0,
                 'created_at' => '2023-12-11 13:33:53',
-                'updated_at' => '2023-12-11 18:19:09',
+                'updated_at' => '2023-12-21 22:17:19',
             ),
             5 => 
             array (
@@ -93,9 +93,9 @@ class ContactsTableSeeder extends Seeder
                 'email' => 'zusi@pfadi-lagom.ch',
                 'role' => 'Abteilungsleiter',
                 'file_id' => 35,
-                'sort' => 0.0,
+                'sort' => 1.2,
                 'created_at' => '2023-12-11 13:35:28',
-                'updated_at' => '2023-12-11 14:33:17',
+                'updated_at' => '2023-12-21 22:15:47',
             ),
             6 => 
             array (
@@ -106,9 +106,9 @@ class ContactsTableSeeder extends Seeder
                 'email' => 'rissi@pfadi-lagom.ch',
                 'role' => 'Abteilungsleiterin',
                 'file_id' => 39,
-                'sort' => 0.0,
+                'sort' => 1.1,
                 'created_at' => '2023-12-11 13:37:03',
-                'updated_at' => '2023-12-11 18:20:09',
+                'updated_at' => '2023-12-21 22:15:31',
             ),
         ));
         

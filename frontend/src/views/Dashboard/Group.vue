@@ -3,7 +3,7 @@
     <ItemHeaderTemplate :title="content.name" :content="content" @errors="handleErrors" @clearErrors="errors = {}"
       entity="groups" backLinkTo="Groups" />
     <Card class="mt-4">
-      <div class="flex flex-row space-x-5 h-full w-full">
+      <div class="flex flex-col md:flex-row items-center md:items-start space-x-0 md:space-x-5 space-y-5 md:space-y-0 h-full w-full">
         <LogoDisplay :key="loadedKey" :logo="content.file" @selectImage="updateLogo" />
         <div class="space-y-2 w-full">
           <TextInput label="Name" type="text" v-model="content.name" :errors="errors.name" />

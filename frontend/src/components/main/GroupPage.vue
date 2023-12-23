@@ -1,9 +1,10 @@
 <template >
    <PageWrapper v-if="group">
     <TextItem :item="{title: group.name, body: group.description}" />
-    <HeadingOne class="px-24 text-primary">Anlässe</HeadingOne>
+    <div>
+    <HeadingOne class="px-24 text-primary pb-5">Anlässe</HeadingOne>
     <Event v-if="events.length>0" v-for="event in events" :key="event.id" :event="event" />
-       
+    </div>
     </PageWrapper>
 </template>
 <script>

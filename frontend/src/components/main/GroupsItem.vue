@@ -1,24 +1,28 @@
 <template>
-    <div class="space-y-5 px-24">
+    <ContentWrapper>
         <div class="w-full">
-            <div v-for="section in sections" class="flex" :key="section.id" :style="`background-color: ${section.color}`">
-                <div class="flex flex-col p-3 justify-between items-center space-y-12 ">
-                    <img v-if="section.file" :src="this.backendURL + section.file?.path" class="w-[100px] h-[100px]">
-                    <div v-else class="w-[100px] h-[100px]"></div>
+            <div v-for="section in sections" class="flex flex-col md:flex-row p-3" :key="section.id"
+                :style="`background-color: ${section.color}`">
+                <div
+                    class="flex flex-row md:flex-col space-x-3 md:space-x-0 md:justify-between items-start md:items-center md:space-y-12 mb-3 md:mb-0 ">
+                    <img v-if="section.file" :src="this.backendURL + section.file?.path"
+                        class="size-[60px] md:size-[100px]">
+                    <div v-else class="size-[60px] md:size-[100px]"></div>
                     <div>
-                        <h3 class="text-3xl text-heading-3 text-primary">
+                        <h3 class="text-2xl md:text-3xl  text-heading-3 text-primary">
                             {{ section.name }}
                         </h3>
-                        <p class="main-text text-lg text-white">{{ section.fromAge }} - {{ section.toAge }} Jahre</p>
+                        <p class="main-text text-base md:text-lg text-white">{{ section.fromAge }} - {{ section.toAge }}
+                            Jahre</p>
                     </div>
                 </div>
                 <div class="flex flex-wrap justify-around w-full items-center">
                     <template v-for="group in groups" :key="group.id">
-                        <div v-if="group.section.id === section.id && !group.parentId" @click="currentGroup=group"
-                            class="relative cursor-pointer rounded-full aspect-square w-[150px] flex justify-center items-center"
+                        <div v-if="group.section.id === section.id && !group.parentId" @click="currentGroup = group"
+                            class="relative cursor-pointer rounded-full aspect-square w-[100px] md:w-[150px] flex justify-center items-center"
                             :style="`background-color: ${group.color}`">
                             <div
-                                class="absolute top-0 right-0 rounded-full w-10 h-10 bg-secondary flex justify-center items-center">
+                                class="absolute top-0 right-0 rounded-full size-6  md:size-10 bg-secondary flex justify-center items-center">
                                 <img :src="selectGenderIcon(group.gender)" class="w-[65%] h-[65%]">
                             </div>
                             <img v-if="group.file?.path" :src="this.backendURL + group.file?.path" class="w-[60%] h-[60%]">
@@ -28,7 +32,7 @@
 
             </div>
         </div>
-    </div>
+    </ContentWrapper>
     <div v-if="currentGroup" @click.self="currentGroup = undefined"
         class="fixed inset-0 z-30 bg-black bg-opacity-80 h-screen w-screen flex justify-center items-center py-10"
         style="margin-top: 0">
@@ -50,24 +54,27 @@
                     <template v-if="currentGroup.predecessors.length > 0">
                         <p><span class="font-semibold">{{ currentGroup.predecessors.lenght > 1 ? 'Vorgängergruppen' :
                             'Vorgängergruppe' }}</span></p>
-                            <ul class="list-disc pl-6">
-                                <li v-for="p in currentGroup.predecessors" :key="p.id">{{ p.name }}</li>
-                            </ul>
+                        <ul class="list-disc pl-6">
+                            <li v-for="p in currentGroup.predecessors" :key="p.id">{{ p.name }}</li>
+                        </ul>
                     </template>
                     <template v-if="currentGroup.successors.length > 0">
                         <p><span class="font-semibold">{{ currentGroup.successors.lenght > 1 ? 'Nachfolgergruppen' :
                             'Nachfolgergruppe' }}</span></p>
-                            <ul class="list-disc pl-6">
-                                <li v-for="s in currentGroup.successors" :key="s.id">{{ s.name }}</li>
-                            </ul>
+                        <ul class="list-disc pl-6">
+                            <li v-for="s in currentGroup.successors" :key="s.id">{{ s.name }}</li>
+                        </ul>
                     </template>
-                    <p class="main-text text-lg"><span class="font-semibold">Kontakt:</span> <a class="link" :href="`mailto:${currentGroup.contact}`">Gruppenleitung</a></p>
+                    <p class="main-text text-lg"><span class="font-semibold">Kontakt:</span> <a class="link"
+                            :href="`mailto:${currentGroup.contact}`">Gruppenleitung</a></p>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import ContentWrapper from './ContentWrapper.vue';
+
 export default {
     props: ['item'],
     data() {
@@ -117,6 +124,6 @@ export default {
         await this.getSections();
         await this.getGroups();
     },
-    components: {}
+    components: { ContentWrapper }
 }
 </script>

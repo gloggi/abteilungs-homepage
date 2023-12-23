@@ -33,6 +33,7 @@ export default{
                 {name: "Text", type: "textItem"},
                 {name: "Image", type: "imageItem"},
                 {name: "Form", type: "formItem"},
+                {name: "Files", type: "filesItem"},  
                 {name: "Contact", type: "contactItem"},
                 {name: "Groups", type: "groupsItem"},
                 {name: "Sections", type: "sectionsItem"}   

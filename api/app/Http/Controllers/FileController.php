@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\File;
 use Imagick;
+use ImagickPixel;
 use Intervention\Image\ImageManagerStatic as Image;
 use Spatie\PdfToImage\Pdf as PdfToImage;
 
@@ -14,25 +15,20 @@ class FileController extends Controller
 {
 
     public function index(Request $request)
-    {
-        $perPage = $request->input('per_page', 100);
-        $page = $request->input('page', 1);
-        $files = File::paginate($perPage, ['*'], 'page', $page);
-        $data = $files->items();
-        $meta = [
-            'current_page' => $files->currentPage(),
-            'from' => $files->firstItem(),
-            'last_page' => $files->lastPage(),
-            'path' => $files->path(),
-            'per_page' => $files->perPage(),
-            'to' => $files->lastItem(),
-            'total' => $files->total(),
-        ];
-        return response()->json([
-            'data' => $data,
-            'meta' => $meta
-        ]);
+{
+    $perPage = $request->input('per_page', 100);
+    $extensions = $request->input('extensions');
+    $query = File::orderBy("id", "desc");
+
+    if ($extensions) {
+        $extensionsArray = explode(',', $extensions); 
+        $query->whereIn('extension', $extensionsArray);
     }
+
+    $files = $query->paginate($perPage);
+
+    return response()->json($files);
+}
 
     public function store(Request $request)
     {
@@ -42,21 +38,25 @@ class FileController extends Controller
         ]);
 
         $file = $request->file('file');
-        $filename = time(). '_'. rand() . '.' . $file->getClientOriginalExtension();
+        $filename = time() . '_' . rand() . '.' . $file->getClientOriginalExtension();
         $category = $validatedData['category'];
         $filePath = 'public/uploads/' . $filename;
-
-      
-        Storage::disk('public')->putFileAs('uploads', $file, $filename);
-
-      
-        $fileUrl = Storage::url($filePath);
+        $name = implode('.', array_slice(explode('.', $file->getClientOriginalName()), 0, -1));
 
      
+
+        Storage::disk('public')->putFileAs('uploads', $file, $filename);
+
+
+        $fileUrl = Storage::url($filePath);
+
+
         $newFile = new File;
         $newFile->path = $fileUrl;
         $newFile->extension = $file->getClientOriginalExtension();
         $newFile->category = $category;
+        $newFile->name = $name;
+
 
 
         if (in_array($newFile->extension, ['jpg', 'jpeg', 'png', 'gif'])) {
@@ -68,11 +68,26 @@ class FileController extends Controller
             $newFile->thumbnail = Storage::url($thumbnailPath);
         } elseif ($newFile->extension === 'pdf') {
             $thumbnailPath = 'public/thumbnails/' . $filename . '.png';
-            $pdf = new PdfToImage($file);
-            $pdf->setResolution(72);
-            $pdf->saveImage(storage_path('app/' . $thumbnailPath));
+
+            $imagick = new Imagick();
+            $imagick->setResolution(72, 72);
+
+            $imagick->readImage($file . '[0]');
+            if ($imagick->getImageWidth() > $imagick->getImageHeight()) {
+                error_log("true");
+                $imagick->rotateImage(new ImagickPixel('none'), -90);
+            }
+
+            $imagick->setImageFormat('png');
+
+            $imagick->writeImage(storage_path('app/' . $thumbnailPath));
+
+            
+            $imagick->clear();
+            $imagick->destroy();
+
             $newFile->thumbnail = Storage::url($thumbnailPath);
-        }elseif ($newFile->extension === 'svg') {
+        } elseif ($newFile->extension === 'svg') {
             $newFile->thumbnail = $fileUrl;
         }
 
@@ -85,6 +100,17 @@ class FileController extends Controller
     {
         $file = File::findOrFail($id);
         return response()->json($file);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'string|max:255',
+            'category' => 'string|max:255'
+        ]);
+        $file = File::findOrFail($id);
+        $file->update($validatedData);
+        return response()->json(['message' => 'File updated successfully']);
     }
 
     public function destroy($id)

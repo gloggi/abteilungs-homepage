@@ -1,5 +1,6 @@
 <template>
-    <form class="px-24 space-y-5" @submit.prevent="handleForm">
+    <ContentWrapper>
+    <form class="space-y-5" @submit.prevent="handleForm">
         <HeadingOne class="text-primary">{{ item.form.name }}</HeadingOne>
    
     <div class="flex flex-col  space-y-5 pl-4">
@@ -16,8 +17,10 @@
     </div>
     <button type="submit" class="bg-primary text-white rounded-lg p-5 hover:bg-secondary w-fit main-text">Absenden</button>
     </form>
+    </ContentWrapper>
 </template>
 <script>
+import ContentWrapper from './ContentWrapper.vue';
 import HeadingOne from './HeadingOne.vue';
 
 export default {
@@ -41,6 +44,6 @@ export default {
     },
     async created() {
     },
-    components: { HeadingOne }
+    components: { HeadingOne, ContentWrapper }
 }
 </script>

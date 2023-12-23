@@ -32,6 +32,7 @@ class Page extends Model
 
         return $this->hasMany(FormItem::class)->with('form');
     }
+
     public function formItemsWithFields()
     {
         $formItems = $this->formItems()->get();
@@ -44,6 +45,13 @@ class Page extends Model
 
         return $formItems;
     }
+
+    public function filesItems()
+    {
+
+        return $this->hasMany(FilesItem::class)->with('files');
+    }
+
     public function genericItems()
     {
 
@@ -57,12 +65,13 @@ class Page extends Model
         $textItems = $this->textItems;
         $imageItems = $this->imageItems;
         $formItems = $this->formItems;
-        //$formItems = $this->formItemsWithFields();
+        $filesItems = $this->filesItems;
         $genericItems = $this->genericItems;
 
         $items = $items->concat($textItems);
         $items = $items->concat($imageItems);
         $items = $items->concat($formItems);
+        $items = $items->concat($filesItems);
         $items = $items->concat($genericItems);
 
         $items = $items->sortBy('sort')->values()->all();
