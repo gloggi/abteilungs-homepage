@@ -1,15 +1,11 @@
 <template>
-  <div class="bg-gray-50 rounded-lg p-5">
-      <slot></slot>
-  </div>
+	<div class="bg-gray-50 rounded-lg p-5">
+		<slot></slot>
+	</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>
