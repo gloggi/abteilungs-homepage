@@ -19,12 +19,59 @@
 			</div>
 		</div>
 		<img
+			ref="currentImageRef"
 			class="fixed -z-10 h-screen w-screen object-cover"
-			:src="`${backendURL}${page?.files[0]?.path}`" />
+			:src="`${backendURL}${currentImage}`" />
+		<img
+			ref="nextImageRef"
+			class="fixed -z-10 h-screen w-screen object-cover"
+			:src="`${backendURL}${nextImage}`" />
 	</div>
 </template>
 <script>
+import { gsap } from "gsap";
+
 export default {
 	props: ["page"],
+	data() {
+		return {
+			imageIndex: 0,
+			currentImage: undefined,
+			nextImage: undefined,
+			interval: undefined,
+		};
+	},
+	methods: {
+		prepareNextImage() {
+			this.imageIndex = (this.imageIndex + 1) % this.page.files.length;
+			this.nextImage = this.page.files[this.imageIndex].path;
+			gsap.set(this.$refs.nextImageRef, { opacity: 0 });
+		},
+		changeImage() {
+			gsap.to(this.$refs.nextImageRef, {
+				opacity: 1,
+				duration: 1,
+				onComplete: () => {
+					this.currentImage = this.nextImage;
+					this.prepareNextImage();
+				},
+			});
+		},
+	},
+	computed: {
+		moreThanOneImage() {
+			return this.page.files.length > 1;
+		},
+	},
+	mounted() {
+		this.currentImage = this.page.files[this.imageIndex]?.path;
+		if (this.moreThanOneImage) {
+			this.prepareNextImage();
+			this.interval = setInterval(this.changeImage, 5000);
+		}
+	},
+	beforeUnmount() {
+		clearInterval(this.interval);
+	},
 };
 </script>

@@ -41,7 +41,7 @@ import InfoField from "./InfoField.vue";
 export default {
 	components: { MediaModal, Card, InfoField },
 	props: ["item", "modelValue", "info"],
-	emits: ["changeImages"],
+	emits: ["changeFiles"],
 	data() {
 		return {
 			imageItem: undefined,
@@ -58,7 +58,7 @@ export default {
 	methods: {
 		selectHandler(selectedImages) {
 			this.preSelectedImages = selectedImages;
-			this.$emit("changeImages", { id: this.item.id, files: selectedImages });
+			this.$emit("changeFiles", { id: this.item.id, files: selectedImages });
 		},
 		removeSelectedImage(image) {
 			this.preSelectedImages = this.preSelectedImages.filter(
@@ -69,7 +69,8 @@ export default {
 	},
 	computed: {},
 	created() {
-		this.preSelectedImages = this.item.files;
+		const files = this.item.files;
+		this.preSelectedImages = files ? [...files] : [];
 	},
 };
 </script>

@@ -15,6 +15,7 @@ class StoreGroupRequest extends FormRequest
             'midata_id'=> 'nullable|integer',
             'gender' => 'nullable|integer',
             'header_images' => 'array|nullable',
+            'files' => 'array|nullable',
             'description' => 'nullable|string',
             'section_id' => 'required|integer|exists:sections,id',
             'file_id' => 'nullable|integer|exists:files,id',

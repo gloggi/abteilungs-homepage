@@ -77,7 +77,7 @@ export default {
 	},
 	async created() {
 		await this.getMedia();
-		this.items = this.preSelected || [];
+		this.items = [...this.preSelected] || [];
 		console.log(this.items);
 	},
 };

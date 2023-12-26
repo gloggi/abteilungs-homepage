@@ -103,7 +103,7 @@
 						</ul>
 					</template>
 					<p class="main-text text-lg">
-						<span class="font-semibold">Kontakt:</span>
+						<span class="font-semibold">Kontakt: </span>
 						<a class="link" :href="`mailto:${currentGroup.contact}`"
 							>Gruppenleitung</a
 						>

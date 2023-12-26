@@ -7,7 +7,7 @@
 		@endedDragging="$emit('endedDragging')">
 		<Card class="space-y-2">
 			<TextInput v-model="item.title" label="Title" />
-			<FilesSelector :item="item" @changeImages="changeImages" />
+			<FilesSelector :item="item" @changeFiles="handleFilesChange" />
 		</Card>
 	</DragItemBox>
 </template>
@@ -24,7 +24,7 @@ export default {
 	props: ["item", "modelValue", "boxTitle"],
 	emits: [
 		"updatePage",
-		"changeImages",
+		"changeFiles",
 		"delete",
 		"startedDragging",
 		"endedDragging",
@@ -52,6 +52,9 @@ export default {
 				(i) => i.id !== image.id,
 			);
 			this.selectHandler(this.preSelectedImages);
+		},
+		handleFilesChange(event) {
+			this.$emit("changeFiles", event);
 		},
 	},
 	computed: {},

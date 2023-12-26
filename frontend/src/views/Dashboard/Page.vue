@@ -52,7 +52,7 @@
 			<FilesItem
 				v-if="pageItem.type == 'filesItem'"
 				boxTitle="Files Item"
-				@changeImages="changeFilesItem"
+				@changeFiles="changeFilesItem"
 				:item="pageItem"
 				@delete="deleteItem"
 				@startedDragging="isDragging = true"

@@ -4,8 +4,7 @@
 			<img
 				v-if="currentImage"
 				class="w-full"
-				:src="this.backendURL + currentImage"
-				alt="Slider Image" />
+				:src="this.backendURL + currentImage" />
 		</transition>
 		<div
 			class="absolute left-1/2 transform -translate-x-1/2 bottom-2 flex space-x-2">
@@ -21,8 +20,7 @@
 		<img
 			class="w-full"
 			v-if="currentImage"
-			:src="this.backendURL + currentImage"
-			alt="Slider Image" />
+			:src="this.backendURL + currentImage" />
 	</div>
 </template>
 

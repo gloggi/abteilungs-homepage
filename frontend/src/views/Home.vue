@@ -3,6 +3,7 @@
 		<BigHeader v-if="!isGroupPage && page.bigHeader" :page="page" />
 		<SmallHeader
 			v-if="!page?.bigHeader"
+			:key="headerKey"
 			:page="
 				isGroupPage ? { title: group.name, files: group.headerImages } : page
 			" />
@@ -37,6 +38,7 @@ export default {
 			menuItems: [],
 			isGroupPage: false,
 			group: undefined,
+			headerKey: 0,
 		};
 	},
 	methods: {
@@ -54,6 +56,7 @@ export default {
 			try {
 				const response = await this.callApi("get", `/pages/${pageRoute}`);
 				this.page = response.data;
+				this.headerKey++;
 				document.title = `${this.page.title} | ${this.settings.divisionName}`;
 			} catch (error) {
 				console.log(error);

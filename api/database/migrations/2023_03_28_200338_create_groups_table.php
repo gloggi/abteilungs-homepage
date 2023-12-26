@@ -34,6 +34,12 @@ return new class extends Migration
             $table->foreignId('file_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
+
+        Schema::create('group_files', function (Blueprint $table) {
+            $table->foreignId('group_id')->constrained()->onDelete('cascade');
+            $table->foreignId('file_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -43,5 +49,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('groups');
         Schema::dropIfExists('group_headers');
+        Schema::dropIfExists('group_files');
     }
 };

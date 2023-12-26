@@ -69,6 +69,13 @@
 						<FormLabel>Description</FormLabel>
 						<Editor v-model="content.description" />
 					</div>
+					<div class="flex flex-col space-y-2">
+						<FormLabel>Files</FormLabel>
+						<FilesSelector
+							:key="loadedKey"
+							:item="{ files: content.files }"
+							@changeFiles="changeFiles" />
+					</div>
 				</div>
 			</div>
 		</Card>
@@ -92,6 +99,7 @@ import ColorPicker from "../../components/admin/ColorPicker.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
+import FilesSelector from "../../components/admin/FilesSelector.vue";
 export default {
 	components: {
 		Card,
@@ -104,6 +112,7 @@ export default {
 		FormLabel,
 		Editor,
 		BannerImageSelector,
+		FilesSelector,
 	},
 	data() {
 		return {
@@ -196,6 +205,9 @@ export default {
 		},
 		changeHeaderImages(event) {
 			this.content.headerImages = event.files;
+		},
+		changeFiles(event) {
+			this.content.files = event.files;
 		},
 	},
 	async created() {

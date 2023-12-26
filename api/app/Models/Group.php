@@ -27,6 +27,11 @@ class Group extends Model
         return $this->belongsToMany(File::class, 'group_headers');
 
     }
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'group_files');
+
+    }
 
     public function section()
     {
