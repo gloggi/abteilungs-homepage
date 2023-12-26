@@ -12,7 +12,15 @@ services:
     ports:
       - '8080:8080'
   
-  
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./api:/var/www
+
   mariadb:
     image: mariadb:latest
     ports:
