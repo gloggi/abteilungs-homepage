@@ -6,7 +6,7 @@
 		@startedDragging="$emit('startedDragging')"
 		@endedDragging="$emit('endedDragging')">
 		<Card>
-			<BannerImageSelector :item="item" @changeImages="changeImages" />
+			<BannerImageSelector :item="item" @changeImages="selectHandler" />
 		</Card>
 	</DragItemBox>
 </template>

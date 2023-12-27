@@ -33,6 +33,7 @@
 							@input="
 								editor.chain().focus().setColor($event.target.value).run()
 							"
+							value="000000"
 							:value="editor.getAttributes('textStyle').color" />
 					</EditorButton>
 				</div>
@@ -130,25 +131,26 @@
 				hard break
 			</EditorButton>
 		</div>
-		<editor-content
-			v-if="!showHTML"
-			:editor="editor"
-			class="bg-white rounded-lg" />
+		<editor-content v-if="!showHTML" :editor="editor" />
 		<textarea
 			v-else
 			v-model="inputModel"
 			class="appearance-none border-0 w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 h-48 overflow-scroll">
 		</textarea>
 	</div>
+	<MediaModal
+		v-if="showMediaModal"
+		@close="showMediaModal = false"
+		@select="handleSelect"
+		:max-select="1"
+		:extensions="['jpg', 'png', 'gif', 'svg']" />
 </template>
 
 <script>
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import HeadingExtension from "@tiptap/extension-heading";
-import ParagraphExtension from "@tiptap/extension-paragraph";
-import BulletlistExtension from "@tiptap/extension-bullet-list";
-import Image from "@tiptap/extension-image";
+import ImageResize from "tiptap-extension-resize-image";
 import LinkExtension from "@tiptap/extension-link";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
@@ -165,17 +167,19 @@ import {
 	faHeading,
 } from "@fortawesome/free-solid-svg-icons";
 import prettify from "html-prettify";
+import MediaModal from "../MediaModal.vue";
 export default {
 	props: ["modelValue"],
 	components: {
 		EditorContent,
 		EditorButton,
+		MediaModal,
 	},
-
 	data() {
 		return {
 			editor: null,
 			showHTML: false,
+			showMediaModal: false,
 			icons: {
 				faArrowRotateLeft,
 				faArrowRotateRight,
@@ -195,34 +199,34 @@ export default {
 			this.showHTML = !this.showHTML;
 		},
 		addImage() {
-			const url = window.prompt("URL");
-
-			if (url) {
-				this.editor.chain().focus().setImage({ src: url }).run();
-			}
+			this.showMediaModal = true;
 		},
 		setLink() {
 			const previousUrl = this.editor.getAttributes("link").href;
 			const url = window.prompt("URL", previousUrl);
 
-			// cancelled
 			if (url === null) {
 				return;
 			}
 
-			// empty
 			if (url === "") {
 				this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
 
 				return;
 			}
 
-			// update link
 			this.editor
 				.chain()
 				.focus()
 				.extendMarkRange("link")
 				.setLink({ href: url })
+				.run();
+		},
+		handleSelect(selected) {
+			this.editor
+				.chain()
+				.focus()
+				.setImage({ src: this.backendURL + selected[0].path })
 				.run();
 		},
 	},
@@ -248,24 +252,23 @@ export default {
 	mounted() {
 		this.editor = new Editor({
 			content: this.inputModel,
-			attributes: {
-				class: "h-full",
-			},
 
 			onBlur: () => {
-				// HTML
 				this.$emit("update:modelValue", this.editor.getHTML());
-
-				// JSON
-				// this.$emit('update:modelValue', this.editor.getJSON())
 			},
 			extensions: [
-				StarterKit,
-				Image,
-				ParagraphExtension.configure({
-					HTMLAttributes: {
-						class: "main-text",
+				StarterKit.configure({
+					paragraph: {
+						HTMLAttributes: {
+							class: "main-text",
+						},
 					},
+					bulletList: {
+						HTMLAttributes: {
+							class: "list-disc pl-6",
+						},
+					},
+					heading: false,
 				}),
 				HeadingExtension.configure({ levels: [1, 2] }).extend({
 					levels: [1, 2],
@@ -287,11 +290,6 @@ export default {
 						];
 					},
 				}),
-				BulletlistExtension.configure({
-					HTMLAttributes: {
-						class: "list-disc pl-6",
-					},
-				}),
 				LinkExtension.configure({
 					openOnClick: false,
 					HTMLAttributes: {
@@ -301,6 +299,7 @@ export default {
 				}),
 				TextStyle,
 				Color,
+				ImageResize,
 			],
 			editorProps: {
 				attributes: {

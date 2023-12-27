@@ -11,10 +11,10 @@
 					<TextInput class="w-full" label="Title" v-model.lazy="titleValue" />
 					<div class="w-full md:w-1/4">
 						<FormLabel class=" ">Show Fleur-de-Lis</FormLabel>
-						<CheckBox v-model="fleurDeLis" />
+						<CheckBox v-model="fleurDeLisValue" />
 					</div>
 				</div>
-				<Editor class="mt-2" v-model.lazy="bodyValue" />
+				<Editor v-model="bodyValue" />
 			</div>
 		</Card>
 	</DragItemBox>
@@ -68,7 +68,7 @@ export default {
 				this.$emit("update:body", value);
 			},
 		},
-		fleurDeLis: {
+		fleurDeLisValue: {
 			get() {
 				return this.fleurDeLis;
 			},
