@@ -32,6 +32,12 @@ export const mixin = {
 		settings() {
 			return this.$store.state.settings.settings || {};
 		},
+		isAdmin() {
+			return this.$store.state.user.isAdmin;
+		},
+		isUnitLeader() {
+			return this.$store.state.user.isUnitLeader;
+		},
 	},
 	methods: {
 		getAsset(asset) {

@@ -39,7 +39,7 @@ Route::post('/auth/midata/callback', [AuthController::class, 'handleProviderCall
 
 Route::middleware('auth:sanctum')->get('/user/info', [UserController::class, 'getUserInfo']);
 
-Route::group(['middleware' => ['auth:sanctum','role:al']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::get('/users', [UserController::class, 'index']);
 });
 
@@ -51,57 +51,78 @@ Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 Route::get('/groups', [GroupController::class, 'index']);
 Route::get('/groups/{id}', [GroupController::class, 'show']);
-Route::post('/groups', [GroupController::class, 'store']);
-Route::put('/groups/{id}', [GroupController::class, 'update']);
-Route::delete('/groups/{id}', [GroupController::class, 'destroy']);
+
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/groups', [GroupController::class, 'store']);
+    Route::put('/groups/{id}', [GroupController::class, 'update']);
+    Route::delete('/groups/{id}', [GroupController::class, 'destroy']);
+});
 
 Route::get('/sections', [SectionController::class, 'index']);
 Route::get('/sections/{id}', [SectionController::class, 'show']);
-Route::post('/sections', [SectionController::class, 'store']);
-Route::put('/sections/{id}', [SectionController::class, 'update']);
-Route::delete('/sections/{id}', [SectionController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/sections', [SectionController::class, 'store']);
+    Route::put('/sections/{id}', [SectionController::class, 'update']);
+    Route::delete('/sections/{id}', [SectionController::class, 'destroy']);
+});
 
 Route::get('/pages', [PageController::class, 'index']);
 Route::get('/pages/{id}', [PageController::class, 'show']);
-Route::post('/pages', [PageController::class, 'store']);
-Route::put('/pages/{id}', [PageController::class, 'update']);
-Route::delete('/pages/{id}', [PageController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/pages', [PageController::class, 'store']);
+    Route::put('/pages/{id}', [PageController::class, 'update']);
+    Route::delete('/pages/{id}', [PageController::class, 'destroy']);
+});
 
 Route::get('/files', [FileController::class, 'index']);
-Route::post('/files', [FileController::class, 'store']);
-Route::get('/files/{id}', [FileController::class, 'show']);
-Route::put('/files/{id}', [FileController::class, 'update']);
-Route::delete('/files/{id}', [FileController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/files', [FileController::class, 'store']);
+    Route::get('/files/{id}', [FileController::class, 'show']);
+    Route::put('/files/{id}', [FileController::class, 'update']);
+    Route::delete('/files/{id}', [FileController::class, 'destroy']);
+});
 
 Route::get('/contacts', [ContactController::class, 'index']);
-Route::post('/contacts', [ContactController::class, 'store']);
 Route::get('/contacts/{id}', [ContactController::class, 'show']);
-Route::put('/contacts/{id}', [ContactController::class, 'update']);
-Route::delete('/contacts/{id}', [ContactController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/contacts', [ContactController::class, 'store']);
+    Route::put('/contacts/{id}', [ContactController::class, 'update']);
+    Route::delete('/contacts/{id}', [ContactController::class, 'destroy']);
+});
 
 Route::get('/forms', [FormController::class, 'index']);
-Route::post('/forms', [FormController::class, 'store']);
 Route::get('/forms/{id}', [FormController::class, 'show']);
-Route::put('/forms/{id}', [FormController::class, 'update']);
-Route::delete('/forms/{id}', [FormController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/forms', [FormController::class, 'store']);
+    Route::put('/forms/{id}', [FormController::class, 'update']);
+    Route::delete('/forms/{id}', [FormController::class, 'destroy']);
+});
 
 Route::get('/menuitems', [MenuItemController::class, 'index']);
-Route::post('/menuitems', [MenuItemController::class, 'store']);
-Route::delete('/menuitems/{id}', [MenuItemController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/menuitems', [MenuItemController::class, 'store']);
+    Route::delete('/menuitems/{id}', [MenuItemController::class, 'destroy']);
+});
 
 Route::get('/settings', [SettingController::class, 'show']);
-Route::put('/settings', [SettingController::class, 'update']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::put('/settings', [SettingController::class, 'update']);
+});
 
 Route::get('/locations', [LocationController::class, 'index']);
-Route::post('/locations', [LocationController::class, 'store']);
 Route::get('/locations/{id}', [LocationController::class, 'show']);
-Route::put('/locations/{id}', [LocationController::class, 'update']);
-Route::delete('/locations/{id}', [LocationController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/locations', [LocationController::class, 'store']);
+    Route::put('/locations/{id}', [LocationController::class, 'update']);
+    Route::delete('/locations/{id}', [LocationController::class, 'destroy']);
+});
 
 Route::get('/events', [EventController::class, 'index']);
-Route::post('/events', [EventController::class, 'store']);
 Route::get('/events/{id}', [EventController::class, 'show']);
-Route::put('/events/{id}', [EventController::class, 'update']);
-Route::delete('/events/{id}', [EventController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/events', [EventController::class, 'store']);
+    Route::put('/events/{id}', [EventController::class, 'update']);
+    Route::delete('/events/{id}', [EventController::class, 'destroy']);
+});
 
 Route::post('/webforms', [WebFormController::class, 'store']);

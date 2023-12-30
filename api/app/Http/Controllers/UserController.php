@@ -56,6 +56,7 @@ class UserController extends Controller
                 'status' => false,
             ], 404);
         }
+        $user->load('roles');
 
         return response()->json($user, 200);
     }

@@ -7,9 +7,13 @@ import "./assets/tailwind.css";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 router.beforeEach((to, from, next) => {
-	//if (to.name !== 'Login' && !localStorage.user) next({ name: 'Login' })
-	//else
-	next();
+	let splitPath = to.path.split("/");
+	let isDashboard = splitPath[1] === "dashboard";
+	if (isDashboard && !localStorage.token) {
+		next({ name: "Login" });
+	} else {
+		next();
+	}
 });
 
 const app = createApp(App)

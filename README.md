@@ -1,24 +1,43 @@
 # Gloggi Abteilungs-Homepage
 
-## Running locally
+Unsere Webapp ist speziell darauf ausgerichtet, Webseiten für Abteilungen und Pfadiregionen zu erstellen. Sie bietet eine flexible und modulare Plattform, mit der Benutzer ihre eigenen Seiten aus verschiedenen Bausteinen zusammenstellen können. Die Webapp hat folgende Funktionen:
 
-1. Clone the git repository
+- **Modulare Webseitenerstellung:** Gestalte die Webseite deiner Abteilung mit einer Vielzahl von Modulen, darunter Bilder-Banner, Formulare und spezielle Pfadimodule.
+- **Gruppenseiten:** Einheitsleitende haben Zugang zu ihrer Gruppenseite, welche speziell auf ihre Gruppe zugeschnitten ist.
+- **Veranstaltungsmanagement:** Erfasse Samstagnachmittagsevents, die auf den Gruppenseiten dargestellt werden.
+- **Sicheres Login:** Der Zugang zum Editorbereich wird durch die OAuth-Funktion der MiData ermöglicht.
 
-    ```git clone https://github.com/gloggi/abteilungs-homepage.git```
+## Development
 
-2. Go into the created directory
+1. Klone das GIT-Repository:
 
-    ```cd abteilungs-homepage```
+```
+git clone https://github.com/gloggi/abteilungs-homepage.git
+```
 
-3. Start the docker containers
+2. Wechsle in das Directory:
 
-    ```docker-compose up```
+```
+cd abteilungs-homepage
+```
 
-4. Once the containers have started, access the site at `http://localhost`
+3. Starte die Docker-Container:
 
-You can log in with user 'admin@gloggi.ch' and password 'admin'.
+```
+docker-compose up -d
+```
 
+4. Das Frontend der Webseite findest du unter ```http://localhost:8080``` und das Backend unter ```http://localhost:8000```
 
-## Installing on a hoster
+### Login
+Das Login zum Editorenbereich unter ```http://localhost:8080/dashboard``` funktioniert mithilfe der Testumgebung der MiData gehosted unter ```https://pbs.puzzle.ch```. Damit das Login zusammen mit den Seeds funktioniert, kannst du dich mit folgenden Accounts einloggen:
 
-TODO
+| Abteilungsleitung |                    |
+|-------------------|--------------------|
+| E-Mail            | rissi@gloggi.ch    |
+| Passwort          | Rissi@Lagom1234    |
+
+| Einheitsleitung   |                    |
+|-------------------|--------------------|
+| E-Mail            | diff@gloggi.ch     |
+| Passwort          | Diff@Lagom1234     |

@@ -22,6 +22,10 @@ export default {
 	},
 	async created() {
 		await this.$store.dispatch("settings/getSettings");
+		await this.$store.dispatch("user/getUser");
+		if (!(this.isAdmin || this.isUnitLeader)) {
+			this.$router.push("/login");
+		}
 	},
 };
 </script>

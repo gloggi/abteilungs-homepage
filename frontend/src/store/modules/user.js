@@ -6,6 +6,8 @@ export const user = {
 		return {
 			user: undefined,
 			token: undefined,
+			isAdmin: false,
+			isUnitLeader: false,
 		};
 	},
 	mutations: {
@@ -18,12 +20,26 @@ export const user = {
 		clear(state) {
 			state.user = undefined;
 		},
+		setAdmin(state, isAdmin) {
+			state.isAdmin = isAdmin;
+		},
+		setUnitLeader(state, isUnitLeader) {
+			state.isUnitLeader = isUnitLeader;
+		},
 	},
 	actions: {
 		async getUser({ commit }) {
 			try {
 				const response = await api.get("user/info");
-				commit("setUser", snakeToCamelObject(response.data));
+				const user = snakeToCamelObject(response.data);
+				const isAdmin =
+					user.roles.findIndex((role) => role.name === "admin") >= 0;
+				const isUnitLeader =
+					user.roles.findIndex((role) => role.name === "unitleader") >= 0;
+				commit("setUser", user);
+				commit("setToken", user.token);
+				commit("setAdmin", isAdmin);
+				commit("setUnitLeader", isUnitLeader || isAdmin);
 			} catch (error) {
 				console.error(error);
 			}

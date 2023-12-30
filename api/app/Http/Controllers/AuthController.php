@@ -132,6 +132,7 @@ class AuthController extends Controller
         $setting = Setting::find(1);
         $groupIds = Group::pluck('midata_id')->toArray();
 
+
         if (!$user) {
             $user = User::create([
                 'nickname' => $midataUser->attributes['nickname'],
@@ -144,15 +145,15 @@ class AuthController extends Controller
             if ($midata_group_id = $this->hasRole($midataUser->user, 'PowerUser',[$setting->midata_parent_id])) {
                 $user->assignRole('admin');
             } else if ($midata_group_id = $this->hasRole($midataUser->user, 'Abteilungsleiter*in', [$setting->midata_id])) {
-                $user->assignRole('al');
+                $user->assignRole('admin');
             } else if ($midata_group_id = $this->hasRole($midataUser->user, 'Einheitsleiter*in', $groupIds)) {
-                $user->assignRole('einheitsleiter');
+                $user->assignRole('unitleader');
             }
             $user->midata_group_id = $midata_group_id;
             $user->save();
             
         }
-        error_log(json_encode($midataUser->user));
+        
         return response()->json([
             'status' => true,
             'message' => 'User Logged In Successfully',
@@ -166,8 +167,8 @@ class AuthController extends Controller
     {
         if (isset($data['roles']) && is_array($data['roles'])) {
             foreach ($data['roles'] as $role) { 
-                
                 if (isset($role['role_name']) && $role['role_name'] === $roleName && in_array($role['group_id'], $groupIds, true)) {
+                    
                     return $role['group_id'];
                 }
             }

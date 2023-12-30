@@ -35,19 +35,22 @@
 				{{ settings.divisionName || "Abteilungshomepage" }}
 			</div>
 		</router-link>
-		<SidebarItem to="/dashboard/menu" :icon="icons.faEllipsis">
+		<SidebarItem v-if="isAdmin" to="/dashboard/menu" :icon="icons.faEllipsis">
 			Menu
 		</SidebarItem>
-		<SidebarItem to="/dashboard/pages" :icon="icons.faBookOpen">
+		<SidebarItem v-if="isAdmin" to="/dashboard/pages" :icon="icons.faBookOpen">
 			Pages
 		</SidebarItem>
 		<SidebarItem to="/dashboard/groups" :icon="icons.faUsers">
 			Groups
 		</SidebarItem>
-		<SidebarItem to="/dashboard/contacts" :icon="icons.faAddressCard">
+		<SidebarItem
+			v-if="isAdmin"
+			to="/dashboard/contacts"
+			:icon="icons.faAddressCard">
 			Contacts
 		</SidebarItem>
-		<SidebarItem to="/dashboard/sections" :icon="icons.faStairs">
+		<SidebarItem v-if="isAdmin" to="/dashboard/sections" :icon="icons.faStairs">
 			Sections
 		</SidebarItem>
 		<SidebarItem to="/dashboard/events" :icon="icons.faCalendarDays">
@@ -56,16 +59,19 @@
 		<SidebarItem to="/dashboard/locations" :icon="icons.faLocationDot">
 			Locations
 		</SidebarItem>
-		<SidebarItem to="/dashboard/forms" :icon="icons.faRectangleList">
+		<SidebarItem
+			v-if="isAdmin"
+			to="/dashboard/forms"
+			:icon="icons.faRectangleList">
 			Forms
 		</SidebarItem>
 		<SidebarItem to="/dashboard/media" :icon="icons.faPhotoVideo">
 			Media
 		</SidebarItem>
-		<SidebarItem to="/dashboard/users" :icon="icons.faUser">
+		<SidebarItem v-if="isAdmin" to="/dashboard/users" :icon="icons.faUser">
 			Users
 		</SidebarItem>
-		<SidebarItem to="/dashboard/settings" :icon="icons.faGear">
+		<SidebarItem v-if="isAdmin" to="/dashboard/settings" :icon="icons.faGear">
 			Settings
 		</SidebarItem>
 	</div>
