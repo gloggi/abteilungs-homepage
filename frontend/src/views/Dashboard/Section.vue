@@ -123,8 +123,8 @@ export default {
 			}
 		},
 		updateLogo(file) {
-			this.content.file_id = file.id;
-			this.updateGroup();
+			this.content.fileId = file?.id || undefined;
+			console.log(this.content.fileId);
 		},
 		changeHeaderImages(event) {
 			this.content.files = event.files;

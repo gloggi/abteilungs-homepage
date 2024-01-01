@@ -32,7 +32,7 @@
 import { gsap } from "gsap";
 
 export default {
-	props: ["page"],
+	props: { images: { type: Array, default: () => [] } },
 	data() {
 		return {
 			imageIndex: 0,
@@ -42,8 +42,8 @@ export default {
 	},
 	methods: {
 		prepareNextImage() {
-			this.imageIndex = (this.imageIndex + 1) % this.page.files.length;
-			this.nextImage = this.page.files[this.imageIndex].path;
+			this.imageIndex = (this.imageIndex + 1) % this.images.length;
+			this.nextImage = this.images[this.imageIndex].path;
 			gsap.set(this.$refs.nextImageRef, { opacity: 0 });
 		},
 		changeImage() {
@@ -59,11 +59,11 @@ export default {
 	},
 	computed: {
 		moreThanOneImage() {
-			return this.page.files.length > 1;
+			return this.images.length > 1;
 		},
 	},
 	mounted() {
-		this.currentImage = this.page.files[this.imageIndex]?.path;
+		this.currentImage = this.images[this.imageIndex]?.path;
 
 		if (this.moreThanOneImage) {
 			this.prepareNextImage();

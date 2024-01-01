@@ -1,65 +1,67 @@
 <template>
-	<template v-if="page || group">
-		<BigHeader v-if="!isGroupPage && page.bigHeader" :page="page" />
-		<SmallHeader
-			v-if="!page?.bigHeader"
-			:key="headerKey"
-			:page="
-				isGroupPage ? { title: group.name, files: group.headerImages } : page
-			" />
-		<NavBar :menuItems="menuItems" @pageChange="handlePageChange" />
-		<PageBuilder v-if="!isGroupPage" :page="page" :key="pageId" />
-		<GroupPage v-if="isGroupPage" :group="group" />
-		<Footer />
-	</template>
+	<GroupPage
+		:key="`group-${pageKey}`"
+		v-if="pageType === 'groupPage'"
+		:group="group">
+		<template v-slot:navbar>
+			<NavBar :menuItems="menuItems" />
+		</template>
+	</GroupPage>
+	<RegularPage
+		:key="`page-${pageKey}`"
+		v-if="pageType === 'regularPage'"
+		:page="page">
+		<template v-slot:navbar>
+			<NavBar :menuItems="menuItems" />
+		</template>
+	</RegularPage>
+	<Footer />
 </template>
 <script>
-import BigHeader from "../components/main/BigHeader.vue";
 import NavBar from "../components/main/NavBar.vue";
-import PageBuilder from "../components/main/PageBuilder.vue";
 import Footer from "../components/main/Footer.vue";
-import SmallHeader from "../components/main/SmallHeader.vue";
-import GroupPage from "../components/main/GroupPage.vue";
+import RegularPage from "./RegularPage.vue";
+import GroupPage from "./GroupPage.vue";
 
 export default {
-	name: "App",
 	components: {
 		NavBar,
-		BigHeader,
-		PageBuilder,
 		Footer,
-		SmallHeader,
+		RegularPage,
 		GroupPage,
 	},
 	data() {
 		return {
-			pageId: undefined,
 			page: undefined,
+			pageKey: 0,
 			menuItems: [],
-			isGroupPage: false,
+			pageType: undefined,
 			group: undefined,
-			headerKey: 0,
 		};
 	},
 	methods: {
-		async getPage() {
-			this.isGroupPage = false;
-			var pageRoute = this.$route.path.substring(1);
-			if (pageRoute === "") {
-				pageRoute = 0;
+		async routeHandler() {
+			if (this.$route.name == "GroupPage") {
+				let groupId = this.$route.params.id;
+				await this.getGroup(groupId);
+				this.pageType = "groupPage";
+			} else {
+				let pageRoute = this.$route.path.substring(1);
+				if (pageRoute === "") {
+					pageRoute = 0;
+				}
+				await this.getPage(pageRoute);
+				this.pageType = "regularPage";
 			}
-			if (this.$route.name === "GroupPage") {
-				this.isGroupPage = true;
-				this.getGroup();
-				return;
-			}
+			this.pageKey++;
+		},
+		async getPage(pageRoute) {
 			try {
 				const response = await this.callApi("get", `/pages/${pageRoute}`);
 				this.page = response.data;
-				this.headerKey++;
 				document.title = `${this.page.title} | ${this.settings.divisionName}`;
 			} catch (error) {
-				console.log(error);
+				//console.log(error);
 			}
 		},
 		async getMenuItems() {
@@ -70,33 +72,27 @@ export default {
 				console.log(error);
 			}
 		},
-		async getGroup() {
+		async getGroup(groupId) {
 			try {
-				const response = await this.callApi(
-					"get",
-					`/groups/${this.$route.params.id}`,
-				);
+				const response = await this.callApi("get", `/groups/${groupId}`);
 				this.group = response.data;
 			} catch (error) {
-				console.log(error);
+				//console.log(error);
 			}
 		},
-		handlePageChange(pageId) {
-			this.pageId = pageId;
-			this.getPage();
+		handlePageChange(event) {
+			console.log(event);
+			//this.routeHandler()
 		},
 	},
 	watch: {
 		$route() {
-			this.getPage();
+			this.routeHandler();
 		},
 	},
 	async created() {
 		await this.getMenuItems();
-		if (!this.pageId && this.menuItems.length > 0) {
-			this.pageId = this.menuItems.find((item) => item.pageId).pageId;
-		}
-		await this.getPage();
+		await this.routeHandler();
 	},
 };
 </script>

@@ -43,6 +43,7 @@ export default {
 		},
 		preSelected: {
 			type: Array,
+			default: () => [],
 		},
 		extensions: {
 			type: Array,

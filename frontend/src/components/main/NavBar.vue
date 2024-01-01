@@ -21,12 +21,9 @@
 				class="flex flex-col md:flex-row md:space-x-5 w-full md:w-auto absolute z-10 md:static top-[75px] md:top-0 bg-primary"
 				v-if="showMobileMenu || isDesktop">
 				<template v-for="menuItem in menuItems" :key="menuItem.id">
-					<NavLinkItem
-						v-if="!menuItem.special"
-						:menuItem="menuItem"
-						@pageChange="handlePageChange"
-						>{{ menuItem.title }}</NavLinkItem
-					>
+					<NavLinkItem v-if="!menuItem.special" :menuItem="menuItem">{{
+						menuItem.title
+					}}</NavLinkItem>
 					<GroupDropdown v-else />
 				</template>
 			</ul>
@@ -40,7 +37,6 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { gsap } from "gsap";
 export default {
 	components: { NavLinkItem, GroupDropdown },
-	emits: ["pageChange"],
 	props: {
 		menuItems: {
 			type: Array,
@@ -69,10 +65,6 @@ export default {
 		},
 		handleResize() {
 			this.isDesktop = window.innerWidth > 768;
-		},
-		handlePageChange(e) {
-			this.$emit("pageChange", e);
-			this.showMobileMenu = false;
 		},
 	},
 	mounted() {

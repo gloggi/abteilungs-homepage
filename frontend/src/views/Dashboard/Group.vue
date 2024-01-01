@@ -175,7 +175,6 @@ export default {
 			try {
 				const response = await this.callApi("get", `/sections`);
 				this.sections = response.data.data;
-				console.log(this.sections);
 			} catch (e) {
 				console.log(e);
 			}

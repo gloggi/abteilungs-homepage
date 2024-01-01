@@ -14,7 +14,7 @@
 			<div class="flex items-center w-full h-2/3 text-center">
 				<h1
 					class="text-5xl md:text-6xl font-semibold text-white text-heading-1">
-					{{ page.title }}
+					{{ title }}
 				</h1>
 			</div>
 		</div>
@@ -23,6 +23,7 @@
 			class="fixed -z-10 h-screen w-screen object-cover"
 			:src="`${backendURL}${currentImage}`" />
 		<img
+			v-if="moreThanOneImage"
 			ref="nextImageRef"
 			class="fixed -z-10 h-screen w-screen object-cover"
 			:src="`${backendURL}${nextImage}`" />
@@ -32,7 +33,10 @@
 import { gsap } from "gsap";
 
 export default {
-	props: ["page"],
+	props: {
+		title: { type: String, default: () => "" },
+		images: { type: Array, default: () => [] },
+	},
 	data() {
 		return {
 			imageIndex: 0,
@@ -43,8 +47,8 @@ export default {
 	},
 	methods: {
 		prepareNextImage() {
-			this.imageIndex = (this.imageIndex + 1) % this.page.files.length;
-			this.nextImage = this.page.files[this.imageIndex].path;
+			this.imageIndex = (this.imageIndex + 1) % this.images.length;
+			this.nextImage = this.images[this.imageIndex].path;
 			gsap.set(this.$refs.nextImageRef, { opacity: 0 });
 		},
 		changeImage() {
@@ -60,11 +64,11 @@ export default {
 	},
 	computed: {
 		moreThanOneImage() {
-			return this.page.files.length > 1;
+			return this.images.length > 1;
 		},
 	},
 	mounted() {
-		this.currentImage = this.page.files[this.imageIndex]?.path;
+		this.currentImage = this.images[this.imageIndex]?.path;
 		if (this.moreThanOneImage) {
 			this.prepareNextImage();
 			this.interval = setInterval(this.changeImage, 5000);

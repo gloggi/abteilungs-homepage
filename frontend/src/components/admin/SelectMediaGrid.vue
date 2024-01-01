@@ -29,6 +29,7 @@ export default {
 		},
 		preSelected: {
 			type: Array,
+			default: () => [],
 		},
 		extensions: {
 			type: Array,
@@ -77,8 +78,7 @@ export default {
 	},
 	async created() {
 		await this.getMedia();
-		this.items = [...this.preSelected] || [];
-		console.log(this.items);
+		this.items = [...this.preSelected];
 	},
 };
 </script>
