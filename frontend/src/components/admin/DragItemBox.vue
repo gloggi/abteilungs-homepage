@@ -33,7 +33,15 @@ import { faTrash, faGripHorizontal } from "@fortawesome/free-solid-svg-icons";
 
 export default {
 	components: { ItemBox },
-	props: ["item", "boxTitle"],
+	props: {
+		item: {
+			type: Object,
+			required: true,
+		},
+		boxTitle: {
+			type: String,
+		},
+	},
 	emits: ["delete", "startedDragging", "endedDragging"],
 	data() {
 		return {

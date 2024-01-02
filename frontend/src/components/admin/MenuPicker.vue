@@ -44,6 +44,17 @@
 					<MenuDropZone :index="i" @dropped-item="handleMenuZoneDrop" />
 				</template>
 			</div>
+			<p class="text-2xl font-semibold">Footer Links</p>
+			<div
+				class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg">
+				<MenuDropZone :index="-1" @dropped-item="handleFooterLinksDrop" />
+				<template v-for="(footerlink, i) in footerLinks" :key="footerlink.id">
+					<DragableMenuItem :item="footerlink">
+						{{ footerlink.title }}
+					</DragableMenuItem>
+					<MenuDropZone :index="i" @dropped-item="handleFooterLinksDrop" />
+				</template>
+			</div>
 			<div
 				v-if="menuItems.length > 0"
 				:dropzone="true"
@@ -71,6 +82,7 @@ export default {
 		return {
 			pages: [],
 			menuItems: [],
+			footerLinks: [],
 			icons: {
 				faTrash,
 			},
@@ -119,6 +131,36 @@ export default {
 				console.log(error);
 			}
 		},
+		async getFooterLinks() {
+			try {
+				const response = await this.callApi("get", "footerlinks");
+				this.footerLinks = response.data.data;
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async saveFooterLink(link) {
+			try {
+				const response = await this.callApi("post", "footerlinks", link);
+				this.footerLinks.push(response.data.data);
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async updateFooterLink(link) {
+			try {
+				await this.callApi("put", `footerlinks/${link.id}`, link);
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async deleteFooterLink(link) {
+			try {
+				await this.callApi("delete", `footerlinks/${link.id}`);
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		async handleMenuZoneDrop(menuItem) {
 			if (menuItem.type === "menuItem") {
 				this.menuItems = this.menuItems.filter((mI) => mI.id !== menuItem.id);
@@ -147,18 +189,63 @@ export default {
 			await this.getMenuItems();
 			await this.getPages();
 		},
+		async handleFooterLinksDrop(footerLink) {
+			const isCustomItem = footerLink.type === "customItem" && !footerLink.id;
+			const isFooterLink =
+				footerLink.type === "footerLink" &&
+				footerLink.url &&
+				footerLink.title &&
+				footerLink.id;
+
+			if (isCustomItem || isFooterLink) {
+				if (isCustomItem) {
+					this.footerLinks.push(footerLink);
+				} else {
+					this.footerLinks = this.footerLinks.filter(
+						(link) => link.id !== footerLink.id,
+					);
+					this.footerLinks.push(footerLink);
+				}
+
+				this.updateFooterLinksOrder();
+				await this.saveAllFooterLinks();
+				await this.getFooterLinks();
+			}
+		},
+
+		updateFooterLinksOrder() {
+			this.footerLinks.sort((a, b) => a.sort - b.sort);
+			this.footerLinks = this.footerLinks.map((link, index) => ({
+				...link,
+				sort: index,
+			}));
+		},
+
+		async saveAllFooterLinks() {
+			await Promise.all(
+				this.footerLinks.map(async (link) =>
+					link.id
+						? await this.updateFooterLink(link)
+						: await this.saveFooterLink(link),
+				),
+			);
+		},
 		async handleDeleteDrop(e) {
 			const item = JSON.parse(e.dataTransfer.getData("text/plain"));
 			if (item.type === "menuItem") {
 				await this.deleteMenuItem(item);
+				await this.getMenuItems();
+				await this.getPages();
+			} else if (item.type === "footerLink") {
+				await this.deleteFooterLink(item);
+				await this.getFooterLinks();
 			}
-			await this.getMenuItems();
-			await this.getPages();
 		},
 	},
 	async created() {
 		await this.getMenuItems();
 		await this.getPages();
+		await this.getFooterLinks();
 	},
 };
 </script>

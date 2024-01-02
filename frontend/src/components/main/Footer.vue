@@ -31,6 +31,11 @@
 			</div>
 			<div>
 				<h2 class="text-heading-2 text-primary text-4xl">Links</h2>
+				<ul class="text-white text-xl main-text space-y-1 pt-5">
+					<li v-for="link in footerLinks" :key="link.id">
+						<a :href="link.url" target="_blank">{{ link.title }}</a>
+					</li>
+				</ul>
 			</div>
 			<div>
 				<h2 class="text-heading-2 text-primary text-4xl">Kontakt</h2>
@@ -47,6 +52,7 @@ export default {
 	data() {
 		return {
 			groups: [],
+			footerLinks: [],
 		};
 	},
 	methods: {
@@ -54,6 +60,14 @@ export default {
 			try {
 				const response = await this.callApi("get", "/groups");
 				this.groups = response.data.data;
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async getFooterLinks() {
+			try {
+				const response = await this.callApi("get", "/footerlinks");
+				this.footerLinks = response.data.data;
 			} catch (error) {
 				console.log(error);
 			}
@@ -69,6 +83,7 @@ export default {
 	},
 	async created() {
 		await this.getGroups();
+		await this.getFooterLinks();
 	},
 };
 </script>

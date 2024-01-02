@@ -45,5 +45,5 @@ class DatabaseSeeder extends Seeder
         $this->call(EventsTableSeeder::class);
         $this->call(EventGroupsTableSeeder::class);
     }
-    // create seeds: php artisan iseed files,sections,groups,group_predecessor,group_successor,group_headers,contacts,pages,page_file,section_file,text_items,generic_items,image_items,image_item_file,forms,form_items,settings,text_fields,textarea_fields,select_fields,option_fields,menu_items,events,event_groups,locations --force
+    // create seeds: php artisan iseed files,sections,groups,group_predecessor,group_successor,group_headers,contacts,pages,page_file,section_file,text_items,generic_items,image_items,image_item_file,forms,form_items,settings,text_fields,textarea_fields,select_fields,option_fields,menu_items,events,event_groups,locations,footer_links --force
 }

@@ -15,6 +15,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\FooterLinkController;
+
 
 
 
@@ -124,5 +126,14 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::put('/events/{id}', [EventController::class, 'update']);
     Route::delete('/events/{id}', [EventController::class, 'destroy']);
 });
+
+Route::get('/footerlinks', [FooterLinkController::class, 'index']);
+Route::get('/footerlinks/{id}', [FooterLinkController::class, 'show']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/footerlinks', [FooterLinkController::class, 'store']);
+    Route::put('/footerlinks/{id}', [FooterLinkController::class, 'update']);
+    Route::delete('/footerlinks/{id}', [FooterLinkController::class, 'destroy']);
+});
+
 
 Route::post('/webforms', [WebFormController::class, 'store']);
