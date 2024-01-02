@@ -7,7 +7,7 @@
 			<font-awesome-icon class="" :icon="icons.faCaretDown" />
 		</li>
 		<transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
-			<ul v-if="showDropdown" class="absolute z-10 bg-primary w-full">
+			<ul v-if="showDropdown" class="absolute z-10 bg-primary w-full h-full">
 				<li
 					v-for="group in groups"
 					:key="group.id"
@@ -46,14 +46,14 @@ export default {
 			}
 		},
 		beforeEnter(el) {
-			el.style.transform = "scaleY(0)";
-			el.style.transformOrigin = "top";
+			el.style.height = "0";
+			el.style.overflow = "hidden";
 		},
 		enter(el, done) {
-			gsap.to(el, { transform: "scaleY(1)", duration: 0.3, onComplete: done });
+			gsap.to(el, { height: "auto", duration: 0.3, onComplete: done });
 		},
 		leave(el, done) {
-			gsap.to(el, { transform: "scaleY(0)", duration: 0.3, onComplete: done });
+			gsap.to(el, { height: "0", duration: 0.3, onComplete: done });
 		},
 	},
 	created() {

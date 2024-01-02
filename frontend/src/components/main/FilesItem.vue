@@ -1,9 +1,9 @@
 <template>
 	<ContentWrapper>
-		<HeadingOne class="w-full text-primary">{{ item.title }}</HeadingOne>
+		<HeadingOne class="w-full text-primary">{{ title }}</HeadingOne>
 		<div class="p-5 flex justify-center flex-wrap gap gap-5">
 			<a
-				v-for="file in item.files"
+				v-for="file in files"
 				:key="file.id"
 				:href="`${backendURL}${file.path}`">
 				<div>
@@ -24,7 +24,7 @@ import ContentWrapper from "./ContentWrapper.vue";
 import HeadingOne from "./HeadingOne.vue";
 
 export default {
-	props: ["item"],
+	props: ["title", "files"],
 	data() {
 		return {};
 	},

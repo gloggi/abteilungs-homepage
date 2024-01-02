@@ -7,7 +7,10 @@
 			<FormItem v-if="pageItem.type == 'formItem'" :item="pageItem" />
 			<SectionsItem v-if="pageItem.type == 'sectionsItem'" :item="pageItem" />
 			<GroupsItem v-if="pageItem.type == 'groupsItem'" :item="pageItem" />
-			<FilesItem v-if="pageItem.type == 'filesItem'" :item="pageItem" />
+			<FilesItem
+				v-if="pageItem.type == 'filesItem'"
+				:title="pageItem.title"
+				:files="pageItem.files" />
 		</template>
 	</PageWrapper>
 </template>

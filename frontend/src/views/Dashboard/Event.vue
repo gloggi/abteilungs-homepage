@@ -9,12 +9,6 @@
 			entity="events"
 			backLinkTo="Events" />
 		<Card class="mt-4">
-			<LocationPicker
-				v-if="false"
-				:lat="content.lat"
-				:long="content.long"
-				@event-selected="selectEvent"
-				class="h-96 w-full" />
 			<div class="flex flex-col space-y-2">
 				<TextInput
 					label="Title"
@@ -31,14 +25,6 @@
 					type="datetime-local"
 					v-model="content.endTime"
 					:errors="errors.endTime" />
-				<div class="flex flex-col space-y-2">
-					<FormLabel>Description</FormLabel>
-					<Editor v-model="content.description" />
-				</div>
-				<div class="flex flex-col space-y-2">
-					<FormLabel>Take with you</FormLabel>
-					<Editor v-model="content.takeWithYou" />
-				</div>
 				<MultipleSelect
 					label="Groups"
 					v-model="content.groups"
@@ -57,6 +43,14 @@
 					:options="locations"
 					:value="content.endLocationId"
 					:errors="errors.endLocationId" />
+				<div class="flex flex-col space-y-2">
+					<FormLabel>Description</FormLabel>
+					<Editor v-model="content.description" />
+				</div>
+				<div class="flex flex-col space-y-2">
+					<FormLabel>Take with you</FormLabel>
+					<Editor v-model="content.takeWithYou" />
+				</div>
 			</div>
 		</Card>
 	</div>
@@ -65,7 +59,6 @@
 <script>
 import Card from "../../components/admin/Card.vue";
 import TextInput from "../../components/admin/TextInput.vue";
-import LocationPicker from "../../components/admin/LocationPicker.vue";
 import Select from "../../components/admin/Select.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import {
@@ -81,7 +74,6 @@ export default {
 	components: {
 		Card,
 		TextInput,
-		LocationPicker,
 		Select,
 		ItemHeaderTemplate,
 		FormLabel,

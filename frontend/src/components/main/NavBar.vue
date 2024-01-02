@@ -18,7 +18,7 @@
 		</div>
 		<Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
 			<ul
-				class="flex flex-col md:flex-row md:space-x-5 w-full md:w-auto absolute z-10 md:static top-[75px] md:top-0 bg-primary"
+				class="flex flex-col md:flex-row md:space-x-5 w-full md:w-auto absolute z-10 md:static top-[75px] md:top-0 bg-primary h-full md:h-auto"
 				v-if="showMobileMenu || isDesktop">
 				<template v-for="menuItem in menuItems" :key="menuItem.id">
 					<NavLinkItem v-if="!menuItem.special" :menuItem="menuItem">{{
@@ -54,14 +54,19 @@ export default {
 	},
 	methods: {
 		beforeEnter(el) {
-			el.style.transform = "scaleY(0)";
-			el.style.transformOrigin = "top";
+			el.style.height = "0";
+			el.style.overflow = "hidden";
 		},
 		enter(el, done) {
-			gsap.to(el, { transform: "scaleY(1)", duration: 0.3, onComplete: done });
+			gsap.to(el, {
+				height: "auto",
+				overflow: "visible",
+				duration: 0.3,
+				onComplete: done,
+			});
 		},
 		leave(el, done) {
-			gsap.to(el, { transform: "scaleY(0)", duration: 0.3, onComplete: done });
+			gsap.to(el, { height: "0", duration: 0.3, onComplete: done });
 		},
 		handleResize() {
 			this.isDesktop = window.innerWidth > 768;

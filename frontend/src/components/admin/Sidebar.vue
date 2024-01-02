@@ -36,7 +36,7 @@
 			</div>
 		</router-link>
 		<SidebarItem v-if="isAdmin" to="/dashboard/menu" :icon="icons.faEllipsis">
-			Menu
+			Menu & Links
 		</SidebarItem>
 		<SidebarItem v-if="isAdmin" to="/dashboard/pages" :icon="icons.faBookOpen">
 			Pages

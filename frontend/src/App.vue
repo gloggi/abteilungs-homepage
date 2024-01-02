@@ -34,6 +34,10 @@ export default {
 				`color: ${this.settings.secondaryColor};`,
 			);
 			this.createNewCssClass(
+				"border-primary",
+				`border-color: ${this.settings.primaryColor};`,
+			);
+			this.createNewCssClass(
 				"border-secondary",
 				`border-color: ${this.settings.secondaryColor};`,
 			);
