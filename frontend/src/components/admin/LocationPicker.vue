@@ -27,10 +27,10 @@ export default {
 		};
 	},
 	watch: {
-		lat: function (val) {
+		lat: function () {
 			this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
 		},
-		long: function (val) {
+		long: function () {
 			this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
 		},
 	},

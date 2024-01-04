@@ -63,4 +63,42 @@ class CampController extends Controller
         return response()->json(null, 204);
     }
 
+    public function syncExternalCamps()
+    {
+        $setting = Setting::find(1);
+        $token = $setting->midata_api_key;
+        $midataId = $setting->midata_id;
+        $response = Http::get("https://pbs.puzzle.ch/de/groups/{$midataId}/events/camp.json?token={$token}");
+        $externalCamps = $response->json();
+
+        $eventDatesMap = collect($externalCamps['linked']['event_dates'])->keyBy('id');
+
+        foreach ($externalCamps['events'] as $externalCamp) {
+            $eventDateIds = $externalCamp['links']['dates'] ?? [];
+            $eventDate = collect($eventDateIds)->map(fn($id) => $eventDatesMap->get($id))->first();
+            error_log(json_encode($externalCamp));
+            error_log($externalCamp['id']);
+
+            Camp::updateOrCreate(
+                ['midata_id' => $externalCamp['id']],
+                [
+                    'name' => $externalCamp['name'],
+                    'description' => $externalCamp['description'],
+                    'cost' => $externalCamp['cost'],
+                    'maximum_participants' => $externalCamp['maximum_participants'],
+                    'participant_count' => $externalCamp['participant_count'],
+                    'location' => $externalCamp['location'],
+                    'application_opening_at' => $externalCamp['application_opening_at'],
+                    'application_closing_at' => $externalCamp['application_closing_at'],
+                    'application_conditions' => $externalCamp['application_conditions'],
+                    'external_application_link' => $externalCamp['external_application_link'],
+                    'start_at' => $eventDate['start_at'] ?? null,
+                    'finish_at' => $eventDate['finish_at'] ?? null,
+                ]
+            );
+        }
+
+        return response()->json(['message' => 'External camps synced successfully']);
+    }
+
 }

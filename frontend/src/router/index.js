@@ -23,6 +23,8 @@ import Events from "../views/Dashboard/Events.vue";
 import Event from "../views/Dashboard/Event.vue";
 import Users from "../views/Dashboard/Users.vue";
 import User from "../views/Dashboard/User.vue";
+import Camps from "../views/Dashboard/Camps.vue";
+import Camp from "../views/Dashboard/Camp.vue";
 
 const routes = [
 	{
@@ -165,6 +167,22 @@ const routes = [
 				path: "events/:id",
 				name: "Event",
 				component: Event,
+			},
+			{
+				path: "camps",
+				name: "Camps",
+				component: Camps,
+				meta: {
+					title: "Camps",
+				},
+			},
+			{
+				path: "camps/:id",
+				name: "Camp",
+				component: Camp,
+				meta: {
+					title: "Camp",
+				},
 			},
 			{
 				path: "users",

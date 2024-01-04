@@ -52,6 +52,9 @@
 						:src="`${backendURL}${item[key].thumbnail}`" />
 				</div>
 			</template>
+			<template v-if="actions[key] && actions[key].actionName == 'date'">
+				<div class="text-sm text-gray-500">{{ formatDate(item[key]) }}</div>
+			</template>
 			<template v-if="!actions[key]">
 				<div class="text-sm text-gray-500">{{ getValue(item, key) }}</div>
 			</template>
@@ -68,6 +71,7 @@
 import { get } from "lodash";
 /* import Button from './Button.vue'; */
 import PaginationNav from "./PaginationNav.vue";
+import { format } from "date-fns";
 export default {
 	components: { /* Button, */ PaginationNav },
 	props: ["entity", "columns", "titles"],
@@ -110,6 +114,9 @@ export default {
 	methods: {
 		getValue(obj, key) {
 			return get(obj, key);
+		},
+		formatDate(date) {
+			return format(new Date(date), "dd.MM.yyyy HH:mm");
 		},
 		changeBox(event, iri) {
 			if (event.target.checked) {

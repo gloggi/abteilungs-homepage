@@ -11,6 +11,7 @@ class Camp extends Model
 
 
     protected $fillable = [
+        'midata_id',
         'name',
         'description',
         'cost',

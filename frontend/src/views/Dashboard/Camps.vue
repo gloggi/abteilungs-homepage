@@ -1,10 +1,11 @@
 <template>
 	<OverviewTemplate
-		name="Events"
-		entity="events"
-		titles="Title,Start,End"
-		columns="title:link(id),startTime:date,endTime:date"
-		pushAfterCreationTo="Event" />
+		name="Camps"
+		entity="camps"
+		titles="Name,Start Date,End Date,Participants"
+		columns="name:link(id),startAt:date,finishAt:date,participantCount"
+		pushAfterCreationTo="Camp"
+		:midataSync="true" />
 </template>
 
 <script>

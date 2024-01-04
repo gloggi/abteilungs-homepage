@@ -27,14 +27,18 @@
 							>3</sub
 						>
 					</EditorButton>
-					<EditorButton @click.self>
+					<EditorButton @click.self.prevent>
 						<input
 							type="color"
 							@input="
 								editor.chain().focus().setColor($event.target.value).run()
 							"
-							value="000000"
-							:value="editor.getAttributes('textStyle').color" />
+							:value="
+								() =>
+									editor.getAttributes('textStyle').color == ''
+										? '#000000'
+										: editor.getAttributes('textStyle')
+							" />
 					</EditorButton>
 				</div>
 				<div class="flex">

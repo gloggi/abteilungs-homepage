@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('camps', function (Blueprint $table) {
             $table->id();
+            $table->integer('midata_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('cost', 5, 2)->nullable();

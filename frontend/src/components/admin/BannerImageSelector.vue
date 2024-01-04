@@ -32,12 +32,11 @@
 
 <script>
 import { faXmark, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
-import Card from "./Card.vue";
 import MediaModal from "./MediaModal.vue";
 import InfoField from "./InfoField.vue";
 
 export default {
-	components: { MediaModal, Card, InfoField },
+	components: { MediaModal, InfoField },
 	props: ["item", "modelValue", "info"],
 	emits: ["changeImages"],
 	data() {

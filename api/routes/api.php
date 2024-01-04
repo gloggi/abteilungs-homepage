@@ -16,6 +16,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FooterLinkController;
+use App\Http\Controllers\CampController;
 
 
 
@@ -133,6 +134,15 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::post('/footerlinks', [FooterLinkController::class, 'store']);
     Route::put('/footerlinks/{id}', [FooterLinkController::class, 'update']);
     Route::delete('/footerlinks/{id}', [FooterLinkController::class, 'destroy']);
+});
+
+Route::get('/camps', [CampController::class, 'index']);
+Route::get('/camps/{id}', [CampController::class, 'show']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('/camps', [CampController::class, 'store']);
+    Route::put('/camps/{id}', [CampController::class, 'update']);
+    Route::delete('/camps/{id}', [CampController::class, 'destroy']);
+    Route::post('/camps/sync', [CampController::class, 'syncExternalCamps']);
 });
 
 

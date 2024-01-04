@@ -10,7 +10,9 @@
 			class="bg-white p-1 rounded-l-lg">
 			<font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
 		</button>
-
+		<button class="bg-white p-1" v-if="midataSync" @click="syncEntity">
+			<MiDataSync class="h-6 w-6" />
+		</button>
 		<button class="rounded-r-lg bg-white p-1" @click="createEntity">
 			<font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 text-gray-500" />
 		</button>
@@ -26,9 +28,20 @@
 <script>
 import Table from "@/components/admin/Table.vue";
 import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import MiDataSync from "@/icons/MidataSync.vue";
 export default {
-	props: ["name", "entity", "titles", "columns", "pushAfterCreationTo"],
-	components: { Table },
+	props: {
+		name: String,
+		entity: String,
+		titles: String,
+		columns: String,
+		pushAfterCreationTo: String,
+		midataSync: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	components: { Table, MiDataSync },
 	data() {
 		return {
 			content: undefined,
@@ -58,17 +71,22 @@ export default {
 				);
 				this.selected = [];
 				this.tableKey++;
-				this.$store.dispatch(
-					"notification/notify",
-					`All selected ${this.name} were deleted`,
-				);
+				this.notifyUser(`All selected ${this.name} were deleted`);
+			} catch (e) {
+				console.log(e);
+			}
+		},
+		async syncEntity() {
+			try {
+				await this.callApi("post", `${this.entity}/sync`);
+				this.tableKey++;
+				this.notifyUser(`All ${this.name} were synced`);
 			} catch (e) {
 				console.log(e);
 			}
 		},
 		async createEntity() {
 			try {
-				//const response = await this.callApi("post", `/${this.entity}`, {});
 				this.$router.push({
 					name: this.pushAfterCreationTo,
 					params: { id: "new" },

@@ -56,6 +56,9 @@
 		<SidebarItem to="/dashboard/events" :icon="icons.faCalendarDays">
 			Events
 		</SidebarItem>
+		<SidebarItem to="/dashboard/camps" :icon="icons.faCampground">
+			Camps
+		</SidebarItem>
 		<SidebarItem to="/dashboard/locations" :icon="icons.faLocationDot">
 			Locations
 		</SidebarItem>
@@ -108,6 +111,7 @@ import {
 	faLocationDot,
 	faCalendarDays,
 	faAddressCard,
+	faCampground,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 export default {
@@ -127,6 +131,7 @@ export default {
 				faLocationDot,
 				faCalendarDays,
 				faAddressCard,
+				faCampground,
 			},
 		};
 	},
