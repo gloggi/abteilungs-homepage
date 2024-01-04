@@ -6,7 +6,7 @@
 		@startedDragging="$emit('startedDragging')"
 		@endedDragging="$emit('endedDragging')">
 		<Card class="space-y-2">
-			<TextInput v-model="item.title" label="Title" />
+			<TextInput v-model="titleValue" label="Title" />
 			<FilesSelector :item="item" @changeFiles="handleFilesChange" />
 		</Card>
 	</DragItemBox>
@@ -21,13 +21,14 @@ import TextInput from "../TextInput.vue";
 
 export default {
 	components: { DragItemBox, FilesSelector, Card, TextInput },
-	props: ["item", "modelValue", "boxTitle"],
+	props: ["title", "item", "modelValue", "boxTitle"],
 	emits: [
 		"updatePage",
 		"changeFiles",
 		"delete",
 		"startedDragging",
 		"endedDragging",
+		"update:title",
 	],
 	data() {
 		return {
@@ -57,7 +58,16 @@ export default {
 			this.$emit("changeFiles", event);
 		},
 	},
-	computed: {},
+	computed: {
+		titleValue: {
+			get() {
+				return this.title;
+			},
+			set(value) {
+				this.$emit("update:title", value);
+			},
+		},
+	},
 	created() {
 		this.preSelectedImages = this.item.files;
 	},

@@ -17,7 +17,7 @@
 			<font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 text-gray-500" />
 		</button>
 	</div>
-	<Table
+	<EntityTable
 		:key="tableKey"
 		:entity="entity"
 		@changeSelected="changeSelected"
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Table from "@/components/admin/Table.vue";
+import EntityTable from "@/components/admin/EntityTable.vue";
 import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import MiDataSync from "@/icons/MidataSync.vue";
 export default {
@@ -41,7 +41,7 @@ export default {
 			default: false,
 		},
 	},
-	components: { Table, MiDataSync },
+	components: { EntityTable, MiDataSync },
 	data() {
 		return {
 			content: undefined,

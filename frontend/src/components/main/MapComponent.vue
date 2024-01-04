@@ -7,7 +7,7 @@ import "ol/ol.css";
 import { Map, View } from "ol";
 import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { XYZ, Vector as VectorSource } from "ol/source";
-import { fromLonLat, toLonLat } from "ol/proj";
+import { fromLonLat } from "ol/proj";
 import { Icon, Style } from "ol/style";
 import { boundingExtent } from "ol/extent";
 import Point from "ol/geom/Point";

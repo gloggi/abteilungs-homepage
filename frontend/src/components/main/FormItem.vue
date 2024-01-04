@@ -5,7 +5,10 @@
 
 			<div class="flex flex-col space-y-5 pl-4">
 				<input type="text" tabindex="-1" class="absolute -left-3/4" />
-				<div v-for="field in item.form.fields" class="flex flex-col space-y-2">
+				<div
+					v-for="field in item.form.fields"
+					:key="field.id"
+					class="flex flex-col space-y-2">
 					<label class="font-bold main-text text-2xl" for="form.label"
 						>{{ field.label }} {{ field.required ? "*" : "" }}</label
 					>

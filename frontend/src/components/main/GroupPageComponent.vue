@@ -7,12 +7,13 @@
 			:files="group.files" />
 		<div>
 			<HeadingOne class="px-24 text-primary pb-5">Anlässe</HeadingOne>
-			<Event
-				v-if="events.length > 0"
-				v-for="(event, idx) in events"
-				:open="idx === 0"
-				:key="event.id"
-				:event="event" />
+			<div v-if="events.length > 0">
+				<Event
+					v-for="(event, idx) in events"
+					:open="idx === 0"
+					:key="event.id"
+					:event="event" />
+			</div>
 		</div>
 	</PageWrapper>
 </template>

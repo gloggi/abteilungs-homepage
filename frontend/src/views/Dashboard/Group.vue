@@ -20,14 +20,14 @@
 						type="text"
 						v-model="content.name"
 						:errors="errors.name" />
-					<Select
+					<SelectComponent
 						label="Section"
 						@selectSection="(event) => handleSection(event)"
 						:value="content.section ? content.section['id'] : null"
 						selection="Section"
 						:options="sections"
 						:errors="errors.sectionId" />
-					<Select
+					<SelectComponent
 						label="Gender"
 						@selectGender="(event) => handleGender(event)"
 						:value="content.gender"
@@ -38,7 +38,7 @@
 						<FormLabel>Group Color</FormLabel>
 						<ColorPicker v-model="content.color" :errors="errors.color" />
 					</div>
-					<Select
+					<SelectComponent
 						label="Parent Group"
 						@selectParentGroup="(event) => handleParentGroup(event)"
 						:value="content.parentId ? content.parentId : null"
@@ -85,7 +85,7 @@
 <script>
 import Card from "../../components/admin/Card.vue";
 import TextInput from "../../components/admin/TextInput.vue";
-import Select from "../../components/admin/Select.vue";
+import SelectComponent from "../../components/admin/SelectComponent.vue";
 import {
 	faArrowsRotate,
 	faChevronLeft,
@@ -104,7 +104,7 @@ export default {
 	components: {
 		Card,
 		TextInput,
-		Select,
+		SelectComponent,
 		LogoDisplay,
 		MultipleSelect,
 		ItemHeaderTemplate,

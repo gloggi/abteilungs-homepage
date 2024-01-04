@@ -51,7 +51,7 @@ import {
 	faTrash,
 	faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { project, unproject } from "swissgrid";
+import { project } from "swissgrid";
 export default {
 	components: {
 		Card,
@@ -74,21 +74,21 @@ export default {
 		};
 	},
 	watch: {
-		"content.lat": function (val) {
+		"content.lat": function () {
 			if (this.content.lat && this.content.long) {
 				this.lv95 = this.formatLV95(
 					project([this.content.long, this.content.lat]),
 				);
 			}
 		},
-		"content.long": function (val) {
+		"content.long": function () {
 			if (this.content.lat && this.content.long) {
 				this.lv95 = this.formatLV95(
 					project([this.content.long, this.content.lat]),
 				);
 			}
 		},
-		lv95: function (val) {},
+		lv95: function () {},
 	},
 	methods: {
 		async getLocation() {

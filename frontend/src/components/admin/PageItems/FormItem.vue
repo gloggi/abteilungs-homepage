@@ -6,7 +6,7 @@
 		@startedDragging="$emit('startedDragging')"
 		@endedDragging="$emit('endedDragging')">
 		<Card class="space-y-2">
-			<Select
+			<SelectComponent
 				selection="FormItem"
 				@selectFormItem="handleChange"
 				:value="item.formId"
@@ -17,11 +17,11 @@
 
 <script>
 import Card from "../Card.vue";
-import Select from "../Select.vue";
+import SelectComponent from "../SelectComponent.vue";
 import DragItemBox from "../DragItemBox.vue";
 
 export default {
-	components: { Card, Select, DragItemBox },
+	components: { Card, SelectComponent, DragItemBox },
 	props: ["item", "boxTitle"],
 	emits: [
 		"updatePage",

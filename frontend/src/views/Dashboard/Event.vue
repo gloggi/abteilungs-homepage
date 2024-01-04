@@ -29,14 +29,14 @@
 					label="Groups"
 					v-model="content.groups"
 					:options="groups" />
-				<Select
+				<SelectComponent
 					label="Start Location"
 					selection="StartLocation"
 					@selectStartLocation="handleSelectStartLocation"
 					:options="locations"
 					:value="content.startLocationId"
 					:errors="errors.startLocationId" />
-				<Select
+				<SelectComponent
 					label="End Location"
 					selection="EndLocation"
 					@selectEndLocation="handleSelectEndLocation"
@@ -59,7 +59,7 @@
 <script>
 import Card from "../../components/admin/Card.vue";
 import TextInput from "../../components/admin/TextInput.vue";
-import Select from "../../components/admin/Select.vue";
+import SelectComponent from "../../components/admin/SelectComponent.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import {
 	faArrowsRotate,
@@ -74,7 +74,7 @@ export default {
 	components: {
 		Card,
 		TextInput,
-		Select,
+		SelectComponent,
 		ItemHeaderTemplate,
 		FormLabel,
 		Editor,

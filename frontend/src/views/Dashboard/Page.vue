@@ -53,6 +53,7 @@
 				v-if="pageItem.type == 'filesItem'"
 				boxTitle="Files Item"
 				@changeFiles="changeFilesItem"
+				v-model:title="pageItem.title"
 				:item="pageItem"
 				@delete="deleteItem"
 				@startedDragging="isDragging = true"

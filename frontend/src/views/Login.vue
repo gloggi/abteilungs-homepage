@@ -20,7 +20,7 @@
 						label="Password"
 						type="password"
 						:content="form.email"></TextInput>
-					<Button type="submit">Login</Button>
+					<ButtonComponent type="submit">Login</ButtonComponent>
 				</form>
 				<MiDataButton @click="loginWithMiData" type="submit" />
 			</div>
@@ -29,12 +29,12 @@
 </template>
 <script>
 import TextInput from "../components/admin/TextInput.vue";
-import Button from "../components/admin/Button.vue";
+import ButtonComponent from "../components/admin/ButtonComponent.vue";
 import ErrorMessage from "../components/admin/ErrorMessage.vue";
 import MiDataButton from "../components/admin/MiDataButton.vue";
 export default {
 	name: "Login",
-	components: { TextInput, Button, ErrorMessage, MiDataButton },
+	components: { TextInput, ButtonComponent, ErrorMessage, MiDataButton },
 	data() {
 		return {
 			form: {

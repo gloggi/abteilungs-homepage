@@ -69,7 +69,6 @@
 
 <script>
 import { get } from "lodash";
-/* import Button from './Button.vue'; */
 import PaginationNav from "./PaginationNav.vue";
 import { format } from "date-fns";
 export default {

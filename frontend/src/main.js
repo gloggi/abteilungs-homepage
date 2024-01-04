@@ -22,7 +22,7 @@ const app = createApp(App)
 	.mixin(mixin)
 	.component("font-awesome-icon", FontAwesomeIcon);
 app.directive("router-link", {
-	mounted(el, binding, vnode) {
+	mounted(el) {
 		el.addEventListener("click", (event) => {
 			event.preventDefault();
 			const path = event.target.getAttribute("href");

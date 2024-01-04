@@ -30,7 +30,7 @@
 				</button>
 				<Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
 					<div v-if="show" class="h-full">
-						<Map
+						<MapComponent
 							class="w-full h-96"
 							:markers="[event.startLocation, event.endLocation]" />
 						<div class="p-3">
@@ -54,14 +54,13 @@
 </template>
 <script>
 import HeadingOne from "./HeadingOne.vue";
-import Map from "./Map.vue";
+import MapComponent from "./MapComponent.vue";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
 import { gsap } from "gsap";
 
 export default {
-	props: ["event"],
-	components: { HeadingOne, Map },
+	components: { HeadingOne, MapComponent },
 	props: {
 		open: {
 			type: Boolean,

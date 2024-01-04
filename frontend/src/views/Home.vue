@@ -15,18 +15,18 @@
 			<NavBar :menuItems="menuItems" />
 		</template>
 	</RegularPage>
-	<Footer />
+	<FooterComponent />
 </template>
 <script>
 import NavBar from "../components/main/NavBar.vue";
-import Footer from "../components/main/Footer.vue";
+import FooterComponent from "../components/main/FooterComponent.vue";
 import RegularPage from "./RegularPage.vue";
 import GroupPage from "./GroupPage.vue";
 
 export default {
 	components: {
 		NavBar,
-		Footer,
+		FooterComponent,
 		RegularPage,
 		GroupPage,
 	},
