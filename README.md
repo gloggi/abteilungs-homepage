@@ -49,5 +49,5 @@ Das Login zum Editorenbereich unter ```http://localhost:8080/dashboard``` funkti
 
 Um den Testaccount des Powerusers zu nutzen, ist ein Login mit der 2-Faktor-Authentifizierung (2FA) erforderlich. Scanne dazu den bereitgestellten QR-Code mit einer Authenticator-App deiner Wahl.
 
-<img src="https://github.com/gloggi/abteilungs-homepage/blob/master/satoshi_2FA.jpg?raw=true" height="200px" width="200px" />
+<img src="https://raw.githubusercontent.com/gloggi/abteilungs-homepage/master/satoshi_2FA.png" height="200px" width="200px" />
 
