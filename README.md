@@ -5,7 +5,7 @@ Unsere Webapp ist speziell darauf ausgerichtet, Webseiten für Abteilungen und P
 - **Modulare Webseitenerstellung:** Gestalte die Webseite deiner Abteilung mit einer Vielzahl von Modulen, darunter Bilder-Banner, Formulare und spezielle Pfadimodule.
 - **Gruppenseiten:** Einheitsleitende haben Zugang zu ihrer Gruppenseite, welche speziell auf ihre Gruppe zugeschnitten ist.
 - **Veranstaltungsmanagement:** Erfasse Samstagnachmittagsevents, die auf den Gruppenseiten dargestellt werden.
-- **Sicheres Login:** Der Zugang zum Editorbereich wird durch die OAuth-Funktion der MiData ermöglicht.
+- **MiData OAuth Login:** Der Zugang zum Editorbereich wird durch die OAuth-Funktion der MiData ermöglicht.
 
 ## Development
 
@@ -41,3 +41,13 @@ Das Login zum Editorenbereich unter ```http://localhost:8080/dashboard``` funkti
 |-------------------|--------------------|
 | E-Mail            | diff@gloggi.ch     |
 | Passwort          | Diff@Lagom1234     |
+
+| Poweruser         |                      |
+|-------------------|----------------------|
+| E-Mail            | satoshi@gloggi.ch    |
+| Passwort          | Satoshi@Lagom1234    |
+
+Um den Testaccount des Powerusers zu nutzen, ist ein Login mit der 2-Faktor-Authentifizierung (2FA) erforderlich. Scanne dazu den bereitgestellten QR-Code mit einer Authenticator-App deiner Wahl.
+
+<img src="https://github.com/gloggi/abteilungs-homepage/blob/master/satoshi_2FA.jpg?raw=true" height="200px" width="200px" />
+
