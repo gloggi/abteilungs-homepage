@@ -2,20 +2,18 @@
 	<div class="bg-gray-50 rounded-lg p-5 flex items-center mb-2">
 		<h2 class="font-extrabold text-4xl">{{ name }}</h2>
 	</div>
-	<div
-		:class="`flex ${itemsSelected ? 'justify-between' : 'justify-end'} mb-2`">
-		<button
-			v-if="itemsSelected"
-			@click="deleteItems"
-			class="bg-white p-1 rounded-l-lg">
-			<font-awesome-icon :icon="icons.faTrash" class="h-6 w-6 text-gray-500" />
-		</button>
-		<button class="bg-white p-1" v-if="midataSync" @click="syncEntity">
-			<MiDataSync class="h-6 w-6" />
-		</button>
-		<button class="rounded-r-lg bg-white p-1" @click="createEntity">
-			<font-awesome-icon :icon="icons.faPlus" class="h-6 w-6 text-gray-500" />
-		</button>
+	<div :class="`flex justify-between mb-2`">
+		<ActionButton v-if="itemsSelected" @click="deleteItems">
+			<font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
+		</ActionButton>
+		<div class="w-full flex justify-end space-x-2">
+			<ActionButton v-if="midataSync" @click="syncEntity">
+				<MiDataSync class="h-6 w-6" />
+			</ActionButton>
+			<ActionButton @click="createEntity">
+				<font-awesome-icon :icon="icons.faPlus" class="h-6 w-6" />
+			</ActionButton>
+		</div>
 	</div>
 	<EntityTable
 		:key="tableKey"
@@ -29,6 +27,7 @@
 import EntityTable from "@/components/admin/EntityTable.vue";
 import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import MiDataSync from "@/icons/MidataSync.vue";
+import ActionButton from "./ActionButton.vue";
 export default {
 	props: {
 		name: String,
@@ -41,7 +40,7 @@ export default {
 			default: false,
 		},
 	},
-	components: { EntityTable, MiDataSync },
+	components: { EntityTable, MiDataSync, ActionButton },
 	data() {
 		return {
 			content: undefined,

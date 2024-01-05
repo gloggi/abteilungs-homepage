@@ -20,16 +20,20 @@
 					type="text"
 					v-model="content.name"
 					:errors="errors.name" />
-				<TextInput
-					label="Latitude"
-					type="number"
-					v-model="content.lat"
-					:errors="errors.lat" />
-				<TextInput
-					label="Longitude"
-					type="number"
-					v-model="content.long"
-					:errors="errors.long" />
+				<div class="flex space-x-2 w-full">
+					<TextInput
+						class="w-full"
+						label="Latitude (DD)"
+						type="number"
+						v-model="content.lat"
+						:errors="errors.lat" />
+					<TextInput
+						class="w-full"
+						label="Longitude (DD)"
+						type="number"
+						v-model="content.long"
+						:errors="errors.long" />
+				</div>
 				<TextInput
 					label="Swiss Coordinates (LV95)"
 					type="text"
@@ -51,7 +55,8 @@ import {
 	faTrash,
 	faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { project } from "swissgrid";
+import { project, unproject } from "swissgrid";
+import { parse } from "date-fns";
 export default {
 	components: {
 		Card,
@@ -88,7 +93,16 @@ export default {
 				);
 			}
 		},
-		lv95: function () {},
+		lv95: function (newVal, oldVal) {
+			if (oldVal && oldVal != newVal && this.content.lat && this.content.long) {
+				let [x, y] = this.lv95.split("/");
+				x = x.replace(/\s/g, "");
+				y = y.replace(/\s/g, "");
+				const [long, lat] = unproject([parseFloat(x), parseFloat(y)]);
+				this.content.lat = lat;
+				this.content.long = long;
+			}
+		},
 	},
 	methods: {
 		async getLocation() {

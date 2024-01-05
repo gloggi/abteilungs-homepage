@@ -26,7 +26,7 @@
 					<template v-for="group in groups" :key="group.id">
 						<div
 							v-if="group.section.id === section.id && !group.parentId"
-							@click="currentGroup = group"
+							@click="selectGroup(group)"
 							class="relative cursor-pointer rounded-full aspect-square w-[100px] md:w-[150px] flex justify-center items-center"
 							:style="`background-color: ${group.color}`">
 							<div
@@ -47,7 +47,7 @@
 	</ContentWrapper>
 	<div
 		v-if="currentGroup"
-		@click.self="currentGroup = undefined"
+		@click.self="selectGroup(undefined)"
 		class="fixed inset-0 z-30 bg-black bg-opacity-80 h-screen w-screen flex justify-center items-center py-10"
 		style="margin-top: 0">
 		<div class="w-1/2 h-full bg-white">
@@ -160,10 +160,26 @@ export default {
 				return "Mädchen";
 			}
 		},
+		selectGroup(group) {
+			if (!group) {
+				this.currentGroup = undefined;
+				history.pushState({}, null, this.$route.path);
+				return;
+			}
+			this.currentGroup = group;
+			history.pushState({}, null, `${this.$route.path}#${group.id}`);
+		},
+		checkHash() {
+			if (this.$route.hash) {
+				const id = this.$route.hash.split("#")[1];
+				this.currentGroup = this.groups.find((g) => g.id === parseInt(id));
+			}
+		},
 	},
 	async created() {
 		await this.getSections();
 		await this.getGroups();
+		this.checkHash();
 	},
 	components: { ContentWrapper },
 };

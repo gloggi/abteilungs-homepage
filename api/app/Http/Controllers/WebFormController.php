@@ -31,7 +31,6 @@ class WebFormController extends Controller
             }
         }
 
-        error_log(json_encode($matchedFields));
         Mail::to($form->email)->send(new WebForm($form->subject,$matchedFields));
 
         return response()->json(["message"=>"Sent!"], 201);

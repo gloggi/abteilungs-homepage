@@ -35,6 +35,9 @@
 					<li v-for="link in footerLinks" :key="link.id">
 						<a :href="link.url" target="_blank">{{ link.title }}</a>
 					</li>
+					<li>
+						<router-link :to="{ name: 'Login' }">Login</router-link>
+					</li>
 				</ul>
 			</div>
 			<div>

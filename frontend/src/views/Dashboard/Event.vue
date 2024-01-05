@@ -70,6 +70,7 @@ import {
 import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import MultipleSelect from "../../components/admin/MultipleSelect.vue";
+import { isBefore, format, addHours, subHours } from "date-fns";
 export default {
 	components: {
 		Card,
@@ -82,7 +83,9 @@ export default {
 	},
 	data() {
 		return {
-			content: {},
+			content: {
+				groups: [],
+			},
 			errors: {},
 			icons: {
 				faArrowsRotate,
@@ -93,6 +96,22 @@ export default {
 			locations: [],
 			groups: [],
 		};
+	},
+	watch: {
+		"content.startTime": function (val) {
+			if (
+				!this.content.endTime ||
+				!isBefore(
+					new Date(this.content.startTime),
+					new Date(this.content.endTime),
+				)
+			) {
+				let endTime = new Date(this.content.startTime);
+				endTime = addHours(endTime, 3);
+				endTime = format(endTime, "yyyy-MM-dd'T'HH:mm");
+				this.content.endTime = endTime;
+			}
+		},
 	},
 	methods: {
 		async getEvent() {
@@ -153,9 +172,6 @@ export default {
 		},
 		handleSelectEndLocation(event) {
 			this.content.endLocationId = event;
-		},
-		handleSelectGroup(event) {
-			this.content.groupId = event;
 		},
 		handleErrors(errors) {
 			this.errors = errors;

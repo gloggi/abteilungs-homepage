@@ -85,7 +85,17 @@ export default {
 	},
 	methods: {
 		isImage() {
-			const imageTypes = ["png", "jpeg", "gif", "svg"];
+			const imageTypes = [
+				"png",
+				"jpeg",
+				"jpg",
+				"gif",
+				"svg",
+				"bmp",
+				"webp",
+				"tiff",
+				"ico",
+			];
 			return imageTypes.includes(this.selectedFile.extension);
 		},
 		async getMedia() {

@@ -6,14 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
+    
     public function index(Request $request)
     {
+        $user = Auth::user();
+        $groups = Group::with(['file', 'section','predecessors', 'successors', 'parent', 'headerImages', 'files']);
+        if ($request->has('dashboard')&&$user->hasRole('unitleader')) {
+            $groups = $groups->where('midata_id', $user->midata_group_id);
+        } 
         $perPage = $request->input('per_page', 10);
-        $groups = Group::with(['file', 'section','predecessors', 'successors', 'parent', 'headerImages', 'files'])
-                       ->paginate($perPage);
+        $groups = $groups->paginate($perPage);
 
         return response()->json($groups);
     }

@@ -74,7 +74,6 @@ class FileController extends Controller
 
             $imagick->readImage($file . '[0]');
             if ($imagick->getImageWidth() > $imagick->getImageHeight()) {
-                error_log("true");
                 $imagick->rotateImage(new ImagickPixel('none'), -90);
             }
 

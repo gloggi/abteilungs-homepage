@@ -55,7 +55,7 @@ Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::get('/groups', [GroupController::class, 'index']);
 Route::get('/groups/{id}', [GroupController::class, 'show']);
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function () {
     Route::post('/groups', [GroupController::class, 'store']);
     Route::put('/groups/{id}', [GroupController::class, 'update']);
     Route::delete('/groups/{id}', [GroupController::class, 'destroy']);
@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
 });
 
 Route::get('/files', [FileController::class, 'index']);
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function () {
     Route::post('/files', [FileController::class, 'store']);
     Route::get('/files/{id}', [FileController::class, 'show']);
     Route::put('/files/{id}', [FileController::class, 'update']);
@@ -114,7 +114,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
 
 Route::get('/locations', [LocationController::class, 'index']);
 Route::get('/locations/{id}', [LocationController::class, 'show']);
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function () {
     Route::post('/locations', [LocationController::class, 'store']);
     Route::put('/locations/{id}', [LocationController::class, 'update']);
     Route::delete('/locations/{id}', [LocationController::class, 'destroy']);
@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
 
 Route::get('/events', [EventController::class, 'index']);
 Route::get('/events/{id}', [EventController::class, 'show']);
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function () {
     Route::post('/events', [EventController::class, 'store']);
     Route::put('/events/{id}', [EventController::class, 'update']);
     Route::delete('/events/{id}', [EventController::class, 'destroy']);

@@ -46,7 +46,6 @@ class SectionController extends Controller
         }
 
         $section->update($request->validated());
-        error_log(json_encode(array_column($request->input('files', []), 'id')));
         $section->files()->sync(array_column($request->input('files', []), 'id'));
 
         return response()->json($section);

@@ -4,29 +4,20 @@
 	</Card>
 	<div class="flex justify-between mb-2">
 		<router-link :to="{ name: backLinkTo }">
-			<button
-				class="rounded-l-lg bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-gray-400 text-gray-400 hover:text-white">
+			<ActionButton>
 				<font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6" />
-			</button>
+			</ActionButton>
 		</router-link>
-		<div>
-			<button
-				v-if="dublicate"
-				@click="dublicateItem"
-				class="bg-white p-1 border-r border-l border-gray-200 transition-colors duration-300 ease-in-out hover:bg-gray-400 text-gray-400 hover:text-white">
+		<div class="flex space-x-2">
+			<ActionButton v-if="dublicate" @click="dublicateItem">
 				<font-awesome-icon :icon="icons.faCopy" class="h-6 w-6" />
-			</button>
-			<button
-				v-if="!noDelete"
-				@click="deleteItem"
-				class="bg-white p-1 border-r border-l border-gray-200 transition-colors duration-300 ease-in-out hover:bg-gray-400 text-gray-400 hover:text-white">
+			</ActionButton>
+			<ActionButton v-if="!noDelete" @click="deleteItem">
 				<font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
-			</button>
-			<button
-				class="rounded-r-lg bg-white p-1 transition-colors duration-300 ease-in-out hover:bg-gray-400 text-gray-400 hover:text-white"
-				@click="updateItem">
+			</ActionButton>
+			<ActionButton @click="updateItem">
 				<font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
-			</button>
+			</ActionButton>
 		</div>
 	</div>
 </template>
@@ -39,9 +30,11 @@ import {
 	faPlus,
 	faCopy,
 } from "@fortawesome/free-solid-svg-icons";
+import ActionButton from "./ActionButton.vue";
 export default {
 	components: {
 		Card,
+		ActionButton,
 	},
 	props: ["title", "content", "backLinkTo", "entity", "noDelete", "dublicate"],
 	emits: ["errors", "clearErrors"],

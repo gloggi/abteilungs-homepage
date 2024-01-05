@@ -4,7 +4,6 @@
 			<HeadingOne class="text-primary">{{ item.form.name }}</HeadingOne>
 
 			<div class="flex flex-col space-y-5 pl-4">
-				<input type="text" tabindex="-1" class="absolute -left-3/4" />
 				<div
 					v-for="field in item.form.fields"
 					:key="field.id"

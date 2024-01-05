@@ -1,7 +1,7 @@
 <template>
 	<div
 		@click="dMSb = !dMSb"
-		:class="`flex items-center ${
+		:class="`flex items-center h-full ${
 			dMSb ? 'hidden' : 'md:hidden'
 		} bg-gray-900 text-white w-3`">
 		<svg
@@ -18,7 +18,7 @@
 		</svg>
 	</div>
 	<div
-		:class="`bg-gray-900 w-64 md:flex flex-col md:rounded-r-lg ${
+		:class="`bg-gray-900 w-64 md:flex flex-col md:rounded-r-lg h-full ${
 			dMSb ? 'flex' : 'hidden'
 		}`">
 		<router-link to="/dashboard">
@@ -56,7 +56,10 @@
 		<SidebarItem to="/dashboard/events" :icon="icons.faCalendarDays">
 			Events
 		</SidebarItem>
-		<SidebarItem to="/dashboard/camps" :icon="icons.faCampground">
+		<SidebarItem
+			v-if="isAdmin"
+			to="/dashboard/camps"
+			:icon="icons.faCampground">
 			Camps
 		</SidebarItem>
 		<SidebarItem to="/dashboard/locations" :icon="icons.faLocationDot">
@@ -77,6 +80,11 @@
 		<SidebarItem v-if="isAdmin" to="/dashboard/settings" :icon="icons.faGear">
 			Settings
 		</SidebarItem>
+		<div class="h-full flex flex-col justify-end pb-5">
+			<SidebarItem @click="logout" class="" to="" :icon="icons.faDoorOpen">
+				Logout
+			</SidebarItem>
+		</div>
 	</div>
 	<div
 		@click="dMSb = !dMSb"
@@ -112,6 +120,7 @@ import {
 	faCalendarDays,
 	faAddressCard,
 	faCampground,
+	faDoorOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 export default {
@@ -132,8 +141,15 @@ export default {
 				faCalendarDays,
 				faAddressCard,
 				faCampground,
+				faDoorOpen,
 			},
 		};
+	},
+	methods: {
+		logout() {
+			localStorage.removeItem("token");
+			this.$router.push("/");
+		},
 	},
 };
 </script>
