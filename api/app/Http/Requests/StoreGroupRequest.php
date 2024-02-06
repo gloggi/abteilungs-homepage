@@ -12,7 +12,7 @@ class StoreGroupRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'color' => 'required|string|max:255',
-            'midata_id'=> 'nullable|integer',
+            'midata_id' => 'nullable|integer',
             'gender' => 'nullable|integer',
             'header_images' => 'array|nullable',
             'files' => 'array|nullable',

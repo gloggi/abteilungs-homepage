@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Camp;
-use App\Models\Setting;
 use App\Http\Requests\StoreCampRequest;
 use App\Http\Requests\UpdateCampRequest;
+use App\Models\Camp;
+use App\Models\Setting;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class CampController extends Controller

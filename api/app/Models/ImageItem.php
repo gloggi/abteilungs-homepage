@@ -13,9 +13,11 @@ class ImageItem extends Model
 
     protected $appends = ['type'];
 
-    public function getTypeAttribute(){
+    public function getTypeAttribute()
+    {
         return "imageItem";
     }
+
     public function page()
     {
         return $this->belongsTo(Page::class);
@@ -24,7 +26,7 @@ class ImageItem extends Model
     public function files()
     {
         return $this->belongsToMany(File::class, 'image_item_file');
-        
+
     }
 
 }

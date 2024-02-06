@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Section;
 use App\Http\Requests\StoreSectionRequest;
 use App\Http\Requests\UpdateSectionRequest;
+use App\Models\Section;
+use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
@@ -13,7 +13,7 @@ class SectionController extends Controller
     {
         $perPage = $request->input('per_page', 10);
         $sections = Section::with(['file', 'files'])
-                           ->paginate($perPage);
+            ->paginate($perPage);
 
         return response()->json($sections);
     }

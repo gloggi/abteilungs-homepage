@@ -5,7 +5,7 @@ namespace App\Providers;
 
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Two\AbstractProvider;
-use \Laravel\Socialite\Two\User;
+use Laravel\Socialite\Two\User;
 
 class MiDataProvider extends AbstractProvider implements Provider
 {
@@ -13,7 +13,7 @@ class MiDataProvider extends AbstractProvider implements Provider
 
     protected $scopeSeparator = ' ';
 
-   
+
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase('https://pbs.puzzle.ch/oauth/authorize', $state);
@@ -30,7 +30,7 @@ class MiDataProvider extends AbstractProvider implements Provider
 
         $response = $this->getHttpClient()->get('https://pbs.puzzle.ch/oauth/profile', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer '.$token,
                 'X-Scope' => 'with_roles',
             ],
         ]);
@@ -40,14 +40,13 @@ class MiDataProvider extends AbstractProvider implements Provider
     protected function mapUserToObject(array $user)
     {
         return (new User)->setRaw($user)->map([
-        'id' => $user['id'], 
-        'nickname' => $user['nickname'],
-        'firstname' => $user['first_name'],
-        'lastname' => $user['last_name'],
-        'email' => $user['email'],
-    ]);
+            'id' => $user['id'],
+            'nickname' => $user['nickname'],
+            'firstname' => $user['first_name'],
+            'lastname' => $user['last_name'],
+            'email' => $user['email'],
+        ]);
     }
-
 
 
 }

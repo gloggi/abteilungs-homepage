@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\FooterLink;
 use App\Http\Requests\StoreFooterLinkRequest;
 use App\Http\Requests\UpdateFooterLinkRequest;
+use App\Models\FooterLink;
+use Illuminate\Http\Request;
 
 class FooterLinkController extends Controller
 {

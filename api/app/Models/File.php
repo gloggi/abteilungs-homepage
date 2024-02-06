@@ -12,8 +12,9 @@ class File extends Model
     protected $fillable = [
         'name',
         'path',
-        
+
     ];
+
     public function groups()
     {
         return $this->hasMany(Group::class);

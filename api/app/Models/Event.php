@@ -9,7 +9,7 @@ class Event extends Model
 {
 
     protected $fillable = [
-        'title','start_time', 'end_time', 'start_location_id', 'end_location_id', 'description', 'take_with_you'
+        'title', 'start_time', 'end_time', 'start_location_id', 'end_location_id', 'description', 'take_with_you'
     ];
 
 
@@ -38,7 +38,7 @@ class Event extends Model
         return $this->belongsTo(Location::class, 'start_location_id');
     }
 
-  
+
     public function endLocation()
     {
         return $this->belongsTo(Location::class, 'end_location_id');

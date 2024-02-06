@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\Event;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -19,24 +19,24 @@ class EventController extends Controller
 
         $query = Event::with(['startLocation', 'endLocation', 'groups']);
         if ($groupId) {
-            $query->whereHas('groups', function ($query) use ($groupId) {
+            $query->whereHas('groups', function($query) use ($groupId) {
                 $query->where('groups.id', $groupId);
             });
         }
-        if($request->has('dashboard')){
+        if ($request->has('dashboard')) {
             $user = Auth::user();
             $userMidataId = $user->midata_group_id;
-            $query->whereHas('groups', function ($query) use ($userMidataId) {
+            $query->whereHas('groups', function($query) use ($userMidataId) {
                 $query->where('groups.midata_id', $userMidataId);
             });
         }
         $events = $query->get();
 
-        $upcomingEvents = $events->filter(function ($event) use ($currentDateTime) {
+        $upcomingEvents = $events->filter(function($event) use ($currentDateTime) {
             return $event->start_time >= $currentDateTime;
         })->sortBy('start_time');
 
-        $pastEvents = $events->reject(function ($event) use ($currentDateTime) {
+        $pastEvents = $events->reject(function($event) use ($currentDateTime) {
             return $event->start_time >= $currentDateTime;
         })->sortByDesc('start_time');
 

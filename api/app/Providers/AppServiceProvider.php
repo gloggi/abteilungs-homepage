@@ -19,14 +19,14 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot() : void
-{
-    Socialite::extend('midata', function ($app) {
-        $config = $app['config']['services.midata'];
-        return new MiDataProvider(
-            $app['request'], $config['client_id'],
-            $config['client_secret'], $config['redirect']
-        );
-    });
-}
+    public function boot(): void
+    {
+        Socialite::extend('midata', function($app) {
+            $config = $app['config']['services.midata'];
+            return new MiDataProvider(
+                $app['request'], $config['client_id'],
+                $config['client_secret'], $config['redirect']
+            );
+        });
+    }
 }

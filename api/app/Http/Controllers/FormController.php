@@ -1,13 +1,14 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFormRequest;
-use App\Models\OptionField;
-use Illuminate\Http\Request;
 use App\Models\Form;
-use App\Models\TextField;
-use App\Models\TextareaField;
+use App\Models\OptionField;
 use App\Models\SelectField;
+use App\Models\TextareaField;
+use App\Models\TextField;
+use Illuminate\Http\Request;
 
 class FormController extends Controller
 {
@@ -18,6 +19,7 @@ class FormController extends Controller
         $forms = Form::paginate($perPage);
         return response()->json($forms);
     }
+
     public function store(StoreFormRequest $request)
     {
 
@@ -28,9 +30,9 @@ class FormController extends Controller
         $this->createFieldsFromValidatedData($form, $validatedData);
 
         return response()->json([
-                'id' => $form->id,
-                'name' => $form->name,
-                'fields' => $form->getAllFields(),
+            'id' => $form->id,
+            'name' => $form->name,
+            'fields' => $form->getAllFields(),
         ], 201);
     }
 
@@ -50,9 +52,9 @@ class FormController extends Controller
         foreach ($currentFields as $currentField) {
             $found = false;
             foreach ($validatedData['fields'] as $fieldData) {
-                if(!isset($fieldData['id']) || ($currentField->id == $fieldData['id'] && $currentField->type == $fieldData['type'])) {
+                if (!isset($fieldData['id']) || ($currentField->id == $fieldData['id'] && $currentField->type == $fieldData['type'])) {
                     $found = true;
-                    
+
                     break;
                 }
             }
@@ -63,19 +65,19 @@ class FormController extends Controller
         $form = Form::find($id);
 
         return response()->json([
-            
-                'id' => $form->id,
-                'name' => $form->name,
-                'fields' => $form->getAllFields(),
+
+            'id' => $form->id,
+            'name' => $form->name,
+            'fields' => $form->getAllFields(),
         ], 200);
     }
 
     public function show($id)
     {
         $form = Form::find($id);
-        return response()->json(array_merge($form->toArray(),[
+        return response()->json(array_merge($form->toArray(), [
             'fields' => $form->getAllFields(),
-    ]), 200);
+        ]), 200);
 
     }
 
@@ -91,23 +93,25 @@ class FormController extends Controller
 
         return response()->json(null, 204);
     }
-    private function createFieldsFromValidatedData(Form $form, $validatedData){
-        if( !isset($validatedData['fields'])) {
+
+    private function createFieldsFromValidatedData(Form $form, $validatedData)
+    {
+        if (!isset($validatedData['fields'])) {
             return;
         }
         $validatedData['fields'] = collect($validatedData['fields'])->sortBy('sort')->values()->all();
-        $sort_counter =0;
+        $sort_counter = 0;
         foreach ($validatedData['fields'] as $fieldData) {
             switch ($fieldData['type']) {
                 case 'textField':
                     TextField::updateOrCreate(
                         ['id' => $fieldData['id'] ?? null],
                         [
-                            'label' => $fieldData['label']??'',
+                            'label' => $fieldData['label'] ?? '',
                             'form_id' => $form->id,
-                            'required' => $fieldData['required']??false,
+                            'required' => $fieldData['required'] ?? false,
                             'input_type' => $fieldData['input_type'],
-                            'sort' =>  $sort_counter
+                            'sort' => $sort_counter
                         ]
                     );
                     break;
@@ -115,10 +119,10 @@ class FormController extends Controller
                     TextareaField::updateOrCreate(
                         ['id' => $fieldData['id'] ?? null],
                         [
-                            'label' => $fieldData['label']??'',
+                            'label' => $fieldData['label'] ?? '',
                             'form_id' => $form->id,
-                            'required' => $fieldData['required']??false,
-                            'sort' =>  $sort_counter
+                            'required' => $fieldData['required'] ?? false,
+                            'sort' => $sort_counter
                         ]
                     );
                     break;
@@ -126,26 +130,26 @@ class FormController extends Controller
                     $selectField = SelectField::updateOrCreate(
                         ['id' => $fieldData['id'] ?? null],
                         [
-                            'label' => $fieldData['label']??'',
+                            'label' => $fieldData['label'] ?? '',
                             'form_id' => $form->id,
-                            'required' => $fieldData['required']??false,
-                            'sort' =>  $sort_counter
+                            'required' => $fieldData['required'] ?? false,
+                            'sort' => $sort_counter
                         ]
                     );
-                    if(isset($fieldData['option_fields'])){
-                        
-                       
-                    foreach($fieldData['option_fields'] as $option){
-                       
-                        OptionField::updateOrCreate(
-                            ['id' => $option['id'] ?? null],
-                            [
-                                'name' => $option['name'],
-                                'select_field_id' => $selectField->id
-                            ]);
+                    if (isset($fieldData['option_fields'])) {
 
+
+                        foreach ($fieldData['option_fields'] as $option) {
+
+                            OptionField::updateOrCreate(
+                                ['id' => $option['id'] ?? null],
+                                [
+                                    'name' => $option['name'],
+                                    'select_field_id' => $selectField->id
+                                ]);
+
+                        }
                     }
-                } 
                     break;
                 default:
                     throw new \InvalidArgumentException("Unsupported field type: {$fieldData['type']}");

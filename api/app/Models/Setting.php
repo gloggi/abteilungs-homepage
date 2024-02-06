@@ -20,8 +20,6 @@ class Setting extends Model
         'midata_parent_id'
     ];
 
- 
-
 
     public function divisionLogo()
     {

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
 use App\Models\Contact;
+use Illuminate\Http\Request;
 
 
 class ContactController extends Controller
@@ -13,7 +13,7 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         $contacts = Contact::with('file')->orderBy('sort', 'asc')
-                           ->paginate($request->input('per_page', 10));
+            ->paginate($request->input('per_page', 10));
 
         return response()->json($contacts);
     }

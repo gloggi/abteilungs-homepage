@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invite extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'email', 'token',
     ];

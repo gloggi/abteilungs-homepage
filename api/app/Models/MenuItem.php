@@ -18,7 +18,8 @@ class MenuItem extends Model
     ];
     protected $appends = ['type'];
 
-    public function getTypeAttribute(){
+    public function getTypeAttribute()
+    {
         return "menuItem";
     }
 

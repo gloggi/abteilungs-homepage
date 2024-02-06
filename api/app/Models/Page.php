@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -21,6 +20,7 @@ class Page extends Model
 
         return $this->hasMany(TextItem::class);
     }
+
     public function imageItems()
     {
 
@@ -74,8 +74,7 @@ class Page extends Model
         $items = $items->concat($filesItems);
         $items = $items->concat($genericItems);
 
-        $items = $items->sortBy('sort')->values()->all();
-        ;
+        $items = $items->sortBy('sort')->values()->all();;
 
         return $items;
     }

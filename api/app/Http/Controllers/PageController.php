@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 
@@ -6,11 +7,11 @@ use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Models\FilesItem;
 use App\Models\FormItem;
-use App\Models\ImageItem;
-use App\Models\TextItem;
 use App\Models\GenericItem;
-use Illuminate\Http\Request;
+use App\Models\ImageItem;
 use App\Models\Page;
+use App\Models\TextItem;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
@@ -19,14 +20,15 @@ class PageController extends Controller
     {
         $perPage = $request->input('per_page', 10);
         $pages = Page::with(['files'])
-                       ->paginate($perPage);
+            ->paginate($perPage);
 
         return response()->json($pages);
     }
+
     public function store(StorePageRequest $request)
     {
         $validatedData = $request->validated();
-       
+
         $page = Page::create($validatedData);
 
         $page->files()->sync(array_column($request->input('files', []), 'id'));
@@ -110,6 +112,7 @@ class PageController extends Controller
 
         return response()->json(null, 204);
     }
+
     private function createPageItemsFromValidatedData(Page $page, $validatedData)
     {
         if (!isset($validatedData['page_items'])) {
@@ -125,7 +128,7 @@ class PageController extends Controller
                         [
                             'title' => $pageItemData['title'] ?? '',
                             'body' => $pageItemData['body'] ?? '',
-                            'show_fleur_de_lis'=>$pageItemData['show_fleur_de_lis'] ?? false,
+                            'show_fleur_de_lis' => $pageItemData['show_fleur_de_lis'] ?? false,
                             'page_id' => $page->id,
                             'sort' => $sort_counter
                         ]

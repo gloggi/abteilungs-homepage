@@ -9,15 +9,17 @@ class TextareaField extends Model
 {
     use TransformTrait;
 
-    protected $fillable = ['form_id','label', 'sort', 'required'];
+    protected $fillable = ['form_id', 'label', 'sort', 'required'];
 
     protected $appends = ['type', 'key'];
 
-    public function getKeyAttribute(){
+    public function getKeyAttribute()
+    {
         return $this->toCamelCase($this->label);
     }
 
-    public function getTypeAttribute(){
+    public function getTypeAttribute()
+    {
         return "textareaField";
     }
 

@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use App\Mail\InviteCreated;
-use Illuminate\Http\Request;
 use App\Models\Invite;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class InviteController extends Controller
@@ -14,10 +14,9 @@ class InviteController extends Controller
     {
         do {
             $token = Str::random(16);
-        } 
-        while (Invite::where('token', $token)->first());
-     
-       
+        } while (Invite::where('token', $token)->first());
+
+
         $invite = Invite::create([
             'email' => $request->get('email'),
             'token' => $token

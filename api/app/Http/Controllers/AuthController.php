@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Invite;
 use App\Models\Setting;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -73,7 +72,7 @@ class AuthController extends Controller
     /**
      * Login The User
      * @param Request $request
-     * 
+     *
      */
     public function loginUser(Request $request)
     {
@@ -127,7 +126,7 @@ class AuthController extends Controller
         $tokenResponse = Socialite::driver('midata')->getAccessTokenResponse($request->code);
         $accessToken = $tokenResponse['access_token'];
         $midataUser = Socialite::driver('midata')->userFromToken($accessToken);
-        
+
         $user = User::where('midata_id', $midataUser->id)->first();
         $setting = Setting::find(1);
         $groupIds = Group::pluck('midata_id')->toArray();
@@ -142,7 +141,7 @@ class AuthController extends Controller
                 'password' => '',
                 'midata_id' => $midataUser->attributes['id']
             ]);
-            if ($midata_group_id = $this->hasRole($midataUser->user, 'PowerUser',[$setting->midata_parent_id])) {
+            if ($midata_group_id = $this->hasRole($midataUser->user, 'PowerUser', [$setting->midata_parent_id])) {
                 $user->assignRole('admin');
             } else if ($midata_group_id = $this->hasRole($midataUser->user, 'Abteilungsleiter*in', [$setting->midata_id])) {
                 $user->assignRole('admin');
@@ -151,9 +150,9 @@ class AuthController extends Controller
             }
             $user->midata_group_id = $midata_group_id;
             $user->save();
-            
+
         }
-        
+
         return response()->json([
             'status' => true,
             'message' => 'User Logged In Successfully',
@@ -166,9 +165,9 @@ class AuthController extends Controller
     protected function hasRole($data, $roleName, $groupIds)
     {
         if (isset($data['roles']) && is_array($data['roles'])) {
-            foreach ($data['roles'] as $role) { 
+            foreach ($data['roles'] as $role) {
                 if (isset($role['role_name']) && $role['role_name'] === $roleName && in_array($role['group_id'], $groupIds, true)) {
-                    
+
                     return $role['group_id'];
                 }
             }
