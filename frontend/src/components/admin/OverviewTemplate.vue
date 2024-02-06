@@ -26,7 +26,7 @@
 <script>
 import EntityTable from "@/components/admin/EntityTable.vue";
 import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
-import MiDataSync from "@/icons/MidataSync.vue";
+import MiDataSync from "@/icons/MiDataSync.vue";
 import ActionButton from "./ActionButton.vue";
 export default {
 	props: {
