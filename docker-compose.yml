@@ -20,6 +20,7 @@ services:
       - "8000:80"
     volumes:
       - ./api:/var/www
+      - ./api/public/.htaccess.docker:/var/www/public/.htaccess
 
   mariadb:
     image: mariadb:latest

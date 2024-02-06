@@ -12,6 +12,9 @@ if [[ ! -f .env ]]; then
 fi
 
 php artisan storage:link
+chmod 777 -R storage bootstrap/cache
+
+php artisan db:wait
 
 php artisan migrate
 
