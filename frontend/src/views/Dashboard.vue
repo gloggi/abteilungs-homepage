@@ -7,14 +7,14 @@
 			</div>
 		</div>
 	</div>
-	<SucessMessage />
+	<SuccessMessage />
 </template>
 
 <script>
 import Sidebar from "../components/admin/Sidebar.vue";
-import SucessMessage from "../components/admin/SucessNotification.vue";
+import SuccessMessage from "../components/admin/SuccessNotification.vue";
 export default {
-	components: { Sidebar, SucessMessage },
+	components: { Sidebar, SuccessMessage },
 	computed: {
 		user() {
 			return this.$store.state.user.user;
@@ -25,6 +25,7 @@ export default {
 		await this.$store.dispatch("user/getUser");
 		if (!(this.isAdmin || this.isUnitLeader)) {
 			this.$router.push("/login");
+			this.notifyUser("Deine Rollen erlauben dir den Zugriff nicht. Wende dich an die Abteilungsleitung.", true);
 		}
 	},
 };
