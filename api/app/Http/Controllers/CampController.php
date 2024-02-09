@@ -68,7 +68,8 @@ class CampController extends Controller
         $setting = Setting::find(1);
         $token = $setting->midata_api_key;
         $midataId = $setting->midata_id;
-        $response = Http::get("https://pbs.puzzle.ch/de/groups/{$midataId}/events/camp.json?token={$token}");
+        $midataBaseUrl = config('midata.base_url');
+        $response = Http::get("${midataBaseUrl}/de/groups/{$midataId}/events/camp.json?token={$token}");
         $externalCamps = $response->json();
 
         $eventDatesMap = collect($externalCamps['linked']['event_dates'])->keyBy('id');
