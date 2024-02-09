@@ -1,0 +1,57 @@
+name: CI + CD
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  get-environment-name:
+    name: "Extract environment name"
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.extract.outputs.environment }}
+    steps:
+      - id: extract
+        run: echo "environment=$(echo $GITHUB_REF | sed -e '/^refs\/heads\/deploy-\(.*\)$/!d;s//\1/')" >> $GITHUB_OUTPUT
+      - env:
+          EXTRACTED: ${{ steps.extract.outputs.environment }}
+        run: 'echo "Extracted environment name: $EXTRACTED"'
+
+  deploy:
+    name: "Deploy"
+    if: ${{ github.event_name == 'push' && needs.get-environment-name.outputs.environment }}
+    needs:
+      - get-environment-name
+    environment: ${{ needs.get-environment-name.outputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - run: sudo apt-get update -y && sudo apt-get install -y lftp
+
+      - uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - run: sudo apt-get update -y && sudo apt-get install -y lftp
+
+      - uses: ./.github/actions/deploy
+        with:
+          ssh-username: ${{ secrets.SSH_USERNAME }}
+          ssh-host: ${{ variables.SSH_HOST }}
+          ssh-backend-directory: ${{ variables.SSH_BACKEND_DIRECTORY }}
+          ssh-frontend-directory: ${{ variables.SSH_FRONTEND_DIRECTORY }}
+          app-name: ${{ variables.APP_NAME }}
+          app-key: ${{ secrets.APP_KEY }}
+          api-url: ${{ variables.API_URL }}
+          frontend-url: ${{ variables.FRONTEND_URL }}
+          db-host: ${{ secrets.DB_HOST }}
+          db-database: ${{ secrets.DB_DATABASE }}
+          db-username: ${{ secrets.DB_USERNAME }}
+          db-password: ${{ secrets.DB_PASSWORD }}
+          midata-base-url: ${{ variables.MIDATA_BASE_URL }}
+          midata-client-uid: ${{ variables.MIDATA_CLIENT_UID }}
+          midata-client-secret: ${{ secrets.MIDATA_CLIENT_SECRET }}

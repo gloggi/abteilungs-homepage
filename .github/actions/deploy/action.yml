@@ -1,0 +1,105 @@
+name: Deploy
+description: Deploy the page
+inputs:
+
+  ssh-username:
+    description: 'The SSH username that will be used to log in to the server'
+    required: false
+    default: root
+
+  ssh-host:
+    description: 'The SSH server where to deploy'
+    required: true
+
+  ssh-backend-directory:
+    description: 'The directory on the SSH server where to deploy the backend'
+    required: false
+    default: .
+
+  ssh-frontend-directory:
+    description: 'The directory on the SSH server where to deploy the frontend'
+    required: false
+    default: .
+
+  app-name:
+    description: 'The App Name'
+    required: false
+    default: ''
+
+  app-env:
+    description: 'The environment type that will be deployed'
+    required: false
+    default: production
+
+  app-key:
+    description: 'The application encryption key'
+    required: true
+
+  app-debug:
+    description: 'Whether to activate debug mode on the deployed environment'
+    required: false
+    default: 'false'
+
+  api-url:
+    description: 'The url under which the backend application will be available'
+    required: true
+
+  frontend-url:
+    description: 'The url under which the frontend application will be available'
+    required: true
+
+  db-host:
+    description: 'The URL of the database server'
+    required: false
+    default: localhost
+
+  db-database:
+    description: 'The database name in the database server'
+    required: false
+    default: qualix
+
+  db-username:
+    description: 'The username that will be used to log in to the database'
+    required: true
+
+  db-password:
+    description: 'The password that will be used to log in to the database'
+    required: true
+
+  midata-base-url:
+    description: 'The url of the MiData instance for MiData login'
+    required: false
+    default: 'https://pbs.puzzle.ch'
+
+  midata-client-uid:
+    description: 'The UId of the MiData OAuth application'
+    required: true
+
+  midata-client-secret:
+    description: 'The secret of the MiData OAuth application'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    - run: .github/actions/deploy/deploy.sh
+      shell: bash
+      env:
+        SSH_USERNAME: ${{ inputs.ssh-username }}
+        SSH_HOST: ${{ inputs.ssh-host }}
+        SSH_BACKEND_DIRECTORY: ${{ inputs.ssh-backend-directory }}
+        SSH_FRONTEND_DIRECTORY: ${{ inputs.ssh-frontend-directory }}
+        APP_NAME: ${{ inputs.app-name }}
+        APP_ENV: ${{ inputs.app-env }}
+        APP_KEY: ${{ inputs.app-key }}
+        APP_DEBUG: ${{ inputs.app-debug }}
+        API_URL: ${{ inputs.api-url }}
+        FRONTEND_URL: ${{ inputs.frontend-url }}
+        DB_HOST: ${{ inputs.db-host }}
+        DB_DATABASE: ${{ inputs.db-database }}
+        DB_USERNAME: ${{ inputs.db-username }}
+        DB_PASSWORD: ${{ inputs.db-password }}
+        MIDATA_BASE_URL: ${{ inputs.midata-base-url }}
+        MIDATA_CLIENT_UID: ${{ inputs.midata-client-uid }}
+        MIDATA_CLIENT_SECRET: ${{ inputs.midata-client-secret }}
