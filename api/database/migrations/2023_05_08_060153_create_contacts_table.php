@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("email")->nullable();
             $table->string("role")->nullable();
             $table->unsignedBigInteger('file_id')->nullable();
-            $table->foreign('file_id')->references('id')->on('files');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
             $table->float('sort')->default(0.0);
             $table->timestamps();
         });

@@ -230,7 +230,7 @@ export default {
 			this.editor
 				.chain()
 				.focus()
-				.setImage({ src: this.backendURL + selected[0].path })
+				.setImage({ src: this.backendURL + '/' + selected[0].path })
 				.run();
 		},
 	},

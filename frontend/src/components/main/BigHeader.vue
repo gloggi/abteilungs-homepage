@@ -6,7 +6,7 @@
 				class="flex flex-col justify-between items-center w-full h-2/3 text-center">
 				<img
 					class="drop-shadow-xl max-h-[50vh] md:max-h-full"
-					:src="`${backendURL}${settings?.divisionLogo?.path}`" />
+					:src="`${backendURL}/${settings?.divisionLogo?.path}`" />
 				<h1
 					class="text-5xl md:text-8xl font-semibold text-white text-heading-1">
 					{{ settings.siteTitle }}
@@ -18,12 +18,12 @@
 				ref="currentImageRef"
 				v-if="currentImage"
 				class="h-screen w-screen object-cover absolute"
-				:src="`${backendURL}${currentImage}`" />
+				:src="`${backendURL}/${currentImage}`" />
 			<img
 				ref="nextImageRef"
 				v-if="nextImage"
 				class="h-screen w-screen object-cover absolute"
-				:src="`${backendURL}${nextImage}`" />
+				:src="`${backendURL}/${nextImage}`" />
 		</div>
 	</div>
 </template>

@@ -10,7 +10,7 @@
 			@click="openFile(file)">
 			<div class="bg-gray-50 rounded-lg w-full">
 				<img
-					:src="`${backendURL}${file.thumbnail}`"
+					:src="`${backendURL}/${file.thumbnail}`"
 					class="w-full rounded-lg object-contain p-1 roundd-lg aspect-square" />
 			</div>
 		</button>
@@ -20,12 +20,12 @@
 			<div class="flex justify-center items-center w-2/3">
 				<img
 					v-if="isImage()"
-					:src="`${backendURL}${selectedFile.path}`"
+					:src="`${backendURL}/${selectedFile.path}`"
 					class="w-auto"
 					style="max-height: 90vh" />
 				<object
 					v-if="selectedFile.extension == 'pdf'"
-					:data="`${backendURL}${selectedFile.path}`"
+					:data="`${backendURL}/${selectedFile.path}`"
 					height="550px"
 					type="application/pdf"
 					style="aspect-ratio: 1 / 1.42" />
@@ -47,10 +47,10 @@
 					<TextInput label="Name" v-model="selectedFile.name" />
 					<TextInput label="Category" v-model="selectedFile.category" />
 					<CopyField label="Extension" :value="selectedFile.extension" />
-					<CopyField label="URL" :value="`${backendURL}${selectedFile.path}`" />
+					<CopyField label="URL" :value="`${backendURL}/${selectedFile.path}`" />
 					<CopyField
 						label="Thumbnail URL"
-						:value="`${backendURL}${selectedFile.thumbnail}`" />
+						:value="`${backendURL}/${selectedFile.thumbnail}`" />
 				</div>
 				<div class="flex justify-between pt-5">
 					<div class="font-cursive text-gray-400">

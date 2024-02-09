@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('from_age')->nullable();
             $table->integer('to_age')->nullable();
             $table->unsignedBigInteger('file_id')->nullable();
-            $table->foreign('file_id')->references('id')->on('files');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
             $table->text('description')->nullable();
 
             $table->timestamps();

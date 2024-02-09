@@ -20,11 +20,11 @@ return new class extends Migration
             $table->integer('gender')->nullable();
             $table->integer('midata_id')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('groups');
+            $table->foreign('parent_id')->references('id')->on('groups')->onDelete('set null');
             $table->unsignedBigInteger('section_id')->nullable();
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('set null');
             $table->unsignedBigInteger('file_id')->nullable();
-            $table->foreign('file_id')->references('id')->on('files');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
             $table->text('description')->nullable();
             $table->timestamps();
         });

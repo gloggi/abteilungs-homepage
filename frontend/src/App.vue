@@ -48,7 +48,7 @@ export default {
 			if (this.settings.websiteIcon?.path) {
 				var link = document.createElement("link");
 				link.rel = "icon";
-				link.href = `${this.backendURL}${this.settings.websiteIcon.path}`;
+				link.href = `${this.backendURL}/${this.settings.websiteIcon.path}`;
 				document.head.appendChild(link);
 			}
 		},

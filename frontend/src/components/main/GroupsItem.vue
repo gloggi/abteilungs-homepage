@@ -10,7 +10,7 @@
 					class="flex flex-row md:flex-col space-x-3 md:space-x-0 md:justify-between items-start md:items-center md:space-y-12 mb-3 md:mb-0">
 					<img
 						v-if="section.file"
-						:src="this.backendURL + section.file?.path"
+						:src="this.backendURL + '/' + section.file?.path"
 						class="size-[60px] md:size-[100px]" />
 					<div v-else class="size-[60px] md:size-[100px]"></div>
 					<div>
@@ -37,7 +37,7 @@
 							</div>
 							<img
 								v-if="group.file?.path"
-								:src="this.backendURL + group.file?.path"
+								:src="this.backendURL + '/' + group.file?.path"
 								class="w-[60%] h-[60%]" />
 						</div>
 					</template>
@@ -59,7 +59,7 @@
 					class="relative rounded-full aspect-square w-[100px] flex justify-center items-center"
 					:style="`background-color: ${currentGroup.color}`">
 					<img
-						:src="this.backendURL + currentGroup.file?.path"
+						:src="this.backendURL + '/' + currentGroup.file?.path"
 						class="w-[60%] h-[60%]" />
 				</div>
 			</div>

@@ -3,7 +3,7 @@
 		<div class="relative rounded-full h-48 w-48 border bg-gray-200">
 			<img
 				v-if="file"
-				:src="`${backendURL}${file.thumbnail}`"
+				:src="`${backendURL}/${file.thumbnail}`"
 				class="aspect-square h-full w-full rounded-full"
 				:class="`${objectContain ? 'object-contain' : 'object-cover'}`" />
 			<div class="absolute top-3 right-3 flex justify-center items-center">

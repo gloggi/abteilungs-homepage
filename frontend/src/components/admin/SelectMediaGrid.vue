@@ -11,7 +11,7 @@
 			}`"
 			@click="selectItem(file)">
 			<img
-				:src="`${backendURL}${file.thumbnail}`"
+				:src="`${backendURL}/${file.thumbnail}`"
 				class="w-full rounded-lg object-contain p-1 roundd-lg aspect-square" />
 		</div>
 	</div>

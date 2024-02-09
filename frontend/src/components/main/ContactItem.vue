@@ -22,7 +22,7 @@
 				</div>
 
 				<img
-					:src="this.backendURL + contact.file.path"
+					:src="this.backendURL + '/' + contact.file.path"
 					class="w-36 h-36 object-cover rounded-full" />
 			</div>
 		</div>

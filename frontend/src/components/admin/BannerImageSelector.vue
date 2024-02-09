@@ -8,7 +8,7 @@
 					<font-awesome-icon :icon="icons.faTrash" class="w-3 p-1 text-white" />
 				</button>
 				<img
-					:src="`${backendURL}${image.thumbnail}`"
+					:src="`${backendURL}/${image.thumbnail}`"
 					class="w-full h-32 object-cover rounded-md" />
 			</div>
 			<button

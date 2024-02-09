@@ -6,7 +6,7 @@
 				<router-link to="/"
 					><img
 						class="h-14"
-						:src="`${backendURL}${settings?.divisionLogo?.path}`"
+						:src="`${backendURL}/${settings?.divisionLogo?.path}`"
 				/></router-link>
 			</div>
 			<button
