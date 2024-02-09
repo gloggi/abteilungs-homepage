@@ -41,17 +41,17 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           ssh-username: ${{ secrets.SSH_USERNAME }}
-          ssh-host: ${{ variables.SSH_HOST }}
-          ssh-backend-directory: ${{ variables.SSH_BACKEND_DIRECTORY }}
-          ssh-frontend-directory: ${{ variables.SSH_FRONTEND_DIRECTORY }}
-          app-name: ${{ variables.APP_NAME }}
+          ssh-host: ${{ vars.SSH_HOST }}
+          ssh-backend-directory: ${{ vars.SSH_BACKEND_DIRECTORY }}
+          ssh-frontend-directory: ${{ vars.SSH_FRONTEND_DIRECTORY }}
+          app-name: ${{ vars.APP_NAME }}
           app-key: ${{ secrets.APP_KEY }}
-          api-url: ${{ variables.API_URL }}
-          frontend-url: ${{ variables.FRONTEND_URL }}
+          api-url: ${{ vars.API_URL }}
+          frontend-url: ${{ vars.FRONTEND_URL }}
           db-host: ${{ secrets.DB_HOST }}
           db-database: ${{ secrets.DB_DATABASE }}
           db-username: ${{ secrets.DB_USERNAME }}
           db-password: ${{ secrets.DB_PASSWORD }}
-          midata-base-url: ${{ variables.MIDATA_BASE_URL }}
-          midata-client-uid: ${{ variables.MIDATA_CLIENT_UID }}
+          midata-base-url: ${{ vars.MIDATA_BASE_URL }}
+          midata-client-uid: ${{ vars.MIDATA_CLIENT_UID }}
           midata-client-secret: ${{ secrets.MIDATA_CLIENT_SECRET }}
