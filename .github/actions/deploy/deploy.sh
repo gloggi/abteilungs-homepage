@@ -16,7 +16,7 @@ fi
 sed -ri "s~^APP_ENV=.*$~APP_ENV=$APP_ENV~" .env
 sed -ri "s~^APP_KEY=.*$~APP_KEY=$APP_KEY~" .env
 sed -ri "s~^APP_DEBUG=.*$~APP_DEBUG=$APP_DEBUG~" .env
-sed -ri "s~^APP_URL=.*$~APP_URL=$API_URL~" .env
+sed -ri "s~^APP_URL=.*$~APP_URL=$BACKEND_URL~" .env
 
 sed -ri "s~^DB_HOST=.*$~DB_HOST=$DB_HOST~" .env
 sed -ri "s~^DB_DATABASE=.*$~DB_DATABASE=$DB_DATABASE~" .env
@@ -28,7 +28,7 @@ sed -ri "s~^SESSION_SECURE_COOKIE=.*$~SESSION_SECURE_COOKIE=true~" .env
 sed -ri "s~^MIDATA_BASE_URL=.*$~MIDATA_BASE_URL=$MIDATA_BASE_URL~" .env
 sed -ri "s~^MIDATA_CLIENT_UID=.*$~MIDATA_CLIENT_UID=$MIDATA_CLIENT_UID~" .env
 sed -ri "s~^MIDATA_CLIENT_SECRET=.*$~MIDATA_CLIENT_SECRET=$MIDATA_CLIENT_SECRET~" .env
-sed -ri "s~^MIDATA_CALLBACK_URI=.*$~MIDATA_CALLBACK_URI=${API_URL}/login/hitobito/callback~" .env
+sed -ri "s~^MIDATA_CALLBACK_URI=.*$~MIDATA_CALLBACK_URI=${BACKEND_URL}/login/hitobito/callback~" .env
 
 docker compose run --no-deps --entrypoint "composer install --no-dev" backend
 
@@ -44,7 +44,7 @@ cd frontend
 rm -f .env
 cp .env.example .env
 
-sed -ri "s~^VITE_BACKEND_URL=.*$~VITE_BACKEND_URL=$API_URL~" .env
+sed -ri "s~^VITE_BACKEND_URL=.*$~VITE_BACKEND_URL=$BACKEND_URL~" .env
 
 docker compose run --rm --no-deps --entrypoint "/bin/sh -c 'npm install && npm run build --no-unsafe-inline'" frontend
 

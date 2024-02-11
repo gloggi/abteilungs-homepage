@@ -34,7 +34,7 @@ jobs:
       - uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+          known_hosts: ${{ vars.SSH_KNOWN_HOSTS }}
 
       - run: sudo apt-get update -y && sudo apt-get install -y lftp
 
@@ -46,7 +46,7 @@ jobs:
           ssh-frontend-directory: ${{ vars.SSH_FRONTEND_DIRECTORY }}
           app-name: ${{ vars.APP_NAME }}
           app-key: ${{ secrets.APP_KEY }}
-          api-url: ${{ vars.API_URL }}
+          backend-url: ${{ vars.BACKEND_URL }}
           frontend-url: ${{ vars.FRONTEND_URL }}
           db-host: ${{ secrets.DB_HOST }}
           db-database: ${{ secrets.DB_DATABASE }}

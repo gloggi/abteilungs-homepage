@@ -40,7 +40,7 @@ inputs:
     required: false
     default: 'false'
 
-  api-url:
+  backend-url:
     description: 'The url under which the backend application will be available'
     required: true
 
@@ -94,7 +94,7 @@ runs:
         APP_ENV: ${{ inputs.app-env }}
         APP_KEY: ${{ inputs.app-key }}
         APP_DEBUG: ${{ inputs.app-debug }}
-        API_URL: ${{ inputs.api-url }}
+        BACKEND_URL: ${{ inputs.backend-url }}
         FRONTEND_URL: ${{ inputs.frontend-url }}
         DB_HOST: ${{ inputs.db-host }}
         DB_DATABASE: ${{ inputs.db-database }}
