@@ -1,0 +1,21 @@
+name: Nightly sync to deployment branches
+
+on:
+  schedule:
+    # 03:30 UTC is either 04:30 or 05:30 in CET (swiss time), depending on daylight savings time
+    - cron: '30 3 * * *'
+
+jobs:
+  sync-deploy-branch:
+    name: 'Sync current master to the deploy branch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: repo-sync/github-sync@v2
+        with:
+          source_repo: 'gloggi/abteilungs-homepage'
+          source_branch: 'master'
+          destination_branch: 'deploy-demo'
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
