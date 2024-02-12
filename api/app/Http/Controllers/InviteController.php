@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Mail\InviteCreated;
 use App\Models\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
