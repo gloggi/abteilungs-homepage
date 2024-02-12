@@ -1,6 +1,6 @@
 <template>
 	<Card v-if="user" class="text-4xl font-extrabold"
-		>Hello, {{ user.nickname }}!</Card
+		>{{ $t('dashboard.hello', { name: user.nickname }) }}</Card
 	>
 </template>
 
