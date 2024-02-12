@@ -28,7 +28,7 @@ sed -ri "s~^SESSION_SECURE_COOKIE=.*$~SESSION_SECURE_COOKIE=true~" .env
 sed -ri "s~^MIDATA_BASE_URL=.*$~MIDATA_BASE_URL=$MIDATA_BASE_URL~" .env
 sed -ri "s~^MIDATA_CLIENT_UID=.*$~MIDATA_CLIENT_UID=$MIDATA_CLIENT_UID~" .env
 sed -ri "s~^MIDATA_CLIENT_SECRET=.*$~MIDATA_CLIENT_SECRET=$MIDATA_CLIENT_SECRET~" .env
-sed -ri "s~^MIDATA_CALLBACK_URI=.*$~MIDATA_CALLBACK_URI=${BACKEND_URL}/login/hitobito/callback~" .env
+sed -ri "s~^MIDATA_REDIRECT_URI=.*$~MIDATA_REDIRECT_URI=$FRONTEND_URL/login~" .env
 
 docker compose run --no-deps --entrypoint "composer install --no-dev" backend
 

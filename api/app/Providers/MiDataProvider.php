@@ -16,20 +16,20 @@ class MiDataProvider extends AbstractProvider implements Provider
 
     protected function getAuthUrl($state)
     {
-        $midataBaseUrl = config('midata.base_url');
+        $midataBaseUrl = env('MIDATA_BASE_URL', 'https://pbs.puzzle.ch');
         return $this->buildAuthUrlFromBase("${midataBaseUrl}/oauth/authorize", $state);
     }
 
 
     protected function getTokenUrl()
     {
-        $midataBaseUrl = config('midata.base_url');
+        $midataBaseUrl = env('MIDATA_BASE_URL', 'https://pbs.puzzle.ch');
         return "${midataBaseUrl}/oauth/token";
     }
 
     protected function getUserByToken($token)
     {
-        $midataBaseUrl = config('midata.base_url');
+        $midataBaseUrl = env('MIDATA_BASE_URL', 'https://pbs.puzzle.ch');
         $response = $this->getHttpClient()->get("${midataBaseUrl}/oauth/profile", [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
