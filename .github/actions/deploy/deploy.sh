@@ -93,6 +93,7 @@ lftp <<EOF
   open -u $SSH_USERNAME, sftp://$SSH_HOST
   cd $SSH_FRONTEND_DIRECTORY
   mirror -enRv -x '^\.'
+  mirror -Rv -f .htaccess
 EOF
 cd ..
 echo "All frontend files uploaded to the server."
