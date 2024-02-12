@@ -86,7 +86,6 @@ cd ..
 echo "All backend files uploaded to the server."
 
 echo "Uploading frontend files to the server..."
-cd frontend
 cd frontend/dist
 lftp <<EOF
   set sftp:auto-confirm true
