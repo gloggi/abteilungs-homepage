@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCampRequest;
 use App\Http\Requests\UpdateCampRequest;
 use App\Models\Camp;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -83,7 +84,7 @@ class CampController extends Controller
                 [
                     'name' => $externalCamp['name'],
                     'description' => $externalCamp['description'],
-                    'cost' => $externalCamp['cost'],
+                    'cost' => $externalCamp['cost'] == '' ? null : $externalCamp['cost'],
                     'maximum_participants' => $externalCamp['maximum_participants'],
                     'participant_count' => $externalCamp['participant_count'],
                     'location' => $externalCamp['location'],
@@ -91,8 +92,8 @@ class CampController extends Controller
                     'application_closing_at' => $externalCamp['application_closing_at'],
                     'application_conditions' => $externalCamp['application_conditions'],
                     'external_application_link' => $externalCamp['external_application_link'],
-                    'start_at' => $eventDate['start_at'] ?? null,
-                    'finish_at' => $eventDate['finish_at'] ?? null,
+                    'start_at' => $eventDate['start_at'] ? Carbon::parse($eventDate['start_at']) : null,
+                    'finish_at' => $eventDate['finish_at'] ? Carbon::parse($eventDate['finish_at']) : null,
                 ]
             );
         }
