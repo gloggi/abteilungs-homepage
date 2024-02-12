@@ -79,6 +79,11 @@ inputs:
     description: 'The secret of the MiData OAuth application'
     required: true
 
+  seed-db:
+    description: 'Set this to true in order to insert the seeds into the DB on every deployment'
+    required: false
+    default: 'false'
+
 runs:
   using: "composite"
   steps:
@@ -103,3 +108,4 @@ runs:
         MIDATA_BASE_URL: ${{ inputs.midata-base-url }}
         MIDATA_CLIENT_UID: ${{ inputs.midata-client-uid }}
         MIDATA_CLIENT_SECRET: ${{ inputs.midata-client-secret }}
+        SEED_DB: ${{ inputs.seed-db }}

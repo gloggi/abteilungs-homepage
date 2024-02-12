@@ -102,6 +102,10 @@ ssh -l $SSH_USERNAME -T $SSH_HOST <<EOF
   php artisan storage:link
   php artisan migrate --force
 
+  if [ "$SEED_DB" == "true" ] ; then
+    php artisan db:seed
+  fi
+
   php artisan config:cache
   php artisan route:cache
   php artisan view:cache
