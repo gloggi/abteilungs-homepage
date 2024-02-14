@@ -5,7 +5,7 @@
 			<div
 				v-for="contact in contacts"
 				:key="contact.id"
-				class="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-between">
+				class="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-between w-full">
 				<div class="flex flex-col main-text">
 					<h2 class="header-text-2 text-4xl text-primary pb-3">
 						{{ contact.role }}
@@ -23,7 +23,7 @@
 
 				<img
 					:src="this.backendURL + '/' + contact.file.path"
-					class="w-36 h-36 object-cover rounded-full" />
+					class="w-36 h-36 object-cover rounded-full self-center" />
 			</div>
 		</div>
 	</ContentWrapper>

@@ -1,7 +1,7 @@
 <template>
 	<div class="flex justify-center w-full background bg-[#4A4A4A]">
 		<div
-			class="md:w-[900px] flex flex-col md:flex-row items-start w-full px-5 md:px-0 md:justify-between py-6">
+			class="md:w-[900px] flex flex-col md:flex-row items-start w-full px-5 md:px-0 md:justify-between py-6 md:space-y-0 space-y-10">
 			<div>
 				<h2 class="text-heading-2 text-primary text-4xl">Gruppen</h2>
 				<ul class="text-white text-xl main-text space-y-1 pt-5">
@@ -31,7 +31,7 @@
 			</div>
 			<div>
 				<h2 class="text-heading-2 text-primary text-4xl">Links</h2>
-				<ul class="text-white text-xl main-text space-y-1 pt-5">
+				<ul class="text-white text-xl main-text space-y-1 pt-5 pl-6">
 					<li v-for="link in footerLinks" :key="link.id">
 						<a :href="link.url" target="_blank">{{ link.title }}</a>
 					</li>
@@ -43,7 +43,7 @@
 			<div>
 				<h2 class="text-heading-2 text-primary text-4xl">Kontakt</h2>
 				<div
-					class="text-white"
+					class="text-white pl-6"
 					v-html="settings?.contactInFooter"
 					v-router-link></div>
 			</div>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="w-full px-24">
+		<ContentWrapper>
 			<div class="border border-primary mb-2">
 				<button
 					@click="show = !show"
@@ -49,7 +49,7 @@
 					</div>
 				</Transition>
 			</div>
-		</div>
+		</ContentWrapper>
 	</div>
 </template>
 <script>
@@ -58,9 +58,10 @@ import MapComponent from "./MapComponent.vue";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
 import { gsap } from "gsap";
+import ContentWrapper from "./ContentWrapper.vue";
 
 export default {
-	components: { HeadingOne, MapComponent },
+	components: { HeadingOne, MapComponent, ContentWrapper },
 	props: {
 		open: {
 			type: Boolean,

@@ -6,7 +6,9 @@
 			title="Downloads"
 			:files="group.files" />
 		<div>
-			<HeadingOne class="px-24 text-primary pb-5">Anlässe</HeadingOne>
+			<ContentWrapper>
+			<HeadingOne class="text-primary pb-5">Anlässe</HeadingOne>
+		</ContentWrapper>
 			<div v-if="events.length > 0">
 				<Event
 					v-for="(event, idx) in events"
@@ -18,6 +20,7 @@
 	</PageWrapper>
 </template>
 <script>
+import ContentWrapper from "./ContentWrapper.vue";
 import Event from "./Event.vue";
 import FilesItem from "./FilesItem.vue";
 import HeadingOne from "./HeadingOne.vue";
@@ -49,6 +52,6 @@ export default {
 	async created() {
 		this.getEvents();
 	},
-	components: { PageWrapper, TextItem, Event, HeadingOne, FilesItem },
+	components: { PageWrapper, TextItem, Event, HeadingOne, FilesItem, ContentWrapper },
 };
 </script>

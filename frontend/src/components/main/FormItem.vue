@@ -15,7 +15,7 @@
 						v-if="field.type == 'textField'"
 						v-model="formContent[field.key]"
 						:required="field.required"
-						class="border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary"
+						class="border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary w-full"
 						:type="field.inputType"
 						:placeholder="field.placeholder" />
 					<textarea
