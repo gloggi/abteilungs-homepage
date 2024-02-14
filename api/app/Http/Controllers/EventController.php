@@ -8,6 +8,10 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
+use App\Models\Location;
+use App\Models\Group;
+use Illuminate\Support\Facades\Http;
 
 class EventController extends Controller
 {
@@ -96,5 +100,45 @@ class EventController extends Controller
         $event->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function syncExternalEvents()
+    {
+        $setting = Setting::find(1);
+        $token = $setting->midata_api_key;
+        $user = Auth::user();
+        $midataId = $user->midata_group_id;
+        $response = Http::get("https://pbs.puzzle.ch/de/groups/{$midataId}/events/simple.json?token={$token}");
+        $externalEvents = $response->json();
+
+        $eventDatesMap = collect($externalEvents['linked']['event_dates'])->keyBy('id');
+
+        foreach ($externalEvents['events'] as $externalEvent) {
+            $eventDateIds = $externalEvent['links']['dates'] ?? [];
+            $eventDate = collect($eventDateIds)->map(fn($id) => $eventDatesMap->get($id))->first();
+            $locationId = Location::firstWhere('name', $eventDate['location'])->id ?? null;
+            error_log($eventDate['start_at']);
+            $event = Event::updateOrCreate(
+                ['midata_id' => $externalEvent['id']],
+                [
+                    'title' => $externalEvent['name'],
+                    'description' => $externalEvent['description'],
+                    'start_location_id' => $locationId,
+                    'end_location_id' => $locationId,
+                    'external_application_link' => $externalEvent['external_application_link'],
+                    
+                    'start_time' => $eventDate['start_at'] ?? null,
+                    'end_time' => $eventDate['finish_at'] ?? null
+                ]
+            );
+            $group = Group::where('midata_id', $midataId)->first();
+            $event->groups()->sync([$group->id]);
+           
+            
+           $event->save();
+
+        }
+
+        return response()->json(['message' => 'External events synced successfully']);
     }
 }

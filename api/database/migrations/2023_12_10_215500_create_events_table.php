@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreign('end_location_id')->references('id')->on('locations')->onDelete('set null');
             $table->text('description')->nullable();
             $table->text('take_with_you')->nullable();
+            $table->integer('midata_id')->nullable();
+            $table->string('external_application_link')->nullable();
             $table->timestamps();
         });
         Schema::create('event_groups', function (Blueprint $table) {

@@ -91,7 +91,7 @@ class GroupsTableSeeder extends Seeder
                 'contact' => NULL,
                 'region' => NULL,
                 'gender' => 1,
-                'midata_id' => NULL,
+                'midata_id' => 1503,
                 'parent_id' => NULL,
                 'section_id' => 3,
                 'file_id' => 5,

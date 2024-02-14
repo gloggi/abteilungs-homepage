@@ -4,7 +4,8 @@
 		entity="events"
 		titles="Title,Start,End"
 		columns="title:link(id),startTime:date,endTime:date"
-		pushAfterCreationTo="Event" />
+		pushAfterCreationTo="Event"
+		:midataSync="true" />
 </template>
 
 <script>
