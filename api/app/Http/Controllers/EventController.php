@@ -12,6 +12,7 @@ use App\Models\Setting;
 use App\Models\Location;
 use App\Models\Group;
 use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -108,7 +109,8 @@ class EventController extends Controller
         $token = $setting->midata_api_key;
         $user = Auth::user();
         $midataId = $user->midata_group_id;
-        $response = Http::get("https://pbs.puzzle.ch/de/groups/{$midataId}/events/simple.json?token={$token}");
+        $midataBaseUrl = env('MIDATA_BASE_URL', 'https://pbs.puzzle.ch');
+        $response = Http::get("{$midataBaseUrl}/de/groups/{$midataId}/events/simple.json?token={$token}");
         $externalEvents = $response->json();
 
         $eventDatesMap = collect($externalEvents['linked']['event_dates'])->keyBy('id');
@@ -127,8 +129,8 @@ class EventController extends Controller
                     'end_location_id' => $locationId,
                     'external_application_link' => $externalEvent['external_application_link'],
                     
-                    'start_time' => $eventDate['start_at'] ?? null,
-                    'end_time' => $eventDate['finish_at'] ?? null
+                    'start_time' => $eventDate['start_at'] ? Carbon::parse($eventDate['start_at']) : null,
+                    'end_time' => $eventDate['finish_at'] ? Carbon::parse($eventDate['finish_at']) : null
                 ]
             );
             $group = Group::where('midata_id', $midataId)->first();
