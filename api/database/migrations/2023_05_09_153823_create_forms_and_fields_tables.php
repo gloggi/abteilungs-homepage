@@ -60,10 +60,10 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('option_fields');
+        Schema::dropIfExists('select_fields');
         Schema::dropIfExists('text_fields');
         Schema::dropIfExists('textarea_fields');
-        Schema::dropIfExists('select_fields');
-        Schema::dropIfExists('option_fields');
+        Schema::dropIfExists('forms');
     }
 };

@@ -79,18 +79,20 @@ class CreatePagesTable extends Migration
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->timestamps();
         });
-        
+
     }
 
     public function down()
     {
-        Schema::dropIfExists('pages');
-        Schema::dropIfExists('page_file');
-        Schema::dropIfExists('text_items');
-        Schema::dropIfExists('image_items');
-        Schema::dropIfExists('image_item_file');
-        Schema::dropIfExists('form_items');
+
+        Schema::dropIfExists('files_item_file');
         Schema::dropIfExists('generic_items');
+        Schema::dropIfExists('form_items');
+        Schema::dropIfExists('image_item_file');
+        Schema::dropIfExists('image_items');
+        Schema::dropIfExists('text_items');
+        Schema::dropIfExists('page_file');
         Schema::dropIfExists('files_items');
+        Schema::dropIfExists('pages');
     }
 }
