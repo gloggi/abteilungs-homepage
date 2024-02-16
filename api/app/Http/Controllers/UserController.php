@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with('roles')->with('groups')->find($id);
         return response()->json($user);
     }
 

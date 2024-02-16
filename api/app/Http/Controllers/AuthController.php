@@ -122,7 +122,6 @@ class AuthController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
-
         $tokenResponse = Socialite::driver('midata')->getAccessTokenResponse($request->code);
         $accessToken = $tokenResponse['access_token'];
         $midataUser = Socialite::driver('midata')->userFromToken($accessToken);
@@ -130,7 +129,7 @@ class AuthController extends Controller
         $user = User::where('midata_id', $midataUser->id)->first();
         $setting = Setting::find(1);
         $groupIds = Group::pluck('midata_id')->toArray();
-
+       
 
         if (!$user) {
             $user = User::create([
@@ -141,16 +140,17 @@ class AuthController extends Controller
                 'password' => '',
                 'midata_id' => $midataUser->attributes['id']
             ]);
-            if ($midata_group_id = $this->hasRole($midataUser->user, 'PowerUser', [$setting->midata_parent_id])) {
+            if ($midata_group_ids = $this->hasRole($midataUser->user, 'PowerUser', [$setting->midata_parent_id])) {
                 $user->assignRole('admin');
-            } else if ($midata_group_id = $this->hasRole($midataUser->user, 'Abteilungsleiter*in', [$setting->midata_id])) {
+            } else if ($midata_group_ids = $this->hasRole($midataUser->user, 'Abteilungsleiter*in', [$setting->midata_id])) {
                 $user->assignRole('admin');
-            } else if ($midata_group_id = $this->hasRole($midataUser->user, 'Einheitsleiter*in', $groupIds)) {
+            } else if ($midata_group_ids = $this->hasRole($midataUser->user, 'Einheitsleiter*in', $groupIds)) {
                 $user->assignRole('unitleader');
             }
-            $user->midata_group_id = $midata_group_id;
+            $groups = Group::whereIn('midata_id', $midata_group_ids)->get();
+            
+            $user->groups()->sync($groups);
             $user->save();
-
         }
 
         return response()->json([
@@ -165,14 +165,14 @@ class AuthController extends Controller
     protected function hasRole($data, $roleName, $groupIds)
     {
         if (isset($data['roles']) && is_array($data['roles'])) {
+            $midata_group_ids = [];
             foreach ($data['roles'] as $role) {
                 if (isset($role['role_name']) && $role['role_name'] === $roleName && in_array($role['group_id'], $groupIds, true)) {
-
-                    return $role['group_id'];
+                    $midata_group_ids[] = $role['group_id'];
                 }
             }
         }
-        return null;
+        return $midata_group_ids;
     }
 
 

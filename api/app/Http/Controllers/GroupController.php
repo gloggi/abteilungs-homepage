@@ -16,7 +16,7 @@ class GroupController extends Controller
         $user = Auth::user();
         $groups = Group::with(['file', 'section', 'predecessors', 'successors', 'parent', 'headerImages', 'files']);
         if ($request->has('dashboard') && $user->hasRole('unitleader')) {
-            $groups = $groups->where('midata_id', $user->midata_group_id);
+            $groups = $groups->whereIn('id', $user->groups->pluck('id'));
         }
         $perPage = $request->input('per_page', 10);
         $groups = $groups->paginate($perPage);
@@ -54,6 +54,10 @@ class GroupController extends Controller
 
         if (!$group) {
             return response()->json(['message' => 'Group not found'], 404);
+        }
+        $user = Auth::user();
+        if($user->hasRole('unitleader') && !$user->groups->contains($group)){
+            return response()->json(['message' => 'You are not allowed to update this group'], 403);
         }
 
         $group->update($request->validated());
