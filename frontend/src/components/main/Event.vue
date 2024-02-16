@@ -18,7 +18,7 @@
 						</p>
 						<p class="main-text text-white text-xl">
 							<span class="font-semibold">Ort:</span>
-							{{ event.startLocation.name }}
+							{{ event.startLocation?.name }}
 						</p>
 						<p
 							v-if="event.groups.length > 1"

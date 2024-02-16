@@ -15,7 +15,7 @@
 			<NavBar :menuItems="menuItems" />
 		</template>
 	</RegularPage>
-	<FooterComponent />
+	<FooterComponent v-if="pageType" />
 </template>
 <script>
 import NavBar from "../components/main/NavBar.vue";

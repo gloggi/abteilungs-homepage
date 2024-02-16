@@ -10,6 +10,13 @@
 				<TextInput label="Nickname" type="text" v-model="content.nickname" />
 				<TextInput label="First Name" type="text" v-model="content.firstname" />
 				<TextInput label="Last Name" type="text" v-model="content.lastname" />
+				<MultipleSelect label="Groups" v-model="content.groups" :options="groups" />
+				<SelectComponent
+					label="Role"
+					selection="Role"
+					@selectRole="handleSelectRole"
+					:options="roles"
+					:value="content.role" />
 			</div>
 		</Card>
 	</div>
@@ -25,15 +32,24 @@ import {
 	faTrash,
 	faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import MultipleSelect from "../../components/admin/MultipleSelect.vue";
+import SelectComponent from "../../components/admin/SelectComponent.vue";
 export default {
 	components: {
-		Card,
-		TextInput,
-		ItemHeaderTemplate,
-	},
+    Card,
+    TextInput,
+    ItemHeaderTemplate,
+    MultipleSelect,
+    SelectComponent
+},
 	data() {
 		return {
 			content: undefined,
+			roles: [
+				{ id: 1, name: "Admin" },
+				{ id: 2, name: "Einheitsleiter" },
+			],
+			groups: [],
 			icons: {
 				faArrowsRotate,
 				faChevronLeft,
@@ -50,6 +66,8 @@ export default {
 					`/users/${this.$route.params.id}`,
 				);
 				this.content = response.data;
+				this.content.groups = this.content.groups.map((group) => group.id);
+				this.content.role = this.content.roles[0]?.id;
 				this.loadedKey++;
 			} catch (e) {
 				console.log(e);
@@ -66,8 +84,17 @@ export default {
 				console.log(e);
 			}
 		},
+		async getGroups() {
+			try {
+				const response = await this.callApi("get", "/groups");
+				this.groups = response.data.data;
+			} catch (e) {
+				console.log(e);
+			}
+		},
 	},
-	created() {
+	async created() {
+		await this.getGroups();
 		this.getUser();
 	},
 };

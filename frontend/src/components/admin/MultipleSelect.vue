@@ -45,18 +45,7 @@ export default {
 		},
 		modelValue: {},
 		options: {
-			default: [
-				{ id: 1, name: "Apples" },
-				{ id: 2, name: "Oranges" },
-				{ id: 3, name: "Bananas" },
-				{ id: 4, name: "Grapes" },
-				{ id: 5, name: "Mangos" },
-				{ id: 6, name: "Pineapples" },
-				{ id: 7, name: "Watermelons" },
-				{ id: 8, name: "Strawberries" },
-				{ id: 9, name: "Blueberries" },
-				{ id: 10, name: "Raspberries" },
-			],
+			default: [],
 		},
 	},
 	data() {
