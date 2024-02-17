@@ -10,7 +10,7 @@ export const api = axios.create({
   headers: {
     Accept: "application/json",
   },
-  timeout: 1000,
+  timeout: 10000,
 });
 api.interceptors.request.use(
   function (config) {
@@ -57,7 +57,9 @@ export const mixin = {
         response.data = this.snakeToCamelObject(response.data);
         return response;
       } catch (error) {
-        error.response.data = this.snakeToCamelObject(error.response.data);
+        if (error.response) {
+          error.response.data = this.snakeToCamelObject(error.response?.data);
+        }
         throw error;
       }
     },
