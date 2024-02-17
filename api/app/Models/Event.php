@@ -43,4 +43,8 @@ class Event extends Model
     {
         return $this->belongsTo(Location::class, 'end_location_id');
     }
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'event_files', 'event_id', 'file_id');
+    }
 }

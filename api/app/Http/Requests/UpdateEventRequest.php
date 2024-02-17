@@ -17,6 +17,7 @@ class UpdateEventRequest extends FormRequest
             'end_location_id' => 'sometimes|required|integer|exists:locations,id',
             'description' => 'nullable|string',
             'take_with_you' => 'nullable|string',
+            'files' => 'nullable|array',
         ];
     }
 }

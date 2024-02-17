@@ -22,7 +22,7 @@ class EventController extends Controller
         $groupId = $request->input('group_id');
         $currentDateTime = now();
 
-        $query = Event::with(['startLocation', 'endLocation', 'groups']);
+        $query = Event::with(['startLocation', 'endLocation', 'groups', 'files']);
         if ($groupId) {
             $query->whereHas('groups', function($query) use ($groupId) {
                 $query->where('groups.id', $groupId);
@@ -61,13 +61,14 @@ class EventController extends Controller
     {
         $event = Event::create($request->validated());
         $event->groups()->sync($request->input('groups', []));
+        $event->files()->sync(array_column($request->input('files', []), 'id'));
 
         return response()->json($event, 201);
     }
 
     public function show($id)
     {
-        $event = Event::with('groups')->find($id);
+        $event = Event::with('groups')->with('files')->find($id);
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
@@ -86,6 +87,7 @@ class EventController extends Controller
 
         $event->update($request->validated());
         $event->groups()->sync($request->input('groups', []));
+        $event->files()->sync(array_column($request->input('files', []), 'id'));
 
         return response()->json($event);
     }
