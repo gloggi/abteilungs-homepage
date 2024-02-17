@@ -21,6 +21,7 @@ class EventController extends Controller
         $perPage = $request->input('per_page', 10);
         $groupId = $request->input('group_id');
         $currentDateTime = now();
+        $user = Auth::user();
 
         $query = Event::with(['startLocation', 'endLocation', 'groups', 'files']);
         if ($groupId) {
@@ -28,11 +29,9 @@ class EventController extends Controller
                 $query->where('groups.id', $groupId);
             });
         }
-        if ($request->has('dashboard')) {
-            $user = Auth::user();
-            $userMidataId = $user->midata_group_id;
-            $query->whereHas('groups', function($query) use ($userMidataId) {
-                $query->where('groups.midata_id', $userMidataId);
+        if ($request->has('dashboard')&& $user->hasRole('unitleader')) {
+            $query->whereHas('groups', function ($query) use ($user) {
+                $query->whereIn('groups.id', $user->groups->pluck('id'));
             });
         }
         $events = $query->get();
@@ -45,9 +44,14 @@ class EventController extends Controller
             return $event->start_time >= $currentDateTime;
         })->sortByDesc('start_time');
 
-        $sortedEvents = $upcomingEvents->merge($pastEvents);
+        if ($request->has('dashboard')&& $user) {
+            $sortedEvents = $upcomingEvents->merge($pastEvents);
+        }else{
+            $sortedEvents = $upcomingEvents->merge([]);
+        }
+
         $paginatedEvents = new LengthAwarePaginator(
-            $sortedEvents->forPage($request->page, $perPage),
+            $sortedEvents->forPage($request->page, $perPage)->values(),
             $sortedEvents->count(),
             $perPage,
             $request->page
@@ -110,17 +114,21 @@ class EventController extends Controller
         $setting = Setting::find(1);
         $token = $setting->midata_api_key;
         $user = Auth::user();
-        $midataId = $user->midata_group_id;
+        $midataIds = $user->groups->pluck('midata_id');
+        foreach ($midataIds as $midataId) {
         $midataBaseUrl = env('MIDATA_BASE_URL', 'https://pbs.puzzle.ch');
         $response = Http::get("{$midataBaseUrl}/de/groups/{$midataId}/events/simple.json?token={$token}");
         $externalEvents = $response->json();
-
+        if(!array_key_exists('linked',$externalEvents)){
+            continue;
+        }
         $eventDatesMap = collect($externalEvents['linked']['event_dates'])->keyBy('id');
 
         foreach ($externalEvents['events'] as $externalEvent) {
             $eventDateIds = $externalEvent['links']['dates'] ?? [];
             $eventDate = collect($eventDateIds)->map(fn($id) => $eventDatesMap->get($id))->first();
             $locationId = Location::firstWhere('name', $eventDate['location'])->id ?? null;
+            dump($externalEvent);
             $event = Event::updateOrCreate(
                 ['midata_id' => $externalEvent['id']],
                 [
@@ -129,13 +137,13 @@ class EventController extends Controller
                     'start_location_id' => $locationId,
                     'end_location_id' => $locationId,
                     'external_application_link' => $externalEvent['external_application_link'],
-                    
                     'start_time' => $eventDate['start_at'] ? Carbon::parse($eventDate['start_at']) : null,
                     'end_time' => $eventDate['finish_at'] ? Carbon::parse($eventDate['finish_at']) : null
                 ]
             );
             $group = Group::where('midata_id', $midataId)->first();
             $event->groups()->sync([$group->id]);
+        }
            
             
            $event->save();

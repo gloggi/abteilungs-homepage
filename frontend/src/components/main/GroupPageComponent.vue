@@ -17,6 +17,11 @@
           :key="event.id"
           :event="event"
         />
+        <EventPager
+          @changePage="changeEventPage"
+          :numberOfPages="eventLastPage"
+          :currentPage="eventPage"
+        />
       </div>
     </div>
   </PageWrapper>
@@ -24,6 +29,7 @@
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
 import Event from "./Event.vue";
+import EventPager from "./EventPager.vue";
 import FilesItem from "./FilesItem.vue";
 import HeadingOne from "./HeadingOne.vue";
 import PageWrapper from "./PageWrapper.vue";
@@ -34,6 +40,8 @@ export default {
   data() {
     return {
       events: [],
+      eventPage: 1,
+      eventLastPage: 1,
     };
   },
   methods: {
@@ -43,12 +51,23 @@ export default {
           "get",
           "/events",
           {},
-          { params: { group_id: this.group.id } },
+          {
+            params: {
+              group_id: this.group.id,
+              page: this.eventPage,
+              per_page: 3,
+            },
+          },
         );
         this.events = response.data.data;
+        this.eventLastPage = response.data.lastPage;
       } catch (error) {
         console.log(error);
       }
+    },
+    changeEventPage(page) {
+      this.eventPage = page;
+      this.getEvents();
     },
   },
   async created() {
@@ -61,6 +80,7 @@ export default {
     HeadingOne,
     FilesItem,
     ContentWrapper,
+    EventPager,
   },
 };
 </script>

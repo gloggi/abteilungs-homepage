@@ -9,7 +9,7 @@ class Event extends Model
 {
 
     protected $fillable = [
-        'title', 'start_time', 'end_time', 'start_location_id', 'end_location_id', 'description', 'take_with_you'
+        'title', 'start_time', 'end_time', 'start_location_id', 'end_location_id', 'description', 'take_with_you', 'midata_id', 'external_application_link'
     ];
 
 
