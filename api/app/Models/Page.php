@@ -9,6 +9,8 @@ class Page extends Model
 {
     protected $fillable = ['title', 'route', 'file_ids', 'big_header'];
 
+    protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems'];
+
     public function files()
     {
         return $this->belongsToMany(File::class, 'page_file');
@@ -30,7 +32,7 @@ class Page extends Model
     public function formItems()
     {
 
-        return $this->hasMany(FormItem::class)->with('form');
+        return $this->hasMany(FormItem::class)->with('form')->without('form.email');
     }
 
     public function formItemsWithFields()

@@ -91,6 +91,7 @@ class PageController extends Controller
         $pageItems = $page->getAllItems();
         foreach ($pageItems as $currentField) {
             if ($currentField->type == 'formItem' && $currentField->form) {
+                unset($currentField->form->email);
                 $currentField->form->fields = $currentField->form->getAllFields();
             }
         }
