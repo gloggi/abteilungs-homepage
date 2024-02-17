@@ -1,15 +1,16 @@
 <template>
-	<DragItemBox
-		:boxTitle="boxTitle"
-		:item="item"
-		@delete="(event) => $emit('delete', event)"
-		@startedDragging="$emit('startedDragging')"
-		@endedDragging="$emit('endedDragging')">
-		<Card class="space-y-2">
-			At this point all sections with their descriptions that you have created
-			in the Sections tab are shown.
-		</Card>
-	</DragItemBox>
+  <DragItemBox
+    :boxTitle="boxTitle"
+    :item="item"
+    @delete="(event) => $emit('delete', event)"
+    @startedDragging="$emit('startedDragging')"
+    @endedDragging="$emit('endedDragging')"
+  >
+    <Card class="space-y-2">
+      At this point all sections with their descriptions that you have created
+      in the Sections tab are shown.
+    </Card>
+  </DragItemBox>
 </template>
 
 <script>
@@ -17,18 +18,18 @@ import Card from "../Card.vue";
 import DragItemBox from "../DragItemBox.vue";
 
 export default {
-	components: { Card, DragItemBox },
-	props: ["boxTitle", "item"],
-	emits: ["delete", "startedDragging", "endedDragging"],
-	data() {
-		return {
-			options: [],
-		};
-	},
-	methods: {},
+  components: { Card, DragItemBox },
+  props: ["boxTitle", "item"],
+  emits: ["delete", "startedDragging", "endedDragging"],
+  data() {
+    return {
+      options: [],
+    };
+  },
+  methods: {},
 
-	computed: {},
-	async created() {},
+  computed: {},
+  async created() {},
 };
 </script>
 

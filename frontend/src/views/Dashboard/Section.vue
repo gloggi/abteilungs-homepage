@@ -1,59 +1,66 @@
 <template>
-	<div>
-		<ItemHeaderTemplate
-			:title="content.name"
-			:content="content"
-			@errors="handleErrors"
-			@clearErrors="errors = {}"
-			entity="sections"
-			backLinkTo="Sections" />
-		<Card class="mt-4 space-y-5">
-			<div
-				class="flex flex-col items-center md:items-start md:flex-row space-x-0 md:space-x-5 space-y-5 md:space-y-0 h-full w-full">
-				<LogoDisplay
-					:key="loadedKey"
-					:logo="content.file"
-					:objectContain="true"
-					@selectImage="updateLogo" />
-				<div class="space-y-2 w-full">
-					<TextInput
-						label="Name"
-						type="text"
-						v-model="content.name"
-						:errors="errors.name" />
-					<div class="flex flex-row justify-between space-x-2">
-						<TextInput
-							class="w-full"
-							label="From Age"
-							type="number"
-							v-model="content.fromAge"
-							:errors="errors.fromAge" />
-						<TextInput
-							class="w-full"
-							label="To Age"
-							type="number"
-							v-model="content.toAge"
-							:errors="errors.toAge" />
-					</div>
-					<div class="">
-						<FormLabel>Section Color</FormLabel>
-						<ColorPicker v-model="content.color" :errors="errors.color" />
-					</div>
-				</div>
-			</div>
-			<div class="flex-space-y-2">
-				<FormLabel>Section Header Images</FormLabel>
-				<BannerImageSelector
-					:key="loadedKey"
-					:item="content"
-					@changeImages="changeHeaderImages" />
-			</div>
-			<div class="flex-space-y-2">
-				<FormLabel>Description</FormLabel>
-				<Editor v-model="content.description" />
-			</div>
-		</Card>
-	</div>
+  <div>
+    <ItemHeaderTemplate
+      :title="content.name"
+      :content="content"
+      @errors="handleErrors"
+      @clearErrors="errors = {}"
+      entity="sections"
+      backLinkTo="Sections"
+    />
+    <Card class="mt-4 space-y-5">
+      <div
+        class="flex flex-col items-center md:items-start md:flex-row space-x-0 md:space-x-5 space-y-5 md:space-y-0 h-full w-full"
+      >
+        <LogoDisplay
+          :key="loadedKey"
+          :logo="content.file"
+          :objectContain="true"
+          @selectImage="updateLogo"
+        />
+        <div class="space-y-2 w-full">
+          <TextInput
+            label="Name"
+            type="text"
+            v-model="content.name"
+            :errors="errors.name"
+          />
+          <div class="flex flex-row justify-between space-x-2">
+            <TextInput
+              class="w-full"
+              label="From Age"
+              type="number"
+              v-model="content.fromAge"
+              :errors="errors.fromAge"
+            />
+            <TextInput
+              class="w-full"
+              label="To Age"
+              type="number"
+              v-model="content.toAge"
+              :errors="errors.toAge"
+            />
+          </div>
+          <div class="">
+            <FormLabel>Section Color</FormLabel>
+            <ColorPicker v-model="content.color" :errors="errors.color" />
+          </div>
+        </div>
+      </div>
+      <div class="flex-space-y-2">
+        <FormLabel>Section Header Images</FormLabel>
+        <BannerImageSelector
+          :key="loadedKey"
+          :item="content"
+          @changeImages="changeHeaderImages"
+        />
+      </div>
+      <div class="flex-space-y-2">
+        <FormLabel>Description</FormLabel>
+        <Editor v-model="content.description" />
+      </div>
+    </Card>
+  </div>
 </template>
 
 <script>
@@ -61,10 +68,10 @@ import Card from "../../components/admin/Card.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import {
-	faArrowsRotate,
-	faChevronLeft,
-	faTrash,
-	faPlus,
+  faArrowsRotate,
+  faChevronLeft,
+  faTrash,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
@@ -72,70 +79,70 @@ import FormLabel from "../../components/admin/FormLabel.vue";
 import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
 import ColorPicker from "../../components/admin/ColorPicker.vue";
 export default {
-	components: {
-		Card,
-		TextInput,
-		ItemHeaderTemplate,
-		LogoDisplay,
-		Editor,
-		FormLabel,
-		BannerImageSelector,
-		ColorPicker,
-	},
-	data() {
-		return {
-			content: {},
-			loadedKey: 0,
-			errors: {},
-			icons: {
-				faArrowsRotate,
-				faChevronLeft,
-				faTrash,
-				faPlus,
-			},
-		};
-	},
-	methods: {
-		async getSection() {
-			if (this.$route.params.id === "new") {
-				return;
-			}
-			try {
-				const response = await this.callApi(
-					"get",
-					`/sections/${this.$route.params.id}`,
-				);
-				this.content = response.data;
-				this.loadedKey++;
-			} catch (e) {
-				console.log(e);
-			}
-		},
-		async updateSection() {
-			try {
-				await this.callApi(
-					"put",
-					`/sections/${this.$route.params.id}`,
-					this.content,
-				);
-			} catch (e) {
-				console.log(e);
-			}
-		},
-		updateLogo(file) {
-			this.content.fileId = file?.id || undefined;
-			console.log(this.content.fileId);
-		},
-		changeHeaderImages(event) {
-			this.content.files = event.files;
-		},
-		handleErrors(errors) {
-			this.errors = errors;
-		},
-	},
-	async created() {
-		await this.getSection();
-	},
+  components: {
+    Card,
+    TextInput,
+    ItemHeaderTemplate,
+    LogoDisplay,
+    Editor,
+    FormLabel,
+    BannerImageSelector,
+    ColorPicker,
+  },
+  data() {
+    return {
+      content: {},
+      loadedKey: 0,
+      errors: {},
+      icons: {
+        faArrowsRotate,
+        faChevronLeft,
+        faTrash,
+        faPlus,
+      },
+    };
+  },
+  methods: {
+    async getSection() {
+      if (this.$route.params.id === "new") {
+        return;
+      }
+      try {
+        const response = await this.callApi(
+          "get",
+          `/sections/${this.$route.params.id}`,
+        );
+        this.content = response.data;
+        this.loadedKey++;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async updateSection() {
+      try {
+        await this.callApi(
+          "put",
+          `/sections/${this.$route.params.id}`,
+          this.content,
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    updateLogo(file) {
+      this.content.fileId = file?.id || undefined;
+      console.log(this.content.fileId);
+    },
+    changeHeaderImages(event) {
+      this.content.files = event.files;
+    },
+    handleErrors(errors) {
+      this.errors = errors;
+    },
+  },
+  async created() {
+    await this.getSection();
+  },
 };
 </script>
 

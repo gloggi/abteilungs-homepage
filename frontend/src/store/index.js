@@ -9,14 +9,14 @@ import { drag } from "./modules/drag";
 import { settings } from "./modules/settings";
 
 export default createStore({
-	modules: {
-		login,
-		message,
-		user,
-		modal,
-		notification,
-		pageInEdit,
-		drag,
-		settings,
-	},
+  modules: {
+    login,
+    message,
+    user,
+    modal,
+    notification,
+    pageInEdit,
+    drag,
+    settings,
+  },
 });

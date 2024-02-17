@@ -1,18 +1,18 @@
 <template>
-	<Card v-if="user" class="text-4xl font-extrabold"
-		>{{ $t('dashboard.hello', { name: user.nickname }) }}</Card
-	>
+  <Card v-if="user" class="text-4xl font-extrabold">{{
+    $t("dashboard.hello", { name: user.nickname })
+  }}</Card>
 </template>
 
 <script>
 import Card from "../../components/admin/Card.vue";
 export default {
-	components: { Card },
-	computed: {
-		user() {
-			return this.$store.state.user.user;
-		},
-	},
+  components: { Card },
+  computed: {
+    user() {
+      return this.$store.state.user.user;
+    },
+  },
 };
 </script>
 

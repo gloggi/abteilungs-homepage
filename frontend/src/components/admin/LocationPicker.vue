@@ -1,5 +1,5 @@
 <template>
-	<div ref="mapContainer"></div>
+  <div ref="mapContainer"></div>
 </template>
 
 <script>
@@ -15,86 +15,86 @@ import { defaults as defaultControls, ScaleLine } from "ol/control";
 import mapMarkerSvg from "@/assets/mapMarker.svg";
 
 export default {
-	props: ["lat", "long"],
-	emits: ["location-selected"],
-	mounted() {
-		this.initializeMap();
-	},
-	data() {
-		return {
-			map: undefined,
-			markerPoint: undefined,
-		};
-	},
-	watch: {
-		lat: function () {
-			this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
-		},
-		long: function () {
-			this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
-		},
-	},
-	methods: {
-		initializeMap() {
-			const vectorlayer = this.initializeIcon();
-			this.map = new Map({
-				target: this.$refs.mapContainer,
-				layers: [
-					new TileLayer({
-						source: new XYZ({
-							url: `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe-pk25.noscale/default/current/3857/{z}/{x}/{y}.jpeg`,
-						}),
-					}),
-					vectorlayer,
-				],
-				view: new View({
-					center: fromLonLat([this.long || 8.536, this.lat || 47.372]),
-					zoom: 14,
-				}),
-				controls: defaultControls().extend([
-					new ScaleLine({
-						units: "metric",
-					}),
-				]),
-			});
-			this.map.on("singleclick", this.selectLocation);
-		},
-		initializeIcon() {
-			const vectorSource = new VectorSource();
-			this.markerPoint = new Point(fromLonLat([this.long, this.lat]));
-			const iconFeature = new Feature({
-				geometry: this.markerPoint,
-			});
+  props: ["lat", "long"],
+  emits: ["location-selected"],
+  mounted() {
+    this.initializeMap();
+  },
+  data() {
+    return {
+      map: undefined,
+      markerPoint: undefined,
+    };
+  },
+  watch: {
+    lat: function () {
+      this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
+    },
+    long: function () {
+      this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
+    },
+  },
+  methods: {
+    initializeMap() {
+      const vectorlayer = this.initializeIcon();
+      this.map = new Map({
+        target: this.$refs.mapContainer,
+        layers: [
+          new TileLayer({
+            source: new XYZ({
+              url: `https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe-pk25.noscale/default/current/3857/{z}/{x}/{y}.jpeg`,
+            }),
+          }),
+          vectorlayer,
+        ],
+        view: new View({
+          center: fromLonLat([this.long || 8.536, this.lat || 47.372]),
+          zoom: 14,
+        }),
+        controls: defaultControls().extend([
+          new ScaleLine({
+            units: "metric",
+          }),
+        ]),
+      });
+      this.map.on("singleclick", this.selectLocation);
+    },
+    initializeIcon() {
+      const vectorSource = new VectorSource();
+      this.markerPoint = new Point(fromLonLat([this.long, this.lat]));
+      const iconFeature = new Feature({
+        geometry: this.markerPoint,
+      });
 
-			const iconStyle = new Style({
-				image: new Icon({
-					src: mapMarkerSvg,
-					scale: 4,
-					anchor: [0.5, 1],
-				}),
-			});
+      const iconStyle = new Style({
+        image: new Icon({
+          src: mapMarkerSvg,
+          scale: 4,
+          anchor: [0.5, 1],
+        }),
+      });
 
-			iconFeature.setStyle(iconStyle);
+      iconFeature.setStyle(iconStyle);
 
-			vectorSource.addFeature(iconFeature);
+      vectorSource.addFeature(iconFeature);
 
-			const vectorLayer = new VectorLayer({
-				source: vectorSource,
-			});
+      const vectorLayer = new VectorLayer({
+        source: vectorSource,
+      });
 
-			return vectorLayer;
-		},
-		selectLocation(event) {
-			{
-				const pixel = event.pixel;
-				const coords = this.map.getCoordinateFromPixel(pixel);
-				this.markerPoint.setCoordinates(coords);
-				const lonLat = toLonLat(coords);
+      return vectorLayer;
+    },
+    selectLocation(event) {
+      {
+        const pixel = event.pixel;
+        const coords = this.map.getCoordinateFromPixel(pixel);
+        this.markerPoint.setCoordinates(coords);
+        const lonLat = toLonLat(coords);
 
-				this.$emit("location-selected", { lat: lonLat[1], long: lonLat[0] });
-			}
-		},
-	},
+        this.$emit("location-selected", { lat: lonLat[1], long: lonLat[0] });
+      }
+    },
+  },
 };
 </script>
 
