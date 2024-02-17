@@ -30,6 +30,8 @@ sed -ri "s~^MIDATA_CLIENT_UID=.*$~MIDATA_CLIENT_UID=$MIDATA_CLIENT_UID~" .env
 sed -ri "s~^MIDATA_CLIENT_SECRET=.*$~MIDATA_CLIENT_SECRET=$MIDATA_CLIENT_SECRET~" .env
 sed -ri "s~^MIDATA_REDIRECT_URI=.*$~MIDATA_REDIRECT_URI=$FRONTEND_URL/login~" .env
 
+sed -ri "s~^FRONTEND_URL=.*$~FRONTEND_URI=$FRONTEND_URL~" .env
+
 docker compose run --no-deps --entrypoint "composer install --no-dev" backend
 
 PHP_MIN_VERSION_ID=$(grep -Po '(?<=\(PHP_VERSION_ID >= )[0-9]+(?=\))' vendor/composer/platform_check.php)
