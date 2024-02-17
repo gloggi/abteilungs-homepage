@@ -23,7 +23,7 @@ class EventController extends Controller
         $currentDateTime = now();
         $user = Auth::user();
 
-        $query = Event::with(['startLocation', 'endLocation', 'groups', 'files']);
+        $query = Event::with(['startLocation', 'endLocation', 'groups', 'files', 'user']);
         if ($groupId) {
             $query->whereHas('groups', function($query) use ($groupId) {
                 $query->where('groups.id', $groupId);
@@ -63,7 +63,12 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
-        $event = Event::create($request->validated());
+        $validated = $request->validated();
+        $event = Event::create($validated);
+        if(!array_key_exists('user_id',$validated)){
+            $event->user_id = Auth::user()->id;
+            $event->save();
+        }
         $event->groups()->sync($request->input('groups', []));
         $event->files()->sync(array_column($request->input('files', []), 'id'));
 
@@ -72,7 +77,7 @@ class EventController extends Controller
 
     public function show($id)
     {
-        $event = Event::with('groups')->with('files')->find($id);
+        $event = Event::with(['groups','files', 'user'])->find($id);
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
@@ -138,7 +143,8 @@ class EventController extends Controller
                     'end_location_id' => $locationId,
                     'external_application_link' => $externalEvent['external_application_link'],
                     'start_time' => $eventDate['start_at'] ? Carbon::parse($eventDate['start_at']) : null,
-                    'end_time' => $eventDate['finish_at'] ? Carbon::parse($eventDate['finish_at']) : null
+                    'end_time' => $eventDate['finish_at'] ? Carbon::parse($eventDate['finish_at']) : null,
+                    'user_id' => $user->id,
                 ]
             );
             $group = Group::where('midata_id', $midataId)->first();

@@ -9,7 +9,7 @@ class Event extends Model
 {
 
     protected $fillable = [
-        'title', 'start_time', 'end_time', 'start_location_id', 'end_location_id', 'description', 'take_with_you', 'midata_id', 'external_application_link'
+        'title', 'start_time', 'end_time', 'start_location_id', 'end_location_id', 'description', 'take_with_you', 'midata_id', 'external_application_link', 'user_id'
     ];
 
 
@@ -46,5 +46,10 @@ class Event extends Model
     public function files()
     {
         return $this->belongsToMany(File::class, 'event_files', 'event_id', 'file_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

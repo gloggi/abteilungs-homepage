@@ -38,7 +38,7 @@ Route::post('/auth/midata/callback', [AuthController::class, 'handleProviderCall
 
 Route::middleware('auth:sanctum')->get('/user/info', [UserController::class, 'getUserInfo']);
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
     Route::get('/users', [UserController::class, 'index']);
 });
 

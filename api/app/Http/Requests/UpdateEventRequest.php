@@ -18,6 +18,7 @@ class UpdateEventRequest extends FormRequest
             'description' => 'nullable|string',
             'take_with_you' => 'nullable|string',
             'files' => 'nullable|array',
+            'user_id' => 'nullable|integer|exists:users,id',
         ];
     }
 }

@@ -38,6 +38,18 @@
             />
             <div class="p-3">
               <div v-html="event.description" v-router-link></div>
+              <p class="main-text" v-if="event.user">
+                Hast du noch Fragen? Dann melde dich bei
+                <a
+                  class="link hover:text-secondary"
+                  :href="`mailto:${event.user.email}`"
+                  >{{
+                    event.user.nickname
+                      ? event.user.nickname
+                      : event.user.firstname
+                  }}</a
+                >.
+              </p>
 
               <h4
                 v-if="event.takeWithYou"

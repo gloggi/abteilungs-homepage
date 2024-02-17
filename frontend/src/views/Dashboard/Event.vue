@@ -17,6 +17,14 @@
           v-model="content.title"
           :errors="errors.title"
         />
+        <SelectComponent
+          label="Responsible"
+          selection="User"
+          @selectUser="handleSelectUser"
+          :options="users"
+          :value="content.userId"
+          :errors="errors.userId"
+        />
         <TextInput
           label="Start"
           type="datetime-local"
@@ -113,6 +121,7 @@ export default {
       locations: [],
       groups: [],
       loadedKey: 0,
+      users: [],
     };
   },
   watch: {
@@ -197,11 +206,29 @@ export default {
     changeFiles(event) {
       this.content.files = event.files;
     },
+    handleSelectUser(event) {
+      console.log("selected", event);
+      this.content.userId = event;
+    },
+    async getUsers() {
+      try {
+        const response = await this.callApi("get", `/users`);
+        this.users = response.data.data.map((u) => {
+          return {
+            id: u.id,
+            name: `${u.nickname} (${u.firstname} ${u.lastname})`,
+          };
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
   async created() {
     await this.getEvent();
     await this.getLocations();
     await this.getGroups();
+    await this.getUsers();
   },
 };
 </script>
