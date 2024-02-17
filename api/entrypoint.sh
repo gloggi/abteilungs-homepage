@@ -9,6 +9,7 @@ if [[ ! -f .env ]]; then
     done
     php artisan key:generate
     php artisan config:cache
+    php artisan config:clear
 fi
 
 php artisan storage:link
