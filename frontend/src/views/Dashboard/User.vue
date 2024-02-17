@@ -67,7 +67,6 @@ export default {
 				);
 				this.content = response.data;
 				this.content.groups = this.content.groups.map((group) => group.id);
-				this.content.role = this.content.roles[0]?.id;
 				this.loadedKey++;
 			} catch (e) {
 				console.log(e);
@@ -91,6 +90,9 @@ export default {
 			} catch (e) {
 				console.log(e);
 			}
+		},
+		handleSelectRole(role) {
+			this.content.role = role;
 		},
 	},
 	async created() {

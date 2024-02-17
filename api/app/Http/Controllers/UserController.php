@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,11 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::with('roles')->with('groups')->find($id);
+        if($user->hasRole('admin')){
+            $user->role = 1;
+        }else if($user->hasRole('unitleader')){
+            $user->role = 2;
+        }
         return response()->json($user);
     }
 
@@ -61,14 +67,19 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         $user = User::find($id);
-        $user->nickname = $request->input('nickname');
-        $user->firstname = $request->input('firstname');
-        $user->lastname = $request->input('lastname');
-        $user->email = $request->input('email');
+        $validated = $request->validated();
+        $user->update($validated);
+        $user->roles()->detach();
+        if($request['role']==1){
+            $user->assignRole('admin');
+        }else if($request['role']==2){
+            $user->assignRole('unitleader');
+        }
         $user->save();
+        $user->groups()->sync($validated['groups']);
         return response()->json($user);
     }
 
