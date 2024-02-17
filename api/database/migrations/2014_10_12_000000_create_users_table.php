@@ -24,17 +24,6 @@ return new class extends Migration
             $table->integer('midata_id')->nullable();
             $table->timestamps();
         });
-
-        Schema::create('user_groups', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('group_id');
-            $table->timestamps();
-        
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
-        });
-
     }
 
     /**
@@ -42,7 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_groups');
         Schema::dropIfExists('users');
     }
 };
