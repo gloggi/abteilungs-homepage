@@ -178,18 +178,11 @@ export default {
   },
   methods: {
     async addOption(event, field) {
-      const changeFieldIndex = this.content.fields.findIndex(
-        (f) => field.id == f.id,
-      );
-      const optionFields = this.content.fields[changeFieldIndex].optionFields;
-      optionFields.push({ name: event.target.value });
-      event.target.value = "";
-      await new Promise((resolve) => {
-        setTimeout(resolve, 10);
-      });
-      const parent = event.target.parentNode.parentNode.parentNode.parentNode;
-      const inputElements = parent.querySelectorAll("input");
-      inputElements[inputElements.length - 2].focus();
+      field.optionFields.push({ name: event.target.value });
+      event.target.value = ""
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      const textFieldToFocus = document.getElementById(`selectFieldOption-${field.id}-${field.optionFields.length - 1}`)
+      textFieldToFocus.childNodes[1].focus()
     },
     changeOrder(newField) {
       const fieldIndex = this.content.fields.findIndex(

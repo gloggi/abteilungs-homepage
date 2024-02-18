@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFormRequest;
+use App\Http\Requests\UpdateFormRequest;
 use App\Models\Form;
 use App\Models\OptionField;
 use App\Models\SelectField;
@@ -36,7 +37,7 @@ class FormController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateFormRequest $request, $id)
     {
         $form = Form::find($id);
         if (!$form) {
