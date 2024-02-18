@@ -49,6 +49,7 @@ export default {
         { name: "Groups", type: "groupsItem" },
         { name: "Sections", type: "sectionsItem" },
         { name: "Camps", type: "campsItem" },
+        { name: "Location", type: "locationItem" },
       ],
     };
   },

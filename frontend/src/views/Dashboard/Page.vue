@@ -112,6 +112,16 @@
         :key="i"
         :item="pageItem"
       />
+      <LocationItem
+        v-if="pageItem.type == 'locationItem'"
+        boxTitle="Location Item"
+        @delete="deleteItem"
+        @startedDragging="isDragging = true"
+        @endedDragging="isDragging = false"
+        :key="i"
+        @changeLocation="changeLocationItem"
+        :item="pageItem"
+      />
       <AddPageItem
         @changeOrder="changeOrder"
         @select="addItem"
@@ -147,6 +157,7 @@ import GroupsItem from "../../components/admin/PageItems/GroupsItem.vue";
 import SectionsItem from "../../components/admin/PageItems/SectionsItem.vue";
 import FilesItem from "../../components/admin/PageItems/FilesItem.vue";
 import CampsItem from "../../components/admin/PageItems/CampsItem.vue";
+import LocationItem from "../../components/admin/PageItems/LocationItem.vue";
 
 export default {
   components: {
@@ -165,6 +176,7 @@ export default {
     CheckBox,
     FilesItem,
     CampsItem,
+    LocationItem,
   },
   data() {
     return {
@@ -258,6 +270,15 @@ export default {
       );
 
       this.content.pageItems[itemIndex].formId = formId;
+    },
+    changeLocationItem(event) {
+      const pageItemId = event.id;
+      const locationId = event.locationId;
+      const itemIndex = this.content.pageItems.findIndex(
+        (p) => p.id == pageItemId && p.type == "locationItem",
+      );
+
+      this.content.pageItems[itemIndex].locationId = locationId;
     },
     changeHeaderImages(event) {
       this.content.files = event.files;

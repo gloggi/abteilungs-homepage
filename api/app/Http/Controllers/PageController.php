@@ -9,6 +9,7 @@ use App\Models\FilesItem;
 use App\Models\FormItem;
 use App\Models\GenericItem;
 use App\Models\ImageItem;
+use App\Models\LocationItem;
 use App\Models\Page;
 use App\Models\TextItem;
 use Illuminate\Http\Request;
@@ -216,6 +217,16 @@ class PageController extends Controller
                             'page_id' => $page->id,
                             'sort' => $sort_counter,
                             'type' => 'campsItem'
+                        ]
+                    );
+                    break;
+                case 'locationItem':
+                    LocationItem::updateOrCreate(
+                        ['id' => $pageItemData['id'] ?? null],
+                        [
+                            'page_id' => $page->id,
+                            'sort' => $sort_counter,
+                            'location_id' => $pageItemData['location_id'] ?? null,
                         ]
                     );
                     break;

@@ -13,6 +13,7 @@
         :files="pageItem.files"
       />
       <CampsItem v-if="pageItem.type == 'campsItem'" :item="pageItem" />
+      <LocationItem v-if="pageItem.type == 'locationItem'" :item="pageItem" />
     </template>
   </PageWrapper>
 </template>
@@ -26,6 +27,7 @@ import ImageItem from "./ImageItem.vue";
 import PageWrapper from "./PageWrapper.vue";
 import SectionsItem from "./SectionsItem.vue";
 import TextItem from "./TextItem.vue";
+import LocationItem from "./LocationItem.vue";
 
 export default {
   props: ["page"],
@@ -44,6 +46,7 @@ export default {
     PageWrapper,
     FilesItem,
     CampsItem,
+    LocationItem,
   },
 };
 </script>
