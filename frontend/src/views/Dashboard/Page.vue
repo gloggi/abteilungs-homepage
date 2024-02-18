@@ -103,6 +103,15 @@
         :key="i"
         :item="pageItem"
       />
+      <CampsItem
+        v-if="pageItem.type == 'campsItem'"
+        boxTitle="Camps Item"
+        @delete="deleteItem"
+        @startedDragging="isDragging = true"
+        @endedDragging="isDragging = false"
+        :key="i"
+        :item="pageItem"
+      />
       <AddPageItem
         @changeOrder="changeOrder"
         @select="addItem"
@@ -137,6 +146,7 @@ import FormLabel from "../../components/admin/FormLabel.vue";
 import GroupsItem from "../../components/admin/PageItems/GroupsItem.vue";
 import SectionsItem from "../../components/admin/PageItems/SectionsItem.vue";
 import FilesItem from "../../components/admin/PageItems/FilesItem.vue";
+import CampsItem from "../../components/admin/PageItems/CampsItem.vue";
 
 export default {
   components: {
@@ -154,6 +164,7 @@ export default {
     SectionsItem,
     CheckBox,
     FilesItem,
+    CampsItem,
   },
   data() {
     return {
@@ -198,10 +209,7 @@ export default {
       try {
         await this.callApi("put", `/pages/${this.content.id}`, this.content);
         this.getPage();
-        this.$store.dispatch(
-          "notification/notify",
-          "The page has been successfully updated",
-        );
+        this.notifyUser("The page has been successfully updated");
       } catch (e) {
         console.log(e);
       }
@@ -224,8 +232,9 @@ export default {
       this.updatePage();
     },
     changeImageItem(event) {
+      console.log(event);
       const pageItemId = event.id;
-      const files = event.files;
+      const files = event.files.files;
       const itemIndex = this.content.pageItems.findIndex(
         (p) => p.id == pageItemId && p.type == "imageItem",
       );

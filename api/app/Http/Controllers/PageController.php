@@ -209,6 +209,16 @@ class PageController extends Controller
                         ]
                     );
                     break;
+                case 'campsItem':
+                    GenericItem::updateOrCreate(
+                        ['id' => $pageItemData['id'] ?? null],
+                        [
+                            'page_id' => $page->id,
+                            'sort' => $sort_counter,
+                            'type' => 'campsItem'
+                        ]
+                    );
+                    break;
                 default:
                     throw new \InvalidArgumentException("Unsupported field type: {$pageItemData['type']}");
             }

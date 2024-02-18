@@ -48,6 +48,7 @@ export default {
         { name: "Contact", type: "contactItem" },
         { name: "Groups", type: "groupsItem" },
         { name: "Sections", type: "sectionsItem" },
+        { name: "Camps", type: "campsItem" },
       ],
     };
   },

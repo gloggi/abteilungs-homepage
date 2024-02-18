@@ -12,10 +12,12 @@
         :title="pageItem.title"
         :files="pageItem.files"
       />
+      <CampsItem v-if="pageItem.type == 'campsItem'" :item="pageItem" />
     </template>
   </PageWrapper>
 </template>
 <script>
+import CampsItem from "./CampsItem.vue";
 import ContactItem from "./ContactItem.vue";
 import FilesItem from "./FilesItem.vue";
 import FormItem from "./FormItem.vue";
@@ -41,6 +43,7 @@ export default {
     GroupsItem,
     PageWrapper,
     FilesItem,
+    CampsItem,
   },
 };
 </script>
