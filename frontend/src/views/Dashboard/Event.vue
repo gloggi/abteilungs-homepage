@@ -58,6 +58,12 @@
           :value="content.endLocationId"
           :errors="errors.endLocationId"
         />
+        <TextInput
+          label="MiData Link"
+          type="url"
+          v-model="content.externalApplicationLink"
+          :errors="errors.externalApplicationLink"
+        />
         <div class="flex flex-col space-y-2">
           <FormLabel>Description</FormLabel>
           <Editor v-model="content.description" />

@@ -69,6 +69,16 @@
                 Downloads
               </h4>
               <FilesItem v-if="event.files.length > 0" :files="event.files" />
+              <div class="flex justify-end w-full">
+                <BasicButton
+                  class="self-end"
+                  v-if="event.externalApplicationLink"
+                >
+                  <a :href="event.externalApplicationLink">
+                    Auf MiData anmelden
+                  </a>
+                </BasicButton>
+              </div>
             </div>
           </div>
         </Transition>
@@ -84,9 +94,16 @@ import { de } from "date-fns/locale";
 import { gsap } from "gsap";
 import ContentWrapper from "./ContentWrapper.vue";
 import FilesItem from "./FilesItem.vue";
+import BasicButton from "./BasicButton.vue";
 
 export default {
-  components: { HeadingOne, MapComponent, ContentWrapper, FilesItem },
+  components: {
+    HeadingOne,
+    MapComponent,
+    ContentWrapper,
+    FilesItem,
+    BasicButton,
+  },
   props: {
     open: {
       type: Boolean,

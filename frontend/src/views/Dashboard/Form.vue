@@ -179,10 +179,12 @@ export default {
   methods: {
     async addOption(event, field) {
       field.optionFields.push({ name: event.target.value });
-      event.target.value = ""
+      event.target.value = "";
       await new Promise((resolve) => setTimeout(resolve, 10));
-      const textFieldToFocus = document.getElementById(`selectFieldOption-${field.id}-${field.optionFields.length - 1}`)
-      textFieldToFocus.childNodes[1].focus()
+      const textFieldToFocus = document.getElementById(
+        `selectFieldOption-${field.id}-${field.optionFields.length - 1}`,
+      );
+      textFieldToFocus.childNodes[1].focus();
     },
     changeOrder(newField) {
       const fieldIndex = this.content.fields.findIndex(

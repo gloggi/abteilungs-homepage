@@ -61,6 +61,10 @@
             v-model="content.successors"
             :options="groups"
           />
+          <div class="w-full md:w-1/4">
+            <FormLabel class=" ">Enable Group Page</FormLabel>
+            <CheckBox v-model="content.enableGroupPage" />
+          </div>
           <TextInput
             label="MiData Id"
             type="number"
@@ -112,6 +116,7 @@ import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
 import FilesSelector from "../../components/admin/FilesSelector.vue";
+import CheckBox from "../../components/admin/CheckBox.vue";
 export default {
   components: {
     Card,
@@ -125,6 +130,7 @@ export default {
     Editor,
     BannerImageSelector,
     FilesSelector,
+    CheckBox,
   },
   data() {
     return {

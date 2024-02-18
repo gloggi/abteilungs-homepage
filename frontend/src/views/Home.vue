@@ -24,6 +24,7 @@ import NavBar from "../components/main/NavBar.vue";
 import FooterComponent from "../components/main/FooterComponent.vue";
 import RegularPage from "./RegularPage.vue";
 import GroupPage from "./GroupPage.vue";
+import { pushScopeId } from "vue";
 
 export default {
   components: {
@@ -46,6 +47,9 @@ export default {
       if (this.$route.name == "GroupPage") {
         let groupId = this.$route.params.id;
         await this.getGroup(groupId);
+        if (!this.group.enableGroupPage) {
+          this.$router.go(-1);
+        }
         this.pageType = "groupPage";
       } else {
         let pageRoute = this.$route.path.substring(1);

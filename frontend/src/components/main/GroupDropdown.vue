@@ -9,17 +9,18 @@
     </li>
     <transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
       <ul v-if="showDropdown" class="absolute z-10 bg-primary w-full h-full">
-        <li
-          v-for="group in groups"
-          :key="group.id"
-          class="font-light p-3 py-5 pl-8 md:py-2 md:p-3 w-full md:px-5 hover:text-secondary text-white main-text md:text-2xl"
-        >
-          <router-link
-            @click="showDropdown = false"
-            :to="`/group/${group.id}`"
-            >{{ group.name }}</router-link
+        <template v-for="group in groups" :key="group.id">
+          <li
+            v-if="group.enableGroupPage"
+            class="font-light p-3 py-5 pl-8 md:py-2 md:p-3 w-full md:px-5 hover:text-secondary text-white main-text md:text-2xl"
           >
-        </li>
+            <router-link
+              @click="showDropdown = false"
+              :to="`/group/${group.id}`"
+              >{{ group.name }}</router-link
+            >
+          </li>
+        </template>
       </ul>
     </transition>
   </div>

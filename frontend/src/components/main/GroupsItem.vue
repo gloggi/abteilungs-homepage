@@ -58,7 +58,7 @@
     class="fixed inset-0 z-30 bg-black bg-opacity-80 h-screen w-screen flex justify-center items-center py-10"
     style="margin-top: 0"
   >
-    <div class="w-full mx-5 md:mx-0 md:w-1/2 h-full bg-white">
+    <div class="w-full mx-5 md:mx-0 md:w-1/2 h-full bg-white flex flex-col">
       <div class="bg-primary px-3 py-5 flex justify-between items-end">
         <h2 class="text-white text-heading-3 text-6xl">
           {{ currentGroup.name }}
@@ -73,7 +73,7 @@
           />
         </div>
       </div>
-      <div class="p-8">
+      <div class="p-8 h-full flex flex-col justify-between">
         <div class="border border-primary w-full p-3">
           <p class="main-text text-lg">
             <span class="font-semibold">Alter:</span>
@@ -119,11 +119,17 @@
             >
           </p>
         </div>
+        <BasicButton>
+          <router-link :to="`/group/${currentGroup.id}`" class="w-full"
+            >Zur Gruppenseite</router-link
+          >
+        </BasicButton>
       </div>
     </div>
   </div>
 </template>
 <script>
+import BasicButton from "./BasicButton.vue";
 import ContentWrapper from "./ContentWrapper.vue";
 
 export default {
@@ -191,6 +197,6 @@ export default {
     await this.getGroups();
     this.checkHash();
   },
-  components: { ContentWrapper },
+  components: { ContentWrapper, BasicButton },
 };
 </script>

@@ -19,7 +19,8 @@ class Group extends Model
         'gender',
         'parent_id',
         'midata_id',
-        'description'
+        'description',
+        'enable_group_page',
     ];
 
     public function headerImages()

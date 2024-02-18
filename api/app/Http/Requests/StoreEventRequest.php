@@ -19,6 +19,7 @@ class StoreEventRequest extends FormRequest
             'end_location_id' => 'nullable|integer|exists:locations,id',
             'files' => 'nullable|array',
             'user_id' => 'nullable|integer|exists:users,id',
+            'external_application_link' => 'nullable|string',
         ];
     }
 }
