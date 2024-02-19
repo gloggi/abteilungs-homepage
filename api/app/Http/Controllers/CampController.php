@@ -78,7 +78,6 @@ class CampController extends Controller
         foreach ($externalCamps['events'] as $externalCamp) {
             $eventDateIds = $externalCamp['links']['dates'] ?? [];
             $eventDate = collect($eventDateIds)->map(fn($id) => $eventDatesMap->get($id))->first();
-            error_log(floatval($externalCamp['cost']));
             Camp::updateOrCreate(
                 ['midata_id' => $externalCamp['id']],
                 [

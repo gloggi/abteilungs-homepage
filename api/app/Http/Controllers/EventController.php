@@ -133,7 +133,6 @@ class EventController extends Controller
                 $eventDateIds = $externalEvent['links']['dates'] ?? [];
                 $eventDate = collect($eventDateIds)->map(fn($id) => $eventDatesMap->get($id))->first();
                 $locationId = Location::firstWhere('name', $eventDate['location'])->id ?? null;
-                dump($externalEvent);
                 $event = Event::updateOrCreate(
                     ['midata_id' => $externalEvent['id']],
                     [
