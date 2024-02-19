@@ -2,10 +2,17 @@
   <ContentWrapper>
     <div class="w-full">
       <div
-        v-for="section in sections"
+        v-for="(section, i) in sections"
         class="flex flex-col md:flex-row p-3"
         :key="section.id"
         :style="`background-color: ${section.color}`"
+        :class="
+          i === 0
+            ? 'rounded-t-lg'
+            : i === sections.length - 1
+              ? 'rounded-b-lg'
+              : ''
+        "
       >
         <div
           class="flex flex-row md:flex-col space-x-3 md:space-x-0 md:justify-between items-start md:items-center md:space-y-12 mb-3 md:mb-0"
@@ -58,8 +65,12 @@
     class="fixed inset-0 z-30 bg-black bg-opacity-80 h-screen w-screen flex justify-center items-center py-10"
     style="margin-top: 0"
   >
-    <div class="w-full mx-5 md:mx-0 md:w-1/2 h-full bg-white flex flex-col">
-      <div class="bg-primary px-3 py-5 flex justify-between items-end">
+    <div
+      class="w-full mx-5 md:mx-0 md:w-1/2 h-full bg-white flex flex-col rounded-lg"
+    >
+      <div
+        class="bg-primary px-3 py-5 flex justify-between items-end rounded-t-lg"
+      >
         <h2 class="text-white text-heading-3 text-6xl">
           {{ currentGroup.name }}
         </h2>
@@ -74,7 +85,7 @@
         </div>
       </div>
       <div class="p-8 h-full flex flex-col justify-between">
-        <div class="border border-primary w-full p-3">
+        <div class="border border-primary w-full p-3 rounded-lg">
           <p class="main-text text-lg">
             <span class="font-semibold">Alter:</span>
             {{ currentGroup.section.fromAge }} -

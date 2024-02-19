@@ -8,7 +8,10 @@
       <font-awesome-icon class="" :icon="icons.faCaretDown" />
     </li>
     <transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
-      <ul v-if="showDropdown" class="absolute z-10 bg-primary w-full h-full">
+      <ul
+        v-if="showDropdown"
+        class="absolute z-10 bg-primary w-full h-full rounded-lg"
+      >
         <template v-for="group in groups" :key="group.id">
           <li
             v-if="group.enableGroupPage"

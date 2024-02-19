@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="border border-primary mb-2">
+    <div class="border border-primary mb-2 rounded-lg">
       <button
         @click="show = !show"
-        class="text-left w-full bg-primary p-5 flex flex-col text-white"
+        class="text-left w-full bg-primary p-5 flex flex-col text-white rounded-lg"
       >
         <HeadingOne>{{ camp.name }}</HeadingOne>
         <div class="w-full">

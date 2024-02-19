@@ -1,37 +1,44 @@
 <template>
-  <nav
-    class="relative z-10 md:static bg-primary w-full flex h-[75px] -mt-[75px] px-5 flex-col md:flex-row justify-between items-center text-white"
+  <div
+    class="rounded-t-full"
+    :class="
+      showMobileMenu ? 'bg-primary ' : isDesktop ? 'bg-[#808080]' : 'bg-white'
+    "
   >
-    <div class="flex justify-between items-center w-full h-full md:w-auto">
-      <div class="flex items-center">
-        <router-link to="/"
-          ><img
-            class="h-14"
-            :src="`${backendURL}/${settings?.divisionLogo?.path}`"
-        /></router-link>
+    <nav
+      class="relative z-10 md:static bg-primary w-full flex h-[75px] -mt-[75px] px-5 flex-col md:flex-row justify-between items-center text-white rounded-lg"
+    >
+      <div class="flex justify-between items-center w-full h-full md:w-auto">
+        <div class="flex items-center">
+          <router-link to="/"
+            ><img
+              class="h-14"
+              :src="`${backendURL}/${settings?.divisionLogo?.path}`"
+          /></router-link>
+        </div>
+        <button
+          v-if="!isDesktop"
+          @click="showMobileMenu = !showMobileMenu"
+          class="px-3"
+        >
+          <font-awesome-icon :icon="icons.faBars" />
+        </button>
       </div>
-      <button
-        v-if="!isDesktop"
-        @click="showMobileMenu = !showMobileMenu"
-        class="px-3"
-      >
-        <font-awesome-icon :icon="icons.faBars" />
-      </button>
-    </div>
-    <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
-      <ul
-        class="flex flex-col md:flex-row md:space-x-5 w-full md:w-auto absolute z-10 md:static top-[75px] md:top-0 bg-primary h-full md:h-auto"
-        v-if="showMobileMenu || isDesktop"
-      >
-        <template v-for="menuItem in menuItems" :key="menuItem.id">
-          <NavLinkItem v-if="!menuItem.special" :menuItem="menuItem">{{
-            menuItem.title
-          }}</NavLinkItem>
-          <GroupDropdown v-else />
-        </template>
-      </ul>
-    </Transition>
-  </nav>
+      <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
+        <ul
+          class="flex flex-col md:flex-row md:space-x-5 w-full md:w-auto absolute z-10 md:static top-[75px] md:top-0 bg-primary h-full md:h-auto"
+          v-if="showMobileMenu || isDesktop"
+        >
+          <template v-for="menuItem in menuItems" :key="menuItem.id">
+            <NavLinkItem v-if="!menuItem.special" :menuItem="menuItem">{{
+              menuItem.title
+            }}</NavLinkItem>
+            <GroupDropdown v-else />
+          </template>
+        </ul>
+      </Transition>
+    </nav>
+  </div>
 </template>
 <script>
 import GroupDropdown from "./GroupDropdown.vue";

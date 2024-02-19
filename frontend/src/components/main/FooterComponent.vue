@@ -1,54 +1,60 @@
 <template>
-  <div class="flex justify-center w-full background bg-[#4A4A4A]">
+  <div :class="isDesktop ? 'bg-[#808080]' : 'bg-white'">
     <div
-      class="md:w-[900px] flex flex-col md:flex-row items-start w-full px-5 md:px-0 md:justify-between py-6 md:space-y-0 space-y-10"
+      class="flex justify-center w-full background bg-[#4A4A4A] rounded-t-lg"
     >
-      <div>
-        <h2 class="text-heading-2 text-primary text-4xl">Gruppen</h2>
-        <ul class="text-white text-xl main-text space-y-1 pt-5">
-          <template v-for="group in transformedGroups" :key="group.id">
-            <li v-if="!group.parentId" class="pl-6">
-              <router-link
-                :to="group.enableGroupPage ? `/group/${group.route}` : '#'"
-                >{{ group.name }}</router-link
-              >
-              <ul
-                v-if="group.children.length > 0"
-                class="text-white text-xl main-text space-y-1"
-              >
-                <li
-                  v-for="child in group.children"
-                  :key="child.id"
-                  class="pl-6"
+      <div
+        class="md:w-[900px] flex flex-col md:flex-row items-start w-full px-5 md:px-0 md:justify-between py-6 md:space-y-0 space-y-10"
+      >
+        <div>
+          <h2 class="text-heading-2 text-primary text-4xl">Gruppen</h2>
+          <ul class="text-white text-xl main-text space-y-1 pt-5">
+            <template v-for="group in transformedGroups" :key="group.id">
+              <li v-if="!group.parentId" class="pl-6">
+                <router-link
+                  :to="group.enableGroupPage ? `/group/${group.route}` : '#'"
+                  >{{ group.name }}</router-link
                 >
-                  <router-link
-                    :to="child.enableGroupPage ? `/group/${child.route}` : '#'"
-                    >{{ child.name }}</router-link
+                <ul
+                  v-if="group.children.length > 0"
+                  class="text-white text-xl main-text space-y-1"
+                >
+                  <li
+                    v-for="child in group.children"
+                    :key="child.id"
+                    class="pl-6"
                   >
-                </li>
-              </ul>
+                    <router-link
+                      :to="
+                        child.enableGroupPage ? `/group/${child.route}` : '#'
+                      "
+                      >{{ child.name }}</router-link
+                    >
+                  </li>
+                </ul>
+              </li>
+            </template>
+          </ul>
+        </div>
+        <div>
+          <h2 class="text-heading-2 text-primary text-4xl">Links</h2>
+          <ul class="text-white text-xl main-text space-y-1 pt-5 pl-6">
+            <li v-for="link in footerLinks" :key="link.id">
+              <a :href="link.url" target="_blank">{{ link.title }}</a>
             </li>
-          </template>
-        </ul>
-      </div>
-      <div>
-        <h2 class="text-heading-2 text-primary text-4xl">Links</h2>
-        <ul class="text-white text-xl main-text space-y-1 pt-5 pl-6">
-          <li v-for="link in footerLinks" :key="link.id">
-            <a :href="link.url" target="_blank">{{ link.title }}</a>
-          </li>
-          <li>
-            <router-link :to="{ name: 'Login' }">Login</router-link>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="text-heading-2 text-primary text-4xl">Kontakt</h2>
-        <div
-          class="text-white pl-6"
-          v-html="settings?.contactInFooter"
-          v-router-link
-        ></div>
+            <li>
+              <router-link :to="{ name: 'Login' }">Login</router-link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="text-heading-2 text-primary text-4xl">Kontakt</h2>
+          <div
+            class="text-white pl-6"
+            v-html="settings?.contactInFooter"
+            v-router-link
+          ></div>
+        </div>
       </div>
     </div>
   </div>
@@ -58,6 +64,7 @@ export default {
   data() {
     return {
       footerLinks: [],
+      isDesktop: window.innerWidth > 768,
     };
   },
   methods: {

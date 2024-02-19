@@ -3,7 +3,7 @@
     <form class="space-y-5" @submit.prevent="handleForm">
       <HeadingOne class="text-primary">{{ item.form.name }}</HeadingOne>
 
-      <div class="flex flex-col space-y-5 pl-4">
+      <div class="flex flex-col space-y-5">
         <div
           v-for="field in item.form.fields"
           :key="field.id"
@@ -16,7 +16,7 @@
             v-if="field.type == 'textField'"
             v-model="formContent[field.key]"
             :required="field.required"
-            class="border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary w-full"
+            class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary w-full"
             :type="field.inputType"
             :placeholder="field.placeholder"
           />
@@ -25,14 +25,14 @@
             v-model="formContent[field.key]"
             :required="field.required"
             rows="3"
-            class="border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary"
+            class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary"
             :placeholder="field.placeholder"
           ></textarea>
           <select
             v-if="field.type == 'selectField'"
             v-model="formContent[field.key]"
             :required="field.required"
-            class="border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary"
+            class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary"
           >
             <option
               v-for="option in field.optionFields"
@@ -44,16 +44,12 @@
           </select>
         </div>
       </div>
-      <button
-        type="submit"
-        class="bg-primary text-white rounded-lg p-5 hover:bg-secondary w-fit main-text"
-      >
-        Absenden
-      </button>
+      <BasicButton class="w-full" type="submit"> Absenden </BasicButton>
     </form>
   </ContentWrapper>
 </template>
 <script>
+import BasicButton from "./BasicButton.vue";
 import ContentWrapper from "./ContentWrapper.vue";
 import HeadingOne from "./HeadingOne.vue";
 
@@ -80,6 +76,6 @@ export default {
     },
   },
   async created() {},
-  components: { HeadingOne, ContentWrapper },
+  components: { HeadingOne, ContentWrapper, BasicButton },
 };
 </script>

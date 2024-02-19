@@ -1,10 +1,10 @@
 <template>
   <div>
     <ContentWrapper>
-      <div class="border border-primary mb-2">
+      <div class="border border-primary mb-2 rounded-lg">
         <button
           @click="show = !show"
-          class="text-left w-full bg-primary p-5 flex flex-col text-white"
+          class="text-left w-full bg-primary p-5 flex flex-col text-white rounded-lg"
         >
           <HeadingOne>{{ event.title }}</HeadingOne>
           <div class="grid grid-cols-2 w-full">
