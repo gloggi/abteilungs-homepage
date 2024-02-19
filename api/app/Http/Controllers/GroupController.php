@@ -36,10 +36,19 @@ class GroupController extends Controller
         return response()->json($group, 201);
     }
 
-    public function show($id)
+    public function show($idOrRoute)
     {
-        $group = Group::with(['section', 'file', 'predecessors', 'successors', 'parent', 'headerImages', 'files'])
-            ->find($id);
+        $query = Group::with(['section', 'file', 'predecessors', 'successors', 'parent', 'headerImages', 'files']);
+        if (is_numeric($idOrRoute)) {
+            $group = $query->find($idOrRoute);
+        } else {
+            $groups = $query->get();
+            $filteredGroups = $groups->filter(function ($group) use ($idOrRoute) {
+                return $group->route == $idOrRoute;
+            });
+
+            $group = $filteredGroups->first();
+        }
 
         if (!$group) {
             return response()->json(['message' => 'Group not found'], 404);
@@ -56,7 +65,7 @@ class GroupController extends Controller
             return response()->json(['message' => 'Group not found'], 404);
         }
         $user = Auth::user();
-        if($user->hasRole('unitleader') && !$user->groups->contains($group)){
+        if ($user->hasRole('unitleader') && !$user->groups->contains($group)) {
             return response()->json(['message' => 'You are not allowed to update this group'], 403);
         }
 

@@ -9,7 +9,7 @@
           <template v-for="group in transformedGroups" :key="group.id">
             <li v-if="!group.parentId" class="pl-6">
               <router-link
-                :to="group.enableGroupPage ? `/group/${group.id}` : '#'"
+                :to="group.enableGroupPage ? `/group/${group.route}` : '#'"
                 >{{ group.name }}</router-link
               >
               <ul
@@ -22,7 +22,7 @@
                   class="pl-6"
                 >
                   <router-link
-                    :to="child.enableGroupPage ? `/group/${child.id}` : '#'"
+                    :to="child.enableGroupPage ? `/group/${child.route}` : '#'"
                     >{{ child.name }}</router-link
                   >
                 </li>

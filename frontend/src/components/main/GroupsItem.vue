@@ -120,7 +120,7 @@
           </p>
         </div>
         <BasicButton>
-          <router-link :to="`/group/${currentGroup.id}`" class="w-full"
+          <router-link :to="`/group/${currentGroup.route}`" class="w-full"
             >Zur Gruppenseite</router-link
           >
         </BasicButton>

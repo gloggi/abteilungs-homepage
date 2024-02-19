@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\TransformTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    use HasFactory;
+    use HasFactory, TransformTrait;
 
     protected $fillable = [
         'name',
@@ -22,6 +23,14 @@ class Group extends Model
         'description',
         'enable_group_page',
     ];
+
+    protected $appends = ['route'];
+
+    public function getRouteAttribute()
+    {
+        return $this->toCamelCase($this->name);
+    }
+
 
     public function headerImages()
     {
