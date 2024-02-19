@@ -57,18 +57,12 @@
 export default {
   data() {
     return {
-      groups: [],
       footerLinks: [],
     };
   },
   methods: {
     async getGroups() {
-      try {
-        const response = await this.callApi("get", "/groups");
-        this.groups = response.data.data;
-      } catch (error) {
-        console.log(error);
-      }
+      this.$store.dispatch("groups/fetchGroups");
     },
     async getFooterLinks() {
       try {
@@ -86,9 +80,12 @@ export default {
         children: this.groups.filter((g) => g.parentId === group.id),
       }));
     },
+    groups() {
+      return this.$store.state.groups.groups;
+    },
   },
   async created() {
-    await this.getGroups();
+    this.getGroups();
     await this.getFooterLinks();
   },
 };

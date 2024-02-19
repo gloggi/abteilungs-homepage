@@ -25,22 +25,20 @@ import ImageItem from "./ImageItem.vue";
 export default {
   props: ["item"],
   data() {
-    return {
-      sections: [],
-    };
+    return {};
+  },
+  computed: {
+    sections() {
+      return this.$store.state.sections.sections;
+    },
   },
   methods: {
-    async getSections() {
-      try {
-        const response = await this.callApi("get", "/sections");
-        this.sections = response.data.data;
-      } catch (e) {
-        console.log(e);
-      }
+    getSections() {
+      this.$store.dispatch("sections/fetchSections");
     },
   },
   async created() {
-    await this.getSections();
+    this.getSections();
   },
   components: { ImageItem, HeadingOne, ContentWrapper },
 };

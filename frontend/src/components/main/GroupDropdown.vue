@@ -32,21 +32,20 @@ import { gsap } from "gsap";
 export default {
   data() {
     return {
-      groups: [],
       showDropdown: false,
       icons: {
         faCaretDown,
       },
     };
   },
+  computed: {
+    groups() {
+      return this.$store.state.groups.groups;
+    },
+  },
   methods: {
-    async getGroups() {
-      try {
-        const response = await this.callApi("get", "groups");
-        this.groups = response.data.data;
-      } catch (error) {
-        console.log(error);
-      }
+    getGroups() {
+      this.$store.dispatch("groups/fetchGroups");
     },
     beforeEnter(el) {
       el.style.height = "0";

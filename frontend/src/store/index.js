@@ -7,6 +7,8 @@ import { notification } from "./modules/notification";
 import { pageInEdit } from "./modules/pageInEdit";
 import { drag } from "./modules/drag";
 import { settings } from "./modules/settings";
+import { groups } from "./modules/groups";
+import { sections } from "./modules/sections";
 
 export default createStore({
   modules: {
@@ -18,5 +20,7 @@ export default createStore({
     pageInEdit,
     drag,
     settings,
+    groups,
+    sections,
   },
 });

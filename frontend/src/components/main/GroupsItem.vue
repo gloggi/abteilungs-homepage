@@ -136,27 +136,23 @@ export default {
   props: ["item"],
   data() {
     return {
-      sections: [],
-      groups: [],
       currentGroup: undefined,
     };
   },
-  methods: {
-    async getSections() {
-      try {
-        const response = await this.callApi("get", "/sections");
-        this.sections = response.data.data;
-      } catch (e) {
-        console.log(e);
-      }
+  computed: {
+    groups() {
+      return this.$store.state.groups.groups;
     },
-    async getGroups() {
-      try {
-        const response = await this.callApi("get", "/groups");
-        this.groups = response.data.data;
-      } catch (e) {
-        console.log(e);
-      }
+    sections() {
+      return this.$store.state.sections.sections;
+    },
+  },
+  methods: {
+    getSections() {
+      this.$store.dispatch("sections/fetchSections");
+    },
+    getGroups() {
+      this.$store.dispatch("groups/fetchGroups");
     },
     selectGenderIcon(gender) {
       if (gender === 1) {
@@ -193,8 +189,8 @@ export default {
     },
   },
   async created() {
-    await this.getSections();
-    await this.getGroups();
+    this.getSections();
+    this.getGroups();
     this.checkHash();
   },
   components: { ContentWrapper, BasicButton },
