@@ -12,13 +12,13 @@
     <Card class="mt-4">
       <div class="flex flex-col space-y-2">
         <TextInput
-          label="Title"
+          :label="$t('dashboard.title')"
           type="text"
           v-model="content.title"
           :errors="errors.title"
         />
         <SelectComponent
-          label="Responsible"
+          :label="$t('dashboard.responsible')"
           selection="User"
           @selectUser="handleSelectUser"
           :options="users"
@@ -26,24 +26,24 @@
           :errors="errors.userId"
         />
         <TextInput
-          label="Start"
+          :label="$t('dashboard.start')"
           type="datetime-local"
           v-model="content.startTime"
           :errors="errors.startTime"
         />
         <TextInput
-          label="End"
+          :label="$t('dashboard.end')"
           type="datetime-local"
           v-model="content.endTime"
           :errors="errors.endTime"
         />
         <MultipleSelect
-          label="Groups"
+          :label="$t('dashboard.groups')"
           v-model="content.groups"
           :options="groups"
         />
         <SelectComponent
-          label="Start Location"
+          :label="$t('dashboard.startLocation')"
           selection="StartLocation"
           @selectStartLocation="handleSelectStartLocation"
           :options="locations"
@@ -51,7 +51,7 @@
           :errors="errors.startLocationId"
         />
         <SelectComponent
-          label="End Location"
+          :label="$t('dashboard.endLocation')"
           selection="EndLocation"
           @selectEndLocation="handleSelectEndLocation"
           :options="locations"
@@ -59,21 +59,21 @@
           :errors="errors.endLocationId"
         />
         <TextInput
-          label="MiData Link"
+          :label="$t('dashboard.midataLink')"
           type="url"
           v-model="content.externalApplicationLink"
           :errors="errors.externalApplicationLink"
         />
         <div class="flex flex-col space-y-2">
-          <FormLabel>Description</FormLabel>
+          <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
           <Editor v-model="content.description" />
         </div>
         <div class="flex flex-col space-y-2">
-          <FormLabel>Take with you</FormLabel>
+          <FormLabel>{{ $t("dashboard.takeWithYou") }}</FormLabel>
           <Editor v-model="content.takeWithYou" />
         </div>
         <div class="flex flex-col space-y-2">
-          <FormLabel>Files</FormLabel>
+          <FormLabel>{{ $t("dashboard.files") }}</FormLabel>
           <FilesSelector
             :key="loadedKey"
             :item="{ files: content.files }"

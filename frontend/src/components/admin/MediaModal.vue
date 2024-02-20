@@ -1,7 +1,7 @@
 <template>
   <Modal @close="close" class="overflow-y-scroll">
     <div class="flex flex-col space-y-2">
-      <h1 class="text-4xl font-bold pb-2">Bilder</h1>
+      <h1 class="text-4xl font-bold pb-2">{{ $t("dashboard.files") }}</h1>
       <DragAndDropUpload @uploadedFile="gridKey++" />
 
       <SelectMediaGrid

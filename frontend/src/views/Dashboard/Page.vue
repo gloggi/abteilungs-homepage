@@ -9,19 +9,26 @@
       backLinkTo="Pages"
     />
     <Card class="space-y-2">
-      <TextInput label="Title" v-model="content.title" :errors="errors.title" />
+      <TextInput
+        :label="$t('dashboard.title')"
+        v-model="content.title"
+        :errors="errors.title"
+      />
       <TextInput
         class="mt-2"
-        label="Route"
-        info="If left blank, this field points to the root directory of the website"
+        :label="$t('dashboard.route')"
+        :info="$t('dashboard.infoRootDirectory')"
         v-model="content.route"
         :errors="errors.route"
       />
-      <CheckBox label="Show Big Header" v-model="content.bigHeader" />
+      <CheckBox
+        :label="$t('dashboard.showBigHeader')"
+        v-model="content.bigHeader"
+      />
 
-      <FormLabel>Header Images</FormLabel>
+      <FormLabel>{{ $t("dashboard.headerImages") }}</FormLabel>
       <BannerImageSelector
-        info="If the 'Show Big Header' is selected, the perfect aspect ratio is 16:9, otherwise the perfect aspect ratio is 32:9."
+        :info="$t('dashboard.infoAspectRatio')"
         :item="content"
         @changeImages="changeHeaderImages"
       />
@@ -35,7 +42,7 @@
     <div v-for="(pageItem, i) in content.pageItems" :key="i">
       <TextItem
         v-if="pageItem.type == 'textItem'"
-        boxTitle="Text Item"
+        :boxTitle="$t('dashboard.textItem')"
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
@@ -47,7 +54,7 @@
       />
       <ImageItem
         v-if="pageItem.type == 'imageItem'"
-        boxTitle="Image Item"
+        :boxTitle="$t('dashboard.imageItem')"
         @changeImages="changeImageItem"
         :item="pageItem"
         @delete="deleteItem"
@@ -57,7 +64,7 @@
       />
       <FilesItem
         v-if="pageItem.type == 'filesItem'"
-        boxTitle="Files Item"
+        :boxTitle="$t('dashboard.filesItem')"
         @changeFiles="changeFilesItem"
         v-model:title="pageItem.title"
         :item="pageItem"
@@ -68,7 +75,7 @@
       />
       <FormItem
         v-if="pageItem.type == 'formItem'"
-        boxTitle="Form Item"
+        :boxTitle="$t('dashboard.formItem')"
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
@@ -78,7 +85,7 @@
       />
       <ContactItem
         v-if="pageItem.type == 'contactItem'"
-        boxTitle="Contact Item"
+        :boxTitle="$t('dashboard.contactItem')"
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
@@ -87,7 +94,7 @@
       />
       <GroupsItem
         v-if="pageItem.type == 'groupsItem'"
-        boxTitle="Groups Item"
+        :boxTitle="$t('dashboard.groupsItem')"
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
@@ -96,7 +103,7 @@
       />
       <SectionsItem
         v-if="pageItem.type == 'sectionsItem'"
-        boxTitle="Sections Item"
+        :boxTitle="$t('dashboard.sectionsItem')"
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
@@ -105,7 +112,7 @@
       />
       <CampsItem
         v-if="pageItem.type == 'campsItem'"
-        boxTitle="Camps Item"
+        :boxTitle="$t('dashboard.campsItem')"
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
@@ -114,7 +121,7 @@
       />
       <LocationItem
         v-if="pageItem.type == 'locationItem'"
-        boxTitle="Location Item"
+        :boxTitle="$t('dashboard.locationItem')"
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"

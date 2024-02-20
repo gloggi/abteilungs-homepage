@@ -4,7 +4,7 @@
       <input type="file" name="images" @change="onChange" />
     </div>
     <div class="form-group">
-      <button class="btn btn-success">Submit</button>
+      <button class="btn btn-success">{{ $t("dashboard.submit") }}</button>
     </div>
   </form>
 </template>

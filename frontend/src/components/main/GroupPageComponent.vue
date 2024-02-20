@@ -3,12 +3,14 @@
     <TextItem :item="{ title: group.name, body: group.description }" />
     <FilesItem
       v-if="group.files.length > 0"
-      title="Downloads"
+      :title="$t('page.downloads')"
       :files="group.files"
     />
     <div>
       <ContentWrapper>
-        <HeadingOne class="text-primary pb-5">Anlässe</HeadingOne>
+        <HeadingOne class="text-primary pb-5">{{
+          $t("page.events")
+        }}</HeadingOne>
       </ContentWrapper>
       <div v-if="events.length > 0">
         <Event

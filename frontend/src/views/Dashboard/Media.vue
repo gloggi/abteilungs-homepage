@@ -51,21 +51,31 @@
           </button>
         </div>
         <div class="flex flex-col space-y-2 pt-8 w-full">
-          <TextInput label="Name" v-model="selectedFile.name" />
-          <TextInput label="Category" v-model="selectedFile.category" />
-          <CopyField label="Extension" :value="selectedFile.extension" />
+          <TextInput
+            :label="$t('dashboard.name')"
+            v-model="selectedFile.name"
+          />
+          <TextInput
+            :label="$t('dashboard.category')"
+            v-model="selectedFile.category"
+          />
           <CopyField
-            label="URL"
+            :label="$t('dashboard.extension')"
+            :value="selectedFile.extension"
+          />
+          <CopyField
+            :label="$t('dashboard.url')"
             :value="`${backendURL}/${selectedFile.path}`"
           />
           <CopyField
-            label="Thumbnail URL"
+            :label="$t('dashboard.thumbnailUrl')"
             :value="`${backendURL}/${selectedFile.thumbnail}`"
           />
         </div>
         <div class="flex justify-between pt-5">
           <div class="font-cursive text-gray-400">
-            Created at {{ formatDateTime(selectedFile.createdAt) }}
+            {{ $t("dashboard.createdAt") }}
+            {{ formatDateTime(selectedFile.createdAt) }}
           </div>
         </div>
       </div>

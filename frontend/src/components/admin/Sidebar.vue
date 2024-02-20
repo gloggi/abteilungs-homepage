@@ -43,56 +43,56 @@
       </div>
     </router-link>
     <SidebarItem v-if="isAdmin" to="/dashboard/menu" :icon="icons.faEllipsis">
-      Menu & Links
+      {{ $t("dashboard.menuAndLinks") }}
     </SidebarItem>
     <SidebarItem v-if="isAdmin" to="/dashboard/pages" :icon="icons.faBookOpen">
-      Pages
+      {{ $t("dashboard.pages") }}
     </SidebarItem>
     <SidebarItem to="/dashboard/groups" :icon="icons.faUsers">
-      Groups
+      {{ $t("dashboard.groups") }}
     </SidebarItem>
     <SidebarItem
       v-if="isAdmin"
       to="/dashboard/contacts"
       :icon="icons.faAddressCard"
     >
-      Contacts
+      {{ $t("dashboard.contacts") }}
     </SidebarItem>
     <SidebarItem v-if="isAdmin" to="/dashboard/sections" :icon="icons.faStairs">
-      Sections
+      {{ $t("dashboard.sections") }}
     </SidebarItem>
     <SidebarItem to="/dashboard/events" :icon="icons.faCalendarDays">
-      Events
+      {{ $t("dashboard.events") }}
     </SidebarItem>
     <SidebarItem
       v-if="isAdmin"
       to="/dashboard/camps"
       :icon="icons.faCampground"
     >
-      Camps
+      {{ $t("dashboard.camps") }}
     </SidebarItem>
     <SidebarItem to="/dashboard/locations" :icon="icons.faLocationDot">
-      Locations
+      {{ $t("dashboard.locations") }}
     </SidebarItem>
     <SidebarItem
       v-if="isAdmin"
       to="/dashboard/forms"
       :icon="icons.faRectangleList"
     >
-      Forms
+      {{ $t("dashboard.forms") }}
     </SidebarItem>
     <SidebarItem to="/dashboard/media" :icon="icons.faPhotoVideo">
-      Media
+      {{ $t("dashboard.media") }}
     </SidebarItem>
     <SidebarItem v-if="isAdmin" to="/dashboard/users" :icon="icons.faUser">
-      Users
+      {{ $t("dashboard.users") }}
     </SidebarItem>
     <SidebarItem v-if="isAdmin" to="/dashboard/settings" :icon="icons.faGear">
-      Settings
+      {{ $t("dashboard.settings") }}
     </SidebarItem>
     <div class="h-full flex flex-col justify-end pb-5">
       <SidebarItem @click="logout" class="" to="" :icon="icons.faDoorOpen">
-        Logout
+        {{ $t("dashboard.logout") }}
       </SidebarItem>
     </div>
   </div>

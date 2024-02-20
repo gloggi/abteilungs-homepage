@@ -1,8 +1,10 @@
 <template>
   <OverviewTemplate
-    name="Camps"
+    :name="$t('dashboard.camps')"
     entity="camps"
-    titles="Name,Start Date,End Date,Participants"
+    :titles="`${$t('dashboard.name')},${$t('dashboard.startDate')},${$t(
+      'dashboard.endDate',
+    )},${$t('dashboard.participants')}`"
     columns="name:link(id),startAt:date,finishAt:date,participantCount"
     pushAfterCreationTo="Camp"
     :midataSync="true"

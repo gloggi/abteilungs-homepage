@@ -11,42 +11,42 @@
     <Card class="mt-4">
       <div class="flex flex-col space-y-2" :key="loadedKey">
         <TextInput
-          label="Name"
+          :label="$t('dashboard.name')"
           type="text"
           v-model="content.name"
           :errors="errors.name"
         />
         <div class="flex flex-col space-y-2">
-          <FormLabel>Description</FormLabel>
+          <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
           <Editor v-model="content.description" />
         </div>
         <div class="flex">
           <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>Application Opening At</FormLabel>
+            <FormLabel>{{ $t("dashboard.applicationOpeningAt") }}</FormLabel>
             {{ formatDate(content.applicationOpeningAt) }}
           </div>
           <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>Application Closing At</FormLabel>
+            <FormLabel>{{ $t("dashboard.applicationClosingAt") }}</FormLabel>
             {{ formatDate(content.applicationClosingAt) }}
           </div>
         </div>
         <div class="flex">
           <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>Start At</FormLabel>
+            <FormLabel>{{ $t("dashboard.startAt") }}</FormLabel>
             {{ formatDate(content.startAt) }}
           </div>
           <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>Finish At</FormLabel>
+            <FormLabel>{{ $t("dashboard.finishAt") }}</FormLabel>
             {{ formatDate(content.finishAt) }}
           </div>
         </div>
         <div class="flex">
           <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>Participants Count</FormLabel>
+            <FormLabel>{{ $t("dashboard.participantsCount") }}</FormLabel>
             {{ content.participantCount }}
           </div>
           <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>Maximum Participants</FormLabel>
+            <FormLabel>{{ $t("dashboard.maximumParticipants") }}</FormLabel>
             {{ content.maximumParticipants }}
           </div>
         </div>

@@ -1,8 +1,8 @@
 <template>
   <OverviewTemplate
-    name="Forms"
+    :name="$t('dashboard.forms')"
     entity="forms"
-    titles="Name,E-Mail"
+    :titles="`${$t('dashboard.name')},${$t('dashboard.email')}`"
     columns="name:link(id),email"
     pushAfterCreationTo="Form"
   />

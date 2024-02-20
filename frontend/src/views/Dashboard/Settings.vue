@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50 rounded-lg p-5 flex items-center mb-2">
-    <h2 class="font-extrabold text-4xl">Settings</h2>
+    <h2 class="font-extrabold text-4xl">{{ $t("dashboard.settings") }}</h2>
   </div>
   <div class="flex justify-end mb-2">
     <div>
@@ -16,18 +16,24 @@
     v-if="this.settings"
     class="bg-gray-50 rounded-lg p-3 flex flex-col space-y-2"
   >
-    <TextInput label="Site Title" v-model="settings.siteTitle" />
-    <TextInput label="Division Name" v-model="settings.divisionName" />
+    <TextInput
+      :label="$t('dashboard.siteTitle')"
+      v-model="settings.siteTitle"
+    />
+    <TextInput
+      :label="$t('dashboard.divisionName')"
+      v-model="settings.divisionName"
+    />
     <div class="flex">
       <div class="w-1/2">
-        <FormLabel>Division Logo</FormLabel>
+        <FormLabel>{{ $t("dashboard.divisionLogo") }}</FormLabel>
         <LogoDisplay
           :logo="settings.divisionLogo"
           @selectImage="(e) => updateLogo('divisionLogo', e)"
         />
       </div>
       <div class="w-1/2">
-        <FormLabel>Website Icon</FormLabel>
+        <FormLabel>{{ $t("dashboard.websiteIcon") }}</FormLabel>
         <LogoDisplay
           :logo="settings.websiteIcon"
           @selectImage="(e) => updateLogo('websiteIcon', e)"
@@ -36,28 +42,32 @@
     </div>
     <div class="flex space-x-8">
       <div class="">
-        <FormLabel>Primary Color</FormLabel>
+        <FormLabel>{{ $t("dashboard.primaryColor") }}</FormLabel>
         <ColorPicker v-model="settings.primaryColor" />
       </div>
       <div class="">
-        <FormLabel>Secondary Color</FormLabel>
+        <FormLabel>{{ $t("dashboard.secondaryColor") }}</FormLabel>
         <ColorPicker v-model="settings.secondaryColor" />
       </div>
     </div>
-    <TextInput label="MiData Id" type="number" v-model="settings.midataId" />
     <TextInput
-      label="MiData Parent Id"
+      :label="$t('dashboard.midataId')"
+      type="number"
+      v-model="settings.midataId"
+    />
+    <TextInput
+      :label="$t('dashboard.midataParentId')"
       type="number"
       v-model="settings.midataParentId"
     />
     <TextInput
-      label="MiData API Key"
+      :label="$t('dashboard.midataApiKey')"
       info="Is required to fetch camps from MiData"
       type="text"
       v-model="settings.midataApiKey"
     />
     <div>
-      <FormLabel>Contact in Footer</FormLabel>
+      <FormLabel>{{ $t("dashboard.contactInFooter") }}</FormLabel>
       <Editor v-model="settings.contactInFooter" />
     </div>
   </div>

@@ -1,8 +1,10 @@
 <template>
   <OverviewTemplate
-    name="Users"
+    :name="$t('dashboard.users')"
     entity="users"
-    titles="Nickname,First Name,Last Name,E-Mail"
+    :titles="`${$t('dashboard.nickname')},${$t('dashboard.firstName')},${$t(
+      'dashboard.lastName',
+    )},${$t('dashboard.email')}`"
     columns="nickname:link(id),firstname,lastname,email"
     pushAfterCreationTo="User"
   />

@@ -11,24 +11,24 @@
     <Card class="mt-4">
       <div class="space-y-2 w-full">
         <TextInput
-          label="Name"
+          :label="$t('dashboard.name')"
           type="text"
           v-model="content.name"
           :errors="errors.name"
         />
         <TextInput
-          label="E-Mail"
+          :label="$t('dashboard.email')"
           type="text"
           v-model="content.email"
           :errors="errors.email"
         />
         <TextInput
-          label="Subject"
+          :label="$t('dashboard.subject')"
           type="text"
           v-model="content.subject"
           :errors="errors.subject"
         />
-        <h2 class="font-semibold text-2xl">Form Fields</h2>
+        <h2 class="font-semibold text-2xl">{{ $t("dashboard.formFields") }}</h2>
         <AddFormField
           @changeOrder="changeOrder"
           @select="addField"
@@ -49,9 +49,12 @@
                 class="w-full"
                 type="text"
                 v-model="field.label"
-                label="Label"
+                :label="$t('dashboard.label')"
               />
-              <CheckBox label="Required?" v-model="field.required" />
+              <CheckBox
+                :label="$t('dashboard.required')"
+                v-model="field.required"
+              />
             </div>
           </DragItemBox>
           <DragItemBox
@@ -67,9 +70,12 @@
                 class="w-full"
                 type="text"
                 v-model="field.label"
-                label="Label"
+                :label="$t('dashboard.label')"
               />
-              <CheckBox label="Required?" v-model="field.required" />
+              <CheckBox
+                :label="$t('dashboard.required')"
+                v-model="field.required"
+              />
             </div>
           </DragItemBox>
           <DragItemBox
@@ -85,9 +91,12 @@
                 class="w-full"
                 type="text"
                 v-model="field.label"
-                label="Label"
+                :label="$t('dashboard.label')"
               />
-              <CheckBox label="Required?" v-model="field.required" />
+              <CheckBox
+                :label="$t('dashboard.required')"
+                v-model="field.required"
+              />
             </div>
             <div class="space-y-2 mt-4">
               <div
@@ -101,7 +110,7 @@
                   class="w-full"
                   type="text"
                   v-model="option.name"
-                  :placeholder="`Option ${i + 1}`"
+                  :placeholder="`${$t('dashboard.option')} ${i + 1}`"
                 />
               </div>
               <div>
@@ -111,7 +120,7 @@
                     class="w-full"
                     type="text"
                     @keyup="(e) => addOption(e, field)"
-                    :placeholder="`Another Option?`"
+                    :placeholder="$t('dashboard.anotherOption')"
                   />
                 </div>
               </div>

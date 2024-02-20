@@ -7,8 +7,7 @@
     @endedDragging="$emit('endedDragging')"
   >
     <Card class="space-y-2">
-      At this point all sections with their descriptions that you have created
-      in the Sections tab are shown.
+      {{ $t("dashboard.sectionsMessage") }}
     </Card>
   </DragItemBox>
 </template>

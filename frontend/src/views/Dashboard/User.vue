@@ -8,16 +8,28 @@
     />
     <Card class="mt-4">
       <div class="flex flex-col space-y-2">
-        <TextInput label="Nickname" type="text" v-model="content.nickname" />
-        <TextInput label="First Name" type="text" v-model="content.firstname" />
-        <TextInput label="Last Name" type="text" v-model="content.lastname" />
+        <TextInput
+          :label="$t('dashboard.nickname')"
+          type="text"
+          v-model="content.nickname"
+        />
+        <TextInput
+          :label="$t('dashboard.firstName')"
+          type="text"
+          v-model="content.firstname"
+        />
+        <TextInput
+          :label="$t('dashboard.lastName')"
+          type="text"
+          v-model="content.lastname"
+        />
         <MultipleSelect
-          label="Groups"
+          :label="$t('dashboard.groups')"
           v-model="content.groups"
           :options="groups"
         />
         <SelectComponent
-          label="Role"
+          :label="$t('dashboard.role')"
           selection="Role"
           @selectRole="handleSelectRole"
           :options="roles"

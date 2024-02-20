@@ -1,8 +1,8 @@
 <template>
   <OverviewTemplate
-    name="Pages"
+    :name="$t('dashboard.pages')"
     entity="pages"
-    titles="Titel,Permalink"
+    :titles="`${$t('dashboard.title')},${$t('dashboard.permalink')}`"
     columns="title:link(id),route"
     pushAfterCreationTo="Page"
   />

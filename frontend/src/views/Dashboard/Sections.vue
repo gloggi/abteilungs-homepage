@@ -1,8 +1,10 @@
 <template>
   <OverviewTemplate
-    name="Sections"
+    :name="$t('dashboard.sections')"
     entity="sections"
-    titles="Name,From Age,To Age"
+    :titles="`${$t('dashboard.name')},${$t('dashboard.fromAge')},${$t(
+      'dashboard.toAge',
+    )}`"
     columns="name:link(id),fromAge,toAge"
     pushAfterCreationTo="Section"
   />

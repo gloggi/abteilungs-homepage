@@ -3,17 +3,16 @@
     v-if="show"
     class="fixed bottom-0 md:bottom-10 md:left-10 z-20 bg-white p-5 w-full md:w-1/3 drop-shadow-2xl rounded-lg"
   >
-    <h4 class="font-bold text-xl text-primary">Datenschutz</h4>
+    <h4 class="font-bold text-xl text-primary">
+      {{ $t("page.privacyPolicy") }}
+    </h4>
     <p class="main-text text-sm">
-      Unsere Website verwendet Cookies und ähnliche Technologien, um User zu
-      authentifizieren und Landkarten von swisstopo anzuzeigen. Durch die
-      weitere Nutzung dieser Website stimmst du der Verwendung dieser
-      Technologien zu.
+      {{ $t("page.cookiesMessage") }}
     </p>
     <a
       href="https://pfadi.swiss/de/verband/datenschutz/dse/"
       class="link hover:text-secondary underline text-sm"
-      >Datenschutzerklärung der Pfadibewegung Schweiz</a
+      >{{ $t("page.pfadibewegungPrivacyPolicy") }}</a
     >
     <div class="flex pt-3 w-full">
       <BasicButton @click="acceptCookies" class="text-sm w-full">

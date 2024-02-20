@@ -7,8 +7,7 @@
     @endedDragging="$emit('endedDragging')"
   >
     <Card class="space-y-2">
-      At this point all contacts that you have entered in the Contacts tab are
-      shown.
+      {{ $t("dashboard.contactsMessage") }}
     </Card>
   </DragItemBox>
 </template>

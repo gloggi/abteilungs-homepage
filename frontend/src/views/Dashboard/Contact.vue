@@ -19,7 +19,7 @@
         />
         <div class="space-y-2 w-full">
           <TextInput
-            label="Nickname"
+            :label="$t('dashboard.nickname')"
             type="text"
             v-model="content.nickname"
             :errors="errors.nickname"
@@ -27,33 +27,33 @@
           <div class="flex flex-row justify-between space-x-2">
             <TextInput
               class="w-full"
-              label="Vorname"
+              :label="$t('dashboard.firstName')"
               type="text"
               v-model="content.firstname"
               :errors="errors.firstname"
             />
             <TextInput
               class="w-full"
-              label="Nachname"
+              :label="$t('dashboard.lastName')"
               type="text"
               v-model="content.lastname"
               :errors="errors.lastname"
             />
           </div>
           <TextInput
-            label="E-Mail"
+            :label="$t('dashboard.email')"
             type="email"
             v-model="content.email"
             :errors="errors.email"
           />
           <TextInput
-            label="Rolle"
+            :label="$t('dashboard.role')"
             type="text"
             v-model="content.role"
             :errors="errors.role"
           />
           <TextInput
-            label="Sort"
+            :label="$t('dashboard.sort')"
             type="number"
             v-model="content.sort"
             :errors="errors.sort"

@@ -14,7 +14,7 @@
     rounded-lg my-1 h-1.5 w-full text-xs`"
   ></button>
   <Modal v-if="showModal" @close="close">
-    <h1 class="text-4xl font-bold pb-2">Page Items</h1>
+    <h1 class="text-4xl font-bold pb-2">{{ $t("dashboard.pageItems") }}</h1>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div
         v-for="field in fields"
@@ -41,15 +41,15 @@ export default {
       showModal: false,
       increaseHeight: false,
       fields: [
-        { name: "Text", type: "textItem" },
-        { name: "Image", type: "imageItem" },
-        { name: "Form", type: "formItem" },
-        { name: "Files", type: "filesItem" },
-        { name: "Contact", type: "contactItem" },
-        { name: "Groups", type: "groupsItem" },
-        { name: "Sections", type: "sectionsItem" },
-        { name: "Camps", type: "campsItem" },
-        { name: "Location", type: "locationItem" },
+        { name: this.$t("dashboard.text"), type: "textItem" },
+        { name: this.$t("dashboard.image"), type: "imageItem" },
+        { name: this.$t("dashboard.form"), type: "formItem" },
+        { name: this.$t("dashboard.files"), type: "filesItem" },
+        { name: this.$t("dashboard.contacts"), type: "contactItem" },
+        { name: this.$t("dashboard.groups"), type: "groupsItem" },
+        { name: this.$t("dashboard.sections"), type: "sectionsItem" },
+        { name: this.$t("dashboard.camps"), type: "campsItem" },
+        { name: this.$t("dashboard.location"), type: "locationItem" },
       ],
     };
   },

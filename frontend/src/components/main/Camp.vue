@@ -8,14 +8,16 @@
         <HeadingOne>{{ camp.name }}</HeadingOne>
         <div class="w-full">
           <p class="main-text text-white text-xl">
-            <span class="font-semibold">Lagerdatum: </span>
+            <span class="font-semibold">{{ $t("page.campDateLabel") }}: </span>
             {{ getDate(camp) }}
           </p>
           <p
             v-if="camp.applicationClosingAt"
             class="main-text text-white text-xl"
           >
-            <span class="font-semibold">Anmeldeschluss: </span>
+            <span class="font-semibold"
+              >{{ $t("page.applicationClosingLabel") }}:
+            </span>
             {{ formatDate(camp.applicationClosingAt) }}
           </p>
         </div>
@@ -24,11 +26,13 @@
         <div v-if="show" class="h-full">
           <div class="p-3">
             <p v-if="camp.applicationOpeningAt" class="main-text text-xl">
-              <span class="font-semibold">Anmeldebeginn: </span>
+              <span class="font-semibold"
+                >{{ $t("page.applicationOpeningLabel") }}:
+              </span>
               {{ formatDate(camp.applicationOpeningAt) }}
             </p>
             <p v-if="camp.cost" class="main-text text-xl">
-              <span class="font-semibold">Kosten: </span>CHF
+              <span class="font-semibold">{{ $t("page.costLabel") }}: </span>CHF
               {{ camp.cost }}
             </p>
             <div
@@ -42,7 +46,7 @@
             <div class="flex justify-end w-full">
               <BasicButton class="self-end" v-if="camp.externalApplicationLink">
                 <a :href="camp.externalApplicationLink">
-                  Auf MiData anmelden
+                  {{ $t("page.applyOnMiData") }}
                 </a>
               </BasicButton>
             </div>

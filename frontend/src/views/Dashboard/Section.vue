@@ -20,7 +20,7 @@
         />
         <div class="space-y-2 w-full">
           <TextInput
-            label="Name"
+            :label="$t('dashboard.name')"
             type="text"
             v-model="content.name"
             :errors="errors.name"
@@ -28,27 +28,27 @@
           <div class="flex flex-row justify-between space-x-2">
             <TextInput
               class="w-full"
-              label="From Age"
+              :label="$t('dashboard.fromAge')"
               type="number"
               v-model="content.fromAge"
               :errors="errors.fromAge"
             />
             <TextInput
               class="w-full"
-              label="To Age"
+              :label="$t('dashboard.toAge')"
               type="number"
               v-model="content.toAge"
               :errors="errors.toAge"
             />
           </div>
           <div class="">
-            <FormLabel>Section Color</FormLabel>
+            <FormLabel>{{ $t("dashboard.sectionColor") }}</FormLabel>
             <ColorPicker v-model="content.color" :errors="errors.color" />
           </div>
         </div>
       </div>
       <div class="flex-space-y-2">
-        <FormLabel>Section Header Images</FormLabel>
+        <FormLabel>{{ $t("dashboard.sectionHeaderImages") }}</FormLabel>
         <BannerImageSelector
           :key="loadedKey"
           :item="content"
@@ -56,7 +56,7 @@
         />
       </div>
       <div class="flex-space-y-2">
-        <FormLabel>Description</FormLabel>
+        <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
         <Editor v-model="content.description" />
       </div>
     </Card>

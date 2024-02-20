@@ -4,7 +4,7 @@
       @click="showDropdown = !showDropdown"
       class="min-w-[130px] flex flex-row space-x-2 items-center font-light p-3 py-5 md:py-0 md:p-0 hover:text-secondary text-white main-text md:text-2xl"
     >
-      <div>Gruppen</div>
+      <div>{{ $t("page.groups") }}</div>
       <font-awesome-icon class="" :icon="icons.faCaretDown" />
     </li>
     <transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">

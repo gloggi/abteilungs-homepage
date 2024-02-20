@@ -29,7 +29,7 @@
             @change="uploadFile"
           />
         </label>
-        <div class="text-sm">&nbsp;or drag and drop</div>
+        <div class="text-sm">&nbsp;{{ $t("dashboard.dragAndDrop") }}</div>
       </div>
     </div>
   </div>

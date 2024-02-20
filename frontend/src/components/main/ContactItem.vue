@@ -1,6 +1,8 @@
 <template>
   <ContentWrapper>
-    <HeadingOne class="w-full text-primary">Kontakt</HeadingOne>
+    <HeadingOne class="w-full text-primary">{{
+      $t("page.contact")
+    }}</HeadingOne>
     <div class="flex flex-col space-y-5">
       <div
         v-for="contact in contacts"

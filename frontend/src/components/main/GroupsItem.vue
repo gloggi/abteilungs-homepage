@@ -87,20 +87,20 @@
       <div class="p-8 h-full flex flex-col justify-between">
         <div class="border border-primary w-full p-3 rounded-lg">
           <p class="main-text text-lg">
-            <span class="font-semibold">Alter:</span>
+            <span class="font-semibold">{{ $t("page.ageLabel") }}:</span>
             {{ currentGroup.section.fromAge }} -
             {{ currentGroup.section.toAge }} Jahre
           </p>
           <p class="main-text text-lg">
-            <span class="font-semibold">Geschlecht:</span>
+            <span class="font-semibold">{{ $t("page.genderLabel") }}:</span>
             {{ getGenderName(currentGroup.gender) }}
           </p>
           <template v-if="currentGroup.predecessors.length > 0">
             <p>
               <span class="font-semibold">{{
-                currentGroup.predecessors.lenght > 1
-                  ? "Vorgängergruppen"
-                  : "Vorgängergruppe"
+                currentGroup.predecessors.length > 1
+                  ? $t("page.predecessorGroups")
+                  : $t("page.predecessorGroup")
               }}</span>
             </p>
             <ul class="list-disc pl-6">
@@ -112,9 +112,9 @@
           <template v-if="currentGroup.successors.length > 0">
             <p>
               <span class="font-semibold">{{
-                currentGroup.successors.lenght > 1
-                  ? "Nachfolgergruppen"
-                  : "Nachfolgergruppe"
+                currentGroup.successors.length > 1
+                  ? $t("page.successorGroups")
+                  : $t("page.successorGroup")
               }}</span>
             </p>
             <ul class="list-disc pl-6">
@@ -124,16 +124,16 @@
             </ul>
           </template>
           <p class="main-text text-lg">
-            <span class="font-semibold">Kontakt: </span>
-            <a class="link" :href="`mailto:${currentGroup.contact}`"
-              >Gruppenleitung</a
-            >
+            <span class="font-semibold">{{ $t("page.contactLabel") }}: </span>
+            <a class="link" :href="`mailto:${currentGroup.contact}`">{{
+              $t("page.groupLeadership")
+            }}</a>
           </p>
         </div>
         <BasicButton>
-          <router-link :to="`/group/${currentGroup.route}`" class="w-full"
-            >Zur Gruppenseite</router-link
-          >
+          <router-link :to="`/group/${currentGroup.route}`" class="w-full">{{
+            $t("page.goToGroupPage")
+          }}</router-link>
         </BasicButton>
       </div>
     </div>

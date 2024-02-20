@@ -1,8 +1,10 @@
 <template>
   <OverviewTemplate
-    name="Groups"
+    :name="$t('dashboard.groups')"
     entity="groups"
-    titles="Image,Name,Section"
+    :titles="`${$t('dashboard.image')},${$t('dashboard.name')},${$t(
+      'dashboard.section',
+    )}`"
     columns="file:image(thumbnail),name:link(id),section.name"
     pushAfterCreationTo="Group"
   />

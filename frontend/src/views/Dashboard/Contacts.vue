@@ -1,8 +1,10 @@
 <template>
   <OverviewTemplate
-    name="Contacts"
+    :name="$t('dashboard.contacts')"
     entity="contacts"
-    titles="Image,Nickname,Rolle,E-Mail"
+    :titles="`${$t('dashboard.image')},${$t('dashboard.nickname')},${$t(
+      'dashboard.role',
+    )},${$t('dashboard.email')}`"
     columns="file:image(thumbnail),nickname:link(id),role,email"
     pushAfterCreationTo="Contact"
   />

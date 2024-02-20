@@ -14,7 +14,7 @@
     rounded-lg my-1 h-1.5 w-full text-xs`"
   ></button>
   <Modal v-if="showModal" @close="close">
-    <h1 class="text-4xl font-bold pb-2">Form Fields</h1>
+    <h1 class="text-4xl font-bold pb-2">{{ $t("dashboard.formFields") }}</h1>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div
         v-for="field in fields"

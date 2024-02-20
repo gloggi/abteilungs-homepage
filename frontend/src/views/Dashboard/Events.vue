@@ -1,8 +1,10 @@
 <template>
   <OverviewTemplate
-    name="Events"
+    :name="$t('dashboard.events')"
     entity="events"
-    titles="Title,Start,End"
+    :titles="`${$t('dashboard.title')},${$t('dashboard.start')},${$t(
+      'dashboard.end',
+    )}`"
     columns="title:link(id),startTime:date,endTime:date"
     pushAfterCreationTo="Event"
     :midataSync="true"

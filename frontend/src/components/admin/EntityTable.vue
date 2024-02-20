@@ -23,7 +23,7 @@
   </div>
   <hr />
   <div v-if="totalItems == 0" class="bg-white w-full p-3 border-b">
-    No items available.
+    {{ $t("dashboard.noItemsAvailable") }}
   </div>
   <div
     v-for="(item, j) in content"

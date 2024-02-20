@@ -7,11 +7,10 @@
     @endedDragging="$emit('endedDragging')"
   >
     <Card class="space-y-2">
-      At this point all camps that you have entered in the Camps tab are shown.
+      {{ $t("dashboard.campsMessage") }}
     </Card>
   </DragItemBox>
 </template>
-
 <script>
 import Card from "../Card.vue";
 import DragItemBox from "../DragItemBox.vue";

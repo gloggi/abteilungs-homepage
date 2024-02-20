@@ -7,8 +7,7 @@
     @endedDragging="$emit('endedDragging')"
   >
     <Card class="space-y-2">
-      At this point all groups that you have created in the Groups tab are
-      shown.
+      {{ $t("dashboard.groupsMessage") }}
     </Card>
   </DragItemBox>
 </template>

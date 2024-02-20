@@ -1,6 +1,8 @@
 <template>
   <ContentWrapper>
-    <HeadingOne class="w-full text-primary mb-2">Lager</HeadingOne>
+    <HeadingOne class="w-full text-primary mb-2">{{
+      $t("page.camps")
+    }}</HeadingOne>
     <Camp v-for="camp in camps" :camp="camp" />
   </ContentWrapper>
 </template>

@@ -19,13 +19,13 @@
         />
         <div class="space-y-2 w-full">
           <TextInput
-            label="Name"
+            :label="$t('dashboard.name')"
             type="text"
             v-model="content.name"
             :errors="errors.name"
           />
           <SelectComponent
-            label="Section"
+            :label="$t('dashboard.section')"
             @selectSection="(event) => handleSection(event)"
             :value="content.section ? content.section['id'] : null"
             selection="Section"
@@ -33,7 +33,7 @@
             :errors="errors.sectionId"
           />
           <SelectComponent
-            label="Gender"
+            :label="$t('dashboard.gender')"
             @selectGender="(event) => handleGender(event)"
             :value="content.gender"
             selection="Gender"
@@ -41,38 +41,40 @@
             :errors="errors.gender"
           />
           <div class="">
-            <FormLabel>Group Color</FormLabel>
+            <FormLabel>{{ $t("dashboard.groupColor") }}</FormLabel>
             <ColorPicker v-model="content.color" :errors="errors.color" />
           </div>
           <SelectComponent
-            label="Parent Group"
+            :label="$t('dashboard.parentGroup')"
             @selectParentGroup="(event) => handleParentGroup(event)"
             :value="content.parentId ? content.parentId : null"
             selection="ParentGroup"
             :options="groups"
           />
           <MultipleSelect
-            label="Predecessor Groups"
+            :label="$t('dashboard.predecessorGroups')"
             v-model="content.predecessors"
             :options="groups"
           />
           <MultipleSelect
-            label="Successor Groups"
+            :label="$t('dashboard.successorGroups')"
             v-model="content.successors"
             :options="groups"
           />
           <div class="w-full md:w-1/4">
-            <FormLabel class=" ">Enable Group Page</FormLabel>
+            <FormLabel class=" ">{{
+              $t("dashboard.enableGroupPage")
+            }}</FormLabel>
             <CheckBox v-model="content.enableGroupPage" />
           </div>
           <TextInput
-            label="MiData Id"
+            :label="$t('dashboard.midataId')"
             type="number"
             v-model="content.midataId"
             :errors="errors.midataId"
           />
           <div class="flex flex-col space-y-2">
-            <FormLabel>Header Images</FormLabel>
+            <FormLabel>{{ $t("dashboard.headerImages") }}</FormLabel>
             <BannerImageSelector
               info="The perfect aspect ratio is 32:9."
               :key="loadedKey"
@@ -81,11 +83,11 @@
             />
           </div>
           <div class="flex flex-col space-y-2">
-            <FormLabel>Description</FormLabel>
+            <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
             <Editor v-model="content.description" />
           </div>
           <div class="flex flex-col space-y-2">
-            <FormLabel>Files</FormLabel>
+            <FormLabel>{{ $t("dashboard.files") }}</FormLabel>
             <FilesSelector
               :key="loadedKey"
               :item="{ files: content.files }"

@@ -9,23 +9,23 @@
           <HeadingOne>{{ event.title }}</HeadingOne>
           <div class="grid grid-cols-2 w-full">
             <p class="main-text text-white text-xl">
-              <span class="font-semibold">Datum:</span>
+              <span class="font-semibold">{{ $t("page.dateLabel") }}:</span>
               {{ getDate(event) }}
             </p>
             <p class="main-text text-white text-xl">
-              <span class="font-semibold">Zeit:</span>
+              <span class="font-semibold">{{ $t("page.timeLabel") }}:</span>
               {{ formatTime(event.startTime) }} -
               {{ formatTime(event.endTime) }}
             </p>
             <p class="main-text text-white text-xl">
-              <span class="font-semibold">Ort:</span>
+              <span class="font-semibold">{{ $t("page.locationLabel") }}:</span>
               {{ event.startLocation?.name }}
             </p>
             <p
               v-if="event.groups.length > 1"
               class="main-text text-white text-xl"
             >
-              <span class="font-semibold">Gruppen:</span>
+              <span class="font-semibold">{{ $t("page.groupsLabel") }}:</span>
               {{ event.groups.map((g) => g.name).join(", ") }}
             </p>
           </div>
@@ -39,7 +39,7 @@
             <div class="p-3">
               <div v-html="event.description" v-router-link></div>
               <p class="main-text" v-if="event.user">
-                Hast du noch Fragen? Dann melde dich bei
+                {{ $t("page.contactMessage") }}
                 <a
                   class="link hover:text-secondary"
                   :href="`mailto:${event.user.email}`"
@@ -55,7 +55,7 @@
                 v-if="event.takeWithYou"
                 class="font-bold text-3xl text-primary pt-2"
               >
-                Mitnehmen
+                {{ $t("page.takeWithYouLabel") }}
               </h4>
               <div
                 v-if="event.takeWithYou"
@@ -66,7 +66,7 @@
                 v-if="event.files.length > 0"
                 class="font-bold text-3xl text-primary pt-2"
               >
-                Downloads
+                {{ $t("page.downloadsLabel") }}
               </h4>
               <FilesItem v-if="event.files.length > 0" :files="event.files" />
               <div class="flex justify-end w-full">
@@ -75,7 +75,7 @@
                   v-if="event.externalApplicationLink"
                 >
                   <a :href="event.externalApplicationLink">
-                    Auf MiData anmelden
+                    {{ $t("page.applyOnMiData") }}
                   </a>
                 </BasicButton>
               </div>

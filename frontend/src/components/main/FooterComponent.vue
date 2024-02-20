@@ -7,7 +7,9 @@
         class="md:w-[900px] flex flex-col md:flex-row items-start w-full px-5 md:px-0 md:justify-between py-6 md:space-y-0 space-y-10"
       >
         <div>
-          <h2 class="text-heading-2 text-primary text-4xl">Gruppen</h2>
+          <h2 class="text-heading-2 text-primary text-4xl">
+            {{ $t("page.groupsTitle") }}
+          </h2>
           <ul class="text-white text-xl main-text space-y-1 pt-5">
             <template v-for="group in transformedGroups" :key="group.id">
               <li v-if="!group.parentId" class="pl-6">
@@ -37,18 +39,24 @@
           </ul>
         </div>
         <div>
-          <h2 class="text-heading-2 text-primary text-4xl">Links</h2>
+          <h2 class="text-heading-2 text-primary text-4xl">
+            {{ $t("page.linksTitle") }}
+          </h2>
           <ul class="text-white text-xl main-text space-y-1 pt-5 pl-6">
             <li v-for="link in footerLinks" :key="link.id">
               <a :href="link.url" target="_blank">{{ link.title }}</a>
             </li>
             <li>
-              <router-link :to="{ name: 'Login' }">Login</router-link>
+              <router-link :to="{ name: 'Login' }">{{
+                $t("page.login")
+              }}</router-link>
             </li>
           </ul>
         </div>
         <div>
-          <h2 class="text-heading-2 text-primary text-4xl">Kontakt</h2>
+          <h2 class="text-heading-2 text-primary text-4xl">
+            {{ $t("page.contactTitle") }}
+          </h2>
           <div
             class="text-white pl-6"
             v-html="settings?.contactInFooter"

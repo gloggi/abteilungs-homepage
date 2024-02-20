@@ -14,11 +14,14 @@
       >
         <font-awesome-icon :icon="icons.faGripHorizontal" />
       </div>
-      <TextInput label="Title" v-model="customMenuItem.title" />
+      <TextInput
+        :label="$t('dashboard.title')"
+        v-model="customMenuItem.title"
+      />
     </div>
     <div class="p-3">
       <TextInput
-        label="URL"
+        :label="$t('dashboard.url')"
         placeholder="https://"
         v-model="customMenuItem.url"
       />

@@ -9,9 +9,15 @@
     <Card class="space-y-2">
       <div class="">
         <div class="flex flex-col md:flex-row space-x-2">
-          <TextInput class="w-full" label="Title" v-model.lazy="titleValue" />
+          <TextInput
+            class="w-full"
+            :label="$t('dashboard.title')"
+            v-model.lazy="titleValue"
+          />
           <div class="w-full md:w-1/4">
-            <FormLabel class=" ">Show Fleur-de-Lis</FormLabel>
+            <FormLabel class=" ">{{
+              $t("dashboard.showFleurDeLis")
+            }}</FormLabel>
             <CheckBox v-model="fleurDeLisValue" />
           </div>
         </div>

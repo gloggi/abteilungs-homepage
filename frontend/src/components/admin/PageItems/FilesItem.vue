@@ -7,7 +7,7 @@
     @endedDragging="$emit('endedDragging')"
   >
     <Card class="space-y-2">
-      <TextInput v-model="titleValue" label="Title" />
+      <TextInput v-model="titleValue" :label="$t('dashboard.title')" />
       <FilesSelector :item="item" @changeFiles="handleFilesChange" />
     </Card>
   </DragItemBox>

@@ -44,7 +44,9 @@
           </select>
         </div>
       </div>
-      <BasicButton class="w-full" type="submit"> Absenden </BasicButton>
+      <BasicButton class="w-full" type="submit">
+        {{ $t("page.submit") }}
+      </BasicButton>
     </form>
   </ContentWrapper>
 </template>

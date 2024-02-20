@@ -1,7 +1,7 @@
 <template>
   <div class="flex space-x-2">
     <div class="flex flex-col space-y-2 w-1/2">
-      <p class="text-2xl font-semibold">Custom Links</p>
+      <p class="text-2xl font-semibold">{{ $t("dashboard.customLinks") }}</p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
@@ -10,7 +10,7 @@
       >
         <CustomMenuItem />
       </div>
-      <p class="text-2xl font-semibold">Special Items</p>
+      <p class="text-2xl font-semibold">{{ $t("dashboard.specialItems") }}</p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
@@ -21,10 +21,10 @@
           v-if="showGroupPagesItem"
           :item="{ special: 'groupPages' }"
         >
-          Group Pages Dropdown
+          {{ $t("dashboard.groupPagesDropdown") }}
         </DragableMenuItem>
       </div>
-      <p class="text-2xl font-semibold">Pages</p>
+      <p class="text-2xl font-semibold">{{ $t("dashboard.pages") }}</p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="flex flex-col w-1/2 space-y-2">
-      <p class="text-2xl font-semibold">Menu</p>
+      <p class="text-2xl font-semibold">{{ $t("dashboard.menu") }}</p>
       <div
         class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
       >
@@ -49,7 +49,7 @@
           <MenuDropZone :index="i" @dropped-item="handleMenuZoneDrop" />
         </template>
       </div>
-      <p class="text-2xl font-semibold">Footer Links</p>
+      <p class="text-2xl font-semibold">{{ $t("dashboard.footerLinks") }}</p>
       <div
         class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
       >
@@ -73,7 +73,9 @@
           :icon="icons.faTrash"
           class="text-4xl text-gray-400"
         />
-        <span class="text-gray-400 text-sm">Remove item from menu.</span>
+        <span class="text-gray-400 text-sm">{{
+          $t("dashboard.removeItemFromMenu")
+        }}</span>
       </div>
     </div>
   </div>
