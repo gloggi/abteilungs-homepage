@@ -104,7 +104,6 @@ export const messages = {
       websiteIcon: "Website-Symbol",
       primaryColor: "Primärfarbe",
       secondaryColor: "Sekundärfarbe",
-      midataParentId: "MiData-Übergeordnete-ID",
       midataApiKey: "MiData-API-Schlüssel",
       contactInFooter: "Kontakt im Footer",
       image: "Bild",

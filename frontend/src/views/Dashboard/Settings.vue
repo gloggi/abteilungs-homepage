@@ -56,11 +56,6 @@
       v-model="settings.midataId"
     />
     <TextInput
-      :label="$t('dashboard.midataParentId')"
-      type="number"
-      v-model="settings.midataParentId"
-    />
-    <TextInput
       :label="$t('dashboard.midataApiKey')"
       info="Is required to fetch camps from MiData"
       type="text"

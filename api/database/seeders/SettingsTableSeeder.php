@@ -25,7 +25,6 @@ class SettingsTableSeeder extends Seeder
                 'site_title' => 'Pfadi Lagom',
                 'division_name' => 'Pfadi Lagom',
                 'midata_id' => 1502,
-                'midata_parent_id' => 387,
                 'midata_api_key' => 'd_PuHRozzoeEva1dcYebKkB2sUxf4GgceuLGshp68XqvYRWZ-A',
                 'division_logo_id' => 49,
                 'website_icon_id' => 55,

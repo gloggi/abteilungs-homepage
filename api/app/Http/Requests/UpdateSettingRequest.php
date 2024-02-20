@@ -13,7 +13,6 @@ class UpdateSettingRequest extends FormRequest
             'division_name' => 'required|string',
             'midata_id' => 'nullable|integer',
             'midata_api_key' => 'nullable|string',
-            'midata_parent_id' => 'nullable|integer',
             'division_logo_id' => 'nullable|integer|exists:files,id',
             'website_icon_id' => 'nullable|integer|exists:files,id',
             'primary_color' => 'nullable|string',

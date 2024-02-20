@@ -140,7 +140,7 @@ class AuthController extends Controller
                 'password' => '',
                 'midata_id' => $midataUser->attributes['id']
             ]);
-            if ($midata_group_ids = $this->hasRole($midataUser->user, 'PowerUser', [$setting->midata_parent_id])) {
+            if ($midata_group_ids = $this->hasRole($midataUser->user, 'Webmaster', [$setting->midata_id])) {
                 $user->assignRole('admin');
             } else if ($midata_group_ids = $this->hasRole($midataUser->user, 'Abteilungsleiter*in', [$setting->midata_id])) {
                 $user->assignRole('admin');
