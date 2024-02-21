@@ -4,38 +4,35 @@
   </div>
   <div class="flex justify-end mb-2">
     <div>
-      <button class="rounded-r-lg bg-white p-1" @click="updateSettings">
-        <font-awesome-icon
-          :icon="icons.faArrowsRotate"
-          class="h-6 w-6 text-gray-400"
-        />
-      </button>
+      <ActionButton @click="updateSettings">
+        <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
+      </ActionButton>
     </div>
   </div>
   <div
-    v-if="this.settings"
+    v-if="modifiableSettings"
     class="bg-gray-50 rounded-lg p-3 flex flex-col space-y-2"
   >
     <TextInput
       :label="$t('dashboard.siteTitle')"
-      v-model="settings.siteTitle"
+      v-model="modifiableSettings.siteTitle"
     />
     <TextInput
       :label="$t('dashboard.divisionName')"
-      v-model="settings.divisionName"
+      v-model="modifiableSettings.divisionName"
     />
     <div class="flex">
       <div class="w-1/2">
         <FormLabel>{{ $t("dashboard.divisionLogo") }}</FormLabel>
         <LogoDisplay
-          :logo="settings.divisionLogo"
+          :logo="modifiableSettings.divisionLogo"
           @selectImage="(e) => updateLogo('divisionLogo', e)"
         />
       </div>
       <div class="w-1/2">
         <FormLabel>{{ $t("dashboard.websiteIcon") }}</FormLabel>
         <LogoDisplay
-          :logo="settings.websiteIcon"
+          :logo="modifiableSettings.websiteIcon"
           @selectImage="(e) => updateLogo('websiteIcon', e)"
         />
       </div>
@@ -43,27 +40,27 @@
     <div class="flex space-x-8">
       <div class="">
         <FormLabel>{{ $t("dashboard.primaryColor") }}</FormLabel>
-        <ColorPicker v-model="settings.primaryColor" />
+        <ColorPicker v-model="modifiableSettings.primaryColor" />
       </div>
       <div class="">
         <FormLabel>{{ $t("dashboard.secondaryColor") }}</FormLabel>
-        <ColorPicker v-model="settings.secondaryColor" />
+        <ColorPicker v-model="modifiableSettings.secondaryColor" />
       </div>
     </div>
     <TextInput
       :label="$t('dashboard.midataId')"
       type="number"
-      v-model="settings.midataId"
+      v-model="modifiableSettings.midataId"
     />
     <TextInput
       :label="$t('dashboard.midataApiKey')"
       info="Is required to fetch camps from MiData"
       type="text"
-      v-model="settings.midataApiKey"
+      v-model="modifiableSettings.midataApiKey"
     />
     <div>
       <FormLabel>{{ $t("dashboard.contactInFooter") }}</FormLabel>
-      <Editor v-model="settings.contactInFooter" />
+      <Editor v-model="modifiableSettings.contactInFooter" />
     </div>
   </div>
 </template>
@@ -74,12 +71,20 @@ import FormLabel from "../../components/admin/FormLabel.vue";
 import ColorPicker from "../../components/admin/ColorPicker.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
+import ActionButton from "../../components/admin/ActionButton.vue";
 
 export default {
-  components: { TextInput, LogoDisplay, FormLabel, ColorPicker, Editor },
+  components: {
+    TextInput,
+    LogoDisplay,
+    FormLabel,
+    ColorPicker,
+    Editor,
+    ActionButton,
+  },
   data() {
     return {
-      settings: undefined,
+      modifiableSettings: undefined,
       icons: {
         faArrowsRotate,
       },
@@ -87,19 +92,19 @@ export default {
   },
   methods: {
     updateLogo(key, file) {
-      this.settings[`${key}Id`] = file.id;
+      this.modifiableSettings[`${key}Id`] = file.id;
     },
     async getSettings() {
       try {
         const response = await this.callApi("get", "settings");
-        this.settings = response.data;
+        this.modifiableSettings = response.data;
       } catch (error) {
         console.log(error);
       }
     },
     async updateSettings() {
       try {
-        await this.callApi("put", "settings", this.settings);
+        await this.callApi("put", "settings", this.modifiableSettings);
         this.notifyUser("Settings Updated");
       } catch (error) {
         console.log(error);

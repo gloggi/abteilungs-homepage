@@ -3,7 +3,7 @@
     <HeadingOne class="w-full text-primary mb-2">{{
       $t("page.camps")
     }}</HeadingOne>
-    <Camp v-for="camp in camps" :camp="camp" />
+    <Camp v-for="camp in camps" :camp="camp" :key="camp.id" />
   </ContentWrapper>
 </template>
 <script>

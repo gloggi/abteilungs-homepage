@@ -85,5 +85,8 @@ export const mixin = {
         styleSheet.addRule(`.${className}`, styles);
       }
     },
+    createNewCssVariable(variable, value) {
+      document.documentElement.style.setProperty(variable, value);
+    },
   },
 };

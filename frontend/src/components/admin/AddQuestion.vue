@@ -15,8 +15,6 @@
   ></button>
 </template>
 <script>
-import Modal from "./Modal.vue";
-
 export default {
   data() {
     return {
@@ -28,7 +26,7 @@ export default {
       return this.$store.state.drag.dragging;
     },
   },
-  components: { Modal },
+  components: {},
   props: ["sortKey", "dragging"],
   emits: ["select", "changeOrder"],
   methods: {
@@ -38,7 +36,7 @@ export default {
       question.sort = this.sortKey + 0.5;
       this.$emit("changeOrder", question);
     },
-    select(field) {
+    select() {
       this.$emit("select", {
         question: "",
         answer: "",

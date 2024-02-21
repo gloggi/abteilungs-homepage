@@ -62,7 +62,6 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { project, unproject } from "swissgrid";
-import { parse } from "date-fns";
 export default {
   components: {
     Card,
@@ -133,10 +132,7 @@ export default {
           `/locations/${this.$route.params.id}`,
           this.content,
         );
-        this.$store.dispatch(
-          "notification/notify",
-          "The Location was successfully updated!",
-        );
+        this.notifyUser(this.$t("dashboard.itemUpdatedMessage"));
       } catch (e) {
         console.log(e);
       }

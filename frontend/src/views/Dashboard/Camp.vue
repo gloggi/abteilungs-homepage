@@ -103,10 +103,7 @@ export default {
           `/camps/${this.$route.params.id}`,
           this.content,
         );
-        this.$store.dispatch(
-          "notification/notify",
-          "The Camp was successfully updated!",
-        );
+        this.notifyUser(this.$t("dashboard.itemUpdatedMessage"));
       } catch (e) {
         console.log(e);
       }

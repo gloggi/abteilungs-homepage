@@ -18,15 +18,11 @@
   </div>
 </template>
 <script>
-import HeadingOne from "./HeadingOne.vue";
 import { gsap } from "gsap";
-import BasicButton from "./BasicButton.vue";
 import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
   components: {
-    HeadingOne,
-    BasicButton,
     HeadingTwo,
   },
   props: {

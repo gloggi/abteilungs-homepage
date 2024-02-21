@@ -16,6 +16,7 @@
             v-if="field.type == 'textField'"
             v-model="formContent[field.key]"
             :required="field.required"
+            autocomplete="off"
             class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary w-full"
             :type="field.inputType"
             :placeholder="field.placeholder"
@@ -24,8 +25,8 @@
             v-if="field.type == 'textareaField'"
             v-model="formContent[field.key]"
             :required="field.required"
-            rows="3"
-            class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary"
+            autocomplete="off"
+            class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary min-h-36"
             :placeholder="field.placeholder"
           ></textarea>
           <select

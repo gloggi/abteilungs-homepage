@@ -69,7 +69,6 @@ import {
   faTrash,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import AddQuestion from "../../components/admin/AddQuestion.vue";
 import DragItemBox from "../../components/admin/DragItemBox.vue";
@@ -79,7 +78,6 @@ export default {
     Card,
     TextInput,
     ItemHeaderTemplate,
-    FormLabel,
     Editor,
     AddQuestion,
     DragItemBox,
@@ -126,7 +124,7 @@ export default {
           `/faqs/${this.$route.params.id}`,
           this.content,
         );
-        this.notifyUser("The Faq was successfully updated!");
+        this.$t("dashboard.itemUpdatedMessage");
       } catch (e) {
         console.log(e);
       }

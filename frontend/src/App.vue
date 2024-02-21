@@ -5,6 +5,11 @@
 export default {
   methods: {
     setupStyles() {
+      this.createNewCssVariable("--primary-color", this.settings.primaryColor);
+      this.createNewCssVariable(
+        "--secondary-color",
+        this.settings.secondaryColor,
+      );
       this.createNewCssClass(
         "bg-primary",
         `background-color: ${this.settings.primaryColor};`,

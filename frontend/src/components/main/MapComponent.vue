@@ -17,7 +17,7 @@ import { defaults as defaultControls, ScaleLine } from "ol/control";
 export default {
   props: ["markers"],
   async mounted() {
-    await this.initializeMap();
+    this.initializeMap();
   },
   data() {
     return {
@@ -97,4 +97,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.ol-control button {
+  color: var(--primary-color);
+}
+.ol-control button:hover {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+</style>

@@ -41,13 +41,33 @@ export default {
       showModal: false,
       increaseHeight: false,
       fields: [
-        { name: "Textfeld", type: "textField", inputType: "text" },
-        { name: "Zahlenfeld", type: "textField", inputType: "number" },
-        { name: "Datum", type: "textField", inputType: "date" },
-        { name: "Uhrzeit", type: "textField", inputType: "time" },
-        { name: "E-Mail", type: "textField", inputType: "email" },
-        { name: "Textarea", type: "textareaField" },
-        { name: "Auswahlfeld", type: "selectField" },
+        {
+          name: this.$t("dashboard.textfield"),
+          type: "textField",
+          inputType: "text",
+        },
+        {
+          name: this.$t("dashboard.numberfield"),
+          type: "textField",
+          inputType: "number",
+        },
+        {
+          name: this.$t("dashboard.datefield"),
+          type: "textField",
+          inputType: "date",
+        },
+        {
+          name: this.$t("dashboard.timefield"),
+          type: "textField",
+          inputType: "time",
+        },
+        {
+          name: this.$t("dashboard.email"),
+          type: "textField",
+          inputType: "email",
+        },
+        { name: this.$t("dashboard.textareafield"), type: "textareaField" },
+        { name: this.$t("dashboard.selectfield"), type: "selectField" },
       ],
     };
   },

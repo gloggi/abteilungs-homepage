@@ -99,7 +99,7 @@ import {
 import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import MultipleSelect from "../../components/admin/MultipleSelect.vue";
-import { isBefore, format, addHours, subHours } from "date-fns";
+import { isBefore, format, addHours } from "date-fns";
 import FilesSelector from "../../components/admin/FilesSelector.vue";
 export default {
   components: {
@@ -131,7 +131,7 @@ export default {
     };
   },
   watch: {
-    "content.startTime": function (val) {
+    "content.startTime": function () {
       if (
         !this.content.endTime ||
         !isBefore(
@@ -172,10 +172,7 @@ export default {
           `/events/${this.$route.params.id}`,
           this.content,
         );
-        this.$store.dispatch(
-          "notification/notify",
-          "The Event was successfully updated!",
-        );
+        this.notifyUser(this.$t("dashboard.itemUpdatedMessage"));
       } catch (e) {
         console.log(e);
       }

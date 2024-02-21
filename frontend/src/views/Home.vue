@@ -25,7 +25,6 @@ import NavBar from "../components/main/NavBar.vue";
 import FooterComponent from "../components/main/FooterComponent.vue";
 import RegularPage from "./RegularPage.vue";
 import GroupPage from "./GroupPage.vue";
-import { pushScopeId } from "vue";
 import CookieBanner from "../components/main/CookieBanner.vue";
 
 export default {

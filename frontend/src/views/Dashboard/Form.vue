@@ -42,7 +42,7 @@
             @startedDragging="isDragging = true"
             @endedDragging="isDragging = false"
             v-if="field.type == 'textField'"
-            :title="field.input_type || field.type"
+            :title="$t('dashboard.textfield')"
           >
             <div class="flex space-x-2">
               <TextInput
@@ -63,7 +63,7 @@
             @delete="deleteField"
             @startedDragging="isDragging = true"
             @endedDragging="isDragging = false"
-            :title="field.type"
+            :title="$t('dashboard.textareafield')"
           >
             <div class="flex space-x-2">
               <TextInput
@@ -84,7 +84,7 @@
             @delete="deleteField"
             @startedDragging="isDragging = true"
             @endedDragging="isDragging = false"
-            :title="field.type"
+            :title="$t('dashboard.selectfield')"
           >
             <div class="flex space-x-2">
               <TextInput

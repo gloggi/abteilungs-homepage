@@ -129,6 +129,13 @@ export const messages = {
       defaultOpen: "Von Beginn an geöffnet",
       faq: "FAQ",
       faqItem: "FAQ-Item",
+      itemUpdatedMessage: "Das Item wurde erfolgreich aktualisiert.",
+      textfield: "Textfeld",
+      numberfield: "Zahlenfeld",
+      datefield: "Datumsfeld",
+      timefield: "Zeitfeld",
+      selectfield: "Auswahlfeld",
+      textareafield: "Mehrzeiliges Textfeld",
     },
     page: {
       campDateLabel: "Lagerdatum",

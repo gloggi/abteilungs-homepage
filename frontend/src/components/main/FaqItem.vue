@@ -6,7 +6,8 @@
     <Question
       v-for="question in item.faq.questions"
       :question="question"
-      :open="question.open"
+      :open="question.open === 1"
+      :key="question.id"
     />
   </ContentWrapper>
 </template>
