@@ -1,4 +1,5 @@
 <template>
+  <AlertBar v-if="settings.showAlert" />
   <GroupPage
     :key="`group-${pageKey}`"
     v-if="pageType === 'groupPage'"
@@ -26,6 +27,7 @@ import FooterComponent from "../components/main/FooterComponent.vue";
 import RegularPage from "./RegularPage.vue";
 import GroupPage from "./GroupPage.vue";
 import CookieBanner from "../components/main/CookieBanner.vue";
+import AlertBar from "../components/main/AlertBar.vue";
 
 export default {
   components: {
@@ -34,6 +36,7 @@ export default {
     RegularPage,
     GroupPage,
     CookieBanner,
+    AlertBar,
   },
   data() {
     return {

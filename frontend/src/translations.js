@@ -136,6 +136,13 @@ export const messages = {
       timefield: "Zeitfeld",
       selectfield: "Auswahlfeld",
       textareafield: "Mehrzeiliges Textfeld",
+      generalSettings: "Allgemeine Einstellungen",
+      midataSettings: "MiData-Einstellungen",
+      footerSettings: "Footer-Einstellungen",
+      alertBannerSettings: "Alert-Banner-Einstellungen",
+      showAlertBanner: "Alert-Banner anzeigen",
+      textColor: "Textfarbe",
+      bgColor: "Hintergrundfarbe",
     },
     page: {
       campDateLabel: "Lagerdatum",

@@ -13,6 +13,7 @@
     v-if="modifiableSettings"
     class="bg-gray-50 rounded-lg p-3 flex flex-col space-y-2"
   >
+    <SmallTitle>{{ $t("dashboard.generalSettings") }}</SmallTitle>
     <TextInput
       :label="$t('dashboard.siteTitle')"
       v-model="modifiableSettings.siteTitle"
@@ -47,6 +48,7 @@
         <ColorPicker v-model="modifiableSettings.secondaryColor" />
       </div>
     </div>
+    <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
     <TextInput
       :label="$t('dashboard.midataId')"
       type="number"
@@ -58,10 +60,35 @@
       type="text"
       v-model="modifiableSettings.midataApiKey"
     />
+    <SmallTitle>{{ $t("dashboard.footerSettings") }}</SmallTitle>
     <div>
       <FormLabel>{{ $t("dashboard.contactInFooter") }}</FormLabel>
       <Editor v-model="modifiableSettings.contactInFooter" />
     </div>
+    <SmallTitle>{{ $t("dashboard.alertBannerSettings") }}</SmallTitle>
+    <CheckBox
+      :label="$t('dashboard.showAlertBanner')"
+      v-model="modifiableSettings.showAlert"
+    />
+    <div class="flex flex-row space-x-2">
+      <div class="w-fit">
+        <FormLabel>{{ $t("dashboard.textColor") }}</FormLabel>
+        <ColorPicker v-model="modifiableSettings.alertTextColor" />
+      </div>
+      <div class="w-fit">
+        <FormLabel>{{ $t("dashboard.bgColor") }}</FormLabel>
+        <ColorPicker v-model="modifiableSettings.alertBgColor" />
+      </div>
+    </div>
+    <TextInput
+      class="w-full"
+      :label="$t('dashboard.text')"
+      v-model="modifiableSettings.alertText"
+    />
+    <TextInput
+      :label="$t('dashboard.url')"
+      v-model="modifiableSettings.alertUrl"
+    />
   </div>
 </template>
 <script>
@@ -72,6 +99,8 @@ import ColorPicker from "../../components/admin/ColorPicker.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import ActionButton from "../../components/admin/ActionButton.vue";
+import SmallTitle from "../../components/admin/SmallTitle.vue";
+import CheckBox from "../../components/admin/CheckBox.vue";
 
 export default {
   components: {
@@ -81,6 +110,8 @@ export default {
     ColorPicker,
     Editor,
     ActionButton,
+    SmallTitle,
+    CheckBox,
   },
   data() {
     return {

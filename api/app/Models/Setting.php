@@ -17,6 +17,11 @@ class Setting extends Model
         'contact_in_footer',
         'midata_id',
         'midata_api_key',
+        'alert_text',
+        'alert_bg_color',
+        'alert_text_color',
+        'show_alert',
+        'alert_url'
     ];
 
 

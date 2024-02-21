@@ -18,6 +18,11 @@ class UpdateSettingRequest extends FormRequest
             'primary_color' => 'nullable|string',
             'secondary_color' => 'nullable|string',
             'contact_in_footer' => 'nullable|string',
+            'alert_text' => 'nullable|string',
+            'alert_bg_color' => 'nullable|string',
+            'alert_text_color' => 'nullable|string',
+            'show_alert' => 'nullable|boolean',
+            'alert_url' => 'nullable|string',
         ];
     }
 }
