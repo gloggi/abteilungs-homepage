@@ -90,7 +90,7 @@ export default {
       content: {
         questions: [],
       },
-      lv95: undefined,
+      isDragging: false,
       loadedKey: 0,
       errors: {},
       icons: {

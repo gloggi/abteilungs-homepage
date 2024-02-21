@@ -35,7 +35,7 @@ export default {
     handleDrop(e) {
       this.increaseHeight = false;
       const question = JSON.parse(e.dataTransfer.getData("text"));
-      field.sort = this.sortKey + 0.5;
+      question.sort = this.sortKey + 0.5;
       this.$emit("changeOrder", question);
     },
     select(field) {
