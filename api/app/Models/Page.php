@@ -59,6 +59,11 @@ class Page extends Model
 
         return $this->hasMany(LocationItem::class)->with('location');
     }
+    public function faqItems()
+    {
+
+        return $this->hasMany(FaqItem::class)->with('faq')->with('faq.questions');
+    }
 
     public function genericItems()
     {
@@ -76,6 +81,7 @@ class Page extends Model
         $filesItems = $this->filesItems;
         $genericItems = $this->genericItems;
         $locationItems = $this->locationItems;
+        $faqItems = $this->faqItems;
 
         $items = $items->concat($textItems);
         $items = $items->concat($imageItems);
@@ -83,6 +89,7 @@ class Page extends Model
         $items = $items->concat($filesItems);
         $items = $items->concat($genericItems);
         $items = $items->concat($locationItems);
+        $items = $items->concat($faqItems);
 
         $items = $items->sortBy('sort')->values()->all();;
 

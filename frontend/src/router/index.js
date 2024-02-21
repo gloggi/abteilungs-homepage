@@ -25,6 +25,8 @@ import Users from "../views/Dashboard/Users.vue";
 import User from "../views/Dashboard/User.vue";
 import Camps from "../views/Dashboard/Camps.vue";
 import Camp from "../views/Dashboard/Camp.vue";
+import Faqs from "../views/Dashboard/Faqs.vue";
+import Faq from "../views/Dashboard/Faq.vue";
 
 const routes = [
   {
@@ -154,6 +156,19 @@ const routes = [
         path: "locations/:id",
         name: "Location",
         component: Location,
+      },
+      {
+        path: "faqs",
+        name: "Faqs",
+        component: Faqs,
+        meta: {
+          title: "FAQs",
+        },
+      },
+      {
+        path: "faqs/:id",
+        name: "Faq",
+        component: Faq,
       },
       {
         path: "events",

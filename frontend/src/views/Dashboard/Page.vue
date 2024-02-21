@@ -129,6 +129,16 @@
         @changeLocation="changeLocationItem"
         :item="pageItem"
       />
+      <FaqItem
+        v-if="pageItem.type == 'faqItem'"
+        :boxTitle="$t('dashboard.faqItem')"
+        @delete="deleteItem"
+        @startedDragging="isDragging = true"
+        @endedDragging="isDragging = false"
+        @changeFaq="changeFaqItem"
+        :key="i"
+        :item="pageItem"
+      />
       <AddPageItem
         @changeOrder="changeOrder"
         @select="addItem"
@@ -165,6 +175,7 @@ import SectionsItem from "../../components/admin/PageItems/SectionsItem.vue";
 import FilesItem from "../../components/admin/PageItems/FilesItem.vue";
 import CampsItem from "../../components/admin/PageItems/CampsItem.vue";
 import LocationItem from "../../components/admin/PageItems/LocationItem.vue";
+import FaqItem from "../../components/admin/PageItems/FaqItem.vue";
 
 export default {
   components: {
@@ -184,6 +195,7 @@ export default {
     FilesItem,
     CampsItem,
     LocationItem,
+    FaqItem,
   },
   data() {
     return {
@@ -277,6 +289,15 @@ export default {
       );
 
       this.content.pageItems[itemIndex].formId = formId;
+    },
+    changeFaqItem(event) {
+      const pageItemId = event.id;
+      const faqId = event.faqId;
+      const itemIndex = this.content.pageItems.findIndex(
+        (p) => p.id == pageItemId && p.type == "faqItem",
+      );
+
+      this.content.pageItems[itemIndex].faqId = faqId;
     },
     changeLocationItem(event) {
       const pageItemId = event.id;

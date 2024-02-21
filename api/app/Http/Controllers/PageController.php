@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
+use App\Models\FaqItem;
 use App\Models\FilesItem;
 use App\Models\FormItem;
 use App\Models\GenericItem;
@@ -227,6 +228,16 @@ class PageController extends Controller
                             'page_id' => $page->id,
                             'sort' => $sort_counter,
                             'location_id' => $pageItemData['location_id'] ?? null,
+                        ]
+                    );
+                    break;
+                case 'faqItem':
+                    FaqItem::updateOrCreate(
+                        ['id' => $pageItemData['id'] ?? null],
+                        [
+                            'page_id' => $page->id,
+                            'sort' => $sort_counter,
+                            'faq_id' => $pageItemData['faq_id'] ?? null,
                         ]
                     );
                     break;

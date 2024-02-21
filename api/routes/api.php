@@ -15,7 +15,9 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebFormController;
+use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -142,5 +144,12 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
     Route::post('/camps/sync', [CampController::class, 'syncExternalCamps']);
 });
 
+Route::get('/faqs', [FaqController::class, 'index']);
+Route::get('/faqs/{id}', [FaqController::class, 'show']);
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
+    Route::post('/faqs', [FaqController::class, 'store']);
+    Route::put('/faqs/{id}', [FaqController::class, 'update']);
+    Route::delete('/faqs/{id}', [FaqController::class, 'destroy']);
+});
 
 Route::post('/webforms', [WebFormController::class, 'store']);

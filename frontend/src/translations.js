@@ -122,6 +122,13 @@ export const messages = {
       text: "Text",
       form: "Formular",
       location: "Ort",
+      faqs: "FAQs",
+      question: "Frage",
+      questions: "Fragen",
+      answer: "Antwort",
+      defaultOpen: "Von Beginn an geöffnet",
+      faq: "FAQ",
+      faqItem: "FAQ-Item",
     },
     page: {
       campDateLabel: "Lagerdatum",

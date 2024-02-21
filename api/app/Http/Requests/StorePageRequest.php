@@ -16,7 +16,7 @@ class StorePageRequest extends FormRequest
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'nullable',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem,campsItem,locationItem',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem,campsItem,locationItem,faqItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
             'page_items.*.show_fleur_de_lis' => 'nullable',
@@ -24,6 +24,7 @@ class StorePageRequest extends FormRequest
             'page_items.*.file_id' => 'nullable',
             'page_items.*.form_id' => 'nullable',
             'page_items.*.location_id' => 'nullable',
+            'page_items.*.faq_id' => 'nullable',
         ];
     }
 }

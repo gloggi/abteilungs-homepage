@@ -14,6 +14,7 @@
       />
       <CampsItem v-if="pageItem.type == 'campsItem'" :item="pageItem" />
       <LocationItem v-if="pageItem.type == 'locationItem'" :item="pageItem" />
+      <FaqItem v-if="pageItem.type == 'faqItem'" :item="pageItem" />
     </template>
   </PageWrapper>
 </template>
@@ -28,6 +29,7 @@ import PageWrapper from "./PageWrapper.vue";
 import SectionsItem from "./SectionsItem.vue";
 import TextItem from "./TextItem.vue";
 import LocationItem from "./LocationItem.vue";
+import FaqItem from "./FaqItem.vue";
 
 export default {
   props: ["page"],
@@ -47,6 +49,7 @@ export default {
     FilesItem,
     CampsItem,
     LocationItem,
+    FaqItem,
   },
 };
 </script>

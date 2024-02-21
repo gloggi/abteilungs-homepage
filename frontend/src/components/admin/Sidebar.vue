@@ -74,6 +74,9 @@
     <SidebarItem to="/dashboard/locations" :icon="icons.faLocationDot">
       {{ $t("dashboard.locations") }}
     </SidebarItem>
+    <SidebarItem to="/dashboard/faqs" :icon="icons.faCircleQuestion">
+      {{ $t("dashboard.faqs") }}
+    </SidebarItem>
     <SidebarItem
       v-if="isAdmin"
       to="/dashboard/forms"
@@ -134,6 +137,7 @@ import {
   faAddressCard,
   faCampground,
   faDoorOpen,
+  faCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 export default {
@@ -155,6 +159,7 @@ export default {
         faAddressCard,
         faCampground,
         faDoorOpen,
+        faCircleQuestion,
       },
     };
   },

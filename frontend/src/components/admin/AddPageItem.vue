@@ -50,6 +50,7 @@ export default {
         { name: this.$t("dashboard.sections"), type: "sectionsItem" },
         { name: this.$t("dashboard.camps"), type: "campsItem" },
         { name: this.$t("dashboard.location"), type: "locationItem" },
+        { name: this.$t("dashboard.faq"), type: "faqItem" },
       ],
     };
   },

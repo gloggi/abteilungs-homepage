@@ -58,7 +58,7 @@ export default {
       }
       try {
         await this.callApi("delete", `/${this.entity}/${this.content.id}`);
-        this.notifyUser($t("dashboard.itemDeleted"));
+        this.notifyUser(this.$t("dashboard.itemDeleted"));
         this.$router.push({ name: this.backLinkTo });
       } catch (e) {
         console.log(e);
@@ -78,7 +78,7 @@ export default {
             params: { id: response.data.id },
           });
         }
-        this.notifyUser($t("dashboard.itemCreated"));
+        this.notifyUser(this.$t("dashboard.itemCreated"));
       } catch (e) {
         if (e.response.status === 422) {
           this.$emit("errors", e.response.data.errors);
@@ -98,7 +98,7 @@ export default {
             params: { id: response.data.id },
           });
         }
-        this.notifyUser($t("dashboard.itemDuplicated"));
+        this.notifyUser(this.$t("dashboard.itemDuplicated"));
       } catch (e) {
         if (e.response.status === 422) {
           this.$emit("errors", e.response.data.errors);
@@ -117,7 +117,7 @@ export default {
           this.content,
         );
 
-        this.notifyUser($t("dashboard.itemUpdated"));
+        this.notifyUser(this.$t("dashboard.itemUpdated"));
       } catch (e) {
         console.log(e);
       }
