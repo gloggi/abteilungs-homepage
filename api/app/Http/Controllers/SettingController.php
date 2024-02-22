@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
@@ -17,6 +18,10 @@ class SettingController extends Controller
     public function show()
     {
         $setting = Setting::with(['divisionLogo', 'websiteIcon'])->find(1);
+        if(!Auth::user()||!Auth::user()->hasRole('admin')) {
+            
+            $setting = $setting->makeHidden(['midata_id', 'midata_api_key' ]);
+        }
         return response()->json($setting);
     }
 }

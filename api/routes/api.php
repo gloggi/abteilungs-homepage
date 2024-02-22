@@ -67,16 +67,18 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
     Route::delete('/sections/{id}', [SectionController::class, 'destroy']);
 });
 
-Route::get('/pages', [PageController::class, 'index']);
+
 Route::get('/pages/{id}', [PageController::class, 'show']);
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+    Route::get('/pages', [PageController::class, 'index']);
     Route::post('/pages', [PageController::class, 'store']);
     Route::put('/pages/{id}', [PageController::class, 'update']);
     Route::delete('/pages/{id}', [PageController::class, 'destroy']);
 });
 
-Route::get('/files', [FileController::class, 'index']);
+
 Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
+    Route::get('/files', [FileController::class, 'index']);
     Route::post('/files', [FileController::class, 'store']);
     Route::get('/files/{id}', [FileController::class, 'show']);
     Route::put('/files/{id}', [FileController::class, 'update']);
@@ -84,16 +86,17 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
 });
 
 Route::get('/contacts', [ContactController::class, 'index']);
-Route::get('/contacts/{id}', [ContactController::class, 'show']);
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+    Route::get('/contacts/{id}', [ContactController::class, 'show']);
     Route::post('/contacts', [ContactController::class, 'store']);
     Route::put('/contacts/{id}', [ContactController::class, 'update']);
     Route::delete('/contacts/{id}', [ContactController::class, 'destroy']);
 });
 
-Route::get('/forms', [FormController::class, 'index']);
+
 Route::get('/forms/{id}', [FormController::class, 'show']);
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+    Route::get('/forms', [FormController::class, 'index']);
     Route::post('/forms', [FormController::class, 'store']);
     Route::put('/forms/{id}', [FormController::class, 'update']);
     Route::delete('/forms/{id}', [FormController::class, 'destroy']);
@@ -118,9 +121,9 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
     Route::delete('/locations/{id}', [LocationController::class, 'destroy']);
 });
 
-Route::get('/events', [EventController::class, 'index']);
 Route::get('/events/{id}', [EventController::class, 'show']);
 Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
+    Route::get('/events', [EventController::class, 'index']);
     Route::post('/events', [EventController::class, 'store']);
     Route::put('/events/{id}', [EventController::class, 'update']);
     Route::delete('/events/{id}', [EventController::class, 'destroy']);
@@ -128,16 +131,16 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
 });
 
 Route::get('/footerlinks', [FooterLinkController::class, 'index']);
-Route::get('/footerlinks/{id}', [FooterLinkController::class, 'show']);
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+    Route::get('/footerlinks/{id}', [FooterLinkController::class, 'show']);
     Route::post('/footerlinks', [FooterLinkController::class, 'store']);
     Route::put('/footerlinks/{id}', [FooterLinkController::class, 'update']);
     Route::delete('/footerlinks/{id}', [FooterLinkController::class, 'destroy']);
 });
 
 Route::get('/camps', [CampController::class, 'index']);
-Route::get('/camps/{id}', [CampController::class, 'show']);
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+    Route::get('/camps/{id}', [CampController::class, 'show']);
     Route::post('/camps', [CampController::class, 'store']);
     Route::put('/camps/{id}', [CampController::class, 'update']);
     Route::delete('/camps/{id}', [CampController::class, 'destroy']);
@@ -145,8 +148,8 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
 });
 
 Route::get('/faqs', [FaqController::class, 'index']);
-Route::get('/faqs/{id}', [FaqController::class, 'show']);
 Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
+    Route::get('/faqs/{id}', [FaqController::class, 'show']);
     Route::post('/faqs', [FaqController::class, 'store']);
     Route::put('/faqs/{id}', [FaqController::class, 'update']);
     Route::delete('/faqs/{id}', [FaqController::class, 'destroy']);
