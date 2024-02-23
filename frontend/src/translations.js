@@ -181,6 +181,7 @@ export const messages = {
       contactLabel: "Kontakt",
       groupLeadership: "Gruppenleitung",
       goToGroupPage: "Zur Gruppenseite",
+      noEventsAvailable: "Es sind momentan keine Anlässe verfügbar.",
     },
   },
 };

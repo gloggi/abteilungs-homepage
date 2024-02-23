@@ -45,49 +45,53 @@
             />
           </EditorButton>
         </div>
-        <div class="flex">
-          <EditorButton
-            class="font-bold"
-            @click="editor.chain().focus().toggleBold().run()"
-            :active="editor.isActive('bold')"
-          >
-            Bold
-          </EditorButton>
-          <EditorButton
-            class="italic"
-            @click="editor.chain().focus().toggleItalic().run()"
-            :active="editor.isActive('italic')"
-          >
-            Italic
-          </EditorButton>
-          <EditorButton
-            class="line-through"
-            @click="editor.chain().focus().toggleStrike().run()"
-            :active="editor.isActive('strike')"
-          >
-            strike
-          </EditorButton>
-          <EditorButton
-            @click="editor.chain().focus().toggleBulletList().run()"
-            :active="editor.isActive('bulletList')"
-          >
-            <font-awesome-icon class="h-5 w-5" :icon="icons.faList" />
-          </EditorButton>
-          <EditorButton @click="addImage">
-            <font-awesome-icon class="h-5 w-5" :icon="icons.faImage" />
-          </EditorButton>
-          <EditorButton v-if="!editor.isActive('link')" @click="setLink">
-            <font-awesome-icon class="h-5 w-5" :icon="icons.faLink" />
-          </EditorButton>
-          <EditorButton
-            v-if="editor.isActive('link')"
-            @click="editor.chain().focus().unsetLink().run()"
-          >
-            <font-awesome-icon class="h-5 w-5" :icon="icons.faLinkSlash" />
-          </EditorButton>
-          <EditorButton @click="swapEditorContent" :active="showHTML">
-            <font-awesome-icon class="h-5 w-5" :icon="icons.faCode" />
-          </EditorButton>
+        <div class="flex flex-col md:flex-row">
+          <div>
+            <EditorButton
+              class="font-bold"
+              @click="editor.chain().focus().toggleBold().run()"
+              :active="editor.isActive('bold')"
+            >
+              Bold
+            </EditorButton>
+            <EditorButton
+              class="italic"
+              @click="editor.chain().focus().toggleItalic().run()"
+              :active="editor.isActive('italic')"
+            >
+              Italic
+            </EditorButton>
+            <EditorButton
+              class="line-through"
+              @click="editor.chain().focus().toggleStrike().run()"
+              :active="editor.isActive('strike')"
+            >
+              strike
+            </EditorButton>
+            <EditorButton
+              @click="editor.chain().focus().toggleBulletList().run()"
+              :active="editor.isActive('bulletList')"
+            >
+              <font-awesome-icon class="h-5 w-5" :icon="icons.faList" />
+            </EditorButton>
+          </div>
+          <div>
+            <EditorButton @click="addImage">
+              <font-awesome-icon class="h-5 w-5" :icon="icons.faImage" />
+            </EditorButton>
+            <EditorButton v-if="!editor.isActive('link')" @click="setLink">
+              <font-awesome-icon class="h-5 w-5" :icon="icons.faLink" />
+            </EditorButton>
+            <EditorButton
+              v-if="editor.isActive('link')"
+              @click="editor.chain().focus().unsetLink().run()"
+            >
+              <font-awesome-icon class="h-5 w-5" :icon="icons.faLinkSlash" />
+            </EditorButton>
+            <EditorButton @click="swapEditorContent" :active="showHTML">
+              <font-awesome-icon class="h-5 w-5" :icon="icons.faCode" />
+            </EditorButton>
+          </div>
         </div>
       </div>
       <div class="flex items-start">

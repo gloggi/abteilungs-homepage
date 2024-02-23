@@ -25,6 +25,9 @@
           :currentPage="eventPage"
         />
       </div>
+      <ContentWrapper v-else>
+        <p class="main-text">{{ $t("page.noEventsAvailable") }}</p>
+      </ContentWrapper>
     </div>
   </PageWrapper>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="border border-primary mb-2 rounded-lg">
+    <div class="border border-primary bg-primary mb-2 rounded-lg">
       <button
         @click="show = !show"
         class="text-left w-full bg-primary p-5 flex flex-col text-white rounded-lg"
@@ -8,7 +8,7 @@
         <HeadingTwo>{{ question.question }}</HeadingTwo>
       </button>
       <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
-        <div v-if="show" class="h-full">
+        <div v-if="show" class="h-full bg-white rounded-b-lg">
           <div class="p-3">
             <div v-html="question.answer" v-router-link></div>
           </div>

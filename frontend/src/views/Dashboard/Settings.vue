@@ -22,7 +22,7 @@
       :label="$t('dashboard.divisionName')"
       v-model="modifiableSettings.divisionName"
     />
-    <div class="flex">
+    <div class="flex flex-col md:flex-row">
       <div class="w-1/2">
         <FormLabel>{{ $t("dashboard.divisionLogo") }}</FormLabel>
         <LogoDisplay

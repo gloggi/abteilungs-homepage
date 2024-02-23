@@ -1,7 +1,9 @@
 <template>
   <div class="flex space-x-2">
     <div class="flex flex-col space-y-2 w-1/2">
-      <p class="text-2xl font-semibold">{{ $t("dashboard.customLinks") }}</p>
+      <p class="text-2xl font-semibold break-words">
+        {{ $t("dashboard.customLinks") }}
+      </p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
@@ -49,7 +51,9 @@
           <MenuDropZone :index="i" @dropped-item="handleMenuZoneDrop" />
         </template>
       </div>
-      <p class="text-2xl font-semibold">{{ $t("dashboard.footerLinks") }}</p>
+      <p class="text-2xl font-semibold break-words">
+        {{ $t("dashboard.footerLinks") }}
+      </p>
       <div
         class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
       >

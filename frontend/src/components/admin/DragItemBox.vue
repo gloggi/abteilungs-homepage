@@ -14,7 +14,7 @@
     >
       <font-awesome-icon :icon="icons.faGripHorizontal" />
     </div>
-    <div class="w-full rounded-l-lg px-3">
+    <div class="w-full rounded-l-lg px-0 md:px-3">
       <slot></slot>
     </div>
     <hr />
