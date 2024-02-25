@@ -21,7 +21,8 @@ class Setting extends Model
         'alert_bg_color',
         'alert_text_color',
         'show_alert',
-        'alert_url'
+        'alert_url',
+        'not_found_page_id'
     ];
 
 
@@ -33,5 +34,10 @@ class Setting extends Model
     public function websiteIcon()
     {
         return $this->belongsTo(File::class, 'website_icon_id');
+    }
+
+    public function notFoundPage()
+    {
+        return $this->belongsTo(Page::class, 'not_found_page_id');
     }
 }

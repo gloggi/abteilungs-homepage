@@ -48,6 +48,13 @@
         <ColorPicker v-model="modifiableSettings.secondaryColor" />
       </div>
     </div>
+    <SelectComponent
+      selection="NotFoundPage"
+      :label="$t('dashboard.notFoundPage')"
+      @selectNotFoundPage="handleNotFoundPage"
+      :value="modifiableSettings.notFoundPageId"
+      :options="pages"
+    />
     <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
     <TextInput
       :label="$t('dashboard.midataId')"
@@ -101,6 +108,7 @@ import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import ActionButton from "../../components/admin/ActionButton.vue";
 import SmallTitle from "../../components/admin/SmallTitle.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
+import SelectComponent from "../../components/admin/SelectComponent.vue";
 
 export default {
   components: {
@@ -112,10 +120,12 @@ export default {
     ActionButton,
     SmallTitle,
     CheckBox,
+    SelectComponent,
   },
   data() {
     return {
       modifiableSettings: undefined,
+      pages: [],
       icons: {
         faArrowsRotate,
       },
@@ -141,9 +151,33 @@ export default {
         console.log(error);
       }
     },
+    async getPages() {
+      try {
+        const response = await this.callApi(
+          "get",
+          "pages",
+          {},
+          {
+            params: {
+              limit: 100,
+            },
+          },
+        );
+        this.pages = response.data.data.map((p) => ({
+          name: p.title,
+          id: p.id,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    handleNotFoundPage(value) {
+      this.modifiableSettings.notFoundPageId = value;
+    },
   },
   async created() {
     await this.getSettings();
+    await this.getPages();
   },
 };
 </script>
