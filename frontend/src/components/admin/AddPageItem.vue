@@ -5,17 +5,25 @@
     @dragleave.prevent="increaseHeight = false"
     @dragover.prevent
     @drop="handleDrop"
+    class="rounded-lg my-1 h-1.5 w-full text-xs hover:text-white"
     :class="`${
       dragging
         ? 'bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500'
         : 'bg-gray-300 hover:bg-gray-400'
     } 
-    ${increaseHeight ? 'h-48' : 'h-1.5'}
-    rounded-lg my-1 h-1.5 w-full text-xs`"
-  ></button>
+    ${increaseHeight ? 'h-48' : 'h-auto'}`"
+  >
+    <span v-if="dragging"> Drop page item here </span>
+    <span v-else>
+      <font-awesome-icon :icon="icons.faPlus" /> Click to add a new page item
+    </span>
+  </button>
   <Modal v-if="showModal" @close="close">
     <h1 class="text-4xl font-bold pb-2">{{ $t("dashboard.pageItems") }}</h1>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div
+      class="grid grid-cols-2 md:grid-cols-4 gap-4 overflow-y-scroll"
+      style="max-height: 65vh"
+    >
       <div
         v-for="field in fields"
         :key="field.type"
@@ -34,10 +42,13 @@
 </template>
 <script>
 import Modal from "./Modal.vue";
-
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 export default {
   data() {
     return {
+      icons: {
+        faPlus: faPlus,
+      },
       showModal: false,
       increaseHeight: false,
       fields: [

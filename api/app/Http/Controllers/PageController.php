@@ -80,16 +80,16 @@ class PageController extends Controller
         ], 200);
     }
 
-    public function show($page)
+    public function show($routeOrId)
     {
-        if ($page == "0") {
-            $page = null;
-        }
-        if (is_numeric($page)) {
-            $page = Page::with('files')->find($page);
-        } else {
-            $page = Page::with('files')->where('route', $page)->first();
-        }
+        $routeOrId = $routeOrId == "0" ? null : $routeOrId;
+
+        $page = Page::with('files')
+            ->where(function ($query) use ($routeOrId) {
+                $query->where('route', $routeOrId)
+                    ->orWhere('id', $routeOrId);
+            })->first();
+            
         $pageItems = $page->getAllItems();
         foreach ($pageItems as $currentField) {
             if ($currentField->type == 'formItem' && $currentField->form) {

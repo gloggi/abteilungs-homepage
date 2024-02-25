@@ -91,6 +91,12 @@
             <EditorButton @click="swapEditorContent" :active="showHTML">
               <font-awesome-icon class="h-5 w-5" :icon="icons.faCode" />
             </EditorButton>
+            <EditorButton
+              @click="editor.chain().focus().setTextAlign('right').run()"
+              :active="editor.isActive({ textAlign: 'right' })"
+            >
+              <font-awesome-icon class="h-5 w-5" :icon="icons.faAlignRight" />
+            </EditorButton>
           </div>
         </div>
       </div>
@@ -158,7 +164,7 @@
     <textarea
       v-else
       v-model="inputModel"
-      class="appearance-none border-0 w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 h-48 overflow-scroll"
+      class="appearance-none border-0 w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 h-48 overflow-scroll font-mono"
     >
     </textarea>
   </div>
@@ -179,6 +185,7 @@ import ImageResize from "tiptap-extension-resize-image";
 import LinkExtension from "@tiptap/extension-link";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
+import TextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/core";
 import EditorButton from "./EditorButton.vue";
 import {
@@ -190,6 +197,7 @@ import {
   faLinkSlash,
   faImage,
   faHeading,
+  faAlignRight,
 } from "@fortawesome/free-solid-svg-icons";
 import prettify from "html-prettify";
 import MediaModal from "../MediaModal.vue";
@@ -214,13 +222,16 @@ export default {
         faLinkSlash,
         faImage,
         faHeading,
+        faAlignRight,
       },
     };
   },
   methods: {
+    prettifyHTML(html) {
+      return prettify(html);
+    },
     swapEditorContent() {
       this.inputModel = prettify(this.inputModel);
-      console.log(prettify(this.inputModel));
       this.showHTML = !this.showHTML;
     },
     addImage() {
@@ -325,6 +336,9 @@ export default {
         TextStyle,
         Color,
         ImageResize,
+        TextAlign.configure({
+          types: ["heading", "paragraph"],
+        }),
       ],
       editorProps: {
         attributes: {

@@ -72,7 +72,12 @@ export default {
         this.page = response.data;
         document.title = `${this.page.title} | ${this.settings.divisionName}`;
       } catch (error) {
-        //console.log(error);
+        if (this.settings.notFoundPage) {
+          return this.getPage(this.settings.notFoundPage.route);
+        } else {
+          console.log("here");
+          return this.getPage(0);
+        }
       }
     },
     async getMenuItems() {

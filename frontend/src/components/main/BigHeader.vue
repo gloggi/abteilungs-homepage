@@ -30,6 +30,10 @@
         class="h-screen w-screen object-cover absolute"
         :src="`${backendURL}/${nextImage}`"
       />
+      <div
+        v-if="noImages"
+        class="fixed -z-10 h-screen w-screen object-cover bg-secondary"
+      ></div>
     </div>
   </div>
 </template>
@@ -44,6 +48,7 @@ export default {
       imageIndex: 0,
       currentImage: undefined,
       nextImage: undefined,
+      noImages: this.images.length === 0,
     };
   },
   methods: {

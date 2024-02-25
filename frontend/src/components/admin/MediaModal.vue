@@ -15,12 +15,9 @@
         @selectItems="selectItemsHandler"
       />
       <div class="pt-3 w-full flex justify-end h-13">
-        <button
-          @click="selectAndClose"
-          class="rounded-lg h-9 w-9 bg-gray-400 p-1"
-        >
-          <font-awesome-icon :icon="icons.faCheck" class="h-6 w-6 text-white" />
-        </button>
+        <ActionButton :reverse="true" @click="selectAndClose">
+          <font-awesome-icon :icon="icons.faCheck" class="h-6 w-6" />
+        </ActionButton>
       </div>
     </div>
   </Modal>
@@ -31,8 +28,9 @@ import DragAndDropUpload from "./DragAndDropUpload.vue";
 import Modal from "./Modal.vue";
 import SelectMediaGrid from "./SelectMediaGrid.vue";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import ActionButton from "./ActionButton.vue";
 export default {
-  components: { Modal, DragAndDropUpload, SelectMediaGrid },
+  components: { Modal, DragAndDropUpload, SelectMediaGrid, ActionButton },
   emits: ["close", "select"],
   props: {
     category: {

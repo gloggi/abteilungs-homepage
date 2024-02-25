@@ -23,6 +23,7 @@
       </div>
     </div>
     <img
+      v-if="!noImages"
       ref="currentImageRef"
       class="fixed -z-10 h-screen w-screen object-cover"
       :src="`${backendURL}/${currentImage}`"
@@ -33,6 +34,10 @@
       class="fixed -z-10 h-screen w-screen object-cover"
       :src="`${backendURL}/${nextImage}`"
     />
+    <div
+      v-if="noImages"
+      class="fixed -z-10 h-screen w-screen object-cover bg-secondary"
+    ></div>
   </div>
 </template>
 <script>
@@ -49,6 +54,7 @@ export default {
       currentImage: undefined,
       nextImage: undefined,
       interval: undefined,
+      noImages: this.images.length === 0,
     };
   },
   methods: {

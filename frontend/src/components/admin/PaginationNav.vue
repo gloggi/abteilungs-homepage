@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="Math.ceil(totalItems / itemsPerPage) > 1"
-    class="flex rounded-b-lg p-3 bg-white"
+    class="flex rounded-b-lg p-0 bg-white"
     :key="paginationKey"
   >
     <div class="flex justify-center w-full border-t border-gray-200">
