@@ -2,6 +2,11 @@
   <ContentWrapper>
     <form class="space-y-5" @submit.prevent="handleForm">
       <HeadingOne class="text-primary">{{ item.form.name }}</HeadingOne>
+      <div v-if="submitSuccess" class="p-5 rounded-lg bg-primary">
+        <HeadingTwo class="text-white font-bold">
+          {{ $t("page.formSuccessMessage") }}
+        </HeadingTwo>
+      </div>
 
       <div class="flex flex-col space-y-5">
         <div
@@ -55,12 +60,14 @@
 import BasicButton from "./BasicButton.vue";
 import ContentWrapper from "./ContentWrapper.vue";
 import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
   props: ["item"],
   data() {
     return {
       formContent: {},
+      submitSuccess: false,
     };
   },
   methods: {
@@ -72,13 +79,14 @@ export default {
           "/webforms",
           this.formContent,
         );
-        console.log(response);
+        this.submitSuccess = true;
+        this.formContent = {};
       } catch (error) {
         console.log(error);
       }
     },
   },
   async created() {},
-  components: { HeadingOne, ContentWrapper, BasicButton },
+  components: { HeadingOne, ContentWrapper, BasicButton, HeadingTwo },
 };
 </script>

@@ -14,15 +14,17 @@ class WebForm extends Mailable
     use Queueable, SerializesModels;
 
     public $formData;
-    public $subject;
+    public $form;
+    public $settings;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($subject, $formData)
+    public function __construct($form, $formData, $settings)
     {
-        $this->subject = $subject;
+        $this->form = $form;
         $this->formData = $formData;
+        $this->settings = $settings;
     }
 
     /**
@@ -31,7 +33,7 @@ class WebForm extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
+            subject: $this->form->subject,
         );
     }
 
@@ -42,7 +44,11 @@ class WebForm extends Mailable
     {
         return new Content(
             view: 'emails.webform',
-            with: ['data' => $this->formData]
+            with: [
+                'data' => $this->formData,
+                'form' => $this->form, 
+                'settings' => $this->settings,
+            ]
         );
     }
 

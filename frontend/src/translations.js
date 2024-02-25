@@ -143,6 +143,7 @@ export const messages = {
       showAlertBanner: "Alert-Banner anzeigen",
       textColor: "Textfarbe",
       bgColor: "Hintergrundfarbe",
+      notFoundPage: "404-Seite",
     },
     page: {
       campDateLabel: "Lagerdatum",
@@ -182,6 +183,8 @@ export const messages = {
       groupLeadership: "Gruppenleitung",
       goToGroupPage: "Zur Gruppenseite",
       noEventsAvailable: "Es sind momentan keine Anlässe verfügbar.",
+      formSuccessMessage:
+        "Vielen Dank! Das Formular wurde erfolgreich abgesendet.",
     },
   },
 };
