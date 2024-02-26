@@ -19,7 +19,11 @@
     </button>
   </div>
   <Modal v-if="showModal" @close="showModal = false">
-    <div v-if="content" class="flex h-full p-3 space-x-2">
+    <div
+      :key="modalContentKey"
+      v-if="content"
+      class="flex h-full p-3 space-x-2"
+    >
       <div class="flex justify-center items-center w-2/3">
         <img
           v-if="isImage()"
@@ -36,19 +40,13 @@
         />
       </div>
       <div class="w-1/3">
-        <div class="flex justify-end w-full">
-          <button
-            @click="deleteFile"
-            class="bg-gray-400 p-1 transition-colors duration-300 ease-in-out hover:bg-white text-white hover:text-gray-400"
-          >
+        <div class="flex justify-end w-full space-x-2">
+          <ActionButton @click="deleteFile" :reverse="true">
             <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
-          </button>
-          <button
-            @click="updateFile"
-            class="rounded-r-lg bg-gray-400 p-1 transition-colors duration-300 ease-in-out hover:bg-white text-white hover:text-gray-400"
-          >
+          </ActionButton>
+          <ActionButton @click="updateFile" :reverse="true">
             <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
-          </button>
+          </ActionButton>
         </div>
         <div class="flex flex-col space-y-2 pt-8 w-full">
           <TextInput
@@ -71,6 +69,12 @@
             :label="$t('dashboard.thumbnailUrl')"
             :value="`${backendURL}/${selectedFile.thumbnail}`"
           />
+          <div>
+            <FormLabel>
+              {{ $t("dashboard.replaceFile") }}
+            </FormLabel>
+            <DragAndDropField @droppedFile="replaceFile" />
+          </div>
         </div>
         <div class="flex justify-between pt-5">
           <div class="font-cursive text-gray-400">
@@ -89,9 +93,20 @@ import DragAndDropUpload from "../../components/admin/DragAndDropUpload.vue";
 import Modal from "../../components/admin/Modal.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import { faTrash, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
+import ActionButton from "../../components/admin/ActionButton.vue";
+import DragAndDropField from "../../components/admin/DragAndDropField.vue";
+import FormLabel from "../../components/admin/FormLabel.vue";
 
 export default {
-  components: { DragAndDropUpload, Modal, CopyField, TextInput },
+  components: {
+    DragAndDropUpload,
+    Modal,
+    CopyField,
+    TextInput,
+    ActionButton,
+    DragAndDropField,
+    FormLabel,
+  },
   data() {
     return {
       content: undefined,
@@ -154,6 +169,20 @@ export default {
     openFile(file) {
       this.selectedFile = file;
       this.showModal = true;
+    },
+    async replaceFile(file) {
+      try {
+        const formData = new FormData();
+        formData.append("file", file, file.name);
+        formData.append("category", "test");
+        await this.callApi("post", `/files/${this.selectedFile.id}`, formData);
+        await this.getMedia();
+        this.showModal = false;
+        this.listKey++;
+        this.notifyUser("File replaced");
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   async created() {

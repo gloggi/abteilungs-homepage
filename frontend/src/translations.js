@@ -144,6 +144,7 @@ export const messages = {
       textColor: "Textfarbe",
       bgColor: "Hintergrundfarbe",
       notFoundPage: "404-Seite",
+      replaceFile: "Datei ersetzen",
     },
     page: {
       campDateLabel: "Lagerdatum",

@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
     Route::post('/files', [FileController::class, 'store']);
     Route::get('/files/{id}', [FileController::class, 'show']);
     Route::put('/files/{id}', [FileController::class, 'update']);
+    Route::post('/files/{id}', [FileController::class, 'update']);
     Route::delete('/files/{id}', [FileController::class, 'destroy']);
 });
 
