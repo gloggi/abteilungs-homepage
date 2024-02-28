@@ -11,14 +11,14 @@ class UpdateGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|required|string|max:255',
+            'name' => 'sometimes|required|string|max:255|unique:groups,name,',
             'color' => 'sometimes|required|string|max:255',
             'midata_id' => 'nullable|integer',
             'header_images' => 'array|nullable',
             'files' => 'array|nullable',
             'description' => 'nullable|string',
-            'gender' => 'nullable|integer',
-            'section_id' => 'required|integer|exists:sections,id',
+            'gender' => 'sometimes|required|integer',
+            'section_id' => 'sometimes|required|integer|exists:sections,id',
             'file_id' => 'nullable|integer|exists:files,id',
             'parent_id' => 'nullable|integer',
             'predecessors' => 'nullable|array',

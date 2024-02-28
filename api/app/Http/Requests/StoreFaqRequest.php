@@ -9,13 +9,13 @@ class StoreFaqRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string',
+            'title' => 'required|string|unique:faqs,title',
             'questions' => 'required|array',
             'questions.*.question' => 'required|string',
             'questions.*.answer' => 'required|string',
             'questions.*.id' => 'nullable|integer',
             'questions.*.open' => 'nullable|boolean',
-            'questions.*.sort' => 'nullable',
+            'questions.*.sort' => 'required',
         ];
     }
 }

@@ -9,10 +9,10 @@ class UpdateFaqRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string',
+            'title' => 'sometimes|required|string|unique:faqs,title',
             'questions' => 'array',
-            'questions.*.question' => 'required|string',
-            'questions.*.answer' => 'required|string',
+            'questions.*.question' => 'sometimes|required|string',
+            'questions.*.answer' => 'sometimes|required|string',
             'questions.*.id' => 'nullable|integer',
             'questions.*.open' => 'nullable|boolean',
             'questions.*.sort' => 'nullable',

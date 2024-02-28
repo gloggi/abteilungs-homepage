@@ -9,9 +9,9 @@ class UpdateFooterLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
-            'url' => 'required|url',
-            'sort' => 'required|integer',
+            'title' => 'sometimes|required|string|max:255',
+            'url' => 'sometimes|required|url',
+            'sort' => 'sometimes|required|integer',
         ];
     }
 

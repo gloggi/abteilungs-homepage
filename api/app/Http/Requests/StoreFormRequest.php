@@ -14,11 +14,11 @@ class StoreFormRequest extends FormRequest
             'subject' => 'required|string|max:255',
             'fields' => 'nullable|array',
             'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
-            'fields.*.input_type' => 'nullable',
+            'fields.*.input_type' => 'required',
             'fields.*.required' => 'nullable',
-            'fields.*.sort' => 'nullable',
+            'fields.*.sort' => 'required',
             'fields.*.option_fields' => 'nullable|array|min:1',
-            'fields.*.label' => 'nullable|string|max:255',
+            'fields.*.label' => 'required|string|max:255',
         ];
     }
 }

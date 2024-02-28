@@ -12,9 +12,9 @@ class StoreContactRequest extends FormRequest
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'nickname' => 'nullable|string|max:255',
-            'role' => 'nullable|string|max:255',
+            'role' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'sort' => 'nullable|numeric',
+            'sort' => 'required|numeric',
             'file_id' => 'nullable|integer|exists:files,id',
         ];
     }

@@ -10,10 +10,10 @@ class StoreGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:groups,name',
             'color' => 'required|string|max:255',
             'midata_id' => 'nullable|integer',
-            'gender' => 'nullable|integer',
+            'gender' => 'required|integer',
             'header_images' => 'array|nullable',
             'files' => 'array|nullable',
             'description' => 'nullable|string',
@@ -24,7 +24,7 @@ class StoreGroupRequest extends FormRequest
             'predecessors.*' => 'integer|exists:groups,id',
             'successors' => 'nullable|array',
             'successors.*' => 'integer|exists:groups,id',
-            'enable_group_page' => 'boolean',
+            'enable_group_page' => 'nullable|boolean',
         ];
     }
 }

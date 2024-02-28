@@ -14,7 +14,7 @@ class StoreEventRequest extends FormRequest
             'take_with_you' => 'nullable|string',
             'start_time' => 'required|date',
             'end_time' => 'required|date',
-            'groups' => 'nullable|array',
+            'groups' => 'required|array',
             'start_location_id' => 'required|integer|exists:locations,id',
             'end_location_id' => 'nullable|integer|exists:locations,id',
             'files' => 'nullable|array',

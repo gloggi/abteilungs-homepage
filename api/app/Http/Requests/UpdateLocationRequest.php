@@ -9,7 +9,7 @@ class UpdateLocationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|required|string|max:255',
+            'name' => 'sometimes|required|string|max:255|unique:locations,name',
             'lat' => 'sometimes|required|numeric',
             'long' => 'sometimes|required|numeric',
         ];

@@ -9,7 +9,7 @@ class StoreSectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:sections,name',
             'color' => 'required|string|max:255',
             'from_age' => 'required|integer',
             'to_age' => 'required|integer',

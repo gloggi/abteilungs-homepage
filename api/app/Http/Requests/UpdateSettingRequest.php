@@ -9,8 +9,8 @@ class UpdateSettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'site_title' => 'required|string',
-            'division_name' => 'required|string',
+            'site_title' => 'sometimes|required|string',
+            'division_name' => 'sometimes|required|string',
             'midata_id' => 'nullable|integer',
             'midata_api_key' => 'nullable|string',
             'division_logo_id' => 'nullable|integer|exists:files,id',

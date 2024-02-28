@@ -14,12 +14,12 @@ class UpdateFormRequest extends FormRequest
             'subject' => 'sometimes|string|max:255',
             'fields' => 'nullable|array',
             'fields.*.input_type' => 'nullable',
-            'fields.*.id' => '',
-            'fields.*.sort' => 'nullable',
+            'fields.*.id' => 'integer',
+            'fields.*.sort' => 'sometimes|required',
             'fields.*.required' => 'nullable',
-            'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
+            'fields.*.type' => 'sometimes|required|string|in:textField,textareaField,selectField',
             'fields.*.option_fields' => 'nullable|array|min:1',
-            'fields.*.label' => 'nullable|string|max:255',
+            'fields.*.label' => 'sometimes|required|string|max:255',
         ];
     }
 }

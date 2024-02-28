@@ -9,13 +9,13 @@ class UpdatePageRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'nullable|string|max:255',
-            'route' => 'nullable|string|max:255',
+            'title' => 'sometimes|required|string|max:255',
+            'route' => 'sometimes|required|string|max:255|unique:pages',
             'big_header' => 'boolean|nullable',
             'files' => 'nullable',
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
-            'page_items.*.sort' => 'nullable',
+            'page_items.*.sort' => 'required',
             'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem,campsItem,locationItem,faqItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
