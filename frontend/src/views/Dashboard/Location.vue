@@ -43,7 +43,6 @@
           :label="$t('dashboard.swissCoordinatesLV95')"
           type="text"
           v-model="lv95"
-          :errors="errors.long"
         />
       </div>
     </Card>

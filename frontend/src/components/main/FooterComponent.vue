@@ -58,8 +58,8 @@
             {{ $t("page.contactTitle") }}
           </h2>
           <div
-            class="text-white pl-6"
-            v-html="settings?.contactInFooter"
+            class="text-white pl-6 pt-5" 
+            v-html="formatFooterText(settings?.contactInFooter)"
             v-router-link
           ></div>
         </div>
@@ -86,6 +86,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    formatFooterText(text) {
+      return text.replace("main-text", "main-text text-xl text-white");
     },
   },
   computed: {

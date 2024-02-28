@@ -119,6 +119,9 @@ export default {
 
         this.notifyUser(this.$t("dashboard.itemUpdated"));
       } catch (e) {
+        if (e.response.status === 422) {
+          this.$emit("errors", e.response.data.errors);
+        }
         console.log(e);
       }
     },
