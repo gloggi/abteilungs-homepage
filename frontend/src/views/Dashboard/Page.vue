@@ -14,12 +14,29 @@
         v-model="content.title"
         :errors="errors.title"
       />
+      <div class="flex flex-col md:flex-row">
       <TextInput
-        class="mt-2"
+        class="mt-2 w-full"
+        :disabled="isGroupPage"
         :label="$t('dashboard.route')"
         :info="$t('dashboard.infoRootDirectory')"
         v-model="content.route"
         :errors="errors.route"
+      />
+      <CheckBox
+        class="mt-2 md:ml-2"
+        :label="$t('dashboard.isGroupPage')"
+        v-model="isGroupPage"
+        />
+    </div>
+      <SelectComponent
+        v-if="isGroupPage"
+        :label="$t('dashboard.group')"
+        :options="groups"
+        selection="Group"
+        @selectGroup="($event) => (content.groupId = $event)"
+        :value="content.groupId"
+        :errors="errors.groupId"
       />
       <CheckBox
         :label="$t('dashboard.showBigHeader')"
@@ -139,6 +156,16 @@
         :key="i"
         :item="pageItem"
       />
+      <GroupEventsItem
+        v-if="pageItem.type == 'groupEventsItem'"
+        :boxTitle="$t('dashboard.groupEventsItem')"
+        @delete="deleteItem"
+        @startedDragging="isDragging = true"
+        @endedDragging="isDragging = false"
+        @changeGroupEvents="changeGroupEvents"
+        :key="i"
+        :item="pageItem"
+      />
       <AddPageItem
         @changeOrder="changeOrder"
         @select="addItem"
@@ -176,6 +203,8 @@ import FilesItem from "../../components/admin/PageItems/FilesItem.vue";
 import CampsItem from "../../components/admin/PageItems/CampsItem.vue";
 import LocationItem from "../../components/admin/PageItems/LocationItem.vue";
 import FaqItem from "../../components/admin/PageItems/FaqItem.vue";
+import SelectComponent from "../../components/admin/SelectComponent.vue";
+import GroupEventsItem from "../../components/admin/PageItems/GroupEventsItem.vue";
 
 export default {
   components: {
@@ -196,7 +225,9 @@ export default {
     CampsItem,
     LocationItem,
     FaqItem,
-  },
+    SelectComponent,
+    GroupEventsItem,
+},
   data() {
     return {
       content: {
@@ -214,10 +245,13 @@ export default {
         faArrowsRotate,
         faChevronLeft,
       },
+      groups: [],
+      isGroupPage: false,
     };
   },
   async created() {
     await this.getPage();
+    await this.getGroups();
   },
   computed: {},
   methods: {
@@ -231,6 +265,8 @@ export default {
           `/pages/${this.$route.params.id}`,
         );
         this.content = response.data;
+        this.isGroupPage = !!this.content.groupId;
+        console.log(this.isGroupPage)
         this.loadedKey++;
       } catch (e) {
         console.log(e);
@@ -241,6 +277,14 @@ export default {
         await this.callApi("put", `/pages/${this.content.id}`, this.content);
         this.getPage();
         this.notifyUser("The page has been successfully updated");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getGroups() {
+      try {
+        const response = await this.callApi("get", "/groups");
+        this.groups = response.data.data;
       } catch (e) {
         console.log(e);
       }
@@ -308,6 +352,15 @@ export default {
 
       this.content.pageItems[itemIndex].locationId = locationId;
     },
+    changeGroupEvents(event) {
+      const pageItemId = event.id;
+      const groupId = event.groupEventsId;
+      const itemIndex = this.content.pageItems.findIndex(
+        (p) => p.id == pageItemId && p.type == "groupEventsItem",
+      );
+
+      this.content.pageItems[itemIndex].groupId = groupId;
+    },
     changeHeaderImages(event) {
       this.content.files = event.files;
     },
@@ -317,6 +370,7 @@ export default {
     handleErrors(errors) {
       this.errors = errors;
     },
+  
   },
   watch: {
     "content.title"(newVal) {

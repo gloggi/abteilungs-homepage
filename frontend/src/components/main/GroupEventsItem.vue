@@ -1,12 +1,5 @@
 <template>
-  <PageWrapper v-if="group">
-    <TextItem :item="{ title: group.name, body: group.description }" />
-    <FilesItem
-      v-if="group.files.length > 0"
-      :title="$t('page.downloads')"
-      :files="group.files"
-    />
-    <div>
+<div>
       <ContentWrapper>
         <HeadingOne class="text-primary pb-5">{{
           $t("page.events")
@@ -19,7 +12,8 @@
           :key="event.id"
           :event="event"
         />
-        <EventPager
+        <EventPager 
+        v-if="eventLastPage > 1"
           @changePage="changeEventPage"
           :numberOfPages="eventLastPage"
           :currentPage="eventPage"
@@ -29,27 +23,30 @@
         <p class="main-text">{{ $t("page.noEventsAvailable") }}</p>
       </ContentWrapper>
     </div>
-  </PageWrapper>
-</template>
-<script>
-import ContentWrapper from "./ContentWrapper.vue";
-import Event from "./Event.vue";
-import EventPager from "./EventPager.vue";
-import FilesItem from "./FilesItem.vue";
-import HeadingOne from "./HeadingOne.vue";
-import PageWrapper from "./PageWrapper.vue";
-import TextItem from "./TextItem.vue";
+  </template>
+  <script>
+  import ContentWrapper from "./ContentWrapper.vue";
+  import Event from "./Event.vue";
+  import EventPager from "./EventPager.vue";
+  import HeadingOne from "./HeadingOne.vue";
 
-export default {
-  props: ["group"],
-  data() {
-    return {
-      events: [],
-      eventPage: 1,
-      eventLastPage: 1,
-    };
-  },
-  methods: {
+  
+  export default {
+    props: ["item"],
+    components: {
+      ContentWrapper,
+      Event,
+      EventPager,
+      HeadingOne,
+    },
+    data() {
+      return {
+        events: [],
+        eventPage: 1,
+        eventLastPage: 1,
+      };
+    },
+    methods: {
     async getEvents() {
       try {
         const response = await this.callApi(
@@ -58,7 +55,7 @@ export default {
           {},
           {
             params: {
-              group_id: this.group.id,
+              group_id: this.item.group.id,
               page: this.eventPage,
               per_page: 3,
             },
@@ -78,14 +75,6 @@ export default {
   async created() {
     this.getEvents();
   },
-  components: {
-    PageWrapper,
-    TextItem,
-    Event,
-    HeadingOne,
-    FilesItem,
-    ContentWrapper,
-    EventPager,
-  },
-};
-</script>
+  };
+  </script>
+  

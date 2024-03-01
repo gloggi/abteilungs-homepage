@@ -159,7 +159,7 @@ class FileController extends Controller
 
             $newFile->thumbnail = Storage::url($thumbnailPath);
         } elseif ($newFile->extension === 'svg') {
-            $newFile->thumbnail = $$newFile->path;
+            $newFile->thumbnail = $newFile->path;
         }
     }
 

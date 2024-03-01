@@ -9,6 +9,7 @@ use App\Models\FaqItem;
 use App\Models\FilesItem;
 use App\Models\FormItem;
 use App\Models\GenericItem;
+use App\Models\GroupEventsItem;
 use App\Models\ImageItem;
 use App\Models\LocationItem;
 use App\Models\Page;
@@ -238,6 +239,16 @@ class PageController extends Controller
                             'page_id' => $page->id,
                             'sort' => $sort_counter,
                             'faq_id' => $pageItemData['faq_id'] ?? null,
+                        ]
+                    );
+                    break;
+                case 'groupEventsItem':
+                   GroupEventsItem::updateOrCreate(
+                        ['id' => $pageItemData['id'] ?? null],
+                        [
+                            'page_id' => $page->id,
+                            'sort' => $sort_counter,
+                            'group_id' => $pageItemData['group_id'] ?? null,
                         ]
                     );
                     break;

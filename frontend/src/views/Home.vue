@@ -52,7 +52,7 @@ export default {
       if (this.$route.name == "GroupPage") {
         let groupId = this.$route.params.id;
         await this.getGroup(groupId);
-        if (!this.group.enableGroupPage) {
+        if (!this.group.hasPage) {
           this.$router.go(-1);
         }
         this.pageType = "groupPage";

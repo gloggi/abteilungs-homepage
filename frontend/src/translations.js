@@ -145,6 +145,10 @@ export const messages = {
       bgColor: "Hintergrundfarbe",
       notFoundPage: "404-Seite",
       replaceFile: "Datei ersetzen",
+      group: "Gruppe",
+      groupEvents: "Gruppenanlässe",
+      groupEventsItem: "GruppenanlässeItem",
+      isGroupPage: "Gruppenseite?",
     },
     page: {
       campDateLabel: "Lagerdatum",

@@ -61,39 +61,12 @@
             v-model="content.successors"
             :options="groups"
           />
-          <div class="w-full md:w-1/4">
-            <FormLabel class=" ">{{
-              $t("dashboard.enableGroupPage")
-            }}</FormLabel>
-            <CheckBox v-model="content.enableGroupPage" />
-          </div>
           <TextInput
             :label="$t('dashboard.midataId')"
             type="number"
             v-model="content.midataId"
             :errors="errors.midataId"
           />
-          <div class="flex flex-col space-y-2">
-            <FormLabel>{{ $t("dashboard.headerImages") }}</FormLabel>
-            <BannerImageSelector
-              info="The perfect aspect ratio is 32:9."
-              :key="loadedKey"
-              :item="{ files: content.headerImages }"
-              @changeImages="changeHeaderImages"
-            />
-          </div>
-          <div class="flex flex-col space-y-2">
-            <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
-            <Editor v-model="content.description" />
-          </div>
-          <div class="flex flex-col space-y-2">
-            <FormLabel>{{ $t("dashboard.files") }}</FormLabel>
-            <FilesSelector
-              :key="loadedKey"
-              :item="{ files: content.files }"
-              @changeFiles="changeFiles"
-            />
-          </div>
         </div>
       </div>
     </Card>

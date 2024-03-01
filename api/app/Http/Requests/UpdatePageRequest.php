@@ -10,13 +10,14 @@ class UpdatePageRequest extends FormRequest
     {
         return [
             'title' => 'sometimes|required|string|max:255',
-            'route' => 'sometimes|required|string|max:255|unique:pages',
+            'route' => 'sometimes|required|string|max:255',
             'big_header' => 'boolean|nullable',
             'files' => 'nullable',
+            'group_id' => 'nullable',
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'required',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem,campsItem,locationItem,faqItem',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem,campsItem,locationItem,faqItem,groupEventsItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
             'page_items.*.show_fleur_de_lis' => 'nullable',
@@ -24,6 +25,7 @@ class UpdatePageRequest extends FormRequest
             'page_items.*.form_id' => 'nullable',
             'page_items.*.location_id' => 'nullable',
             'page_items.*.faq_id' => 'nullable',
+            'page_items.*.group_id' => 'nullable',
         ];
     }
 }

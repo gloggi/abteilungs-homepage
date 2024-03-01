@@ -14,7 +14,7 @@
       >
         <template v-for="group in groups" :key="group.id">
           <li
-            v-if="group.enableGroupPage"
+            v-if="group.hasPage"
             class="font-light p-3 py-5 pl-8 md:py-2 md:p-3 w-full md:px-5 hover:text-secondary text-white main-text md:text-2xl"
           >
             <router-link

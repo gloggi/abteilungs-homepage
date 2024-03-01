@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    protected $fillable = ['title', 'route', 'file_ids', 'big_header'];
+    protected $fillable = ['title', 'route', 'file_ids', 'big_header', 'group_id'];
 
     protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems'];
 
@@ -15,6 +15,11 @@ class Page extends Model
     {
         return $this->belongsToMany(File::class, 'page_file');
 
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
     }
 
     public function textItems()
@@ -65,6 +70,12 @@ class Page extends Model
         return $this->hasMany(FaqItem::class)->with('faq')->with('faq.questions');
     }
 
+    public function groupEventsItems()
+    {
+
+        return $this->hasMany(GroupEventsItem::class)->with('group');
+    }
+
     public function genericItems()
     {
 
@@ -82,6 +93,7 @@ class Page extends Model
         $genericItems = $this->genericItems;
         $locationItems = $this->locationItems;
         $faqItems = $this->faqItems;
+        $groupEventsItems = $this->groupEventsItems;
 
         $items = $items->concat($textItems);
         $items = $items->concat($imageItems);
@@ -90,6 +102,7 @@ class Page extends Model
         $items = $items->concat($genericItems);
         $items = $items->concat($locationItems);
         $items = $items->concat($faqItems);
+        $items = $items->concat($groupEventsItems);
 
         $items = $items->sortBy('sort')->values()->all();;
 

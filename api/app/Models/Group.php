@@ -24,25 +24,20 @@ class Group extends Model
         'enable_group_page',
     ];
 
-    protected $appends = ['route'];
+    protected $appends = ['route','has_page'];
 
     public function getRouteAttribute()
     {
         return $this->toCamelCase($this->name);
     }
 
-
-    public function headerImages()
+    public function getHasPageAttribute()
     {
-        return $this->belongsToMany(File::class, 'group_headers');
-
+        return $this->page ? true : false;
     }
 
-    public function files()
-    {
-        return $this->belongsToMany(File::class, 'group_files');
 
-    }
+
 
     public function section()
     {
@@ -67,5 +62,10 @@ class Group extends Model
     public function successors()
     {
         return $this->belongsToMany(Group::class, 'group_successor', 'group_id', 'successor_id');
+    }
+
+    public function page()
+    {
+        return $this->hasOne(Page::class);
     }
 }

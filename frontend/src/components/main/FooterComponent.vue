@@ -14,7 +14,7 @@
             <template v-for="group in transformedGroups" :key="group.id">
               <li v-if="!group.parentId" class="pl-6">
                 <router-link
-                  :to="group.enableGroupPage ? `/group/${group.route}` : '#'"
+                  :to="group.hasPage ? `/group/${group.route}` : '#'"
                   >{{ group.name }}</router-link
                 >
                 <ul
@@ -28,7 +28,7 @@
                   >
                     <router-link
                       :to="
-                        child.enableGroupPage ? `/group/${child.route}` : '#'
+                        child.hasPage ? `/group/${child.route}` : '#'
                       "
                       >{{ child.name }}</router-link
                     >

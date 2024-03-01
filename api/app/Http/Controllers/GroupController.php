@@ -14,7 +14,7 @@ class GroupController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $groups = Group::with(['file', 'section', 'predecessors', 'successors', 'parent', 'headerImages', 'files']);
+        $groups = Group::with(['file', 'section', 'predecessors', 'successors', 'parent']);
         if ($request->has('dashboard') && $user->hasRole('unitleader')) {
             $groups = $groups->whereIn('id', $user->groups->pluck('id'));
         }
@@ -27,8 +27,6 @@ class GroupController extends Controller
     public function store(StoreGroupRequest $request)
     {
         $group = Group::create($request->validated());
-        $group->headerImages()->sync(array_column($request->input('header_images', []), 'id'));
-        $group->files()->sync(array_column($request->input('files', []), 'id'));
 
         $group->predecessors()->sync($request->input('predecessors', []));
         $group->successors()->sync($request->input('successors', []));
@@ -38,7 +36,7 @@ class GroupController extends Controller
 
     public function show($idOrRoute)
     {
-        $query = Group::with(['section', 'file', 'predecessors', 'successors', 'parent', 'headerImages', 'files']);
+        $query = Group::with(['section', 'file', 'predecessors', 'successors', 'parent', 'page', 'page.files']);
         if (is_numeric($idOrRoute)) {
             $group = $query->find($idOrRoute);
         } else {
@@ -48,6 +46,9 @@ class GroupController extends Controller
             });
 
             $group = $filteredGroups->first();
+        }
+        if($group->page){
+            $group->page->page_items = $group->page->getAllItems();
         }
 
         if (!$group) {
@@ -70,8 +71,6 @@ class GroupController extends Controller
         }
 
         $group->update($request->validated());
-        $group->headerImages()->sync(array_column($request->input('header_images', []), 'id'));
-        $group->files()->sync(array_column($request->input('files', []), 'id'));
 
         $group->predecessors()->sync($request->input('predecessors', []));
         $group->successors()->sync($request->input('successors', []));
