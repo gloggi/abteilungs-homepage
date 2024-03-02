@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
 
 
 Route::get('/pages/{id}', [PageController::class, 'show']);
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
     Route::get('/pages', [PageController::class, 'index']);
     Route::post('/pages', [PageController::class, 'store']);
     Route::put('/pages/{id}', [PageController::class, 'update']);
@@ -94,7 +94,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
 
 
 Route::get('/forms/{id}', [FormController::class, 'show']);
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
     Route::get('/forms', [FormController::class, 'index']);
     Route::post('/forms', [FormController::class, 'store']);
     Route::put('/forms/{id}', [FormController::class, 'update']);

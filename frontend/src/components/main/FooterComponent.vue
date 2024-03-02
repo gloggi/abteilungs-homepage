@@ -27,9 +27,7 @@
                     class="pl-6"
                   >
                     <router-link
-                      :to="
-                        child.hasPage ? `/group/${child.route}` : '#'
-                      "
+                      :to="child.hasPage ? `/group/${child.route}` : '#'"
                       >{{ child.name }}</router-link
                     >
                   </li>
@@ -58,7 +56,7 @@
             {{ $t("page.contactTitle") }}
           </h2>
           <div
-            class="text-white pl-6 pt-5" 
+            class="text-white pl-6 pt-5"
             v-html="formatFooterText(settings?.contactInFooter)"
             v-router-link
           ></div>

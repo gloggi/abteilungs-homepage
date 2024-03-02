@@ -7,6 +7,7 @@
     )}`"
     columns="file:image(thumbnail),name:link(id),section.name"
     pushAfterCreationTo="Group"
+    :create="isAdmin"
   />
 </template>
 

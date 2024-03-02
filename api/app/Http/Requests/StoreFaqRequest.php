@@ -10,7 +10,8 @@ class StoreFaqRequest extends FormRequest
     {
         return [
             'title' => 'required|string|unique:faqs,title',
-            'questions' => 'required|array',
+            'questions' => 'array',
+            'group_id' => 'nullable|integer',
             'questions.*.question' => 'required|string',
             'questions.*.answer' => 'required|string',
             'questions.*.id' => 'nullable|integer',

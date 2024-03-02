@@ -10,7 +10,7 @@ class UpdatePageRequest extends FormRequest
     {
         return [
             'title' => 'sometimes|required|string|max:255',
-            'route' => 'sometimes|required|string|max:255',
+            'route' => 'sometimes',
             'big_header' => 'boolean|nullable',
             'files' => 'nullable',
             'group_id' => 'nullable',

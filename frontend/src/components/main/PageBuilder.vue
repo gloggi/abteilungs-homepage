@@ -15,7 +15,10 @@
       <CampsItem v-if="pageItem.type == 'campsItem'" :item="pageItem" />
       <LocationItem v-if="pageItem.type == 'locationItem'" :item="pageItem" />
       <FaqItem v-if="pageItem.type == 'faqItem'" :item="pageItem" />
-      <GroupEventsItem v-if="pageItem.type == 'groupEventsItem'" :item="pageItem" />
+      <GroupEventsItem
+        v-if="pageItem.type == 'groupEventsItem'"
+        :item="pageItem"
+      />
     </template>
   </PageWrapper>
 </template>
@@ -52,7 +55,7 @@ export default {
     CampsItem,
     LocationItem,
     FaqItem,
-    GroupEventsItem
-},
+    GroupEventsItem,
+  },
 };
 </script>

@@ -40,7 +40,12 @@ export default {
   methods: {
     async getForms() {
       try {
-        const response = await this.callApi("get", "forms");
+        const response = await this.callApi(
+          "get",
+          "forms",
+          {},
+          { params: { dashboard: true } },
+        );
         this.options = response.data.data;
       } catch (error) {
         console.log(error);

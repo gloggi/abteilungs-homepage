@@ -148,7 +148,7 @@ export const messages = {
       group: "Gruppe",
       groupEvents: "Gruppenanlässe",
       groupEventsItem: "GruppenanlässeItem",
-      isGroupPage: "Gruppenseite?",
+      isGroupPage: "Ist eine Gruppenseite?",
     },
     page: {
       campDateLabel: "Lagerdatum",

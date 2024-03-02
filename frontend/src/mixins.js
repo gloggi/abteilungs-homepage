@@ -38,6 +38,9 @@ export const mixin = {
     isUnitLeader() {
       return this.$store.state.user.isUnitLeader;
     },
+    userGroups() {
+      return this.$store.state.user.groups;
+    },
   },
   methods: {
     getAsset(asset) {

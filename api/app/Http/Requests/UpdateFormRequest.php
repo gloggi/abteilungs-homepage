@@ -12,6 +12,7 @@ class UpdateFormRequest extends FormRequest
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|max:255',
             'subject' => 'sometimes|string|max:255',
+            'group_id' => 'sometimes|integer',
             'fields' => 'nullable|array',
             'fields.*.input_type' => 'nullable',
             'fields.*.id' => 'integer',

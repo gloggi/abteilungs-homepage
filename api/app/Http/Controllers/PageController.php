@@ -15,6 +15,7 @@ use App\Models\LocationItem;
 use App\Models\Page;
 use App\Models\TextItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -22,7 +23,13 @@ class PageController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $pages = Page::with(['files'])
+        $user = Auth::user();
+        $query = Page::with(['files']);
+        if($request->has('dashboard')&& !$user->hasRole('admin')){
+            $groupIds = $user->groups->pluck('id');
+            $query->whereIn('group_id', $groupIds);
+        } 
+        $pages = $query
             ->paginate($perPage);
 
         return response()->json($pages);
@@ -31,6 +38,16 @@ class PageController extends Controller
     public function store(StorePageRequest $request)
     {
         $validatedData = $request->validated();
+        $user = Auth::user();
+        if(!$user->hasRole('admin')){
+            if(isset($validatedData['group_id'])){
+                $groups = $user->groups->pluck('id');
+                $groupId = $validatedData['group_id'];
+                if(!$groups->contains($groupId)){
+                    return response()->json(['message' => 'Unauthorized'], 403);
+                }
+        }
+
 
         $page = Page::create($validatedData);
 
@@ -45,6 +62,7 @@ class PageController extends Controller
             'page_items' => $page->getAllItems(),
         ], 201);
     }
+}
 
     public function update(UpdatePageRequest $request, $id)
     {
@@ -52,7 +70,16 @@ class PageController extends Controller
         if (!$page) {
             return response()->json(['message' => 'Page not found'], 404);
         }
+        
         $validatedData = $request->validated();
+        $user = Auth::user();
+        if(!$user->hasRole('admin')){
+            $groups = $user->groups->pluck('id');
+            $groupId = $validatedData['group_id'];
+            if(!$groups->contains($groupId)){
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
+        }
         $page->update($validatedData);
         $page->files()->sync(array_column($request->input('files', []), 'id'));
         $this->createPageItemsFromValidatedData($page, $validatedData);
@@ -110,6 +137,14 @@ class PageController extends Controller
 
         if (!$page) {
             return response()->json(['message' => 'Page not found'], 404);
+        }
+        $user = Auth::user();
+        if(!$user->hasRole('admin')){
+            $groups = $user->groups->pluck('id');
+            $groupId = $page->group_id;
+            if(!$groups->contains($groupId)){
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
         }
 
         $page->delete();

@@ -10,6 +10,7 @@ use App\Models\SelectField;
 use App\Models\TextareaField;
 use App\Models\TextField;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
 {
@@ -17,7 +18,15 @@ class FormController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $forms = Form::paginate($perPage);
+        $user = Auth::user();
+        $query = Form::query();
+        if ($request->has('dashboard') && !$user->hasRole('admin')) {
+            $groupIds = $user->groups->pluck('id');
+            $query->whereIn('group_id', $groupIds);
+        }
+
+        $forms = $query->paginate($perPage);
+
         return response()->json($forms);
     }
 
@@ -25,6 +34,11 @@ class FormController extends Controller
     {
 
         $validatedData = $request->validated();
+        $user = Auth::user();
+        if(!$user->hasRole('admin')&&!isset($validatedData['group_id'])){
+            $groups = $user->groups->pluck('id');
+            $validatedData['group_id'] = $groups->first();
+        }
 
         $form = Form::create($validatedData);
 
@@ -44,6 +58,14 @@ class FormController extends Controller
             return response()->json(['message' => 'Form not found'], 404);
         }
         $validatedData = $request->validated();
+        $user = Auth::user();
+        if(!$user->hasRole('admin')){
+            $groups = $user->groups->pluck('id');
+            $groupId = isset($validatedData['group_id']) ? $validatedData['group_id'] : null;
+            if(!$groupId||!$groups->contains($groupId)){
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
+        }
 
         $form->update($validatedData);
 
@@ -88,6 +110,14 @@ class FormController extends Controller
 
         if (!$form) {
             return response()->json(['message' => 'Form not found'], 404);
+        }
+        $user = Auth::user();
+        if(!$user->hasRole('admin')){
+            $groups = $user->groups->pluck('id');
+            $groupId = $form->group_id;
+            if(!$groups->contains($groupId)){
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
         }
 
         $form->delete();
@@ -147,7 +177,8 @@ class FormController extends Controller
                                 [
                                     'name' => $option['name'],
                                     'select_field_id' => $selectField->id
-                                ]);
+                                ]
+                            );
 
                         }
                     }

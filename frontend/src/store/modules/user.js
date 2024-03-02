@@ -8,6 +8,7 @@ export const user = {
       token: undefined,
       isAdmin: false,
       isUnitLeader: false,
+      groups: [],
     };
   },
   mutations: {
@@ -26,6 +27,9 @@ export const user = {
     setUnitLeader(state, isUnitLeader) {
       state.isUnitLeader = isUnitLeader;
     },
+    setGroups(state, groups) {
+      state.groups = groups;
+    },
   },
   actions: {
     async getUser({ commit }) {
@@ -40,6 +44,7 @@ export const user = {
         commit("setToken", user.token);
         commit("setAdmin", isAdmin);
         commit("setUnitLeader", isUnitLeader || isAdmin);
+        commit("setGroups", user.groups);
       } catch (error) {
         console.error(error);
       }

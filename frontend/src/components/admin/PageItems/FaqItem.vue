@@ -40,7 +40,12 @@ export default {
   methods: {
     async getFaqs() {
       try {
-        const response = await this.callApi("get", "faqs");
+        const response = await this.callApi(
+          "get",
+          "faqs",
+          {},
+          { params: { dashboard: true } },
+        );
         this.options = response.data.data.map((faq) => {
           return { id: faq.id, name: faq.title };
         });

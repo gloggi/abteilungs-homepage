@@ -10,7 +10,7 @@
       <ActionButton v-if="midataSync" @click="syncEntity">
         <MiDataSync class="h-6 w-6" />
       </ActionButton>
-      <ActionButton @click="createEntity">
+      <ActionButton v-if="create" @click="createEntity">
         <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6" />
       </ActionButton>
     </div>
@@ -39,6 +39,10 @@ export default {
     midataSync: {
       type: Boolean,
       default: false,
+    },
+    create: {
+      type: Boolean,
+      default: true,
     },
   },
   components: { EntityTable, MiDataSync, ActionButton },

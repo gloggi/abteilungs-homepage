@@ -15,6 +15,14 @@
         v-model="content.title"
         :errors="errors.title"
       />
+      <SelectComponent
+        :label="$t('dashboard.groups')"
+        :value="content.groupId"
+        :options="userGroups"
+        :errors="errors.group"
+        selection="Group"
+        @selectGroup="handleSelectGroup"
+      />
     </Card>
     <h2 class="font-semibold text-2xl">{{ $t("dashboard.questions") }}</h2>
     <AddQuestion
@@ -41,6 +49,7 @@
                 :label="$t('dashboard.question')"
               />
               <CheckBox
+                class="text-nowrap"
                 :label="$t('dashboard.defaultOpen')"
                 v-model="question.open"
               />
@@ -73,6 +82,7 @@ import Editor from "../../components/admin/Editor/Editor.vue";
 import AddQuestion from "../../components/admin/AddQuestion.vue";
 import DragItemBox from "../../components/admin/DragItemBox.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
+import SelectComponent from "../../components/admin/SelectComponent.vue";
 export default {
   components: {
     Card,
@@ -82,6 +92,7 @@ export default {
     AddQuestion,
     DragItemBox,
     CheckBox,
+    SelectComponent,
   },
   data() {
     return {
@@ -156,6 +167,9 @@ export default {
       this.content.questions.forEach((q, i) => {
         q.sort = i;
       });
+    },
+    handleSelectGroup(value) {
+      this.content.groupId = value;
     },
   },
   async created() {

@@ -10,7 +10,7 @@ class StorePageRequest extends FormRequest
     {
         return [
             'title' => 'string|max:255|required',
-            'route' => 'string|max:255|unique:pages|required',
+            'route' => 'string|max:255|unique:pages',
             'big_header' => 'boolean|nullable',
             'files' => 'array|nullable',
             'group_id' => 'nullable|unique:pages,group_id',

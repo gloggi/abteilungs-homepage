@@ -20,7 +20,8 @@ class FileController extends Controller
         $user = Auth::user();
         $query = File::orderBy("id", "desc");
         if (!$user->hasRole('admin')) {
-            $query = $query->where('user_id', $user->id);
+            $groupIds = $user->groups->pluck('id');
+            $query->whereIn('group_id', $groupIds);
         }
 
         if ($extensions) {
@@ -53,7 +54,7 @@ class FileController extends Controller
         $newFile->extension = $fileData->getClientOriginalExtension();
         $newFile->category = $category;
         $newFile->name = $name;
-        $newFile->user_id = $user->id;
+        $newFile->group_id = $user->groups->first()->id;
 
         $this->storeFileAndCreateThumbnail($fileData, $filename, $newFile);
 
@@ -68,7 +69,9 @@ class FileController extends Controller
         $user = Auth::user();
         $file = File::findOrFail($id);
         if (!$user->hasRole('admin')) {
-            if ($file->user_id !== $user->id) {
+            $groups = $user->groups->pluck('id');
+            $groupId = $file->group_id;
+            if(!$groups->contains($groupId)){
                 return response()->json(['message' => 'You are not allowed to view this file'], 403);
             }
         }
@@ -108,9 +111,12 @@ class FileController extends Controller
     {
         $file = File::findOrFail($id);
         $user = Auth::user();
-        if (!$user->hasRole('admin')) {
-            if ($file->user_id !== $user->id) {
-                return response()->json(['message' => 'You are not allowed to delete this file'], 403);
+        $user = Auth::user();
+        if(!$user->hasRole('admin')){
+            $groups = $user->groups->pluck('id');
+            $groupId = $file->group_id;
+            if(!$groups->contains($groupId)){
+                return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
 

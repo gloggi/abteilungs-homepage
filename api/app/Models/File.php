@@ -12,12 +12,18 @@ class File extends Model
     protected $fillable = [
         'name',
         'path',
+        'group_id',
 
     ];
 
     public function groups()
     {
         return $this->hasMany(Group::class);
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
     }
 
     public function user()

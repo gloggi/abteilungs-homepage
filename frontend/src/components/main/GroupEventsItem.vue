@@ -1,52 +1,49 @@
 <template>
-<div>
-      <ContentWrapper>
-        <HeadingOne class="text-primary pb-5">{{
-          $t("page.events")
-        }}</HeadingOne>
-      </ContentWrapper>
-      <div v-if="events.length > 0">
-        <Event
-          v-for="(event, idx) in events"
-          :open="idx === 0"
-          :key="event.id"
-          :event="event"
-        />
-        <EventPager 
+  <div>
+    <ContentWrapper>
+      <HeadingOne class="text-primary pb-5">{{ $t("page.events") }}</HeadingOne>
+    </ContentWrapper>
+    <div v-if="events.length > 0">
+      <Event
+        v-for="(event, idx) in events"
+        :open="idx === 0"
+        :key="event.id"
+        :event="event"
+      />
+      <EventPager
         v-if="eventLastPage > 1"
-          @changePage="changeEventPage"
-          :numberOfPages="eventLastPage"
-          :currentPage="eventPage"
-        />
-      </div>
-      <ContentWrapper v-else>
-        <p class="main-text">{{ $t("page.noEventsAvailable") }}</p>
-      </ContentWrapper>
+        @changePage="changeEventPage"
+        :numberOfPages="eventLastPage"
+        :currentPage="eventPage"
+      />
     </div>
-  </template>
-  <script>
-  import ContentWrapper from "./ContentWrapper.vue";
-  import Event from "./Event.vue";
-  import EventPager from "./EventPager.vue";
-  import HeadingOne from "./HeadingOne.vue";
+    <ContentWrapper v-else>
+      <p class="main-text">{{ $t("page.noEventsAvailable") }}</p>
+    </ContentWrapper>
+  </div>
+</template>
+<script>
+import ContentWrapper from "./ContentWrapper.vue";
+import Event from "./Event.vue";
+import EventPager from "./EventPager.vue";
+import HeadingOne from "./HeadingOne.vue";
 
-  
-  export default {
-    props: ["item"],
-    components: {
-      ContentWrapper,
-      Event,
-      EventPager,
-      HeadingOne,
-    },
-    data() {
-      return {
-        events: [],
-        eventPage: 1,
-        eventLastPage: 1,
-      };
-    },
-    methods: {
+export default {
+  props: ["item"],
+  components: {
+    ContentWrapper,
+    Event,
+    EventPager,
+    HeadingOne,
+  },
+  data() {
+    return {
+      events: [],
+      eventPage: 1,
+      eventLastPage: 1,
+    };
+  },
+  methods: {
     async getEvents() {
       try {
         const response = await this.callApi(
@@ -75,6 +72,5 @@
   async created() {
     this.getEvents();
   },
-  };
-  </script>
-  
+};
+</script>

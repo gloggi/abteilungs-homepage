@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Form extends Model
 {
-    protected $fillable = ['name', 'email', 'subject'];
+    protected $fillable = ['name', 'email', 'subject', 'group_id'];
 
     public function textFields()
     {
@@ -21,6 +21,11 @@ class Form extends Model
     public function selectFields()
     {
         return $this->hasMany(SelectField::class)->with('optionFields');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
     }
 
     public function getAllFields()

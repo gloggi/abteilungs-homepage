@@ -39,11 +39,7 @@
             >
               {{ $t("dashboard.menuAndLinks") }}
             </SidebarItem>
-            <SidebarItem
-              v-if="isAdmin"
-              to="/dashboard/pages"
-              :icon="icons.faBookOpen"
-            >
+            <SidebarItem to="/dashboard/pages" :icon="icons.faBookOpen">
               {{ $t("dashboard.pages") }}
             </SidebarItem>
             <SidebarItem to="/dashboard/groups" :icon="icons.faUsers">
@@ -79,11 +75,7 @@
             <SidebarItem to="/dashboard/faqs" :icon="icons.faCircleQuestion">
               {{ $t("dashboard.faqs") }}
             </SidebarItem>
-            <SidebarItem
-              v-if="isAdmin"
-              to="/dashboard/forms"
-              :icon="icons.faRectangleList"
-            >
+            <SidebarItem to="/dashboard/forms" :icon="icons.faRectangleList">
               {{ $t("dashboard.forms") }}
             </SidebarItem>
             <SidebarItem to="/dashboard/media" :icon="icons.faPhotoVideo">

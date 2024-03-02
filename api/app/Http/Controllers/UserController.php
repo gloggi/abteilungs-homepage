@@ -63,6 +63,7 @@ class UserController extends Controller
             ], 404);
         }
         $user->load('roles');
+        $user->load('groups');
 
         return response()->json($user, 200);
     }

@@ -28,6 +28,14 @@
           v-model="content.subject"
           :errors="errors.subject"
         />
+        <SelectComponent
+          :label="$t('dashboard.groups')"
+          :value="content.groupId"
+          :options="userGroups"
+          :errors="errors.group"
+          selection="Group"
+          @selectGroup="handleSelectGroup"
+        />
         <h2 class="font-semibold text-2xl">{{ $t("dashboard.formFields") }}</h2>
         <AddFormField
           @changeOrder="changeOrder"
@@ -153,6 +161,7 @@ import AddFormField from "../../components/admin/AddFormField.vue";
 import DragItemBox from "../../components/admin/DragItemBox.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
+import SelectComponent from "../../components/admin/SelectComponent.vue";
 
 export default {
   components: {
@@ -162,6 +171,7 @@ export default {
     DragItemBox,
     ItemHeaderTemplate,
     CheckBox,
+    SelectComponent,
   },
   data() {
     return {
@@ -242,6 +252,9 @@ export default {
     },
     handleErrors(errors) {
       this.errors = errors;
+    },
+    async handleSelectGroup(value) {
+      this.content.groupId = value;
     },
   },
   async created() {

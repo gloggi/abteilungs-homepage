@@ -14,12 +14,11 @@
             :label="$t('dashboard.title')"
             v-model.lazy="titleValue"
           />
-          <div class="w-full md:w-1/4">
-            <FormLabel class=" ">{{
-              $t("dashboard.showFleurDeLis")
-            }}</FormLabel>
-            <CheckBox v-model="fleurDeLisValue" />
-          </div>
+          <CheckBox
+            class="text-nowrap"
+            :label="$t('dashboard.showFleurDeLis')"
+            v-model="fleurDeLisValue"
+          />
         </div>
         <Editor v-model="bodyValue" />
       </div>

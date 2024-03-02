@@ -15,20 +15,20 @@
         :errors="errors.title"
       />
       <div class="flex flex-col md:flex-row">
-      <TextInput
-        class="mt-2 w-full"
-        :disabled="isGroupPage"
-        :label="$t('dashboard.route')"
-        :info="$t('dashboard.infoRootDirectory')"
-        v-model="content.route"
-        :errors="errors.route"
-      />
-      <CheckBox
-        class="mt-2 md:ml-2"
-        :label="$t('dashboard.isGroupPage')"
-        v-model="isGroupPage"
+        <TextInput
+          class="mt-2 w-full"
+          :disabled="isGroupPage"
+          :label="$t('dashboard.route')"
+          :info="$t('dashboard.infoRootDirectory')"
+          v-model="content.route"
+          :errors="errors.route"
         />
-    </div>
+        <CheckBox
+          class="mt-2 md:ml-2 text-nowrap"
+          :label="$t('dashboard.isGroupPage')"
+          v-model="isGroupPage"
+        />
+      </div>
       <SelectComponent
         v-if="isGroupPage"
         :label="$t('dashboard.group')"
@@ -227,7 +227,7 @@ export default {
     FaqItem,
     SelectComponent,
     GroupEventsItem,
-},
+  },
   data() {
     return {
       content: {
@@ -266,7 +266,7 @@ export default {
         );
         this.content = response.data;
         this.isGroupPage = !!this.content.groupId;
-        console.log(this.isGroupPage)
+        console.log(this.isGroupPage);
         this.loadedKey++;
       } catch (e) {
         console.log(e);
@@ -370,7 +370,6 @@ export default {
     handleErrors(errors) {
       this.errors = errors;
     },
-  
   },
   watch: {
     "content.title"(newVal) {
