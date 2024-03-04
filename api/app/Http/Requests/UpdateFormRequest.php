@@ -8,8 +8,9 @@ class UpdateFormRequest extends FormRequest
 {
     public function rules()
     {
+        $id = $this->route('id');
         return [
-            'name' => 'sometimes|string|max:255',
+            'name' => 'sometimes|string|max:255|unique:forms,name,' . $id,
             'email' => 'sometimes|string|max:255',
             'subject' => 'sometimes|string|max:255',
             'group_id' => 'sometimes|integer',

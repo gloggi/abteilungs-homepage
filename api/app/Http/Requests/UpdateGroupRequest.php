@@ -10,13 +10,12 @@ class UpdateGroupRequest extends FormRequest
 
     public function rules()
     {
+        $id = $this->route('id');
         return [
-            'name' => 'sometimes|required|string|max:255|unique:groups,name,',
+            'name' => 'sometimes|string|max:255|unique:groups,name,' . $id,
             'color' => 'sometimes|required|string|max:255',
             'midata_id' => 'nullable|integer',
-            'header_images' => 'array|nullable',
-            'files' => 'array|nullable',
-            'description' => 'nullable|string',
+            'region' => 'nullable|string|max:255',
             'gender' => 'sometimes|required|integer',
             'section_id' => 'sometimes|required|integer|exists:sections,id',
             'file_id' => 'nullable|integer|exists:files,id',
@@ -26,6 +25,7 @@ class UpdateGroupRequest extends FormRequest
             'successors' => 'nullable|array',
             'successors.*' => 'integer|exists:groups,id',
             'enable_group_page' => 'boolean',
+
         ];
     }
 }

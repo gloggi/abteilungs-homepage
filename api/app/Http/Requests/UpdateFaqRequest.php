@@ -8,8 +8,9 @@ class UpdateFaqRequest extends FormRequest
 {
     public function rules()
     {
+        $id = $this->route('id');
         return [
-            'title' => 'sometimes|required|string',
+            'title' => 'sometimes|required|string|unique:faqs,title,' . $id,
             'questions' => 'array',
             'group_id' => 'nullable|integer',
             'questions.*.question' => 'sometimes|required|string',
