@@ -266,7 +266,6 @@ export default {
         );
         this.content = response.data;
         this.isGroupPage = !!this.content.groupId;
-        console.log(this.isGroupPage);
         this.loadedKey++;
       } catch (e) {
         console.log(e);

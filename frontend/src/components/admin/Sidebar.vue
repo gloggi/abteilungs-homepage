@@ -13,7 +13,7 @@
         v-if="!(hideMobileMenu && !isDesktop)"
         class="bg-gray-900 md:w-64 md:flex flex-col md:rounded-r-lg h-full"
       >
-        <router-link to="/dashboard">
+        <router-link to="/dashboard" @click="hideMobileMenu = true">
           <div
             v-if="settings.divisionLogo?.path"
             class="w-full flex flex-col justify-center"
@@ -36,19 +36,29 @@
               v-if="isAdmin"
               to="/dashboard/menu"
               :icon="icons.faEllipsis"
+              @click="hideMobileMenu = true"
             >
               {{ $t("dashboard.menuAndLinks") }}
             </SidebarItem>
-            <SidebarItem to="/dashboard/pages" :icon="icons.faBookOpen">
+            <SidebarItem
+              to="/dashboard/pages"
+              :icon="icons.faBookOpen"
+              @click="hideMobileMenu = true"
+            >
               {{ $t("dashboard.pages") }}
             </SidebarItem>
-            <SidebarItem to="/dashboard/groups" :icon="icons.faUsers">
+            <SidebarItem
+              to="/dashboard/groups"
+              :icon="icons.faUsers"
+              @click="hideMobileMenu = true"
+            >
               {{ $t("dashboard.groups") }}
             </SidebarItem>
             <SidebarItem
               v-if="isAdmin"
               to="/dashboard/contacts"
               :icon="icons.faAddressCard"
+              @click="hideMobileMenu = true"
             >
               {{ $t("dashboard.contacts") }}
             </SidebarItem>
@@ -56,35 +66,58 @@
               v-if="isAdmin"
               to="/dashboard/sections"
               :icon="icons.faStairs"
+              @click="hideMobileMenu = true"
             >
               {{ $t("dashboard.sections") }}
             </SidebarItem>
-            <SidebarItem to="/dashboard/events" :icon="icons.faCalendarDays">
+            <SidebarItem
+              to="/dashboard/events"
+              :icon="icons.faCalendarDays"
+              @click="hideMobileMenu = true"
+            >
               {{ $t("dashboard.events") }}
             </SidebarItem>
             <SidebarItem
               v-if="isAdmin"
               to="/dashboard/camps"
               :icon="icons.faCampground"
+              @click="hideMobileMenu = true"
             >
               {{ $t("dashboard.camps") }}
             </SidebarItem>
-            <SidebarItem to="/dashboard/locations" :icon="icons.faLocationDot">
+            <SidebarItem
+              to="/dashboard/locations"
+              :icon="icons.faLocationDot"
+              @click="hideMobileMenu = true"
+            >
               {{ $t("dashboard.locations") }}
             </SidebarItem>
-            <SidebarItem to="/dashboard/faqs" :icon="icons.faCircleQuestion">
+            <SidebarItem
+              to="/dashboard/faqs"
+              :icon="icons.faCircleQuestion"
+              @click="hideMobileMenu = true"
+            >
               {{ $t("dashboard.faqs") }}
             </SidebarItem>
-            <SidebarItem to="/dashboard/forms" :icon="icons.faRectangleList">
+            <SidebarItem
+              to="/dashboard/forms"
+              :icon="icons.faRectangleList"
+              @click="hideMobileMenu = true"
+            >
               {{ $t("dashboard.forms") }}
             </SidebarItem>
-            <SidebarItem to="/dashboard/media" :icon="icons.faPhotoVideo">
+            <SidebarItem
+              to="/dashboard/media"
+              :icon="icons.faPhotoVideo"
+              @click="hideMobileMenu = true"
+            >
               {{ $t("dashboard.media") }}
             </SidebarItem>
             <SidebarItem
               v-if="isAdmin"
               to="/dashboard/users"
               :icon="icons.faUser"
+              @click="hideMobileMenu = true"
             >
               {{ $t("dashboard.users") }}
             </SidebarItem>
@@ -92,6 +125,7 @@
               v-if="isAdmin"
               to="/dashboard/settings"
               :icon="icons.faGear"
+              @click="hideMobileMenu = true"
             >
               {{ $t("dashboard.settings") }}
             </SidebarItem>

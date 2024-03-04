@@ -24,7 +24,7 @@
             v-model="content.nickname"
             :errors="errors.nickname"
           />
-          <div class="flex flex-row justify-between space-x-2">
+          <BreakpointSpaceManager>
             <TextInput
               class="w-full"
               :label="$t('dashboard.firstName')"
@@ -39,7 +39,7 @@
               v-model="content.lastname"
               :errors="errors.lastname"
             />
-          </div>
+          </BreakpointSpaceManager>
           <TextInput
             :label="$t('dashboard.email')"
             type="email"
@@ -75,12 +75,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
+import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
 export default {
   components: {
     Card,
     TextInput,
     LogoDisplay,
     ItemHeaderTemplate,
+    BreakpointSpaceManager,
   },
   data() {
     return {

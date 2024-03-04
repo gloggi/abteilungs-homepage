@@ -95,8 +95,12 @@
             <span class="font-semibold">{{ $t("page.genderLabel") }}:</span>
             {{ getGenderName(currentGroup.gender) }}
           </p>
+          <p class="main-text text-lg">
+            <span class="font-semibold">{{ $t("page.region") }}:</span>
+            {{ currentGroup.region }}
+          </p>
           <template v-if="currentGroup.predecessors.length > 0">
-            <p>
+            <p class="main-text text-lg">
               <span class="font-semibold">{{
                 currentGroup.predecessors.length > 1
                   ? $t("page.predecessorGroups")

@@ -24,21 +24,29 @@
             v-model="content.name"
             :errors="errors.name"
           />
-          <SelectComponent
-            :label="$t('dashboard.section')"
-            @selectSection="(event) => handleSection(event)"
-            :value="content.section ? content.section['id'] : null"
-            selection="Section"
-            :options="sections"
-            :errors="errors.sectionId"
-          />
-          <SelectComponent
-            :label="$t('dashboard.gender')"
-            @selectGender="(event) => handleGender(event)"
-            :value="content.gender"
-            selection="Gender"
-            :options="genders"
-            :errors="errors.gender"
+          <BreakpointSpaceManager>
+            <SelectComponent
+              :label="$t('dashboard.section')"
+              @selectSection="(event) => handleSection(event)"
+              :value="content.section ? content.section['id'] : null"
+              selection="Section"
+              :options="sections"
+              :errors="errors.sectionId"
+            />
+            <SelectComponent
+              :label="$t('dashboard.gender')"
+              @selectGender="(event) => handleGender(event)"
+              :value="content.gender"
+              selection="Gender"
+              :options="genders"
+              :errors="errors.gender"
+            />
+          </BreakpointSpaceManager>
+          <TextInput
+            :label="$t('dashboard.region')"
+            type="text"
+            v-model="content.region"
+            :errors="errors.region"
           />
           <div class="">
             <FormLabel>{{ $t("dashboard.groupColor") }}</FormLabel>
@@ -51,16 +59,18 @@
             selection="ParentGroup"
             :options="groups"
           />
-          <MultipleSelect
-            :label="$t('dashboard.predecessorGroups')"
-            v-model="content.predecessors"
-            :options="groups"
-          />
-          <MultipleSelect
-            :label="$t('dashboard.successorGroups')"
-            v-model="content.successors"
-            :options="groups"
-          />
+          <BreakpointSpaceManager>
+            <MultipleSelect
+              :label="$t('dashboard.predecessorGroups')"
+              v-model="content.predecessors"
+              :options="groups"
+            />
+            <MultipleSelect
+              :label="$t('dashboard.successorGroups')"
+              v-model="content.successors"
+              :options="groups"
+            />
+          </BreakpointSpaceManager>
           <TextInput
             :label="$t('dashboard.midataId')"
             type="number"
@@ -92,6 +102,7 @@ import Editor from "../../components/admin/Editor/Editor.vue";
 import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
 import FilesSelector from "../../components/admin/FilesSelector.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
+import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
 export default {
   components: {
     Card,
@@ -106,6 +117,7 @@ export default {
     BannerImageSelector,
     FilesSelector,
     CheckBox,
+    BreakpointSpaceManager,
   },
   data() {
     return {
@@ -130,7 +142,7 @@ export default {
   },
   methods: {
     updateLogo(file) {
-      this.content.file_id = file.id;
+      this.content.file_id = file ? file.id : null;
       this.updateGroup();
     },
     async getGroup() {

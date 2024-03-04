@@ -8,7 +8,7 @@
       entity="forms"
       backLinkTo="Forms"
     />
-    <Card class="mt-4">
+    <Card>
       <div class="space-y-2 w-full">
         <TextInput
           :label="$t('dashboard.name')"
@@ -36,113 +36,114 @@
           selection="Group"
           @selectGroup="handleSelectGroup"
         />
-        <h2 class="font-semibold text-2xl">{{ $t("dashboard.formFields") }}</h2>
+      </div>
+    </Card>
+    <div class="">
+      <AddFormField
+        @changeOrder="changeOrder"
+        @select="addField"
+        :dragging="isDragging"
+        :sortKey="-1"
+      />
+      <template v-for="field in content.fields" :key="field.id">
+        <DragItemBox
+          :item="field"
+          @delete="deleteField"
+          @startedDragging="isDragging = true"
+          @endedDragging="isDragging = false"
+          v-if="field.type == 'textField'"
+          :title="$t('dashboard.textfield')"
+        >
+          <div class="flex space-x-2">
+            <TextInput
+              class="w-full"
+              type="text"
+              v-model="field.label"
+              :label="$t('dashboard.label')"
+            />
+            <CheckBox
+              :label="$t('dashboard.required')"
+              v-model="field.required"
+            />
+          </div>
+        </DragItemBox>
+        <DragItemBox
+          v-if="field.type == 'textareaField'"
+          :item="field"
+          @delete="deleteField"
+          @startedDragging="isDragging = true"
+          @endedDragging="isDragging = false"
+          :title="$t('dashboard.textareafield')"
+        >
+          <div class="flex space-x-2">
+            <TextInput
+              class="w-full"
+              type="text"
+              v-model="field.label"
+              :label="$t('dashboard.label')"
+            />
+            <CheckBox
+              :label="$t('dashboard.required')"
+              v-model="field.required"
+            />
+          </div>
+        </DragItemBox>
+        <DragItemBox
+          v-if="field.type == 'selectField'"
+          :item="field"
+          @delete="deleteField"
+          @startedDragging="isDragging = true"
+          @endedDragging="isDragging = false"
+          :title="$t('dashboard.selectfield')"
+        >
+          <div class="flex space-x-2">
+            <TextInput
+              class="w-full"
+              type="text"
+              v-model="field.label"
+              :label="$t('dashboard.label')"
+            />
+            <CheckBox
+              :label="$t('dashboard.required')"
+              v-model="field.required"
+            />
+          </div>
+          <div class="space-y-2 mt-4">
+            <div
+              class="flex space-x-2 items-center"
+              v-for="(option, i) in field.optionFields"
+              :key="option.id"
+            >
+              <font-awesome-icon :icon="icons.faCircle" />
+              <TextInput
+                :id="`selectFieldOption-${field.id}-${i}`"
+                class="w-full"
+                type="text"
+                v-model="option.name"
+                :placeholder="`${$t('dashboard.option')} ${i + 1}`"
+              />
+            </div>
+            <div>
+              <div class="flex space-x-2 items-center">
+                <font-awesome-icon :icon="icons.faCircle" />
+                <TextInput
+                  class="w-full"
+                  type="text"
+                  @keyup="(e) => addOption(e, field)"
+                  :placeholder="$t('dashboard.anotherOption')"
+                />
+              </div>
+            </div>
+          </div>
+        </DragItemBox>
         <AddFormField
           @changeOrder="changeOrder"
           @select="addField"
           :dragging="isDragging"
-          :sortKey="-1"
+          :sortKey="field.sort"
         />
-        <template v-for="field in content.fields" :key="field.id">
-          <DragItemBox
-            :item="field"
-            @delete="deleteField"
-            @startedDragging="isDragging = true"
-            @endedDragging="isDragging = false"
-            v-if="field.type == 'textField'"
-            :title="$t('dashboard.textfield')"
-          >
-            <div class="flex space-x-2">
-              <TextInput
-                class="w-full"
-                type="text"
-                v-model="field.label"
-                :label="$t('dashboard.label')"
-              />
-              <CheckBox
-                :label="$t('dashboard.required')"
-                v-model="field.required"
-              />
-            </div>
-          </DragItemBox>
-          <DragItemBox
-            v-if="field.type == 'textareaField'"
-            :item="field"
-            @delete="deleteField"
-            @startedDragging="isDragging = true"
-            @endedDragging="isDragging = false"
-            :title="$t('dashboard.textareafield')"
-          >
-            <div class="flex space-x-2">
-              <TextInput
-                class="w-full"
-                type="text"
-                v-model="field.label"
-                :label="$t('dashboard.label')"
-              />
-              <CheckBox
-                :label="$t('dashboard.required')"
-                v-model="field.required"
-              />
-            </div>
-          </DragItemBox>
-          <DragItemBox
-            v-if="field.type == 'selectField'"
-            :item="field"
-            @delete="deleteField"
-            @startedDragging="isDragging = true"
-            @endedDragging="isDragging = false"
-            :title="$t('dashboard.selectfield')"
-          >
-            <div class="flex space-x-2">
-              <TextInput
-                class="w-full"
-                type="text"
-                v-model="field.label"
-                :label="$t('dashboard.label')"
-              />
-              <CheckBox
-                :label="$t('dashboard.required')"
-                v-model="field.required"
-              />
-            </div>
-            <div class="space-y-2 mt-4">
-              <div
-                class="flex space-x-2 items-center"
-                v-for="(option, i) in field.optionFields"
-                :key="option.id"
-              >
-                <font-awesome-icon :icon="icons.faCircle" />
-                <TextInput
-                  :id="`selectFieldOption-${field.id}-${i}`"
-                  class="w-full"
-                  type="text"
-                  v-model="option.name"
-                  :placeholder="`${$t('dashboard.option')} ${i + 1}`"
-                />
-              </div>
-              <div>
-                <div class="flex space-x-2 items-center">
-                  <font-awesome-icon :icon="icons.faCircle" />
-                  <TextInput
-                    class="w-full"
-                    type="text"
-                    @keyup="(e) => addOption(e, field)"
-                    :placeholder="$t('dashboard.anotherOption')"
-                  />
-                </div>
-              </div>
-            </div>
-          </DragItemBox>
-          <AddFormField
-            @changeOrder="changeOrder"
-            @select="addField"
-            :dragging="isDragging"
-            :sortKey="field.sort"
-          />
-        </template>
-      </div>
-    </Card>
+      </template>
+    </div>
   </div>
 </template>
 

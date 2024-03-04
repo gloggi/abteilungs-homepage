@@ -25,39 +25,43 @@
           :value="content.userId"
           :errors="errors.userId"
         />
-        <TextInput
-          :label="$t('dashboard.start')"
-          type="datetime-local"
-          v-model="content.startTime"
-          :errors="errors.startTime"
-        />
-        <TextInput
-          :label="$t('dashboard.end')"
-          type="datetime-local"
-          v-model="content.endTime"
-          :errors="errors.endTime"
-        />
         <MultipleSelect
           :label="$t('dashboard.groups')"
           v-model="content.groups"
           :options="groups"
         />
-        <SelectComponent
-          :label="$t('dashboard.startLocation')"
-          selection="StartLocation"
-          @selectStartLocation="handleSelectStartLocation"
-          :options="locations"
-          :value="content.startLocationId"
-          :errors="errors.startLocationId"
-        />
-        <SelectComponent
-          :label="$t('dashboard.endLocation')"
-          selection="EndLocation"
-          @selectEndLocation="handleSelectEndLocation"
-          :options="locations"
-          :value="content.endLocationId"
-          :errors="errors.endLocationId"
-        />
+        <BreakpointSpaceManager>
+          <TextInput
+            :label="$t('dashboard.start')"
+            type="datetime-local"
+            v-model="content.startTime"
+            :errors="errors.startTime"
+          />
+          <TextInput
+            :label="$t('dashboard.end')"
+            type="datetime-local"
+            v-model="content.endTime"
+            :errors="errors.endTime"
+          />
+        </BreakpointSpaceManager>
+        <BreakpointSpaceManager>
+          <SelectComponent
+            :label="$t('dashboard.startLocation')"
+            selection="StartLocation"
+            @selectStartLocation="handleSelectStartLocation"
+            :options="locations"
+            :value="content.startLocationId"
+            :errors="errors.startLocationId"
+          />
+          <SelectComponent
+            :label="$t('dashboard.endLocation')"
+            selection="EndLocation"
+            @selectEndLocation="handleSelectEndLocation"
+            :options="locations"
+            :value="content.endLocationId"
+            :errors="errors.endLocationId"
+          />
+        </BreakpointSpaceManager>
         <TextInput
           :label="$t('dashboard.midataLink')"
           type="url"
@@ -101,6 +105,7 @@ import Editor from "../../components/admin/Editor/Editor.vue";
 import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 import { isBefore, format, addHours } from "date-fns";
 import FilesSelector from "../../components/admin/FilesSelector.vue";
+import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
 export default {
   components: {
     Card,
@@ -111,6 +116,7 @@ export default {
     Editor,
     MultipleSelect,
     FilesSelector,
+    BreakpointSpaceManager,
   },
   data() {
     return {

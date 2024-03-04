@@ -79,7 +79,7 @@
             <EditorButton @click="addImage">
               <font-awesome-icon class="h-5 w-5" :icon="icons.faImage" />
             </EditorButton>
-            <EditorButton v-if="!editor.isActive('link')" @click="setLink">
+            <EditorButton v-if="!editor.isActive('link')" @click="askForLink">
               <font-awesome-icon class="h-5 w-5" :icon="icons.faLink" />
             </EditorButton>
             <EditorButton
@@ -175,6 +175,21 @@
     :max-select="1"
     :extensions="['jpg', 'png', 'gif', 'svg']"
   />
+  <Modal v-if="showLinkModal" @close="showLinkModal = false">
+    <form @submit.prevent="setLink" class="p-3 flex space-x-2 items-end">
+      <TextInput
+        class="w-full"
+        v-model="newLink"
+        :required="true"
+        :label="$t('dashboard.link')"
+        type="url"
+        placeholder="https://"
+      />
+      <ActionButton :reverse="true" type="submit">
+        <font-awesome-icon class="h-6 w-6" :icon="icons.faLink" />
+      </ActionButton>
+    </form>
+  </Modal>
 </template>
 
 <script>
@@ -201,18 +216,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import prettify from "html-prettify";
 import MediaModal from "../MediaModal.vue";
+import Modal from "../Modal.vue";
+import TextInput from "../TextInput.vue";
+import ActionButton from "../ActionButton.vue";
 export default {
   props: ["modelValue"],
   components: {
     EditorContent,
     EditorButton,
     MediaModal,
+    Modal,
+    TextInput,
+    ActionButton,
   },
   data() {
     return {
       editor: null,
       showHTML: false,
       showMediaModal: false,
+      showLinkModal: false,
+      newLink: undefined,
       icons: {
         faArrowRotateLeft,
         faArrowRotateRight,
@@ -237,9 +260,13 @@ export default {
     addImage() {
       this.showMediaModal = true;
     },
+    askForLink() {
+      this.showLinkModal = true;
+    },
     setLink() {
+      this.showLinkModal = false;
       const previousUrl = this.editor.getAttributes("link").href;
-      const url = window.prompt("URL", previousUrl);
+      const url = this.newLink;
 
       if (url === null) {
         return;

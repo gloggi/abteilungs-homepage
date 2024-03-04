@@ -13,16 +13,20 @@
           type="text"
           v-model="content.nickname"
         />
-        <TextInput
-          :label="$t('dashboard.firstName')"
-          type="text"
-          v-model="content.firstname"
-        />
-        <TextInput
-          :label="$t('dashboard.lastName')"
-          type="text"
-          v-model="content.lastname"
-        />
+        <BreakpointSpaceManager>
+          <TextInput
+            class="w-full"
+            :label="$t('dashboard.firstName')"
+            type="text"
+            v-model="content.firstname"
+          />
+          <TextInput
+            class="w-full"
+            :label="$t('dashboard.lastName')"
+            type="text"
+            v-model="content.lastname"
+          />
+        </BreakpointSpaceManager>
         <MultipleSelect
           :label="$t('dashboard.groups')"
           v-model="content.groups"
@@ -52,6 +56,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
+import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
 export default {
   components: {
     Card,
@@ -59,6 +64,7 @@ export default {
     ItemHeaderTemplate,
     MultipleSelect,
     SelectComponent,
+    BreakpointSpaceManager,
   },
   data() {
     return {

@@ -39,23 +39,21 @@
         @endedDragging="isDragging = false"
         :title="$t('dashboard.question')"
       >
-        <div class="space-x-2 w-full">
-          <div class="w-full space-y-2">
-            <div class="w-full flex space-x-2">
-              <TextInput
-                class="w-full"
-                type="text"
-                v-model="question.question"
-                :label="$t('dashboard.question')"
-              />
-              <CheckBox
-                class="text-nowrap"
-                :label="$t('dashboard.defaultOpen')"
-                v-model="question.open"
-              />
-            </div>
-            <Editor v-model="question.answer" />
+        <div>
+          <div class="w-full flex space-x-2">
+            <TextInput
+              class="w-full"
+              type="text"
+              v-model="question.question"
+              :label="$t('dashboard.question')"
+            />
+            <CheckBox
+              class="text-nowrap"
+              :label="$t('dashboard.defaultOpen')"
+              v-model="question.open"
+            />
           </div>
+          <Editor v-model="question.answer" />
         </div>
       </DragItemBox>
       <AddQuestion

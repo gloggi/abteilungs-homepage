@@ -86,14 +86,20 @@ export default {
     "content.lat": function () {
       if (this.content.lat && this.content.long) {
         this.lv95 = this.formatLV95(
-          project([this.content.long, this.content.lat]),
+          project([
+            parseFloat(this.content.long),
+            parseFloat(this.content.lat),
+          ]),
         );
       }
     },
     "content.long": function () {
       if (this.content.lat && this.content.long) {
         this.lv95 = this.formatLV95(
-          project([this.content.long, this.content.lat]),
+          project([
+            parseFloat(this.content.long),
+            parseFloat(this.content.lat),
+          ]),
         );
       }
     },

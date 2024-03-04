@@ -45,19 +45,19 @@
             <FormLabel>{{ $t("dashboard.sectionColor") }}</FormLabel>
             <ColorPicker v-model="content.color" :errors="errors.color" />
           </div>
+          <div class="flex-space-y-2">
+            <FormLabel>{{ $t("dashboard.sectionHeaderImages") }}</FormLabel>
+            <BannerImageSelector
+              :key="loadedKey"
+              :item="content"
+              @changeImages="changeHeaderImages"
+            />
+          </div>
+          <div class="flex-space-y-2">
+            <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
+            <Editor v-model="content.description" />
+          </div>
         </div>
-      </div>
-      <div class="flex-space-y-2">
-        <FormLabel>{{ $t("dashboard.sectionHeaderImages") }}</FormLabel>
-        <BannerImageSelector
-          :key="loadedKey"
-          :item="content"
-          @changeImages="changeHeaderImages"
-        />
-      </div>
-      <div class="flex-space-y-2">
-        <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
-        <Editor v-model="content.description" />
       </div>
     </Card>
   </div>
@@ -130,8 +130,7 @@ export default {
       }
     },
     updateLogo(file) {
-      this.content.fileId = file?.id || undefined;
-      console.log(this.content.fileId);
+      this.content.fileId = file?.id || null;
     },
     changeHeaderImages(event) {
       this.content.files = event.files;
