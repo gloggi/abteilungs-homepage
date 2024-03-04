@@ -32,26 +32,39 @@
             </p>
           </div>
         </div>
-        <div class="flex flex-wrap justify-around w-full items-center">
-          <template v-for="group in groups" :key="group.id">
+        <div class="flex flex-wrap justify-around w-full items-center gap-y-2">
+          <template v-for="(group, i) in section.groups" :key="group.id">
+            <GroupCircle
+              v-if="
+                !group.parentId &&
+                !(
+                  section.groups.length > 3 &&
+                  section.groups.length % 3 == 1 &&
+                  i > section.groups.length - 3
+                )
+              "
+              :group="group"
+              :gender-icon="selectGenderIcon(group.gender)"
+              @select-group="selectGroup"
+            />
             <div
-              v-if="group.section.id === section.id && !group.parentId"
-              @click="selectGroup(group)"
-              class="relative cursor-pointer rounded-full aspect-square w-[100px] md:w-[150px] flex justify-center items-center"
-              :style="`background-color: ${group.color}`"
+              class="flex justify-around w-full"
+              v-if="
+                section.groups.length > 3 &&
+                section.groups.length % 3 == 1 &&
+                i > section.groups.length - 3 &&
+                i == section.groups.length - 1
+              "
             >
-              <div
-                class="absolute top-0 right-0 rounded-full size-6 md:size-10 bg-secondary flex justify-center items-center"
-              >
-                <img
-                  :src="selectGenderIcon(group.gender)"
-                  class="w-[65%] h-[65%]"
-                />
-              </div>
-              <img
-                v-if="group.file?.path"
-                :src="this.backendURL + '/' + group.file?.path"
-                class="w-[60%] h-[60%]"
+              <GroupCircle
+                :group="section.groups[i - 1]"
+                :gender-icon="selectGenderIcon(section.groups[i - 1].gender)"
+                @select-group="selectGroup"
+              />
+              <GroupCircle
+                :group="section.groups[i]"
+                :gender-icon="selectGenderIcon(section.groups[i].gender)"
+                @select-group="selectGroup"
               />
             </div>
           </template>
@@ -146,6 +159,7 @@
 <script>
 import BasicButton from "./BasicButton.vue";
 import ContentWrapper from "./ContentWrapper.vue";
+import GroupCircle from "./GroupCircle.vue";
 
 export default {
   props: ["item"],
@@ -193,7 +207,7 @@ export default {
         history.pushState({}, null, this.$route.path);
         return;
       }
-      this.currentGroup = group;
+      this.currentGroup = this.groups.find((g) => g.id === group.id);
       history.pushState({}, null, `${this.$route.path}#${group.id}`);
     },
     checkHash() {
@@ -208,6 +222,6 @@ export default {
     this.getGroups();
     this.checkHash();
   },
-  components: { ContentWrapper, BasicButton },
+  components: { ContentWrapper, BasicButton, GroupCircle },
 };
 </script>
