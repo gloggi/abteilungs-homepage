@@ -22,6 +22,7 @@ class Group extends Model
         'midata_id',
         'description',
         'enable_group_page',
+        'region',
     ];
 
     protected $appends = ['route','has_page'];

@@ -13,9 +13,10 @@
     } 
     ${increaseHeight ? 'h-48' : 'h-auto'}`"
   >
-    <span v-if="dragging"> Drop page item here </span>
+    <span v-if="dragging">{{ $t("dashboard.dropPageItemHere") }}</span>
     <span v-else>
-      <font-awesome-icon :icon="icons.faPlus" /> Click to add a new page item
+      <font-awesome-icon :icon="icons.faPlus" />
+      {{ $t("dashboard.clickToAddPageItem") }}
     </span>
   </button>
   <Modal v-if="showModal" @close="close">
@@ -28,14 +29,17 @@
         v-for="field in fields"
         :key="field.type"
         @click="select(field)"
-        class="flex flex-col bg-gray-200 hover:bg-gray-300 rounded-lg p-3"
+        class="flex flex-col bg-gray-200 hover:bg-gray-300 rounded-lg p-3 space-y-2"
       >
         <div
           class="aspect-square bg-white rounded-lg flex justify-center items-center"
         >
-          <p class="font-serif text-8xl">{{ field.name.substring(0, 1) }}</p>
+          <img class="h-full w-full" v-if="field.src" :src="field.src" />
+          <p v-else class="font-serif text-8xl">
+            {{ field.name.substring(0, 1) }}
+          </p>
         </div>
-        <p class="font-semibold pl-5">{{ field.name }}</p>
+        <p class="font-semibold pl-1 md:pl-5 break-words">{{ field.name }}</p>
       </div>
     </div>
   </Modal>
@@ -52,17 +56,61 @@ export default {
       showModal: false,
       increaseHeight: false,
       fields: [
-        { name: this.$t("dashboard.text"), type: "textItem" },
-        { name: this.$t("dashboard.image"), type: "imageItem" },
-        { name: this.$t("dashboard.form"), type: "formItem" },
-        { name: this.$t("dashboard.files"), type: "filesItem" },
-        { name: this.$t("dashboard.contacts"), type: "contactItem" },
-        { name: this.$t("dashboard.groups"), type: "groupsItem" },
-        { name: this.$t("dashboard.sections"), type: "sectionsItem" },
-        { name: this.$t("dashboard.camps"), type: "campsItem" },
-        { name: this.$t("dashboard.location"), type: "locationItem" },
-        { name: this.$t("dashboard.faq"), type: "faqItem" },
-        { name: this.$t("dashboard.groupEvents"), type: "groupEventsItem" },
+        {
+          name: this.$t("dashboard.text"),
+          type: "textItem",
+          src: this.getAsset("PageItems/TextItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.image"),
+          type: "imageItem",
+          src: this.getAsset("PageItems/ImageItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.form"),
+          type: "formItem",
+          src: this.getAsset("PageItems/FormItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.files"),
+          type: "filesItem",
+          src: this.getAsset("PageItems/FilesItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.contacts"),
+          type: "contactItem",
+          src: this.getAsset("PageItems/ContactItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.groups"),
+          type: "groupsItem",
+          src: this.getAsset("PageItems/GroupsItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.sections"),
+          type: "sectionsItem",
+          src: this.getAsset("PageItems/SectionsItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.camps"),
+          type: "campsItem",
+          src: this.getAsset("PageItems/CampsItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.location"),
+          type: "locationItem",
+          src: this.getAsset("PageItems/LocationItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.faq"),
+          type: "faqItem",
+          src: this.getAsset("PageItems/FaqItem.svg"),
+        },
+        {
+          name: this.$t("dashboard.groupEvents"),
+          type: "groupEventsItem",
+          src: this.getAsset("PageItems/GroupEventsItem.svg"),
+        },
       ],
     };
   },

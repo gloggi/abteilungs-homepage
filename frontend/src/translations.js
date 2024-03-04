@@ -149,6 +149,12 @@ export const messages = {
       groupEvents: "Gruppenanlässe",
       groupEventsItem: "GruppenanlässeItem",
       isGroupPage: "Ist eine Gruppenseite?",
+      clickToAddPageItem: "Klicke hier, um ein neues Seitenitem hinzuzufügen",
+      dropPageItemHere: "Ziehe ein Item hierher, um es zu verschieben",
+      clickToAddFormItem: "Klicke hier, um ein neues Formularitem hinzuzufügen",
+      dropFormItemHere: "Ziehe ein Formularitem hierher, um es zu verschieben",
+      link: "Link",
+      region: "Region",
     },
     page: {
       campDateLabel: "Lagerdatum",
@@ -190,6 +196,7 @@ export const messages = {
       noEventsAvailable: "Es sind momentan keine Anlässe verfügbar.",
       formSuccessMessage:
         "Vielen Dank! Das Formular wurde erfolgreich abgesendet.",
+      region: "Region",
     },
   },
 };
