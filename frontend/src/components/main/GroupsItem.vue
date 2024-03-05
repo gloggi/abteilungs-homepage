@@ -147,10 +147,11 @@
             }}</a>
           </p>
         </div>
-        <BasicButton>
-          <router-link :to="`/group/${currentGroup.route}`" class="w-full">{{
-            $t("page.goToGroupPage")
-          }}</router-link>
+        <BasicButton
+          v-if="currentGroup.hasPage"
+          @click="goToGroupPage(currentGroup.route)"
+        >
+          {{ $t("page.goToGroupPage") }}
         </BasicButton>
       </div>
     </div>
@@ -215,6 +216,9 @@ export default {
         const id = this.$route.hash.split("#")[1];
         this.currentGroup = this.groups.find((g) => g.id === parseInt(id));
       }
+    },
+    goToGroupPage(route) {
+      this.$router.push(`/group/${route}`);
     },
   },
   async created() {

@@ -30,7 +30,10 @@ export default {
       } catch (e) {
         console.log(e);
         if (e.response.status === 422) {
-          this.notifyUser(this.$t("dashboard.fileNotSupportedOrTooLarge"), true);
+          this.notifyUser(
+            this.$t("dashboard.fileNotSupportedOrTooLarge"),
+            true,
+          );
         }
       }
     },

@@ -32,9 +32,9 @@
           <div class="w-full flex justify-center items-center" v-else>
             <font-awesome-icon
               class="h-20 py-5 text-white"
-              :icon="icons.faGhost"/>
+              :icon="icons.faGhost"
+            />
           </div>
-          
         </router-link>
         <div class="flex flex-col md:justify-between h-full">
           <div>
@@ -170,7 +170,7 @@ import {
   faDoorOpen,
   faCircleQuestion,
   faBars,
-  faGhost
+  faGhost,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 export default {
@@ -195,7 +195,7 @@ export default {
         faDoorOpen,
         faCircleQuestion,
         faBars,
-        faGhost
+        faGhost,
       },
     };
   },

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <MapComponent v-if="item?.location" class="w-full h-96" :markers="[item.location]" />
+    <MapComponent
+      v-if="item?.location"
+      class="w-full h-96"
+      :markers="[item.location]"
+    />
   </div>
 </template>
 <script>

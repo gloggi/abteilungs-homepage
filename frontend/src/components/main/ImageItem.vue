@@ -3,7 +3,8 @@
     <transition name="slide">
       <img
         v-if="currentImage"
-        class="w-full object-cover " style="aspect-ratio: 32/9;"
+        class="w-full object-cover"
+        style="aspect-ratio: 32/9"
         :src="this.backendURL + '/' + currentImage"
       />
     </transition>
@@ -22,7 +23,7 @@
   <div v-else>
     <img
       class="w-full object-cover"
-      style="aspect-ratio: 32/9;"
+      style="aspect-ratio: 32/9"
       v-if="currentImage"
       :src="this.backendURL + '/' + currentImage"
     />

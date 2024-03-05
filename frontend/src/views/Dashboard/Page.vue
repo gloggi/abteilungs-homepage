@@ -8,12 +8,12 @@
       entity="pages"
       backLinkTo="Pages"
     >
-  <template v-slot:buttons>
-    <ActionButton @click="visitPage">
-      <font-awesome-icon :icon="icons.faEye" class="h-6 w-6" />
-    </ActionButton>
-  </template>
-  </ItemHeaderTemplate>
+      <template v-slot:buttons>
+        <ActionButton @click="visitPage">
+          <font-awesome-icon :icon="icons.faEye" class="h-6 w-6" />
+        </ActionButton>
+      </template>
+    </ItemHeaderTemplate>
     <Card class="space-y-2">
       <TextInput
         :label="$t('dashboard.title')"
@@ -22,6 +22,7 @@
       />
       <div class="flex flex-col md:flex-row">
         <TextInput
+          v-if="!isGroupPage"
           class="mt-2 w-full"
           :disabled="isGroupPage"
           :label="$t('dashboard.route')"
@@ -188,9 +189,7 @@ import TextInput from "../../components/admin/TextInput.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/AddPageItem.vue";
-import {
-  faEye
-} from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import TextItem from "../../components/admin/PageItems/TextItem.vue";
 import ImageItem from "../../components/admin/PageItems/ImageItem.vue";
 import { kebabCase } from "lodash";
@@ -245,7 +244,7 @@ export default {
       preSelectedImages: undefined,
       isDragging: false,
       icons: {
-       faEye
+        faEye,
       },
       groups: [],
       isGroupPage: false,
@@ -372,11 +371,21 @@ export default {
       this.errors = errors;
     },
     visitPage() {
-      if(!this.content.route){
+      if (!this.content.route) {
         this.$router.push({ name: "Home" });
-        return
+        return;
       }
-      this.$router.push({ name: "Home2", params: { path: this.content.route } });
+      if (this.isGroupPage) {
+        const groupRoute = this.groups.find(
+          (g) => g.id == this.content.groupId,
+        )?.route;
+        this.$router.push({ name: "GroupPage", params: { id: groupRoute } });
+        return;
+      }
+      this.$router.push({
+        name: "Home2",
+        params: { path: this.content.route },
+      });
     },
   },
   watch: {

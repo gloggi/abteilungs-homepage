@@ -49,6 +49,15 @@ class GroupController extends Controller
         }
         if($group->page){
             $group->page->page_items = $group->page->getAllItems();
+            
+            $pageItems = $group->page->page_items;
+
+            foreach ($pageItems as $currentField) {
+                if ($currentField->type == 'formItem' && $currentField->form) {
+                    unset($currentField->form->email);
+                    $currentField->form->fields = $currentField->form->getAllFields();
+                }
+            }
         }
 
         if (!$group) {
