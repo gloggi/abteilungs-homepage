@@ -121,8 +121,8 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
 });
 
 Route::get('/events/{id}', [EventController::class, 'show']);
+Route::get('/events', [EventController::class, 'index']);
 Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
-    Route::get('/events', [EventController::class, 'index']);
     Route::post('/events', [EventController::class, 'store']);
     Route::put('/events/{id}', [EventController::class, 'update']);
     Route::delete('/events/{id}', [EventController::class, 'destroy']);
