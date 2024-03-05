@@ -1,19 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="5cm" height="5cm" viewBox="0 0 141.73 141.77">
-  <rect x="8.5" y="15.29" width="91.11" height="17.6" rx="2.85" ry="2.85" style="fill: #e5e7eb;"/>
-  <g>
-    <rect x="8.5" y="38.56" width="94.6" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="47.07" width="124.47" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="55.57" width="124.47" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="64.08" width="124.47" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="72.58" width="124.47" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="81.08" width="99.08" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" width="5cm" height="5cm" viewBox="0 0 141.73 141.77" class="item-fill" fill="currentColor">
+  <rect x="8.5" y="15.29" width="91.11" height="17.6" rx="2.85" ry="2.85" class="item-fill" fill="currentColor"/>
+  <g class="item-fill" fill="currentColor">
+    <rect x="8.5" y="38.56" width="94.6" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="47.07" width="124.47" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="55.57" width="124.47" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="64.08" width="124.47" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="72.58" width="124.47" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="81.08" width="99.08" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
   </g>
-  <g>
-    <rect x="8.5" y="93.84" width="124.47" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="102.34" width="124.47" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="110.85" width="124.47" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="119.35" width="57.48" height="7.09" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
+  <g class="item-fill" fill="currentColor">
+    <rect x="8.5" y="93.84" width="124.47" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="102.34" width="124.47" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="110.85" width="124.47" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="119.35" width="57.48" height="7.09" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
   </g>
-  <circle cx="117.32" cy="30.95" r="15.65" style="fill: #e5e7eb;"/>
+  <circle cx="117.32" cy="30.95" r="15.65" class="item-fill" fill="currentColor"/>
 </svg>

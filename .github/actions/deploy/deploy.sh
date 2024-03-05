@@ -109,6 +109,9 @@ ssh -l $SSH_USERNAME -T $SSH_HOST <<EOF
     php artisan db:seed --force
   fi
 
+  php artisan thumbnails:copy
+  php artisan settings:create
+
   php artisan config:cache
   php artisan route:cache
   php artisan view:cache

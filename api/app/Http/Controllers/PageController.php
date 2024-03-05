@@ -47,6 +47,10 @@ class PageController extends Controller
                     return response()->json(['message' => 'Unauthorized'], 403);
                 }
         }
+    }
+        
+       
+       
 
 
         $page = Page::create($validatedData);
@@ -62,7 +66,7 @@ class PageController extends Controller
             'page_items' => $page->getAllItems(),
         ], 201);
     }
-}
+
 
     public function update(UpdatePageRequest $request, $id)
     {

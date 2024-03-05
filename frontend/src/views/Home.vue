@@ -74,8 +74,7 @@ export default {
       } catch (error) {
         if (this.settings.notFoundPage) {
           return this.getPage(this.settings.notFoundPage.route);
-        } else {
-          console.log("here");
+        } else if(pageRoute !== 0) {
           return this.getPage(0);
         }
       }

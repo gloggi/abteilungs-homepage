@@ -1,9 +1,9 @@
 <template>
-  <div v-if="item.files.length > 1" class="relative">
+  <div v-if="item.files.length > 1" class="relative -mb-20">
     <transition name="slide">
       <img
         v-if="currentImage"
-        class="w-full"
+        class="w-full object-cover " style="aspect-ratio: 32/9;"
         :src="this.backendURL + '/' + currentImage"
       />
     </transition>
@@ -21,7 +21,8 @@
   </div>
   <div v-else>
     <img
-      class="w-full"
+      class="w-full object-cover"
+      style="aspect-ratio: 32/9;"
       v-if="currentImage"
       :src="this.backendURL + '/' + currentImage"
     />

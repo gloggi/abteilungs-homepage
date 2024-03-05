@@ -86,7 +86,7 @@ export default {
       }
     },
     formatFooterText(text) {
-      return text.replace("main-text", "main-text text-xl text-white");
+      return text.replace(/main-text/g, "main-text text-xl text-white");
     },
   },
   computed: {

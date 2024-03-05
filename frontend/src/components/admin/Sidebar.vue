@@ -24,11 +24,17 @@
             />
           </div>
           <div
-            v-else
+            v-else-if="settings.divisionName"
             class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 text-center mx-auto p-5 cursor-pointer"
           >
-            {{ settings.divisionName || "Abteilungshomepage" }}
+            {{ settings.divisionName }}
           </div>
+          <div class="w-full flex justify-center items-center" v-else>
+            <font-awesome-icon
+              class="h-20 py-5 text-white"
+              :icon="icons.faGhost"/>
+          </div>
+          
         </router-link>
         <div class="flex flex-col md:justify-between h-full">
           <div>
@@ -164,6 +170,7 @@ import {
   faDoorOpen,
   faCircleQuestion,
   faBars,
+  faGhost
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 export default {
@@ -188,6 +195,7 @@ export default {
         faDoorOpen,
         faCircleQuestion,
         faBars,
+        faGhost
       },
     };
   },

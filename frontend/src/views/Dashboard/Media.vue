@@ -32,11 +32,23 @@
           style="max-height: 90vh"
         />
         <object
-          v-if="selectedFile.extension == 'pdf'"
+          v-else-if="selectedFile.extension == 'pdf'"
           :data="`${backendURL}/${selectedFile.path}`"
           height="550px"
           type="application/pdf"
           style="aspect-ratio: 1 / 1.42"
+        />
+        <video v-else-if="selectedFile.extension == 'mp4'" controls>
+          <source :src="`${backendURL}/${selectedFile.path}`" type="video/mp4" />
+        </video>
+        <audio v-else-if="selectedFile.extension == 'mp3'" controls>
+          <source :src="`${backendURL}/${selectedFile.path}`" type="audio/mpeg" />
+        </audio>
+        <img
+          v-else
+          :src="`${backendURL}/${selectedFile.thumbnail}`"
+          class="w-auto"
+          style="max-height: 90vh"
         />
       </div>
       <div class="w-1/3">

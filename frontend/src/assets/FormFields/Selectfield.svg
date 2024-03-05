@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="5cm" height="5cm" viewBox="0 0 141.73 141.77">
-  <rect x="8.38" y="70.33" width="124.85" height="12.01" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-  <rect x="8.73" y="59.39" width="64.04" height="7.29" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-  <path d="M124.67,79.18c.3,.3,.79,.3,1.09,0l4.6-4.6c.3-.3,.3-.79,0-1.09s-.79-.3-1.09,0l-4.06,4.06-4.06-4.06c-.3-.3-.79-.3-1.09,0s-.3,.79,0,1.09l4.6,4.6h0Z" style="fill: #fff;"/>
-  <rect x="11.17" y="72.69" width="80.08" height="7.29" rx="2.83" ry="2.83" style="fill: #fff;"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" width="5cm" height="5cm" viewBox="0 0 141.73 141.77" class="item-fill" fill="currentColor">
+  <rect x="8.73" y="59.39" width="64.04" height="7.29" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+  <path d="M130.39,70.33H11.21c-1.57,0-2.83,1.27-2.83,2.83v6.34c0,1.57,1.27,2.83,2.83,2.83h119.18c1.57,0,2.83-1.27,2.83-2.83v-6.34c0-1.57-1.27-2.83-2.83-2.83Zm-39.14,6.82c0,1.57-1.27,2.83-2.83,2.83H14c-1.57,0-2.83-1.27-2.83-2.83v-1.62c0-1.57,1.27-2.83,2.83-2.83H88.42c1.57,0,2.83,1.27,2.83,2.83v1.62Zm39.11-2.57l-4.6,4.6c-.3,.3-.79,.3-1.09,0h0s-4.6-4.6-4.6-4.6c-.3-.3-.3-.79,0-1.09s.79-.3,1.09,0l4.06,4.06,4.06-4.06c.3-.3,.79-.3,1.09,0s.3,.79,0,1.09Z" class="item-fill" fill="currentColor"/>
 </svg>

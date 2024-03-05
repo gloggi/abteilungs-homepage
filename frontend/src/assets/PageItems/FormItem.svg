@@ -1,20 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="5cm" height="5cm" viewBox="0 0 141.73 141.77">
-  <rect x="8.38" y="9.66" width="91.11" height="17.6" rx="2.85" ry="2.85" style="fill: #e5e7eb;"/>
-  <rect x="8.12" y="122.73" width="124.72" height="9.34" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-  <g>
-    <g>
-      <rect x="8.38" y="42.85" width="124.72" height="9.34" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-      <rect x="8.65" y="34.35" width="69.09" height="5.67" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" width="5cm" height="5cm" viewBox="0 0 141.73 141.77" class="item-fill" fill="currentColor">
+  <rect x="8.38" y="9.66" width="91.11" height="17.6" rx="2.85" ry="2.85" class="item-fill" fill="currentColor"/>
+  <rect x="8.12" y="122.73" width="124.72" height="9.34" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+  <g class="item-fill" fill="currentColor">
+    <g class="item-fill" fill="currentColor">
+      <rect x="8.38" y="42.85" width="124.72" height="9.34" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+      <rect x="8.65" y="34.35" width="69.09" height="5.67" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
     </g>
-    <g>
-      <rect x="8.12" y="89.88" width="124.72" height="25.76" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-      <rect x="8.4" y="81.38" width="62.36" height="5.67" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
+    <g class="item-fill" fill="currentColor">
+      <rect x="8.12" y="89.88" width="124.72" height="25.76" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+      <rect x="8.4" y="81.38" width="62.36" height="5.67" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
     </g>
-    <g>
-      <rect x="8.38" y="66.37" width="124.72" height="9.34" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-      <rect x="8.65" y="57.86" width="49.81" height="5.67" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
-      <path d="M125.31,73.25c.23,.23,.61,.23,.84,0l3.58-3.58c.23-.23,.23-.61,0-.84s-.61-.23-.84,0l-3.16,3.16-3.16-3.16c-.23-.23-.61-.23-.84,0s-.23,.61,0,.84l3.58,3.58h0Z" style="fill: #fff;"/>
+    <g class="item-fill" fill="currentColor">
+      <rect x="8.38" y="66.37" width="124.72" height="9.34" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+      <rect x="8.65" y="57.86" width="49.81" height="5.67" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
+      <path d="M125.31,73.25c.23,.23,.61,.23,.84,0l3.58-3.58c.23-.23,.23-.61,0-.84s-.61-.23-.84,0l-3.16,3.16-3.16-3.16c-.23-.23-.61-.23-.84,0s-.23,.61,0,.84l3.58,3.58h0Z" class="item-fill" fill="currentColor"/>
     </g>
   </g>
 </svg>

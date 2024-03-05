@@ -18,6 +18,8 @@
       <ActionButton @click="updateItem">
         <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
       </ActionButton>
+      <slot name="buttons"></slot>
+      
     </div>
   </div>
 </template>

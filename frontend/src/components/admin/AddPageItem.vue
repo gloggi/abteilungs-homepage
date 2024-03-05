@@ -29,23 +29,74 @@
         v-for="field in fields"
         :key="field.type"
         @click="select(field)"
-        class="flex flex-col bg-gray-200 hover:bg-gray-300 rounded-lg p-3 space-y-2"
+        class="flex flex-col bg-gray-200 hover:bg-gray-300 rounded-lg p-3 space-y-2 text-gray-200 hover:text-gray-300"
       >
         <div
           class="aspect-square bg-white rounded-lg flex justify-center items-center"
         >
-          <img class="h-full w-full" v-if="field.src" :src="field.src" />
+          <TextItem class="h-full w-full" v-if="field.type === 'textItem'" />
+          <ImageItem
+            class="h-full w-full"
+            v-else-if="field.type === 'imageItem'"
+          />
+          <FormItem
+            class="h-full w-full"
+            v-else-if="field.type === 'formItem'"
+          />
+          <FilesItem
+            class="h-full w-full"
+            v-else-if="field.type === 'filesItem'"
+          />
+          <ContactItem
+            class="h-full w-full"
+            v-else-if="field.type === 'contactItem'"
+          />
+          <GroupsItem
+            class="h-full w-full"
+            v-else-if="field.type === 'groupsItem'"
+          />
+          <SectionsItem
+            class="h-full w-full"
+            v-else-if="field.type === 'sectionsItem'"
+          />
+          <CampsItem
+            class="h-full w-full"
+            v-else-if="field.type === 'campsItem'"
+          />
+          <LocationItem
+            class="h-full w-full"
+            v-else-if="field.type === 'locationItem'"
+          />
+          <FaqItem class="h-full w-full" v-else-if="field.type === 'faqItem'" />
+          <GroupEventsItem
+            class="h-full w-full"
+            v-else-if="field.type === 'groupEventsItem'"
+          />
           <p v-else class="font-serif text-8xl">
             {{ field.name.substring(0, 1) }}
           </p>
         </div>
-        <p class="font-semibold pl-1 md:pl-5 break-words">{{ field.name }}</p>
+        <p class="font-semibold pl-1 md:pl-5 break-words text-black">
+          {{ field.name }}
+        </p>
       </div>
     </div>
   </Modal>
 </template>
 <script>
 import Modal from "./Modal.vue";
+import TextItem from "../../assets/PageItems/TextItem.svg?component";
+import ImageItem from "../../assets/PageItems/ImageItem.svg?component";
+import FormItem from "../../assets/PageItems/FormItem.svg?component";
+import FilesItem from "../../assets/PageItems/FilesItem.svg?component";
+import ContactItem from "../../assets/PageItems/ContactItem.svg?component";
+import GroupsItem from "../../assets/PageItems/GroupsItem.svg?component";
+import SectionsItem from "../../assets/PageItems/SectionsItem.svg?component";
+import CampsItem from "../../assets/PageItems/CampsItem.svg?component";
+import LocationItem from "../../assets/PageItems/LocationItem.svg?component";
+import FaqItem from "../../assets/PageItems/FaqItem.svg?component";
+import GroupEventsItem from "../../assets/PageItems/GroupEventsItem.svg?component";
+
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 export default {
   data() {
@@ -59,57 +110,46 @@ export default {
         {
           name: this.$t("dashboard.text"),
           type: "textItem",
-          src: this.getAsset("PageItems/TextItem.svg"),
         },
         {
           name: this.$t("dashboard.image"),
           type: "imageItem",
-          src: this.getAsset("PageItems/ImageItem.svg"),
         },
         {
           name: this.$t("dashboard.form"),
           type: "formItem",
-          src: this.getAsset("PageItems/FormItem.svg"),
         },
         {
           name: this.$t("dashboard.files"),
           type: "filesItem",
-          src: this.getAsset("PageItems/FilesItem.svg"),
         },
         {
           name: this.$t("dashboard.contacts"),
           type: "contactItem",
-          src: this.getAsset("PageItems/ContactItem.svg"),
         },
         {
           name: this.$t("dashboard.groups"),
           type: "groupsItem",
-          src: this.getAsset("PageItems/GroupsItem.svg"),
         },
         {
           name: this.$t("dashboard.sections"),
           type: "sectionsItem",
-          src: this.getAsset("PageItems/SectionsItem.svg"),
         },
         {
           name: this.$t("dashboard.camps"),
           type: "campsItem",
-          src: this.getAsset("PageItems/CampsItem.svg"),
         },
         {
           name: this.$t("dashboard.location"),
           type: "locationItem",
-          src: this.getAsset("PageItems/LocationItem.svg"),
         },
         {
           name: this.$t("dashboard.faq"),
           type: "faqItem",
-          src: this.getAsset("PageItems/FaqItem.svg"),
         },
         {
           name: this.$t("dashboard.groupEvents"),
           type: "groupEventsItem",
-          src: this.getAsset("PageItems/GroupEventsItem.svg"),
         },
       ],
     };
@@ -119,7 +159,20 @@ export default {
       return this.$store.state.drag.dragging;
     },
   },
-  components: { Modal },
+  components: {
+    Modal,
+    TextItem,
+    ImageItem,
+    FormItem,
+    FilesItem,
+    ContactItem,
+    GroupsItem,
+    SectionsItem,
+    CampsItem,
+    LocationItem,
+    FaqItem,
+    GroupEventsItem,
+  },
   props: ["sortKey", "dragging"],
   emits: ["select", "changeOrder"],
   methods: {

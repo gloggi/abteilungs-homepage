@@ -12,7 +12,7 @@ import { Icon, Style } from "ol/style";
 import Point from "ol/geom/Point";
 import Feature from "ol/Feature";
 import { defaults as defaultControls, ScaleLine } from "ol/control";
-import mapMarkerSvg from "@/assets/mapMarker.svg";
+import mapMarkerSvg from "../../assets/mapMarker.svg?url";
 
 export default {
   props: ["lat", "long"],

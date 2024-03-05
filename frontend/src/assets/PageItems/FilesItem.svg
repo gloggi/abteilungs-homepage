@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="5cm" height="5cm" viewBox="0 0 141.73 141.77">
-  <g>
-    <rect x="8.5" y="48.12" width="28.35" height="40.08" rx="2.85" ry="2.85" style="fill: #e5e7eb;"/>
-    <rect x="8.5" y="91.93" width="28.35" height="5.67" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" width="5cm" height="5cm" viewBox="0 0 141.73 141.77" class="item-fill" fill="currentColor">
+  <g class="item-fill" fill="currentColor">
+    <rect x="8.5" y="48.12" width="28.35" height="40.08" rx="2.85" ry="2.85" class="item-fill" fill="currentColor"/>
+    <rect x="8.5" y="91.93" width="28.35" height="5.67" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
   </g>
-  <g>
-    <rect x="56.69" y="48.12" width="28.35" height="40.08" rx="2.85" ry="2.85" style="fill: #e5e7eb;"/>
-    <rect x="56.69" y="91.93" width="28.35" height="5.67" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
+  <g class="item-fill" fill="currentColor">
+    <rect x="56.69" y="48.12" width="28.35" height="40.08" rx="2.85" ry="2.85" class="item-fill" fill="currentColor"/>
+    <rect x="56.69" y="91.93" width="28.35" height="5.67" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
   </g>
-  <g>
-    <rect x="104.88" y="48.12" width="28.35" height="40.08" rx="2.85" ry="2.85" style="fill: #e5e7eb;"/>
-    <rect x="104.88" y="91.93" width="28.35" height="5.67" rx="2.83" ry="2.83" style="fill: #e5e7eb;"/>
+  <g class="item-fill" fill="currentColor">
+    <rect x="104.88" y="48.12" width="28.35" height="40.08" rx="2.85" ry="2.85" class="item-fill" fill="currentColor"/>
+    <rect x="104.88" y="91.93" width="28.35" height="5.67" rx="2.83" ry="2.83" class="item-fill" fill="currentColor"/>
   </g>
 </svg>

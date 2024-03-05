@@ -37,7 +37,7 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,ico,svg',
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf,ico,svg,docx,xlsx,pptx,mp3,mp4,zip|max:50000',
             'category' => 'string|max:255'
         ]);
 
@@ -54,7 +54,9 @@ class FileController extends Controller
         $newFile->extension = $fileData->getClientOriginalExtension();
         $newFile->category = $category;
         $newFile->name = $name;
+        if(!$user->hasRole('admin')){
         $newFile->group_id = $user->groups->first()->id;
+        }
 
         $this->storeFileAndCreateThumbnail($fileData, $filename, $newFile);
 
@@ -166,6 +168,8 @@ class FileController extends Controller
             $newFile->thumbnail = Storage::url($thumbnailPath);
         } elseif ($newFile->extension === 'svg') {
             $newFile->thumbnail = $newFile->path;
+        }elseif(in_array($newFile->extension, ['docx','xlsx,','pptx','mp3','mp4','zip'])){
+            $newFile->thumbnail = Storage::url('default_thumbnails/'.$newFile->extension.'.svg');
         }
     }
 

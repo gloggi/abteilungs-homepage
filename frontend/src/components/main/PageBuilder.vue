@@ -1,8 +1,12 @@
 <template>
   <PageWrapper>
-    <template v-for="pageItem in page.pageItems" :key="pageItem.id">
+    <template v-for="(pageItem, i) in page.pageItems" :key="pageItem.id">
       <TextItem v-if="pageItem.type == 'textItem'" :item="pageItem" />
-      <ImageItem v-if="pageItem.type == 'imageItem'" :item="pageItem" />
+      <ImageItem
+        v-if="pageItem.type == 'imageItem'"
+        :style="getMargins(i)"
+        :item="pageItem"
+      />
       <ContactItem v-if="pageItem.type == 'contactItem'" :item="pageItem" />
       <FormItem v-if="pageItem.type == 'formItem'" :item="pageItem" />
       <SectionsItem v-if="pageItem.type == 'sectionsItem'" :item="pageItem" />
@@ -13,7 +17,10 @@
         :files="pageItem.files"
       />
       <CampsItem v-if="pageItem.type == 'campsItem'" :item="pageItem" />
-      <LocationItem v-if="pageItem.type == 'locationItem'" :item="pageItem" />
+      <LocationItem
+        v-if="pageItem.type == 'locationItem'"
+        :style="getMargins(i)"
+      />
       <FaqItem v-if="pageItem.type == 'faqItem'" :item="pageItem" />
       <GroupEventsItem
         v-if="pageItem.type == 'groupEventsItem'"
@@ -41,7 +48,17 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    getMargins(i) {
+      if (i === 0) {
+        return "margin-top: -48px; margin-bottom: 48px;";
+      } else if (i === this.page.pageItems.length - 1) {
+        return "margin-bottom: -48px; margin-top: 48px;";
+      } else {
+        return "";
+      }
+    },
+  },
   async created() {},
   components: {
     TextItem,

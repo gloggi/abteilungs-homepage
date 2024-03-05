@@ -7,7 +7,13 @@
       @clearErrors="errors = {}"
       entity="pages"
       backLinkTo="Pages"
-    />
+    >
+  <template v-slot:buttons>
+    <ActionButton @click="visitPage">
+      <font-awesome-icon :icon="icons.faEye" class="h-6 w-6" />
+    </ActionButton>
+  </template>
+  </ItemHeaderTemplate>
     <Card class="space-y-2">
       <TextInput
         :label="$t('dashboard.title')"
@@ -183,10 +189,7 @@ import CheckBox from "../../components/admin/CheckBox.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/AddPageItem.vue";
 import {
-  faArrowsRotate,
-  faChevronLeft,
-  faTrash,
-  faPlus,
+  faEye
 } from "@fortawesome/free-solid-svg-icons";
 import TextItem from "../../components/admin/PageItems/TextItem.vue";
 import ImageItem from "../../components/admin/PageItems/ImageItem.vue";
@@ -205,6 +208,7 @@ import LocationItem from "../../components/admin/PageItems/LocationItem.vue";
 import FaqItem from "../../components/admin/PageItems/FaqItem.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
 import GroupEventsItem from "../../components/admin/PageItems/GroupEventsItem.vue";
+import ActionButton from "../../components/admin/ActionButton.vue";
 
 export default {
   components: {
@@ -227,6 +231,7 @@ export default {
     FaqItem,
     SelectComponent,
     GroupEventsItem,
+    ActionButton,
   },
   data() {
     return {
@@ -240,10 +245,7 @@ export default {
       preSelectedImages: undefined,
       isDragging: false,
       icons: {
-        faTrash,
-        faPlus,
-        faArrowsRotate,
-        faChevronLeft,
+       faEye
       },
       groups: [],
       isGroupPage: false,
@@ -368,6 +370,13 @@ export default {
     },
     handleErrors(errors) {
       this.errors = errors;
+    },
+    visitPage() {
+      if(!this.content.route){
+        this.$router.push({ name: "Home" });
+        return
+      }
+      this.$router.push({ name: "Home2", params: { path: this.content.route } });
     },
   },
   watch: {

@@ -29,7 +29,7 @@
     <MediaModal
       v-if="showModal"
       @close="showModal = false"
-      :extensions="['pdf', 'docx', 'xlsx', 'zip']"
+      :extensions="['pdf', 'docx', 'xlsx', 'pptx', 'zip', 'mp3', 'mp4']"
       :pre-selected="preSelectedImages"
       @select="selectHandler"
       :max-select="1000"

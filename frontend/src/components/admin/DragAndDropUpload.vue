@@ -29,6 +29,9 @@ export default {
         this.$emit("uploadedFile", true);
       } catch (e) {
         console.log(e);
+        if (e.response.status === 422) {
+          this.notifyUser(this.$t("dashboard.fileNotSupportedOrTooLarge"), true);
+        }
       }
     },
   },
