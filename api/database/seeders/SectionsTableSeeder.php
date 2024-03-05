@@ -26,10 +26,10 @@ class SectionsTableSeeder extends Seeder
                 'color' => '#9b9292',
                 'from_age' => 4,
                 'to_age' => 5,
-                'file_id' => 44,
+                'file_id' => 10,
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:32:21',
-                'updated_at' => '2023-12-16 18:47:29',
+                'updated_at' => '2024-03-05 15:20:37',
             ),
             1 => 
             array (
@@ -38,10 +38,10 @@ class SectionsTableSeeder extends Seeder
                 'color' => '#3eb9bb',
                 'from_age' => 6,
                 'to_age' => 10,
-                'file_id' => 43,
+                'file_id' => 11,
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:32:40',
-                'updated_at' => '2023-12-16 18:47:40',
+                'updated_at' => '2024-03-05 15:20:57',
             ),
             2 => 
             array (
@@ -50,10 +50,10 @@ class SectionsTableSeeder extends Seeder
                 'color' => '#cd922d',
                 'from_age' => 11,
                 'to_age' => 14,
-                'file_id' => 42,
+                'file_id' => 12,
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:32:55',
-                'updated_at' => '2023-12-16 18:47:53',
+                'updated_at' => '2024-03-05 15:21:22',
             ),
             3 => 
             array (
@@ -62,10 +62,10 @@ class SectionsTableSeeder extends Seeder
                 'color' => '#e22828',
                 'from_age' => 15,
                 'to_age' => 16,
-                'file_id' => 41,
+                'file_id' => 13,
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:33:10',
-                'updated_at' => '2023-12-16 18:48:02',
+                'updated_at' => '2024-03-05 15:21:35',
             ),
             4 => 
             array (

@@ -12,17 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
         $this->call(FilesTableSeeder::class);
         $this->call(SectionsTableSeeder::class);
         $this->call(GroupsTableSeeder::class);
         $this->call(ContactsTableSeeder::class);
-        $this->call(PermissionsSeeder::class);
         $this->call(PagesTableSeeder::class);
         $this->call(PageFileTableSeeder::class);
         $this->call(SectionFileTableSeeder::class);
@@ -39,11 +32,21 @@ class DatabaseSeeder extends Seeder
         $this->call(MenuItemsTableSeeder::class);
         $this->call(GroupPredecessorTableSeeder::class);
         $this->call(GroupSuccessorTableSeeder::class);
-        $this->call(GroupHeadersTableSeeder::class);
         $this->call(ImageItemFileTableSeeder::class);
         $this->call(LocationsTableSeeder::class);
         $this->call(EventsTableSeeder::class);
         $this->call(EventGroupsTableSeeder::class);
+        $this->call(LocationItemsTableSeeder::class);
+        $this->call(FilesItemsTableSeeder::class);
+        $this->call(FilesItemFileTableSeeder::class);
+        $this->call(CampsTableSeeder::class);
+        $this->call(MigrationsTableSeeder::class);
+        $this->call(FaqsTableSeeder::class);
+        $this->call(QuestionsTableSeeder::class);
+        $this->call(FooterLinksTableSeeder::class);
+        $this->call(FaqItemsTableSeeder::class);
+        $this->call(EventFilesTableSeeder::class);
+        $this->call(GroupEventsItemsTableSeeder::class);
     }
-    // create seeds: php artisan iseed files,sections,groups,group_predecessor,group_successor,group_headers,contacts,pages,page_file,section_file,text_items,generic_items,image_items,image_item_file,forms,form_items,settings,text_fields,textarea_fields,select_fields,option_fields,menu_items,events,event_groups,locations,footer_links --force
+    // create seeds: php artisan iseed contacts,page_file,location_items,option_fields,text_fields,image_items,settings,files_items,files_item_file,groups,menu_items,events,text_items,camps,section_file,migrations,questions,files,pages,footer_links,locations,faq_items,faqs,group_predecessor,textarea_fields,select_fields,form_items,group_successor,forms,generic_items,image_item_file,sections,event_files,group_events_items,event_groups --force
 }

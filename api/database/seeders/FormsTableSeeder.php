@@ -22,12 +22,24 @@ class FormsTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'name' => 'Contact',
-                'email' => 'contact@pfadi-lagom.ch',
-                'subject' => 'Contact',
+                'group_id' => NULL,
+                'name' => 'Kontakt',
+                'email' => 'kantakt@pfadi-lagom.ch',
+                'subject' => 'Kontaktformular',
                 'message' => NULL,
-                'created_at' => '2023-12-15 20:02:15',
-                'updated_at' => '2023-12-15 20:05:13',
+                'created_at' => '2024-03-05 17:06:07',
+                'updated_at' => '2024-03-05 17:06:07',
+            ),
+            1 => 
+            array (
+                'id' => 2,
+                'group_id' => 9,
+                'name' => 'Gruppenformular',
+                'email' => 'owls@pfadi-lagom.ch',
+                'subject' => 'Neue Antwort',
+                'message' => NULL,
+                'created_at' => '2024-03-05 19:36:02',
+                'updated_at' => '2024-03-05 19:36:39',
             ),
         ));
         

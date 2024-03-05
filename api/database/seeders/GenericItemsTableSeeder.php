@@ -21,30 +21,30 @@ class GenericItemsTableSeeder extends Seeder
         \DB::table('generic_items')->insert(array (
             0 => 
             array (
-                'id' => 3,
-                'type' => 'sectionsItem',
-                'sort' => 1,
-                'page_id' => 2,
-                'created_at' => '2023-12-15 19:44:11',
-                'updated_at' => '2023-12-16 19:51:51',
+                'id' => 1,
+                'type' => 'groupsItem',
+                'sort' => 0,
+                'page_id' => 4,
+                'created_at' => '2024-03-05 17:16:39',
+                'updated_at' => '2024-03-05 17:16:39',
             ),
             1 => 
             array (
-                'id' => 4,
+                'id' => 2,
                 'type' => 'contactItem',
-                'sort' => 2,
-                'page_id' => 2,
-                'created_at' => '2023-12-15 19:44:11',
-                'updated_at' => '2023-12-16 19:51:51',
+                'sort' => 1,
+                'page_id' => 4,
+                'created_at' => '2024-03-05 17:16:39',
+                'updated_at' => '2024-03-05 17:16:39',
             ),
             2 => 
             array (
-                'id' => 5,
-                'type' => 'groupsItem',
-                'sort' => 0,
-                'page_id' => 2,
-                'created_at' => '2023-12-16 19:51:51',
-                'updated_at' => '2023-12-16 19:51:51',
+                'id' => 3,
+                'type' => 'sectionsItem',
+                'sort' => 2,
+                'page_id' => 4,
+                'created_at' => '2024-03-05 17:16:39',
+                'updated_at' => '2024-03-05 17:16:39',
             ),
         ));
         

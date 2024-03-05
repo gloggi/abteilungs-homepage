@@ -23,10 +23,19 @@ class FormItemsTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'form_id' => 1,
-                'sort' => 0,
+                'sort' => 1,
                 'page_id' => 3,
-                'created_at' => '2023-12-15 19:46:44',
-                'updated_at' => '2023-12-15 19:47:24',
+                'created_at' => '2024-03-05 17:14:55',
+                'updated_at' => '2024-03-05 17:14:59',
+            ),
+            1 => 
+            array (
+                'id' => 2,
+                'form_id' => NULL,
+                'sort' => 0,
+                'page_id' => 7,
+                'created_at' => '2024-03-05 19:34:37',
+                'updated_at' => '2024-03-05 19:34:37',
             ),
         ));
         
