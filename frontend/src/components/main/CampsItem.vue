@@ -1,15 +1,15 @@
 <template>
   <ContentWrapper>
-    <HeadingOne class="w-full text-primary mb-2">{{
+    <HeadingTwo class="w-full text-primary mb-2">{{
       $t("page.camps")
-    }}</HeadingOne>
+    }}</HeadingTwo>
     <Camp v-for="camp in camps" :camp="camp" :key="camp.id" />
   </ContentWrapper>
 </template>
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
 import Camp from "./Camp.vue";
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
   props: ["item"],
@@ -31,6 +31,6 @@ export default {
   async created() {
     await this.getCamps();
   },
-  components: { ContentWrapper, Camp, HeadingOne },
+  components: { ContentWrapper, Camp, HeadingTwo },
 };
 </script>

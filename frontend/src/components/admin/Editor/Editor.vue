@@ -4,15 +4,6 @@
       <div class="flex flex-col">
         <div class="flex">
           <EditorButton
-            @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-            :active="editor.isActive('heading', { level: 1 })"
-          >
-            <font-awesome-icon class="h-4 w-4" :icon="icons.faHeading" /><sub
-              class="font-bold"
-              >1</sub
-            >
-          </EditorButton>
-          <EditorButton
             @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
             :active="editor.isActive('heading', { level: 2 })"
           >
@@ -340,9 +331,8 @@ export default {
               ? node.attrs.level
               : this.options.levels[0];
             const classes = {
-              1: "font-bold text-4xl text-primary",
-              2: "font-bold text-2xl",
-              3: "font-bold text-xl",
+              2: "text-3xl mt-19 mb-5 sm:text-5xl text-heading-2 text-primary mt-4 mb-2",
+              3: "text-2xl md:text-3xl pb-2 text-heading-3 text-primary mt-4 mb-2",
             };
             return [
               `h${level}`,

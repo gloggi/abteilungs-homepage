@@ -1,11 +1,11 @@
 <template>
   <ContentWrapper>
     <form class="space-y-5" @submit.prevent="handleForm">
-      <HeadingOne class="text-primary">{{ item.form.name }}</HeadingOne>
+      <HeadingTwo class="text-primary">{{ item.form.name }}</HeadingTwo>
       <div v-if="submitSuccess" class="p-5 rounded-lg bg-primary">
-        <HeadingTwo class="text-white font-bold">
+        <HeadingThree class="text-white font-bold">
           {{ $t("page.formSuccessMessage") }}
-        </HeadingTwo>
+        </HeadingThree>
       </div>
 
       <div class="flex flex-col space-y-5">
@@ -59,8 +59,8 @@
 <script>
 import BasicButton from "./BasicButton.vue";
 import ContentWrapper from "./ContentWrapper.vue";
-import HeadingOne from "./HeadingOne.vue";
 import HeadingTwo from "./HeadingTwo.vue";
+import HeadingThree from "./HeadingThree.vue";
 
 export default {
   props: ["item"],
@@ -87,6 +87,6 @@ export default {
     },
   },
   async created() {},
-  components: { HeadingOne, ContentWrapper, BasicButton, HeadingTwo },
+  components: { HeadingTwo, ContentWrapper, BasicButton, HeadingThree },
 };
 </script>

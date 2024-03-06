@@ -5,7 +5,7 @@
         @click="show = !show"
         class="text-left w-full bg-primary p-5 flex flex-col text-white rounded-lg"
       >
-        <HeadingOne>{{ camp.name }}</HeadingOne>
+        <HeadingTwo>{{ camp.name }}</HeadingTwo>
         <div class="w-full">
           <p class="main-text text-white text-xl">
             <span class="font-semibold">{{ $t("page.campDateLabel") }}: </span>
@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
 import { gsap } from "gsap";
@@ -65,7 +65,7 @@ import BasicButton from "./BasicButton.vue";
 
 export default {
   components: {
-    HeadingOne,
+    HeadingTwo,
     BasicButton,
   },
   props: {

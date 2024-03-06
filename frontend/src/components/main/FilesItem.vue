@@ -1,6 +1,6 @@
 <template>
   <ContentWrapper>
-    <HeadingOne class="w-full text-primary">{{ title }}</HeadingOne>
+    <HeadingTwo class="w-full text-primary">{{ title }}</HeadingTwo>
     <div class="p-5 flex justify-center flex-wrap gap gap-5">
       <a
         v-for="file in files"
@@ -23,7 +23,7 @@
 </template>
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
   props: ["title", "files"],
@@ -32,6 +32,6 @@ export default {
   },
   methods: {},
   async created() {},
-  components: { HeadingOne, ContentWrapper },
+  components: { HeadingTwo, ContentWrapper },
 };
 </script>

@@ -6,29 +6,41 @@
           @click="show = !show"
           class="text-left w-full bg-primary p-5 flex flex-col text-white rounded-lg"
         >
-          <HeadingOne>{{ event.title }}</HeadingOne>
-          <div class="grid grid-cols-2 w-full">
-            <p class="main-text text-white text-xl">
+          <HeadingTwo>{{ event.title }}</HeadingTwo>
+          <div class="w-full flex flex-wrap">
+            <p class="main-text text-white text-base md:text-xl w-1/2">
               <span class="font-semibold">{{ $t("page.dateLabel") }}:</span>
               {{ getDate(event) }}
             </p>
-            <p class="main-text text-white text-xl">
+            <p class="main-text text-white text-base md:text-xl w-1/2">
               <span class="font-semibold">{{ $t("page.timeLabel") }}:</span>
               {{ formatTime(event.startTime) }} -
               {{ formatTime(event.endTime) }}
             </p>
-            <p class="main-text text-white text-xl">
+            <p v-if="(event.startLocation&&!event.endLocation) || event.startLocation?.name=== event.endLocation?.name" class="main-text text-white text-base md:text-xl w-full md:w-1/2">
               <span class="font-semibold">{{ $t("page.locationLabel") }}:</span>
               {{ event.startLocation?.name }}
             </p>
+            <template v-else>
+              <p class="main-text text-white text-base md:text-xl w-1/2">
+                <span class="font-semibold">{{ $t("page.startLocationLabel") }}:</span>
+                {{ event.startLocation?.name }}
+              </p>
+              <p class="main-text text-white text-base md:text-xl w-1/2">
+                <span class="font-semibold">{{ $t("page.endLocationLabel") }}:</span>
+                {{ event.endLocation?.name }}
+              </p>
+             
+            </template>
+            
             <p
               v-if="event.groups.length > 1"
-              class="main-text text-white text-xl"
+              class="main-text text-white text-base md:text-xl w-full md:w-1/2"
             >
               <span class="font-semibold">{{ $t("page.groupsLabel") }}:</span>
               {{ event.groups.map((g) => g.name).join(", ") }}
             </p>
-          </div>
+        </div>
         </button>
         <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
           <div v-if="show" class="h-full">
@@ -87,7 +99,7 @@
   </div>
 </template>
 <script>
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 import MapComponent from "./MapComponent.vue";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
@@ -98,7 +110,7 @@ import BasicButton from "./BasicButton.vue";
 
 export default {
   components: {
-    HeadingOne,
+    HeadingTwo,
     MapComponent,
     ContentWrapper,
     FilesItem,

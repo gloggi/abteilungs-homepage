@@ -1,8 +1,8 @@
 <template>
   <ContentWrapper>
-    <HeadingOne class="w-full text-primary">{{
+    <HeadingTwo class="w-full text-primary">{{
       $t("page.contact")
-    }}</HeadingOne>
+    }}</HeadingTwo>
     <div class="flex flex-col space-y-5">
       <div
         v-for="contact in contacts"
@@ -34,7 +34,7 @@
 </template>
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
   props: ["item"],
@@ -56,6 +56,6 @@ export default {
   async created() {
     await this.getContacts();
   },
-  components: { HeadingOne, ContentWrapper },
+  components: { HeadingTwo, ContentWrapper },
 };
 </script>

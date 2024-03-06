@@ -1,7 +1,7 @@
 <template>
   <div>
     <ContentWrapper>
-      <HeadingOne class="text-primary pb-5">{{ $t("page.events") }}</HeadingOne>
+      <HeadingTwo class="text-primary pb-5">{{ $t("page.events") }}</HeadingTwo>
     </ContentWrapper>
     <div v-if="events.length > 0">
       <Event
@@ -26,7 +26,7 @@
 import ContentWrapper from "./ContentWrapper.vue";
 import Event from "./Event.vue";
 import EventPager from "./EventPager.vue";
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
   props: ["item"],
@@ -34,7 +34,7 @@ export default {
     ContentWrapper,
     Event,
     EventPager,
-    HeadingOne,
+    HeadingTwo,
   },
   data() {
     return {

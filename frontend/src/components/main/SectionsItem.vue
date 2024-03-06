@@ -2,7 +2,7 @@
   <div v-for="section in sections" :key="section.id" class="space-y-5">
     <ImageItem v-if="false" :item="section" />
     <ContentWrapper>
-      <HeadingOne class="text-primary">{{ section.name }}</HeadingOne>
+      <HeadingTwo class="text-primary">{{ section.name }}</HeadingTwo>
       <div
         v-if="section.file"
         class="float-right rounded-full size-[150px] md:size-[200px] flex justify-center items-center"
@@ -19,7 +19,7 @@
 </template>
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 import ImageItem from "./ImageItem.vue";
 
 export default {
@@ -40,6 +40,6 @@ export default {
   async created() {
     this.getSections();
   },
-  components: { ImageItem, HeadingOne, ContentWrapper },
+  components: { ImageItem, HeadingTwo, ContentWrapper },
 };
 </script>

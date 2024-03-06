@@ -72,7 +72,11 @@ export default {
         height: "auto",
         overflow: "visible",
         duration: 0.3,
-        onComplete: done,
+        onComplete: function () {
+          const offsetTop = el.getBoundingClientRect().top + window.scrollY-75;
+          window.scrollTo({ top: offsetTop, behavior: "smooth" });
+          done();
+        },
       });
     },
     leave(el, done) {

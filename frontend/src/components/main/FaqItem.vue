@@ -1,8 +1,8 @@
 <template>
   <ContentWrapper>
-    <HeadingOne class="w-full text-primary mb-2">{{
+    <HeadingTwo class="w-full text-primary mb-2">{{
       item.faq.title
-    }}</HeadingOne>
+    }}</HeadingTwo>
     <Question
       v-for="question in item.faq.questions"
       :question="question"
@@ -13,11 +13,11 @@
 </template>
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 import Question from "./Question.vue";
 
 export default {
   props: ["item"],
-  components: { ContentWrapper, HeadingOne, Question },
+  components: { ContentWrapper, HeadingTwo, Question },
 };
 </script>

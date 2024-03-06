@@ -5,7 +5,7 @@
         @click="show = !show"
         class="text-left w-full bg-primary p-5 flex flex-col text-white rounded-lg"
       >
-        <HeadingTwo>{{ question.question }}</HeadingTwo>
+        <HeadingThree>{{ question.question }}</HeadingThree>
       </button>
       <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
         <div v-if="show" class="h-full bg-white rounded-b-lg">
@@ -19,11 +19,11 @@
 </template>
 <script>
 import { gsap } from "gsap";
-import HeadingTwo from "./HeadingTwo.vue";
+import HeadingThree from "./HeadingThree.vue";
 
 export default {
   components: {
-    HeadingTwo,
+    HeadingThree,
   },
   props: {
     open: {

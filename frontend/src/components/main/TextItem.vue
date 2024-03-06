@@ -1,14 +1,14 @@
 <template>
   <ContentWrapper>
     <FleurDeLis class="hidden md:flex" v-if="item.showFleurDeLis" />
-    <HeadingOne class="text-primary">{{ item.title }}</HeadingOne>
+    <HeadingTwo class="text-primary">{{ item.title }}</HeadingTwo>
     <div v-html="item.body" v-router-link></div>
   </ContentWrapper>
 </template>
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
 import FleurDeLis from "./FleurDeLis.vue";
-import HeadingOne from "./HeadingOne.vue";
+import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
   props: ["item"],
@@ -17,6 +17,6 @@ export default {
   },
   methods: {},
   async created() {},
-  components: { HeadingOne, FleurDeLis, ContentWrapper },
+  components: { HeadingTwo, FleurDeLis, ContentWrapper },
 };
 </script>

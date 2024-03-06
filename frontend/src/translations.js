@@ -201,6 +201,8 @@ export const messages = {
       formSuccessMessage:
         "Vielen Dank! Das Formular wurde erfolgreich abgesendet.",
       region: "Region",
+      startLocationLabel: "Besammlungsort",
+      endLocationLabel: "Schlussort",
     },
   },
 };
