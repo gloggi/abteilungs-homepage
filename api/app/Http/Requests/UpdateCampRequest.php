@@ -11,7 +11,7 @@ class UpdateCampRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|required|string|max:255',
-            'description' => 'nullable|string',
+            'custom_description' => 'nullable|string',
             'cost' => 'nullable|numeric',
             'maximum_participants' => 'nullable|integer',
             'participant_count' => 'sometimes|required|integer',

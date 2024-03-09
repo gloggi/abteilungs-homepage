@@ -36,11 +36,11 @@
               {{ camp.cost }}
             </p>
             <div
-              v-if="camp.description && isHTML"
-              v-html="camp.description"
+              v-if="camp.customDescription"
+              v-html="camp.customDescription"
               v-router-link
             ></div>
-            <p v-else class="main-text text-xl">
+            <p v-else-if="camp.description" class="main-text text-xl">
               {{ camp.description }}
             </p>
             <div class="flex justify-end w-full">
@@ -82,11 +82,6 @@ export default {
     return {
       show: false,
     };
-  },
-  computed: {
-    isHTML() {
-      return this.camp.description.substring(0, 1) === "<";
-    },
   },
   methods: {
     formatDate(date) {

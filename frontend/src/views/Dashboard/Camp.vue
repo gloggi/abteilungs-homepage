@@ -18,7 +18,10 @@
         />
         <div class="flex flex-col space-y-2">
           <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
-          <Editor v-model="content.description" />
+          <Editor
+            v-model="content.customDescription"
+            :placeholder="content.description"
+          />
         </div>
         <div class="flex">
           <div class="flex flex-col space-y-2 w-full">

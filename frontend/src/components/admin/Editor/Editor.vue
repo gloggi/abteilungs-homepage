@@ -193,6 +193,7 @@ import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import TextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/core";
+import Placeholder from "@tiptap/extension-placeholder";
 import EditorButton from "./EditorButton.vue";
 import {
   faArrowRotateLeft,
@@ -211,7 +212,7 @@ import Modal from "../Modal.vue";
 import TextInput from "../TextInput.vue";
 import ActionButton from "../ActionButton.vue";
 export default {
-  props: ["modelValue"],
+  props: ["modelValue", "placeholder"],
   components: {
     EditorContent,
     EditorButton,
@@ -304,6 +305,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.placeholder);
     this.editor = new Editor({
       content: this.inputModel,
 
@@ -356,6 +358,9 @@ export default {
         TextAlign.configure({
           types: ["heading", "paragraph"],
         }),
+        Placeholder.configure({
+          placeholder: this.placeholder,
+        }),
       ],
       editorProps: {
         attributes: {
@@ -371,4 +376,12 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+</style>

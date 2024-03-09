@@ -14,6 +14,7 @@ class Camp extends Model
         'midata_id',
         'name',
         'description',
+        'custom_description',
         'cost',
         'maximum_participants',
         'participant_count',
