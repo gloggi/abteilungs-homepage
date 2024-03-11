@@ -108,4 +108,5 @@ runs:
         MIDATA_BASE_URL: ${{ inputs.midata-base-url }}
         MIDATA_CLIENT_UID: ${{ inputs.midata-client-uid }}
         MIDATA_CLIENT_SECRET: ${{ inputs.midata-client-secret }}
+        MIDATA_ID: ${{ inputs.midata-id }}
         SEED_DB: ${{ inputs.seed-db }}
