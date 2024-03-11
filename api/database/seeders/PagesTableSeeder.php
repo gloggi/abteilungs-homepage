@@ -99,6 +99,16 @@ class PagesTableSeeder extends Seeder
                 'created_at' => '2024-03-05 19:42:26',
                 'updated_at' => '2024-03-05 19:42:26',
             ),
+            8 => 
+            array (
+                'id' => 9,
+                'group_id' => NULL,
+                'title' => 'Schnuppertag',
+                'route' => 'schnuppertag',
+                'big_header' => 0,
+                'created_at' => '2024-03-11 20:30:21',
+                'updated_at' => '2024-03-11 20:30:21',
+            ),
         ));
         
         

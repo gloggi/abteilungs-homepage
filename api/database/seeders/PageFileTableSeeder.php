@@ -82,6 +82,13 @@ class PageFileTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
+            9 => 
+            array (
+                'page_id' => 9,
+                'file_id' => 31,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
         ));
         
         

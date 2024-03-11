@@ -46,6 +46,15 @@ class GenericItemsTableSeeder extends Seeder
                 'created_at' => '2024-03-05 17:16:39',
                 'updated_at' => '2024-03-05 17:16:39',
             ),
+            3 => 
+            array (
+                'id' => 4,
+                'type' => 'campsItem',
+                'sort' => 3,
+                'page_id' => 1,
+                'created_at' => '2024-03-11 20:28:32',
+                'updated_at' => '2024-03-11 20:28:32',
+            ),
         ));
         
         
