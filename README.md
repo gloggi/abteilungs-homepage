@@ -79,6 +79,7 @@ In diesem Beispiel legen wir ein Deployment für die Abteilung Lagom unter der A
     * `FRONTEND_URL`: URL zum Frontend https://lagom.ch
     * `MIDATA_BASE_URL`: https://pbs.puzzle.ch für Testumgebungen, https://db.scout.ch für produktive Umgebungen
     * `MIDATA_CLIENT_ID`: Von der MiData-OAuth-App (siehe oben)
+    * `MIDATA_ID`: Die ID von der Abteilung auf MiData (https://db.scout.ch/de/groups/{ID})
     * `SEED_DB`: Auf den Wert `true` setzen falls die Inhalte dieser Umgebung bei jedem Deployment mit den Seeds überschrieben werden sollen. Ansonsten weglassen.
     * `SSH_BACKEND_DIRECTORY`: Pfad auf dem Server wo das Backend hochgeladen werden soll. In unserem Beispiel ~/www/lagom.ch-api
     * `SSH_FRONTEND_DIRECTORY`: Pfad auf dem Server wo das Frontend hochgeladen werden soll. In unserem Beispiel ~/www/lagom.ch
