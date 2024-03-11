@@ -19,6 +19,7 @@
       <CampsItem v-if="pageItem.type == 'campsItem'" :item="pageItem" />
       <LocationItem
         v-if="pageItem.type == 'locationItem'"
+        :item="pageItem"
         :style="getMargins(i)"
       />
       <FaqItem v-if="pageItem.type == 'faqItem'" :item="pageItem" />
