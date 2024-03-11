@@ -17,20 +17,20 @@ class MiDataProvider extends AbstractProvider implements Provider
     protected function getAuthUrl($state)
     {
         $midataBaseUrl = config('services.midata.base_url');
-        return $this->buildAuthUrlFromBase("${midataBaseUrl}/oauth/authorize", $state);
+        return $this->buildAuthUrlFromBase("{$midataBaseUrl}/oauth/authorize", $state);
     }
 
 
     protected function getTokenUrl()
     {
         $midataBaseUrl = config('services.midata.base_url');
-        return "${midataBaseUrl}/oauth/token";
+        return "{$midataBaseUrl}/oauth/token";
     }
 
     protected function getUserByToken($token)
     {
         $midataBaseUrl = config('services.midata.base_url');
-        $response = $this->getHttpClient()->get("${midataBaseUrl}/oauth/profile", [
+        $response = $this->getHttpClient()->get("{$midataBaseUrl}/oauth/profile", [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
                 'X-Scope' => 'with_roles',
