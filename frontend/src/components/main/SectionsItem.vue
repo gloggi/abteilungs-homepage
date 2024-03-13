@@ -1,6 +1,6 @@
 <template>
   <div v-for="section in sections" :key="section.id" class="space-y-5">
-    <ImageItem v-if="false" :item="section" />
+    <ImageItem class="mb-3" v-if="section.files.length>0" :item="section" />
     <ContentWrapper>
       <HeadingTwo class="text-primary">{{ section.name }}</HeadingTwo>
       <div
