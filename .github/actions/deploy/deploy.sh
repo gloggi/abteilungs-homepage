@@ -58,7 +58,7 @@ cd ..
 
 ### DEPLOY ALL FILES
 
-echo "Scanning ssh host keys of \"$SSH_HOST\" (showing hashed output only):"
+echo "Scanning ssh host keys of \"$SSH_HOST\" on port \"$SSH_PORT\" (showing hashed output only):"
 ssh-keyscan -p $SSH_PORT -H $SSH_HOST
 
 echo "Showing configured know_hosts:"
