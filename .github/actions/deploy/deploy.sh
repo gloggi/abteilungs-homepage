@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+### Set default SSH port if not provided
+SSH_PORT=${SSH_PORT:-22}
 
 ### BACKEND PREPARATION
 
@@ -57,13 +59,13 @@ cd ..
 ### DEPLOY ALL FILES
 
 echo "Scanning ssh host keys of \"$SSH_HOST\" (showing hashed output only):"
-ssh-keyscan -H $SSH_HOST
+ssh-keyscan -p $SSH_PORT -H $SSH_HOST
 
 echo "Showing configured know_hosts:"
 cat ~/.ssh/known_hosts
 
 echo "Checking PHP version:"
-ssh -l $SSH_USERNAME -T $SSH_HOST <<EOF
+ssh -l $SSH_USERNAME -p $SSH_PORT -T $SSH_HOST <<EOF
   set -e
   php -v
   cd $SSH_BACKEND_DIRECTORY
@@ -80,7 +82,7 @@ cd api
 lftp <<EOF
   set sftp:auto-confirm true
   set dns:order "inet"
-  open -u $SSH_USERNAME, sftp://$SSH_HOST
+  open -u $SSH_USERNAME, sftp://$SSH_HOST -p $SSH_PORT
   cd $SSH_BACKEND_DIRECTORY
   mirror -enRv -x '^\.' -x '^storage/logs/.*' -x '^storage/app/.*' -x '^storage/framework/maintenance.php$' -x '^storage/framework/down$' -x '^resources/fonts/.*' -x '^resources/js/.*' -x '^resources/css/.*'
   mirror -Rv -f .env

@@ -110,3 +110,4 @@ runs:
         MIDATA_CLIENT_SECRET: ${{ inputs.midata-client-secret }}
         MIDATA_ID: ${{ inputs.midata-id }}
         SEED_DB: ${{ inputs.seed-db }}
+        SSH_PORT: ${{ inputs.ssh-port }}
