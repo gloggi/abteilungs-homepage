@@ -84,6 +84,16 @@ inputs:
     required: false
     default: 'false'
 
+  midata-id:
+    description: 'The Midata ID of the main layer'
+    required: false
+    default: 'qualix'
+  
+  ssh-port:
+    description: 'The port of the SSH server'
+    required: false
+    default: 22
+
 runs:
   using: "composite"
   steps:
