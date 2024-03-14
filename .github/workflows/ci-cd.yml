@@ -56,3 +56,5 @@ jobs:
           midata-client-uid: ${{ vars.MIDATA_CLIENT_UID }}
           midata-client-secret: ${{ secrets.MIDATA_CLIENT_SECRET }}
           seed-db: ${{ vars.SEED_DB }}
+          midata-id: ${{ vars.MIDATA_ID }}
+          ssh-port: ${{ vars.SSH_PORT }}

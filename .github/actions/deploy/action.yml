@@ -87,7 +87,6 @@ inputs:
   midata-id:
     description: 'The Midata ID of the main layer'
     required: false
-    default: 'qualix'
   
   ssh-port:
     description: 'The port of the SSH server'
