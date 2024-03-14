@@ -84,6 +84,7 @@ In diesem Beispiel legen wir ein Deployment für die Abteilung Lagom unter der A
     * `SSH_BACKEND_DIRECTORY`: Pfad auf dem Server wo das Backend hochgeladen werden soll. In unserem Beispiel ~/www/lagom.ch-api
     * `SSH_FRONTEND_DIRECTORY`: Pfad auf dem Server wo das Frontend hochgeladen werden soll. In unserem Beispiel ~/www/lagom.ch
     * `SSH_HOST`: Hostname des Hostings für den SSH Login
+    * `SSH_PORT`: Port für den SSH-Zugriff auf den Server (default 22)
     * `SSH_KNOWN_HOSTS`: Kann lokal herausgesucht werden, indem man ~/.ssh/known_hosts temporär umbenennt und dann eine SSH-Verbindung von lokal zum Hosting aufmacht. Der Inhalt des neuen ~/.ssh/known_hosts gehört in diese Variable. Die alte Kopie wiederherstellen nicht vergessen!
 7. In [nightly.yml](https://github.com/gloggi/abteilungs-homepage/blob/master/.github/workflows/nightly.yml) einen Punkt `- uses: repo-sync/github-sync@v2` inkl. Unterpunkten kopieren und destination-branch auf `deploy-lagom` anpassen (muss mit `deploy-` anfangen und `lagom` muss ganz genau gleich geschrieben sein wie das GitHub Environment heisst)
 8. Code von master auf den neuen Branch deploy-lagom pushen und in GitHub Actions zuschauen wie das Deployment zum ersten Mal läuft
