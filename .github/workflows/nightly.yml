@@ -19,3 +19,9 @@ jobs:
           source_branch: 'master'
           destination_branch: 'deploy-demo'
           github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+      - uses: repo-sync/github-sync@v2
+        with:
+          source_repo: 'gloggi/abteilungs-homepage'
+          source_branch: 'master'
+          destination_branch: 'deploy-wildert'
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
