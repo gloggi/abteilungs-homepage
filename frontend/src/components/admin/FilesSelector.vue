@@ -9,7 +9,7 @@
           <font-awesome-icon :icon="icons.faTrash" class="w-3 p-1 text-white" />
         </button>
         <img
-          :src="`${backendURL}/${image.thumbnail}`"
+          :src="`${backendURL}${image.thumbnail}`"
           class="h-48 object-cover rounded-md"
           style="aspect-ratio: 1/1.414"
         />

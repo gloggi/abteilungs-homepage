@@ -20,7 +20,7 @@
           >
             <img
               class="h-32 p-3"
-              :src="`${backendURL}/${settings.divisionLogo?.path}`"
+              :src="`${backendURL}${settings.divisionLogo?.path}`"
             />
           </div>
           <div

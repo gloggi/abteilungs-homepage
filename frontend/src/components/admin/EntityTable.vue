@@ -55,7 +55,7 @@
         <div v-if="item[key]" class="flex justify-start items-center">
           <img
             class="h-10 rounded-lg"
-            :src="`${backendURL}/${item[key].thumbnail}`"
+            :src="`${backendURL}${item[key].thumbnail}`"
           />
         </div>
       </template>

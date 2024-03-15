@@ -12,7 +12,7 @@
     >
       <div class="bg-gray-50 rounded-lg w-full">
         <img
-          :src="`${backendURL}/${file.thumbnail}`"
+          :src="`${backendURL}${file.thumbnail}`"
           class="w-full rounded-lg object-contain p-1 roundd-lg aspect-square"
         />
       </div>
@@ -27,32 +27,32 @@
       <div class="flex justify-center items-center w-2/3">
         <img
           v-if="isImage()"
-          :src="`${backendURL}/${selectedFile.path}`"
+          :src="`${backendURL}${selectedFile.path}`"
           class="w-auto"
           style="max-height: 90vh"
         />
         <object
           v-else-if="selectedFile.extension == 'pdf'"
-          :data="`${backendURL}/${selectedFile.path}`"
+          :data="`${backendURL}${selectedFile.path}`"
           height="550px"
           type="application/pdf"
           style="aspect-ratio: 1 / 1.42"
         />
         <video v-else-if="selectedFile.extension == 'mp4'" controls>
           <source
-            :src="`${backendURL}/${selectedFile.path}`"
+            :src="`${backendURL}${selectedFile.path}`"
             type="video/mp4"
           />
         </video>
         <audio v-else-if="selectedFile.extension == 'mp3'" controls>
           <source
-            :src="`${backendURL}/${selectedFile.path}`"
+            :src="`${backendURL}${selectedFile.path}`"
             type="audio/mpeg"
           />
         </audio>
         <img
           v-else
-          :src="`${backendURL}/${selectedFile.thumbnail}`"
+          :src="`${backendURL}${selectedFile.thumbnail}`"
           class="w-auto"
           style="max-height: 90vh"
         />
@@ -81,11 +81,11 @@
           />
           <CopyField
             :label="$t('dashboard.url')"
-            :value="`${backendURL}/${selectedFile.path}`"
+            :value="`${backendURL}${selectedFile.path}`"
           />
           <CopyField
             :label="$t('dashboard.thumbnailUrl')"
-            :value="`${backendURL}/${selectedFile.thumbnail}`"
+            :value="`${backendURL}${selectedFile.thumbnail}`"
           />
           <div>
             <FormLabel>

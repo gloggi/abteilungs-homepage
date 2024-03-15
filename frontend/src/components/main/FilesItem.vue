@@ -5,12 +5,12 @@
       <a
         v-for="file in files"
         :key="file.id"
-        :href="`${backendURL}/${file.path}`"
+        :href="`${backendURL}${file.path}`"
       >
         <div>
           <div class="flex flex-col items-center">
             <img
-              :src="`${backendURL}/${file.thumbnail}`"
+              :src="`${backendURL}${file.thumbnail}`"
               class="h-48 border"
               style="aspect-ratio: 1 / 1.414"
             />

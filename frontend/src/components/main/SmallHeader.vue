@@ -6,7 +6,7 @@
       <div class="flex md:justify-end items-center w-full h-2/3 text-center">
         <img
           class="hidden md:block drop-shadow-xl max-h-full"
-          :src="`${backendURL}/${settings?.divisionLogo?.path}`"
+          :src="`${backendURL}${settings?.divisionLogo?.path}`"
         />
         <h1
           class="text-5xl md:text-6xl font-semibold text-white text-heading-1"
@@ -26,14 +26,14 @@
       v-if="!noImages"
       ref="currentImageRef"
       class="fixed -z-10 w-screen object-cover"
-      :src="`${backendURL}/${currentImage}`"
+      :src="`${backendURL}${currentImage}`"
       style="height: 50vh"
     />
     <img
       v-if="moreThanOneImage"
       ref="nextImageRef"
       class="fixed -z-10 w-screen object-cover"
-      :src="`${backendURL}/${nextImage}`"
+      :src="`${backendURL}${nextImage}`"
       style="height: 50vh"
     />
     <div
