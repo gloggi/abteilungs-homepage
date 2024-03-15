@@ -25,3 +25,33 @@ jobs:
           source_branch: 'master'
           destination_branch: 'deploy-wildert'
           github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+      - uses: repo-sync/github-sync@v2
+        with:
+          source_repo: 'gloggi/abteilungs-homepage'
+          source_branch: 'master'
+          destination_branch: 'deploy-hadlaub'
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+      - uses: repo-sync/github-sync@v2
+        with:
+          source_repo: 'gloggi/abteilungs-homepage'
+          source_branch: 'master'
+          destination_branch: 'deploy-pta'
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+      - uses: repo-sync/github-sync@v2
+        with:
+          source_repo: 'gloggi/abteilungs-homepage'
+          source_branch: 'master'
+          destination_branch: 'deploy-laegern'
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+      - uses: repo-sync/github-sync@v2
+        with:
+          source_repo: 'gloggi/abteilungs-homepage'
+          source_branch: 'master'
+          destination_branch: 'deploy-manegg'
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+      - uses: repo-sync/github-sync@v2
+        with:
+          source_repo: 'gloggi/abteilungs-homepage'
+          source_branch: 'master'
+          destination_branch: 'deploy-seepfadi'
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
