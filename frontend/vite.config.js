@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import Vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
-import { resolve } from 'path';
+import { resolve } from "path";
 
 export default defineConfig({
   plugins: [Vue(), svgLoader()],

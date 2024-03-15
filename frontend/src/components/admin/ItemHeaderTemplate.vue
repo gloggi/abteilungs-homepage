@@ -51,14 +51,19 @@ export default {
       isDragging: false,
     };
   },
+  computed: {
+    contentId() {
+      return this.$route.params.id;
+    },
+  },
   methods: {
     async deleteItem() {
-      if (this.$route.params.id === "new") {
+      if (this.contentId === "new") {
         this.$router.push({ name: this.backLinkTo });
         return;
       }
       try {
-        await this.callApi("delete", `/${this.entity}/${this.content.id}`);
+        await this.callApi("delete", `/${this.entity}/${this.contentId}`);
         this.notifyUser(this.$t("dashboard.itemDeleted"));
         this.$router.push({ name: this.backLinkTo });
       } catch (e) {
@@ -107,14 +112,14 @@ export default {
       }
     },
     async updateItem() {
-      if (this.$route.params.id === "new") {
+      if (this.contentId === "new") {
         await this.createItem();
         return;
       }
       try {
         await this.callApi(
           "put",
-          `/${this.entity}/${this.content.id}`,
+          `/${this.entity}/${this.contentId}`,
           this.content,
         );
 

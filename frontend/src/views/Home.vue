@@ -11,14 +11,14 @@
   </GroupPage>
   <RegularPage
     :key="`page-${pageKey}`"
-    v-if="pageType === 'regularPage'"
+    v-if="!pageNonExistent && pageType === 'regularPage'"
     :page="page"
   >
     <template v-slot:navbar>
       <NavBar :menuItems="menuItems" />
     </template>
   </RegularPage>
-  <FooterComponent v-if="pageType" />
+  <FooterComponent v-if="pageType && !pageNonExistent" />
   <CookieBanner />
 </template>
 <script>
@@ -45,6 +45,7 @@ export default {
       menuItems: [],
       pageType: undefined,
       group: undefined,
+      pageNonExistent: false,
     };
   },
   methods: {
@@ -70,12 +71,16 @@ export default {
       try {
         const response = await this.callApi("get", `/pages/${pageRoute}`);
         this.page = response.data;
-        document.title = `${this.page.title} | ${this.settings.divisionName}`;
+        document.title = `${this.page.title || ""} | ${
+          this.settings.divisionName || ""
+        }`;
       } catch (error) {
         if (this.settings.notFoundPage) {
           return this.getPage(this.settings.notFoundPage.route);
         } else if (pageRoute !== 0) {
           return this.getPage(0);
+        } else {
+          this.pageNonExistent = true;
         }
       }
     },

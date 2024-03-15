@@ -86,6 +86,7 @@ export default {
       }
     },
     formatFooterText(text) {
+      if (!text) return "";
       return text.replace(/main-text/g, "main-text text-xl text-white");
     },
   },

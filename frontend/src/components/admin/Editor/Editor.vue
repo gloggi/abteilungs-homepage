@@ -194,6 +194,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import TextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/core";
 import Placeholder from "@tiptap/extension-placeholder";
+import HardBreak from "@tiptap/extension-hard-break";
 import EditorButton from "./EditorButton.vue";
 import {
   faArrowRotateLeft,
@@ -360,6 +361,13 @@ export default {
         }),
         Placeholder.configure({
           placeholder: this.placeholder,
+        }),
+        HardBreak.extend({
+          addKeyboardShortcuts() {
+            return {
+              Enter: () => this.editor.commands.setHardBreak(),
+            };
+          },
         }),
       ],
       editorProps: {

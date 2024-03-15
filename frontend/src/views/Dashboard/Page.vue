@@ -291,7 +291,10 @@ export default {
     },
     addItem(field) {
       this.content.pageItems.push(field);
-      this.updatePage();
+      this.content.pageItems = this.content.pageItems.sort(
+        (a, b) => a.sort - b.sort,
+      );
+      this.content.pageItems.forEach((p, i) => (p.sort = i));
     },
     changeOrder(newItem) {
       const itemIndex = this.content.pageItems.findIndex(

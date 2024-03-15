@@ -39,10 +39,7 @@
           style="aspect-ratio: 1 / 1.42"
         />
         <video v-else-if="selectedFile.extension == 'mp4'" controls>
-          <source
-            :src="`${backendURL}${selectedFile.path}`"
-            type="video/mp4"
-          />
+          <source :src="`${backendURL}${selectedFile.path}`" type="video/mp4" />
         </video>
         <audio v-else-if="selectedFile.extension == 'mp3'" controls>
           <source

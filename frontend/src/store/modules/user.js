@@ -46,7 +46,7 @@ export const user = {
         commit("setUnitLeader", isUnitLeader || isAdmin);
         commit("setGroups", user.groups);
       } catch (error) {
-        console.error(error);
+        console.log("User not logged in");
       }
     },
   },

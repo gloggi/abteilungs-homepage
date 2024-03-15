@@ -1,11 +1,13 @@
 <template>
   <div class="flex">
     <div
-      class="flex flex-col justify-center items-center w-screen h-[400px] pb-[75px] px-5"
+      class="flex flex-col justify-center items-center w-screen pb-[115px] px-5 py-10 gap-y-10"
     >
-      <div class="flex md:justify-end items-center w-full h-2/3 text-center">
+      <div
+        class="flex md:justify-around items-center w-full h-2/3 text-center space-x-2"
+      >
         <img
-          class="hidden md:block drop-shadow-xl max-h-full"
+          class="hidden sm:block sm:h-1/2 md:h-full drop-shadow-xl max-h-full"
           :src="`${backendURL}${settings?.divisionLogo?.path}`"
         />
         <h1

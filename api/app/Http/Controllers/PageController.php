@@ -121,7 +121,9 @@ class PageController extends Controller
                 $query->where('route', $routeOrId)
                     ->orWhere('id', $routeOrId);
             })->first();
-            
+        if (!$page) {
+            return response()->json(['message' => 'Page not found'], 404);
+        }
         $pageItems = $page->getAllItems();
         foreach ($pageItems as $currentField) {
             if ($currentField->type == 'formItem' && $currentField->form) {
