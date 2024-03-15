@@ -88,6 +88,8 @@ export default {
       } catch (e) {
         if (e.response.status === 422) {
           this.$emit("errors", e.response.data.errors);
+        }else if (e.response.status === 403) {
+          this.notifyUser(this.$t("dashboard.noPermission"));
         }
       }
     },
@@ -106,9 +108,7 @@ export default {
         }
         this.notifyUser(this.$t("dashboard.itemDuplicated"));
       } catch (e) {
-        if (e.response.status === 422) {
-          this.$emit("errors", e.response.data.errors);
-        }
+        this.handleErrors(e);
       }
     },
     async updateItem() {
@@ -125,10 +125,14 @@ export default {
 
         this.notifyUser(this.$t("dashboard.itemUpdated"));
       } catch (e) {
-        if (e.response.status === 422) {
-          this.$emit("errors", e.response.data.errors);
-        }
-        console.log(e);
+        this.handleErrors(e);
+      }
+    },
+    handleErrors(e) {
+      if (e.response.status === 422) {
+        this.$emit("errors", e.response.data.errors);
+      } else if (e.response.status === 403) {
+        this.notifyUser(this.$t("dashboard.noPermission"), true);
       }
     },
   },

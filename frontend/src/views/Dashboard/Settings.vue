@@ -17,10 +17,12 @@
     <TextInput
       :label="$t('dashboard.siteTitle')"
       v-model="modifiableSettings.siteTitle"
+      :errors="errors.siteTitle"
     />
     <TextInput
       :label="$t('dashboard.divisionName')"
       v-model="modifiableSettings.divisionName"
+      :errors="errors.divisionName"
     />
     <div class="flex flex-col md:flex-row">
       <div class="w-1/2">
@@ -54,18 +56,21 @@
       @selectNotFoundPage="handleNotFoundPage"
       :value="modifiableSettings.notFoundPageId"
       :options="pages"
+      :errors="errors.notFoundPageId"
     />
     <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
     <TextInput
       :label="$t('dashboard.midataId')"
       type="number"
       v-model="modifiableSettings.midataId"
+      :errors="errors.midataId"
     />
     <TextInput
       :label="$t('dashboard.midataApiKey')"
       info="Is required to fetch camps from MiData"
       type="text"
       v-model="modifiableSettings.midataApiKey"
+      :errors="errors.midataApiKey"
     />
     <SmallTitle>{{ $t("dashboard.footerSettings") }}</SmallTitle>
     <div>
@@ -129,6 +134,7 @@ export default {
       icons: {
         faArrowsRotate,
       },
+      errors: {}
     };
   },
   methods: {
@@ -147,8 +153,10 @@ export default {
       try {
         await this.callApi("put", "settings", this.modifiableSettings);
         this.notifyUser("Settings Updated");
-      } catch (error) {
-        console.log(error);
+      } catch (e) {
+        if (e.response.status === 422) {
+          this.errors = e.response.data.errors
+        }
       }
     },
     async getPages() {

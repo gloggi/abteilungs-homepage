@@ -159,6 +159,7 @@ export const messages = {
       link: "Link",
       region: "Region",
       fileNotSupportedOrTooLarge: "Datei nicht unterstützt oder zu gross",
+      noPermission: "Du hast keine Berechtigung dies zu tun",
     },
     page: {
       campDateLabel: "Lagerdatum",
