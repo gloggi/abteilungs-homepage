@@ -41,7 +41,7 @@ class CreateSettings extends Command
         }
 
         $settings = [
-            'midata_id' => env('MIDATA_ID'),
+            'midata_id' => config('services.midata.midata_id'),
         ];
 
         $existingSettings = DB::table('settings')->first();
