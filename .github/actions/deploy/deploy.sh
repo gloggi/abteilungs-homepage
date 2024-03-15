@@ -103,7 +103,7 @@ EOF
 cd ..
 echo "All frontend files uploaded to the server."
 
-ssh -l $SSH_USERNAME -T $SSH_HOST <<EOF
+ssh -l $SSH_USERNAME -T $SSH_HOST -p $SSH_PORT <<EOF
   cd $SSH_BACKEND_DIRECTORY
   php artisan storage:link
   php artisan migrate --force
