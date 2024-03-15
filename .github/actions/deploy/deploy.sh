@@ -95,7 +95,7 @@ cd frontend/dist
 lftp <<EOF
   set sftp:auto-confirm true
   set dns:order "inet"
-  open -u $SSH_USERNAME, sftp://$SSH_HOST
+  open -u $SSH_USERNAME, sftp://$SSH_HOST -p $SSH_PORT
   cd $SSH_FRONTEND_DIRECTORY
   mirror -enRv -x '^\.'
   mirror -Rv -f .htaccess
