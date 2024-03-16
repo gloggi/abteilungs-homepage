@@ -19,7 +19,7 @@
         >
           <img
             v-if="section.file"
-            :src="this.backendURL + '/' + section.file?.path"
+            :src="backendURL  + section.file?.path"
             class="size-[60px] md:size-[100px]"
           />
           <div v-else class="size-[60px] md:size-[100px]"></div>
@@ -92,7 +92,7 @@
           :style="`background-color: ${currentGroup.color}`"
         >
           <img
-            :src="this.backendURL + '/' + currentGroup.file?.path"
+            :src="backendURL + currentGroup.file?.path"
             class="w-[60%] h-[60%]"
           />
         </div>

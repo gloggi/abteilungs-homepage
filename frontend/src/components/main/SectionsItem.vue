@@ -9,7 +9,7 @@
         :style="`background-color: ${section.color}`"
       >
         <img
-          :src="this.backendURL + '/' + section.file?.path"
+          :src="backendURL + section.file?.path"
           class="w-[60%] h-[60%]"
         />
       </div>

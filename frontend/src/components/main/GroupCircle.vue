@@ -11,7 +11,7 @@
     </div>
     <img
       v-if="group.file?.path"
-      :src="this.backendURL + '/' + group.file?.path"
+      :src="backendURL + group.file?.path"
       class="w-[60%] h-[60%]"
     />
   </div>

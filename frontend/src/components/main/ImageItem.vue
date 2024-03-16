@@ -5,7 +5,7 @@
         v-if="currentImage"
         class="w-full object-cover"
         style="aspect-ratio: 32/9"
-        :src="this.backendURL + '/' + currentImage"
+        :src="backendURL + currentImage"
       />
     </transition>
     <div
@@ -25,7 +25,7 @@
       class="w-full object-cover"
       style="aspect-ratio: 32/9"
       v-if="currentImage"
-      :src="this.backendURL + '/' + currentImage"
+      :src="backendURL + currentImage"
     />
   </div>
 </template>
