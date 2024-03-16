@@ -25,7 +25,8 @@
         </div>
 
         <img
-          :src="this.backendURL + '/' + contact.file.path"
+        v-if="contact.file?.path"
+          :src="backendURL + contact.file.path"
           class="w-36 h-36 object-cover rounded-full self-center"
         />
       </div>
@@ -46,7 +47,7 @@ export default {
   methods: {
     async getContacts() {
       try {
-        const response = await this.callApi("get", "/contacts");
+        const response = await this.callApi("get", "/contacts", {},{params: {perPage: 100}});
         this.contacts = response.data.data;
       } catch (e) {
         console.log(e);

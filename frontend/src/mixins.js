@@ -55,7 +55,7 @@ export const mixin = {
           method,
           url,
           data: this.camelToSnakeObject(data),
-          ...options,
+          ...this.camelToSnakeObject(options),
         });
         response.data = this.snakeToCamelObject(response.data);
         return response;
