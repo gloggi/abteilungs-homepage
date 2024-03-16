@@ -7,7 +7,7 @@
         class="flex flex-col justify-between items-center w-full h-2/3 text-center"
       >
         <img
-          class="drop-shadow-xl max-h-[50vh] md:max-h-full"
+          class="drop-shadow-xl max-h-[50vh] md:max-h-full px-5 md:px-0"
           :src="`${backendURL}${settings?.divisionLogo?.path}`"
         />
         <h1
