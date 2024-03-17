@@ -1,11 +1,11 @@
 <template>
   <div class="flex">
     <div
-      class="flex flex-col justify-center items-center w-screen h-[400px] pb-[75px] px-5"
+      class="flex flex-col justify-around items-center w-screen h-[475px] pb-[75px] px-5"
     >
-      <div class="flex md:justify-end items-center w-full h-2/3 text-center">
+      <div class="flex md:justify-end items-center w-full h-1/2 text-center">
         <img
-          class="hidden md:block drop-shadow-xl max-h-full"
+          class="hidden md:block drop-shadow-xl max-h-full mr-5"
           :src="`${backendURL}${settings?.divisionLogo?.path}`"
         />
         <h1
@@ -14,7 +14,7 @@
           {{ settings.siteTitle }}
         </h1>
       </div>
-      <div class="flex items-center w-full h-2/3 text-center">
+      <div class="flex items-center w-full text-center">
         <h1
           class="text-5xl md:text-6xl font-semibold text-white text-heading-1"
         >
@@ -25,21 +25,18 @@
     <img
       v-if="!noImages"
       ref="currentImageRef"
-      class="fixed -z-10 w-screen object-cover"
+      class="fixed -z-10 h-[475px] object-cover"
       :src="`${backendURL}${currentImage}`"
-      style="height: 50vh"
     />
     <img
       v-if="moreThanOneImage"
       ref="nextImageRef"
-      class="fixed -z-10 w-screen object-cover"
+      class="fixed -z-10 h-[475px] object-cover"
       :src="`${backendURL}${nextImage}`"
-      style="height: 50vh"
     />
     <div
       v-if="noImages"
-      class="fixed -z-10 w-screen object-cover bg-secondary"
-      style="height: 50vh"
+      class="fixed -z-10 h-[475px] object-cover bg-secondary"
     ></div>
   </div>
 </template>
