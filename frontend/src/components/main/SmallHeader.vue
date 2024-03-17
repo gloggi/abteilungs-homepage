@@ -25,18 +25,18 @@
     <img
       v-if="!noImages"
       ref="currentImageRef"
-      class="fixed -z-10 h-[475px] object-cover"
+      class="fixed -z-10 h-[475px] w-full object-cover"
       :src="`${backendURL}${currentImage}`"
     />
     <img
       v-if="moreThanOneImage"
       ref="nextImageRef"
-      class="fixed -z-10 h-[475px] object-cover"
+      class="fixed -z-10 h-[475px] w-full object-cover"
       :src="`${backendURL}${nextImage}`"
     />
     <div
       v-if="noImages"
-      class="fixed -z-10 h-[475px] object-cover bg-secondary"
+      class="fixed -z-10 h-[475px] w-full object-cover bg-secondary"
     ></div>
   </div>
 </template>
