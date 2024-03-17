@@ -195,6 +195,10 @@ import TextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/core";
 import Placeholder from "@tiptap/extension-placeholder";
 import HardBreak from "@tiptap/extension-hard-break";
+import Table from "@tiptap/extension-table";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
+import TableRow from "@tiptap/extension-table-row";
 import EditorButton from "./EditorButton.vue";
 import {
   faArrowRotateLeft,
@@ -369,6 +373,14 @@ export default {
             };
           },
         }),
+        Table.configure({
+          HTMLAttributes: {
+            class: "main-text w-full",
+          },
+        }),
+        TableRow,
+        TableHeader,
+        TableCell,
       ],
       editorProps: {
         attributes: {
