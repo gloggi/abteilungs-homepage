@@ -153,8 +153,8 @@ runs:
         MIDATA_ID: ${{ inputs.midata-id }}
         SEED_DB: ${{ inputs.seed-db }}
         SSH_PORT: ${{ inputs.ssh-port }}
-        MAIL_USERNAME: ${{ secrets.mail-username }}
-        MAIL_PASSWORD: ${{ secrets.mail-password }}
+        MAIL_USERNAME: ${{ inputs.mail-username }}
+        MAIL_PASSWORD: ${{ inputs.mail-password }}
         MAIL_MAILER: ${{ inputs.mail-mailer }}
         MAIL_HOST: ${{ inputs.mail-host }}
         MAIL_PORT: ${{ inputs.mail-port }}
