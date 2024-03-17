@@ -92,6 +92,39 @@ inputs:
     description: 'The port of the SSH server'
     required: false
     default: 22
+  
+  mail-username:
+    description: 'The username of the mail'
+    required: false
+  
+  mail-password:
+    description: 'The password of the mail'
+    required: false
+  
+  mail-mailer:
+    description: 'The mailer'
+    required: false
+  
+  mail-host:
+    description: 'The host of the mail'
+    required: false
+  
+  mail-port:
+    description: 'The port of the mail'
+    required: false
+  
+  mail-encryption:
+    description: 'The encryption of the mail'
+    required: false
+  
+  mail-from-address:
+    description: 'The from address of the mail'
+    required: false
+  
+  mail-from-name:
+    description: 'The from name of the mail'
+    required: false
+
 
 runs:
   using: "composite"
@@ -120,3 +153,12 @@ runs:
         MIDATA_ID: ${{ inputs.midata-id }}
         SEED_DB: ${{ inputs.seed-db }}
         SSH_PORT: ${{ inputs.ssh-port }}
+        MAIL_USERNAME: ${{ secrets.mail-username }}
+        MAIL_PASSWORD: ${{ secrets.mail-password }}
+        MAIL_MAILER: ${{ inputs.mail-mailer }}
+        MAIL_HOST: ${{ inputs.mail-host }}
+        MAIL_PORT: ${{ inputs.mail-port }}
+        MAIL_ENCRYPTION: ${{ inputs.mail-encryption }}
+        MAIL_FROM_ADDRESS: ${{ inputs.mail-from-address }}
+        MAIL_FROM_NAME: ${{ inputs.mail-from-name }}
+        

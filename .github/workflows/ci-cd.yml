@@ -58,3 +58,11 @@ jobs:
           seed-db: ${{ vars.SEED_DB }}
           midata-id: ${{ vars.MIDATA_ID }}
           ssh-port: ${{ vars.SSH_PORT }}
+          mail-username: ${{ secrets.MAIL_USERNAME }}
+          mail-password: ${{ secrets.MAIL_PASSWORD }}
+          mail-mailer: ${{ vars.MAIL_MAILER }}
+          mail-host: ${{ vars.MAIL_HOST }}
+          mail-port: ${{ vars.MAIL_PORT }}
+          mail-encryption: ${{ vars.MAIL_ENCRYPTION }}
+          mail-from-address: ${{ vars.MAIL_FROM_ADDRESS }}
+          mail-from-name: ${{ vars.MAIL_FROM_NAME }}

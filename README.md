@@ -73,6 +73,8 @@ In diesem Beispiel legen wir ein Deployment für die Abteilung Lagom unter der A
     * `MIDATA_CLIENT_SECRET`: Von der MiData-OAuth-App (siehe oben)
     * `SSH_PRIVATE_KEY`: Kann man lokal generieren mit `ssh-keygen -t rsa`, dann den Inhalt von id_rsa.pub auf dem Hosting als erlaubten SSH-Key eintragen, und den Inhalt von id_rsa ins GitHub Secret eintragen
     * `SSH_USERNAME`: Accountname für SSH-Login beim Hosting
+    * `MAIL_USERNAME`: E-Mail Benutzername
+    * `MAIL_PASSWORD`: E-Mail Passwort
 6. Im GitHub Environment lagom folgende Environment variables erfassen:
     * `APP_NAME`: Name der Pfadiabteilung, wird aktuell nur für den Namen der Session Cookies verwendet
     * `BACKEND_URL`: URL zum Backend https://api.lagom.ch
@@ -86,5 +88,11 @@ In diesem Beispiel legen wir ein Deployment für die Abteilung Lagom unter der A
     * `SSH_HOST`: Hostname des Hostings für den SSH Login
     * `SSH_PORT`: Port für den SSH-Zugriff auf den Server (default 22)
     * `SSH_KNOWN_HOSTS`: Kann lokal herausgesucht werden, indem man ~/.ssh/known_hosts temporär umbenennt und dann eine SSH-Verbindung von lokal zum Hosting aufmacht. Der Inhalt des neuen ~/.ssh/known_hosts gehört in diese Variable. Die alte Kopie wiederherstellen nicht vergessen!
+    * `MAIL_MAILER`: Email-System, das verwendet wird (z.B. smtp, sendmail, mailgun, etc.)
+    * `MAIL_HOST`: Hostname des Email-Servers
+    * `MAIL_PORT`: Port für die Email-Kommunikation
+    * `MAIL_ENCRYPTION`: Verschlüsselungsmethode für Emails (z.B. tls, ssl, none)
+    * `MAIL_FROM_ADDRESS`: Standard-Absenderadresse für ausgehende Emails
+    * `MAIL_FROM_NAME`: Standard-Absendername für ausgehende Emails
 7. In [nightly.yml](https://github.com/gloggi/abteilungs-homepage/blob/master/.github/workflows/nightly.yml) einen Punkt `- uses: repo-sync/github-sync@v2` inkl. Unterpunkten kopieren und destination-branch auf `deploy-lagom` anpassen (muss mit `deploy-` anfangen und `lagom` muss ganz genau gleich geschrieben sein wie das GitHub Environment heisst)
 8. Code von master auf den neuen Branch deploy-lagom pushen und in GitHub Actions zuschauen wie das Deployment zum ersten Mal läuft

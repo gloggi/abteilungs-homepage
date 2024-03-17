@@ -35,6 +35,15 @@ sed -ri "s~^MIDATA_ID=.*$~MIDATA_ID=$MIDATA_ID~" .env
 
 sed -ri "s~^FRONTEND_URL=.*$~FRONTEND_URL=$FRONTEND_URL~" .env
 
+sed -ri "s~^MAIL_MAILER=.*$~MAIL_MAILER=smtp~" .env
+sed -ri "s~^MAIL_HOST=.*$~MAIL_HOST=localhost~" .env
+sed -ri "s~^MAIL_PORT=.*$~MAIL_PORT=1025~" .env
+sed -ri "s~^MAIL_USERNAME=.*$~MAIL_USERNAME=null~" .env
+sed -ri "s~^MAIL_PASSWORD=.*$~MAIL_PASSWORD=null~" .env
+sed -ri "s~^MAIL_ENCRYPTION=.*$~MAIL_ENCRYPTION=null~" .env
+sed -ri "s~^MAIL_FROM_ADDRESS=.*$~MAIL_FROM_ADDRESS=hello@example.com~" .env
+sed -ri "s~^MAIL_FROM_NAME=.*$~MAIL_FROM_NAME=\${APP_NAME}~" .env
+
 docker compose run --no-deps --entrypoint "composer install --no-dev" backend
 
 PHP_MIN_VERSION_ID=$(grep -Po '(?<=\(PHP_VERSION_ID >= )[0-9]+(?=\))' vendor/composer/platform_check.php)
@@ -106,9 +115,10 @@ echo "All frontend files uploaded to the server."
 ssh -l $SSH_USERNAME -T $SSH_HOST -p $SSH_PORT <<EOF
   cd $SSH_BACKEND_DIRECTORY
 
-  if [ ! -L "public/storage" ]; then
-    php artisan storage:link
-  fi
+  cd ./public 
+  ln -s ../storage/app/public storage
+  cd ..
+
 
   php artisan migrate --force
 
