@@ -35,14 +35,14 @@ sed -ri "s~^MIDATA_ID=.*$~MIDATA_ID=$MIDATA_ID~" .env
 
 sed -ri "s~^FRONTEND_URL=.*$~FRONTEND_URL=$FRONTEND_URL~" .env
 
-sed -ri "s~^MAIL_MAILER=.*$~MAIL_MAILER=smtp~" .env
-sed -ri "s~^MAIL_HOST=.*$~MAIL_HOST=localhost~" .env
-sed -ri "s~^MAIL_PORT=.*$~MAIL_PORT=1025~" .env
-sed -ri "s~^MAIL_USERNAME=.*$~MAIL_USERNAME=null~" .env
-sed -ri "s~^MAIL_PASSWORD=.*$~MAIL_PASSWORD=null~" .env
-sed -ri "s~^MAIL_ENCRYPTION=.*$~MAIL_ENCRYPTION=null~" .env
-sed -ri "s~^MAIL_FROM_ADDRESS=.*$~MAIL_FROM_ADDRESS=hello@example.com~" .env
-sed -ri "s~^MAIL_FROM_NAME=.*$~MAIL_FROM_NAME=\${APP_NAME}~" .env
+sed -ri "s~^MAIL_MAILER=.*$~MAIL_MAILER=$MAIL_MAILER~" .env
+sed -ri "s~^MAIL_HOST=.*$~MAIL_HOST=$MAIL_HOST~" .env
+sed -ri "s~^MAIL_PORT=.*$~MAIL_PORT=$MAIL_PORT~" .env
+sed -ri "s~^MAIL_USERNAME=.*$~MAIL_USERNAME=$MAIL_USERNAME~" .env
+sed -ri "s~^MAIL_PASSWORD=.*$~MAIL_PASSWORD=$MAIL_PASSWORD~" .env
+sed -ri "s~^MAIL_ENCRYPTION=.*$~MAIL_ENCRYPTION=$MAIL_ENCRYPTION~" .env
+sed -ri "s~^MAIL_FROM_ADDRESS=.*$~MAIL_FROM_ADDRESS=$MAIL_FROM_ADDRESS~" .env
+sed -ri "s~^MAIL_FROM_NAME=.*$~MAIL_FROM_NAME=$MAIL_FROM_ADDRESS~" .env
 
 docker compose run --no-deps --entrypoint "composer install --no-dev" backend
 
