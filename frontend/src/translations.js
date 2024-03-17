@@ -160,6 +160,11 @@ export const messages = {
       region: "Region",
       fileNotSupportedOrTooLarge: "Datei nicht unterstützt oder zu gross",
       noPermission: "Du hast keine Berechtigung dies zu tun",
+      isRegion: "Ist eine Region?",
+      divisions: "Abteilungen",
+      externalLink: "Externer Link",
+      externalLinkInfo:
+        "Wenn ein externer Link eingegeben wird, wird der User statt auf die Gruppenseite auf die angegebene URL weitergeleitet.",
     },
     page: {
       campDateLabel: "Lagerdatum",
@@ -204,6 +209,7 @@ export const messages = {
       region: "Region",
       startLocationLabel: "Besammlungsort",
       endLocationLabel: "Schlussort",
+      divisions: "Abteilungen",
     },
   },
 };

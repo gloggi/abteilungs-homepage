@@ -23,6 +23,7 @@ class StoreGroupRequest extends FormRequest
             'successors' => 'nullable|array',
             'successors.*' => 'integer|exists:groups,id',
             'enable_group_page' => 'nullable|boolean',
+            'external_link' => 'nullable|string|max:255',
         ];
     }
 }

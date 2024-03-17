@@ -8,15 +8,14 @@
       >
         <div>
           <h2 class="text-heading-2 text-primary text-4xl">
-            {{ $t("page.groupsTitle") }}
+            {{
+              settings.isRegion ? $t("page.divisions") : $t("page.groupsTitle")
+            }}
           </h2>
           <ul class="text-white text-xl main-text space-y-1 pt-5">
             <template v-for="group in transformedGroups" :key="group.id">
               <li v-if="!group.parentId" class="pl-6">
-                <router-link
-                  :to="group.hasPage ? `/group/${group.route}` : '#'"
-                  >{{ group.name }}</router-link
-                >
+                <FooterGroupLink :group="group" />
                 <ul
                   v-if="group.children.length > 0"
                   class="text-white text-xl main-text space-y-1"
@@ -26,10 +25,7 @@
                     :key="child.id"
                     class="pl-6"
                   >
-                    <router-link
-                      :to="child.hasPage ? `/group/${child.route}` : '#'"
-                      >{{ child.name }}</router-link
-                    >
+                    <FooterGroupLink :group="child" />
                   </li>
                 </ul>
               </li>
@@ -66,7 +62,12 @@
   </div>
 </template>
 <script>
+import FooterGroupLink from "./FooterGroupLink.vue";
+
 export default {
+  components: {
+    FooterGroupLink,
+  },
   data() {
     return {
       footerLinks: [],

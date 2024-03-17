@@ -22,7 +22,8 @@ class Setting extends Model
         'alert_text_color',
         'show_alert',
         'alert_url',
-        'not_found_page_id'
+        'not_found_page_id',
+        'is_region'
     ];
 
 

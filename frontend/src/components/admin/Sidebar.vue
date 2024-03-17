@@ -58,7 +58,11 @@
               :icon="icons.faUsers"
               @click="hideMobileMenu = true"
             >
-              {{ $t("dashboard.groups") }}
+              {{
+                settings.isRegion
+                  ? $t("dashboard.divisions")
+                  : $t("dashboard.groups")
+              }}
             </SidebarItem>
             <SidebarItem
               v-if="isAdmin"

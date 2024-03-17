@@ -1,6 +1,8 @@
 <template>
   <OverviewTemplate
-    :name="$t('dashboard.groups')"
+    :name="
+      settings.isRegion ? $t('dashboard.divisions') : $t('dashboard.groups')
+    "
     entity="groups"
     :titles="`${$t('dashboard.image')},${$t('dashboard.name')},${$t(
       'dashboard.section',

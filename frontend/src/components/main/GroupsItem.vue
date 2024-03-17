@@ -19,7 +19,7 @@
         >
           <img
             v-if="section.file"
-            :src="backendURL  + section.file?.path"
+            :src="backendURL + section.file?.path"
             class="size-[60px] md:size-[100px]"
           />
           <div v-else class="size-[60px] md:size-[100px]"></div>

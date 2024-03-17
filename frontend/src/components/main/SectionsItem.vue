@@ -8,10 +8,7 @@
         class="float-right rounded-full size-[150px] md:size-[200px] flex justify-center items-center"
         :style="`background-color: ${section.color}`"
       >
-        <img
-          :src="backendURL + section.file?.path"
-          class="w-[60%] h-[60%]"
-        />
+        <img :src="backendURL + section.file?.path" class="w-[60%] h-[60%]" />
       </div>
       <div v-html="section.description" v-router-link></div>
     </ContentWrapper>

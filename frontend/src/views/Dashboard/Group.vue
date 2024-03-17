@@ -77,6 +77,14 @@
             v-model="content.midataId"
             :errors="errors.midataId"
           />
+          <TextInput
+            :label="$t('dashboard.externalLink')"
+            type="url"
+            placeholder="https://"
+            v-model="content.externalLink"
+            :errors="errors.externalLink"
+          />
+          <InfoField :info="$t('dashboard.externalLinkInfo')" />
         </div>
       </div>
     </Card>
@@ -103,6 +111,7 @@ import BannerImageSelector from "../../components/admin/BannerImageSelector.vue"
 import FilesSelector from "../../components/admin/FilesSelector.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
+import InfoField from "../../components/admin/InfoField.vue";
 export default {
   components: {
     Card,
@@ -118,6 +127,7 @@ export default {
     FilesSelector,
     CheckBox,
     BreakpointSpaceManager,
+    InfoField,
   },
   data() {
     return {

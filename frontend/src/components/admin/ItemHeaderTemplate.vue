@@ -88,7 +88,7 @@ export default {
       } catch (e) {
         if (e.response.status === 422) {
           this.$emit("errors", e.response.data.errors);
-        }else if (e.response.status === 403) {
+        } else if (e.response.status === 403) {
           this.notifyUser(this.$t("dashboard.noPermission"));
         }
       }

@@ -23,6 +23,7 @@ class Group extends Model
         'description',
         'enable_group_page',
         'region',
+        'external_link',
     ];
 
     protected $appends = ['route','has_page'];

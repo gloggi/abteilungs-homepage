@@ -58,6 +58,10 @@
       :options="pages"
       :errors="errors.notFoundPageId"
     />
+    <CheckBox
+      :label="$t('dashboard.isRegion')"
+      v-model="modifiableSettings.isRegion"
+    />
     <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
     <TextInput
       :label="$t('dashboard.midataId')"
@@ -134,7 +138,7 @@ export default {
       icons: {
         faArrowsRotate,
       },
-      errors: {}
+      errors: {},
     };
   },
   methods: {
@@ -155,7 +159,7 @@ export default {
         this.notifyUser("Settings Updated");
       } catch (e) {
         if (e.response.status === 422) {
-          this.errors = e.response.data.errors
+          this.errors = e.response.data.errors;
         }
       }
     },
