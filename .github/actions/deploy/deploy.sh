@@ -39,10 +39,10 @@ sed -ri "s~^MAIL_MAILER=.*$~MAIL_MAILER=$MAIL_MAILER~" .env
 sed -ri "s~^MAIL_HOST=.*$~MAIL_HOST=$MAIL_HOST~" .env
 sed -ri "s~^MAIL_PORT=.*$~MAIL_PORT=$MAIL_PORT~" .env
 sed -ri "s~^MAIL_USERNAME=.*$~MAIL_USERNAME=$MAIL_USERNAME~" .env
-sed -ri "s~^MAIL_PASSWORD=.*$~MAIL_PASSWORD=$MAIL_PASSWORD~" .env
+sed -ri "s~^MAIL_PASSWORD=.*\$~MAIL_PASSWORD=\"$MAIL_PASSWORD\"~" .env
 sed -ri "s~^MAIL_ENCRYPTION=.*$~MAIL_ENCRYPTION=$MAIL_ENCRYPTION~" .env
 sed -ri "s~^MAIL_FROM_ADDRESS=.*$~MAIL_FROM_ADDRESS=$MAIL_FROM_ADDRESS~" .env
-sed -ri "s~^MAIL_FROM_NAME=.*$~MAIL_FROM_NAME=$MAIL_FROM_ADDRESS~" .env
+sed -ri "s~^MAIL_FROM_NAME=.*\$~MAIL_FROM_NAME=\"$MAIL_FROM_NAME\"~" .env
 
 docker compose run --no-deps --entrypoint "composer install --no-dev" backend
 
