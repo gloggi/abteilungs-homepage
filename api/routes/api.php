@@ -16,6 +16,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebFormController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\DeployController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -155,3 +156,5 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
 });
 
 Route::post('/webforms', [WebFormController::class, 'store']);
+
+Route::post('/deploy', [DeployController::class, 'runCommands']);

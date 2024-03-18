@@ -125,6 +125,9 @@ inputs:
     description: 'The from name of the mail'
     required: false
 
+  deployment-secret-key:
+    description: 'The secret key for the deployment'
+    required: false
 
 runs:
   using: "composite"
@@ -161,4 +164,5 @@ runs:
         MAIL_ENCRYPTION: ${{ inputs.mail-encryption }}
         MAIL_FROM_ADDRESS: ${{ inputs.mail-from-address }}
         MAIL_FROM_NAME: ${{ inputs.mail-from-name }}
+        DEPLOYMENT_SECRET_KEY: ${{ secrets.deployment_secret_key }}
         
