@@ -122,7 +122,7 @@ ssh -l $SSH_USERNAME -T $SSH_HOST -p $SSH_PORT <<EOF
   fi
 
   echo "Executing Laravel deployment commands via secure endpoint..."
-  curl -X POST "$BACKEND_URL/api/deploy/run-commands?secret_key=$DEPLOYMENT_SECRET_KEY"
+  curl -X POST "$BACKEND_URL/api/deploy?secret_key=$DEPLOYMENT_SECRET_KEY"
 
   php artisan up
 EOF
