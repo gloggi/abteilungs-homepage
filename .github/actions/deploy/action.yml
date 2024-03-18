@@ -164,5 +164,5 @@ runs:
         MAIL_ENCRYPTION: ${{ inputs.mail-encryption }}
         MAIL_FROM_ADDRESS: ${{ inputs.mail-from-address }}
         MAIL_FROM_NAME: ${{ inputs.mail-from-name }}
-        DEPLOYMENT_SECRET_KEY: ${{ secrets.deployment_secret_key }}
+        DEPLOYMENT_SECRET_KEY: ${{ secrets.deployment-secret-key }}
         
