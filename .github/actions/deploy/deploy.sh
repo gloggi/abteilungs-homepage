@@ -44,6 +44,8 @@ sed -ri "s~^MAIL_ENCRYPTION=.*$~MAIL_ENCRYPTION=$MAIL_ENCRYPTION~" .env
 sed -ri "s~^MAIL_FROM_ADDRESS=.*$~MAIL_FROM_ADDRESS=$MAIL_FROM_ADDRESS~" .env
 sed -ri "s~^MAIL_FROM_NAME=.*\$~MAIL_FROM_NAME=\"$MAIL_FROM_NAME\"~" .env
 
+sed -ri "s~^DEPLOYMENT_SECRET_KEY=.*\$~DEPLOYMENT_SECRET_KEY=\"$DEPLOYMENT_SECRET_KEY\"~" .env
+
 docker compose run --no-deps --entrypoint "composer install --no-dev" backend
 
 PHP_MIN_VERSION_ID=$(grep -Po '(?<=\(PHP_VERSION_ID >= )[0-9]+(?=\))' vendor/composer/platform_check.php)

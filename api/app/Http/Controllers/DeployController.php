@@ -21,6 +21,8 @@ class DeployController extends Controller
         Artisan::call('config:cache');
         Artisan::call('route:cache');
         Artisan::call('view:cache');
+        
+        return response()->json(['message' => 'Deployed successfully'], 200);
 
     }
 }
