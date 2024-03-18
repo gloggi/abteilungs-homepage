@@ -116,7 +116,7 @@
             >
               <font-awesome-icon :icon="icons.faCircle" />
               <TextInput
-                :id="`selectFieldOption-${field.id}-${i}`"
+                :id="`selectFieldOption-${field.sort}-${i}`"
                 class="w-full"
                 type="text"
                 v-model="option.name"
@@ -198,11 +198,14 @@ export default {
   },
   methods: {
     async addOption(event, field) {
+      if (!field.optionFields) {
+        field.optionFields = [];
+      }
       field.optionFields.push({ name: event.target.value });
       event.target.value = "";
       await new Promise((resolve) => setTimeout(resolve, 10));
       const textFieldToFocus = document.getElementById(
-        `selectFieldOption-${field.id}-${field.optionFields.length - 1}`,
+        `selectFieldOption-${field.sort}-${field.optionFields.length - 1}`,
       );
       textFieldToFocus.childNodes[1].focus();
     },
@@ -215,7 +218,9 @@ export default {
     },
     addField(field) {
       this.content.fields.push(field);
-      this.updateForm();
+      this.content.fields = this.content.fields.sort((a, b) => a.sort - b.sort);
+      this.content.fields.forEach((f, i) => (f.sort = i));
+      //this.updateForm();
     },
     deleteField(idAndType) {
       this.content.fields = this.content.fields.filter(

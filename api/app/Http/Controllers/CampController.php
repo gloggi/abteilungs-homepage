@@ -68,6 +68,9 @@ class CampController extends Controller
     {
         $setting = Setting::find(1);
         $token = $setting->midata_api_key;
+        if(!$token) {
+            return response()->json(['message' => 'MiData API key not found'], 404);
+        }
         $midataId = $setting->midata_id;
         $midataBaseUrl = config('services.midata.base_url');
         $response = Http::get("{$midataBaseUrl}/de/groups/{$midataId}/events/camp.json?token={$token}");
@@ -78,12 +81,16 @@ class CampController extends Controller
         foreach ($externalCamps['events'] as $externalCamp) {
             $eventDateIds = $externalCamp['links']['dates'] ?? [];
             $eventDate = collect($eventDateIds)->map(fn($id) => $eventDatesMap->get($id))->first();
+
+            $cost = $externalCamp['cost'];
+            $numericCost = preg_replace('/[^0-9.]+/', '', $cost);
+            $floatCost = $cost === '' ? null : floatval($numericCost);
             Camp::updateOrCreate(
                 ['midata_id' => $externalCamp['id']],
                 [
                     'name' => $externalCamp['name'],
                     'description' => $externalCamp['description'],
-                    'cost' => $externalCamp['cost'] == '' ? null : $externalCamp['cost'],
+                    'cost' => $floatCost,
                     'maximum_participants' => $externalCamp['maximum_participants'],
                     'participant_count' => $externalCamp['participant_count'],
                     'location' => $externalCamp['location'],
