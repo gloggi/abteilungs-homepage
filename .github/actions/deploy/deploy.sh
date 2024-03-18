@@ -115,11 +115,7 @@ echo "All frontend files uploaded to the server."
 ssh -l $SSH_USERNAME -T $SSH_HOST -p $SSH_PORT <<EOF
   cd $SSH_BACKEND_DIRECTORY
 
-  cd ./public 
-  ln -s ../storage/app/public storage
-  cd ..
-
-
+  php artisan storage:link
   php artisan migrate --force
 
   if [ "$SEED_DB" == "true" ] ; then
