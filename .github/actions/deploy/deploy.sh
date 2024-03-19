@@ -117,14 +117,10 @@ echo "All frontend files uploaded to the server."
 ssh -l $SSH_USERNAME -T $SSH_HOST -p $SSH_PORT <<EOF
   cd $SSH_BACKEND_DIRECTORY
 
-
-
-  if [ "$SEED_DB" == "true" ] ; then
-    php artisan db:seed --force
-  fi
-
   echo "Executing Laravel deployment commands via secure endpoint..."
-  curl -X POST "$BACKEND_URL/api/deploy?secret_key=$DEPLOYMENT_SECRET_KEY"
+  curl -X POST "$BACKEND_URL/api/deploy" \
+     -H "Content-Type: application/json" \
+     -d "{\"secret_key\":\"$DEPLOYMENT_SECRET_KEY\"}"
 
   php artisan up
 EOF
