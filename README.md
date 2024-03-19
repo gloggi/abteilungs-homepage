@@ -65,7 +65,7 @@ In diesem Beispiel legen wir ein Deployment für die Abteilung Lagom unter der A
     * Benötigte Scopes: email, name, with_roles
 4. Im GitHub Webinterface auf diesem Repository unter Settings -> Environments ein neues Environment namens lagom anlegen
 5. Im GitHub Environment lagom folgende Environment secrets erfassen:
-    * `APP_KEY`: Kann man lokal generieren indem man `docker compose run --rm --entrypoint php artisan key:generate` ausführt und den generierten APP_KEY aus api/.env holt
+    * `APP_KEY`: Kann man lokal generieren indem man `docker compose run --rm --entrypoint "php artisan key:generate" backend` ausführt und den generierten APP_KEY aus api/.env holt
     * `DB_HOST`: Aus den Datenbank-Credentials vom DB erstellen (siehe oben)
     * `DB_DATABASE`: Aus den Datenbank-Credentials vom DB erstellen (siehe oben)
     * `DB_USERNAME`: Aus den Datenbank-Credentials vom DB erstellen (siehe oben)
@@ -73,8 +73,8 @@ In diesem Beispiel legen wir ein Deployment für die Abteilung Lagom unter der A
     * `MIDATA_CLIENT_SECRET`: Von der MiData-OAuth-App (siehe oben)
     * `SSH_PRIVATE_KEY`: Kann man lokal generieren mit `ssh-keygen -t rsa`, dann den Inhalt von id_rsa.pub auf dem Hosting als erlaubten SSH-Key eintragen, und den Inhalt von id_rsa ins GitHub Secret eintragen
     * `SSH_USERNAME`: Accountname für SSH-Login beim Hosting
-    * `MAIL_USERNAME`: E-Mail Benutzername
-    * `MAIL_PASSWORD`: E-Mail Passwort
+    * `MAIL_USERNAME`: Benutzername eines Mailaccounts auf dem Hosting
+    * `MAIL_PASSWORD`: Passwort desselben Mailaccounts auf dem Hosting
 6. Im GitHub Environment lagom folgende Environment variables erfassen:
     * `APP_NAME`: Name der Pfadiabteilung, wird aktuell nur für den Namen der Session Cookies verwendet
     * `BACKEND_URL`: URL zum Backend https://api.lagom.ch
@@ -88,7 +88,7 @@ In diesem Beispiel legen wir ein Deployment für die Abteilung Lagom unter der A
     * `SSH_HOST`: Hostname des Hostings für den SSH Login
     * `SSH_PORT`: Port für den SSH-Zugriff auf den Server (default 22)
     * `SSH_KNOWN_HOSTS`: Kann lokal herausgesucht werden, indem man ~/.ssh/known_hosts temporär umbenennt und dann eine SSH-Verbindung von lokal zum Hosting aufmacht. Der Inhalt des neuen ~/.ssh/known_hosts gehört in diese Variable. Die alte Kopie wiederherstellen nicht vergessen!
-    * `MAIL_MAILER`: Email-System, das verwendet wird (z.B. smtp, sendmail, mailgun, etc.)
+    * `MAIL_MAILER`: E-Mail-System, das verwendet wird (z.B. smtp, sendmail, mailgun, etc.)
     * `MAIL_HOST`: Hostname des Email-Servers
     * `MAIL_PORT`: Port für die Email-Kommunikation
     * `MAIL_ENCRYPTION`: Verschlüsselungsmethode für Emails (z.B. tls, ssl, none)

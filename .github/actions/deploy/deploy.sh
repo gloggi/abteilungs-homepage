@@ -95,7 +95,7 @@ lftp <<EOF
   set dns:order "inet"
   open -u $SSH_USERNAME, sftp://$SSH_HOST -p $SSH_PORT
   cd $SSH_BACKEND_DIRECTORY
-  mirror -enRv -x '^\.' -x '^storage/logs/.*' -x '^storage/app/.*' -x '^storage/framework/maintenance.php$' -x '^storage/framework/down$' -x '^resources/fonts/.*' -x '^resources/js/.*' -x '^resources/css/.*'
+  mirror -enRv -x '^\.' -x '^rest-test' -x '^storage/logs/.*' -x '^storage/app/.*' -x '^storage/framework/maintenance.php$' -x '^storage/framework/down$' -x '^resources/fonts/.*' -x '^resources/js/.*' -x '^resources/css/.*'
   mirror -Rv -f .env
 EOF
 cd ..
