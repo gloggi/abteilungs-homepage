@@ -54,8 +54,8 @@ class FileController extends Controller
         $newFile->extension = $fileData->getClientOriginalExtension();
         $newFile->category = $category;
         $newFile->name = $name;
-        if(!$user->hasRole('admin')){
-        $newFile->group_id = $user->groups->first()->id;
+        if (!$user->hasRole('admin')) {
+            $newFile->group_id = $user->groups->first()->id;
         }
 
         $this->storeFileAndCreateThumbnail($fileData, $filename, $newFile);
@@ -73,7 +73,7 @@ class FileController extends Controller
         if (!$user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
             $groupId = $file->group_id;
-            if(!$groups->contains($groupId)){
+            if (!$groups->contains($groupId)) {
                 return response()->json(['message' => 'You are not allowed to view this file'], 403);
             }
         }
@@ -114,16 +114,16 @@ class FileController extends Controller
         $file = File::findOrFail($id);
         $user = Auth::user();
         $user = Auth::user();
-        if(!$user->hasRole('admin')){
+        if (!$user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
             $groupId = $file->group_id;
-            if(!$groups->contains($groupId)){
+            if (!$groups->contains($groupId)) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
 
         // Delete the file from the public disk
-        Storage::disk('public')->delete($file->path);
+        Storage::disk('public')->delete(str_replace('/storage/', '', $file->path));
 
         // Delete the thumbnail if it exists
         if ($file->thumbnail) {
@@ -140,36 +140,36 @@ class FileController extends Controller
     {
         Storage::disk('public')->putFileAs('uploads', $fileData, $filename);
         if (in_array($newFile->extension, ['jpg', 'jpeg', 'png', 'gif'])) {
-            $thumbnailPath = 'public/thumbnails/' . $filename;
+            $thumbnailPath = 'thumbnails/' . $filename;
             $thumbnail = Image::make($fileData)->resize(200, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
-            $thumbnail->save(storage_path('app/' . $thumbnailPath));
+
+            $thumbnailStream = $thumbnail->stream()->__toString();
+            Storage::disk('public')->put($thumbnailPath, $thumbnailStream);
             $newFile->thumbnail = Storage::url($thumbnailPath);
         } elseif ($newFile->extension === 'pdf') {
-            $thumbnailPath = 'public/thumbnails/' . $filename . '.png';
+            $thumbnailPath = 'thumbnails/' . $filename . '.png';
 
             $imagick = new Imagick();
             $imagick->setResolution(72, 72);
-
             $imagick->readImage($fileData . '[0]');
             if ($imagick->getImageWidth() > $imagick->getImageHeight()) {
                 $imagick->rotateImage(new ImagickPixel('none'), -90);
             }
-
             $imagick->setImageFormat('png');
 
-            $imagick->writeImage(storage_path('app/' . $thumbnailPath));
-
+            $imagick->setImageCompressionQuality(90);
+            $imageString = $imagick->getImageBlob();
+            Storage::disk('public')->put($thumbnailPath, $imageString);
+            $newFile->thumbnail = Storage::url($thumbnailPath);
 
             $imagick->clear();
             $imagick->destroy();
-
-            $newFile->thumbnail = Storage::url($thumbnailPath);
         } elseif ($newFile->extension === 'svg') {
             $newFile->thumbnail = $newFile->path;
-        }elseif(in_array($newFile->extension, ['docx','xlsx,','pptx','mp3','mp4','zip'])){
-            $newFile->thumbnail = Storage::url('default_thumbnails/'.$newFile->extension.'.svg');
+        } elseif (in_array($newFile->extension, ['docx', 'xlsx', 'pptx', 'mp3', 'mp4', 'zip'])) {
+            $newFile->thumbnail = Storage::url('default_thumbnails/' . $newFile->extension . '.svg');
         }
     }
 
