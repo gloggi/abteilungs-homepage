@@ -17,6 +17,7 @@ class StoreSectionRequest extends FormRequest
             'description' => 'nullable|string',
             'files' => 'nullable|array',
             'files.*' => 'integer|exists:files,id',
+            'sort' => 'nullable|integer',
         ];
     }
 }

@@ -41,6 +41,15 @@
               :errors="errors.toAge"
             />
           </div>
+          <div>
+          <TextInput
+            :label="$t('dashboard.sort')"
+            type="number"
+            v-model="content.sort"
+            :errors="errors.sort"
+          />
+          <InfoField :info="$t('dashboard.sectionSortInfo')" />
+        </div>
           <div class="">
             <FormLabel>{{ $t("dashboard.sectionColor") }}</FormLabel>
             <ColorPicker v-model="content.color" :errors="errors.color" />
@@ -78,6 +87,7 @@ import Editor from "../../components/admin/Editor/Editor.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
 import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
 import ColorPicker from "../../components/admin/ColorPicker.vue";
+import InfoField from "../../components/admin/InfoField.vue";
 export default {
   components: {
     Card,
@@ -88,6 +98,7 @@ export default {
     FormLabel,
     BannerImageSelector,
     ColorPicker,
+    InfoField,
   },
   data() {
     return {

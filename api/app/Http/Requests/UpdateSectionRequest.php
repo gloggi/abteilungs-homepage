@@ -18,6 +18,7 @@ class UpdateSectionRequest extends FormRequest
             'description' => 'nullable|string',
             'files' => 'nullable|array',
             'files.*' => 'nullable',
+            'sort' => 'nullable|integer',
         ];
     }
 }

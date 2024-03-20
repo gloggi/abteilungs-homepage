@@ -14,11 +14,19 @@ class GroupController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $groups = Group::with(['file', 'section', 'predecessors', 'successors', 'parent']);
+        $groups = $groups = Group::select('groups.*')
+        ->with(['file', 'section', 'predecessors', 'successors', 'parent'])
+        ->leftJoin('sections', 'groups.section_id', '=', 'sections.id')
+        ->orderBy('sections.sort', 'asc');
         if ($request->has('dashboard') && $user->hasRole('unitleader')) {
             $groups = $groups->whereIn('id', $user->groups->pluck('id'));
         }
-        $perPage = $request->input('per_page', 10);
+        if($request->has('dashboard')){
+            $perPage = $request->input('per_page', 10);
+        }else{
+            $perPage = $request->input('per_page', 100);
+        }
+       
         $groups = $groups->paginate($perPage);
 
         return response()->json($groups);

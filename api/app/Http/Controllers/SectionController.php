@@ -12,7 +12,7 @@ class SectionController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $sections = Section::with(['file', 'files', 'groups', 'groups.file'])
+        $sections = Section::with(['file', 'files', 'groups', 'groups.file'])->orderBy('sort')
             ->paginate($perPage);
 
         return response()->json($sections);
