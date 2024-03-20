@@ -27,7 +27,7 @@
             <h3 class="text-2xl md:text-3xl text-heading-3 text-primary">
               {{ section.name }}
             </h3>
-            <p class="main-text text-base md:text-lg text-white">
+            <p class="main-text text-lg md:text-lg text-white">
               {{ section.fromAge }} - {{ section.toAge }} Jahre
             </p>
           </div>
@@ -112,6 +112,18 @@
             <span class="font-semibold">{{ $t("page.region") }}:</span>
             {{ currentGroup.region }}
           </p>
+          <template v-if="currentGroupChildren.length > 0">
+            <p class="main-text text-lg">
+              <span class="font-semibold">{{
+                $t("page.groupChildren")
+              }}</span>
+            </p>
+            <ul class="list-disc pl-6 main-text text-lg">
+              <li v-for="c in currentGroupChildren" :key="c.id">
+                {{ c.name }}
+              </li>
+            </ul>
+          </template>
           <template v-if="currentGroup.predecessors.length > 0">
             <p class="main-text text-lg">
               <span class="font-semibold">{{
@@ -120,7 +132,7 @@
                   : $t("page.predecessorGroup")
               }}</span>
             </p>
-            <ul class="list-disc pl-6">
+            <ul class="list-disc pl-6 main-text text-lg">
               <li v-for="p in currentGroup.predecessors" :key="p.id">
                 {{ p.name }}
               </li>
@@ -134,7 +146,7 @@
                   : $t("page.successorGroup")
               }}</span>
             </p>
-            <ul class="list-disc pl-6">
+            <ul class="list-disc pl-6 main-text text-lg">
               <li v-for="s in currentGroup.successors" :key="s.id">
                 {{ s.name }}
               </li>
@@ -176,6 +188,10 @@ export default {
     sections() {
       return this.$store.state.sections.sections;
     },
+    currentGroupChildren(){
+      return this.groups.filter((g) => g.parent?.id === this.currentGroup.id);
+
+    }
   },
   methods: {
     getSections() {

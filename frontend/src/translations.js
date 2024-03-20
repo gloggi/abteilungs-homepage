@@ -212,6 +212,7 @@ export const messages = {
       startLocationLabel: "Besammlungsort",
       endLocationLabel: "Schlussort",
       divisions: "Abteilungen",
+      groupChildren: "Untergeordnete Gruppen",
     },
   },
 };
