@@ -28,7 +28,7 @@ export const messages = {
       locations: "Orte",
       forms: "Formulare",
       media: "Medien",
-      users: "Benutzer",
+      users: "User",
       settings: "Einstellungen",
       logout: "Ausloggen",
       name: "Name",
@@ -101,7 +101,7 @@ export const messages = {
       siteTitle: "Seitentitel",
       divisionName: "Abteilungsname",
       divisionLogo: "Abteilungslogo",
-      websiteIcon: "Website-Symbol",
+      websiteIcon: "Favicon",
       primaryColor: "Primärfarbe",
       secondaryColor: "Sekundärfarbe",
       midataApiKey: "MiData-API-Schlüssel",
@@ -146,8 +146,8 @@ export const messages = {
       notFoundPage: "404-Seite",
       replaceFile: "Datei ersetzen",
       group: "Gruppe",
-      groupEvents: "Gruppenanlässe",
-      groupEventsItem: "Gruppenanlässe-Element",
+      groupEvents: "Gruppenveranstaltungen",
+      groupEventsItem: "Gruppenveranstaltungen-Element",
       isGroupPage: "Ist eine Gruppenseite?",
       clickToAddPageItem:
         "Klicke hier, um ein neues Seitenelement hinzuzufügen",
@@ -165,6 +165,7 @@ export const messages = {
       externalLink: "Externer Link",
       externalLinkInfo:
         "Wenn ein externer Link eingegeben wird, wird der User statt auf die Gruppenseite auf die angegebene URL weitergeleitet.",
+       emailfield: "E-Mail-Feld",
     },
     page: {
       campDateLabel: "Lagerdatum",

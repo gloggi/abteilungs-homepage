@@ -68,10 +68,6 @@
             :label="$t('dashboard.name')"
             v-model="selectedFile.name"
           />
-          <TextInput
-            :label="$t('dashboard.category')"
-            v-model="selectedFile.category"
-          />
           <CopyField
             :label="$t('dashboard.extension')"
             :value="selectedFile.extension"
