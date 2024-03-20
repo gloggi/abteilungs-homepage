@@ -20,7 +20,7 @@
           }}
         </option>
       </select>
-      <div v-if="showDropdown" class="absolute bg-white z-30 rounded-lg w-full">
+      <div v-if="showDropdown" class="absolute bg-white z-30 rounded-lg w-full overflow-auto max-h-60">
         <div
           v-for="option in options"
           :key="option.id"
