@@ -210,11 +210,13 @@ export default {
       textFieldToFocus.childNodes[1].focus();
     },
     changeOrder(newField) {
-      const fieldIndex = this.content.fields.findIndex(
-        (f) => f.id == newField.id,
+      this.content.fields = this.content.fields.filter(
+        (f) => `${f.label}${f.inputType}` !== `${newField.label}${newField.inputType}`,
       );
-      this.content.fields[fieldIndex] = newField;
-      this.updateForm();
+      this.content.fields.push(newField)
+      this.content.fields = this.content.fields.sort((a, b) => a.sort - b.sort);
+      this.content.fields.forEach((f, i) => (f.sort = i));
+      //this.updateForm();
     },
     addField(field) {
       this.content.fields.push(field);
@@ -226,7 +228,7 @@ export default {
       this.content.fields = this.content.fields.filter(
         (f) => `${f.id}${f.type}` !== idAndType,
       );
-      this.updateForm();
+      //this.updateForm();
     },
     async getForm() {
       try {
