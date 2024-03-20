@@ -8,6 +8,7 @@
     columns="name:link(id),startAt:date,finishAt:date,participantCount"
     pushAfterCreationTo="Camp"
     :midataSync="true"
+    :create="false"
   />
 </template>
 

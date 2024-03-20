@@ -7,6 +7,7 @@
     )},${$t('dashboard.email')}`"
     columns="nickname:link(id),firstname,lastname,email"
     pushAfterCreationTo="User"
+    :create="false"
   />
 </template>
 
