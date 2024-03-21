@@ -208,6 +208,7 @@ export const messages = {
       groupLeadership: "Gruppenleitung",
       goToGroupPage: "Zur Gruppenseite",
       noEventsAvailable: "Es sind momentan keine Anlässe verfügbar.",
+      noCampsAvailable: "Es sind momentan keine Lager verfügbar.",
       formSuccessMessage:
         "Vielen Dank! Das Formular wurde erfolgreich abgesendet.",
       region: "Region",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
+use App\Models\CampItem;
 use App\Models\FaqItem;
 use App\Models\FilesItem;
 use App\Models\FormItem;
@@ -253,13 +254,13 @@ class PageController extends Controller
                         ]
                     );
                     break;
-                case 'campsItem':
-                    GenericItem::updateOrCreate(
+                case 'campItem':
+                    CampItem::updateOrCreate(
                         ['id' => $pageItemData['id'] ?? null],
                         [
                             'page_id' => $page->id,
                             'sort' => $sort_counter,
-                            'type' => 'campsItem'
+                            'group_id' => $pageItemData['group_id'] ?? null,
                         ]
                     );
                     break;

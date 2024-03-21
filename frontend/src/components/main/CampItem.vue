@@ -4,6 +4,9 @@
       $t("page.camps")
     }}</HeadingTwo>
     <Camp v-for="camp in camps" :camp="camp" :key="camp.id" />
+    <p class="main-text" v-if="camps.length == 0">
+      {{ $t("page.noCampsAvailable") }}
+    </p>
   </ContentWrapper>
 </template>
 <script>
@@ -21,7 +24,12 @@ export default {
   methods: {
     async getCamps() {
       try {
-        const response = await this.callApi("get", "camps");
+        const response = await this.callApi(
+          "get",
+          "camps",
+          {},
+          { params: { groupId: this.item.groupId } },
+        );
         this.camps = response.data.data;
       } catch (error) {
         console.log(error);

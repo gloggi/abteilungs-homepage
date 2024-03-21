@@ -59,9 +59,9 @@
             class="h-full w-full"
             v-else-if="field.type === 'sectionsItem'"
           />
-          <CampsItem
+          <CampItem
             class="h-full w-full"
-            v-else-if="field.type === 'campsItem'"
+            v-else-if="field.type === 'campItem'"
           />
           <LocationItem
             class="h-full w-full"
@@ -92,7 +92,7 @@ import FilesItem from "../../assets/PageItems/FilesItem.svg?component";
 import ContactItem from "../../assets/PageItems/ContactItem.svg?component";
 import GroupsItem from "../../assets/PageItems/GroupsItem.svg?component";
 import SectionsItem from "../../assets/PageItems/SectionsItem.svg?component";
-import CampsItem from "../../assets/PageItems/CampsItem.svg?component";
+import CampItem from "../../assets/PageItems/CampItem.svg?component";
 import LocationItem from "../../assets/PageItems/LocationItem.svg?component";
 import FaqItem from "../../assets/PageItems/FaqItem.svg?component";
 import GroupEventsItem from "../../assets/PageItems/GroupEventsItem.svg?component";
@@ -137,7 +137,7 @@ export default {
         },
         {
           name: this.$t("dashboard.camps"),
-          type: "campsItem",
+          type: "campItem",
         },
         {
           name: this.$t("dashboard.location"),
@@ -168,7 +168,7 @@ export default {
     ContactItem,
     GroupsItem,
     SectionsItem,
-    CampsItem,
+    CampItem,
     LocationItem,
     FaqItem,
     GroupEventsItem,

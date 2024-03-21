@@ -16,7 +16,7 @@
         :title="pageItem.title"
         :files="pageItem.files"
       />
-      <CampsItem v-if="pageItem.type == 'campsItem'" :item="pageItem" />
+      <CampItem v-if="pageItem.type == 'campItem'" :item="pageItem" />
       <LocationItem
         v-if="pageItem.type == 'locationItem'"
         :item="pageItem"
@@ -31,7 +31,7 @@
   </PageWrapper>
 </template>
 <script>
-import CampsItem from "./CampsItem.vue";
+import CampItem from "./CampItem.vue";
 import ContactItem from "./ContactItem.vue";
 import FilesItem from "./FilesItem.vue";
 import FormItem from "./FormItem.vue";
@@ -70,7 +70,7 @@ export default {
     GroupsItem,
     PageWrapper,
     FilesItem,
-    CampsItem,
+    CampItem,
     LocationItem,
     FaqItem,
     GroupEventsItem,

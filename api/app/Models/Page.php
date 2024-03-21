@@ -9,7 +9,7 @@ class Page extends Model
 {
     protected $fillable = ['title', 'route', 'file_ids', 'big_header', 'group_id'];
 
-    protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems'];
+    protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems', 'locationItems', 'faqItems', 'groupEventsItems', 'campItems'];
 
     public function files()
     {
@@ -76,6 +76,12 @@ class Page extends Model
         return $this->hasMany(GroupEventsItem::class)->with('group');
     }
 
+    public function campItems()
+    {
+
+        return $this->hasMany(CampItem::class);
+    }
+
     public function genericItems()
     {
 
@@ -94,6 +100,7 @@ class Page extends Model
         $locationItems = $this->locationItems;
         $faqItems = $this->faqItems;
         $groupEventsItems = $this->groupEventsItems;
+        $campItems = $this->campItems;
 
         $items = $items->concat($textItems);
         $items = $items->concat($imageItems);
@@ -103,6 +110,7 @@ class Page extends Model
         $items = $items->concat($locationItems);
         $items = $items->concat($faqItems);
         $items = $items->concat($groupEventsItems);
+        $items = $items->concat($campItems);
 
         $items = $items->sortBy('sort')->values()->all();;
 

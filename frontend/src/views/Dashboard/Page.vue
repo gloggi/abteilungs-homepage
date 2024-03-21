@@ -139,12 +139,13 @@
         :key="i"
         :item="pageItem"
       />
-      <CampsItem
-        v-if="pageItem.type == 'campsItem'"
+      <CampItem
+        v-if="pageItem.type == 'campItem'"
         :boxTitle="$t('dashboard.campsItem')"
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
+        @changeCamp="changeCampItem"
         :key="i"
         :item="pageItem"
       />
@@ -206,7 +207,7 @@ import FormLabel from "../../components/admin/FormLabel.vue";
 import GroupsItem from "../../components/admin/PageItems/GroupsItem.vue";
 import SectionsItem from "../../components/admin/PageItems/SectionsItem.vue";
 import FilesItem from "../../components/admin/PageItems/FilesItem.vue";
-import CampsItem from "../../components/admin/PageItems/CampsItem.vue";
+import CampItem from "../../components/admin/PageItems/CampItem.vue";
 import LocationItem from "../../components/admin/PageItems/LocationItem.vue";
 import FaqItem from "../../components/admin/PageItems/FaqItem.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
@@ -229,7 +230,7 @@ export default {
     SectionsItem,
     CheckBox,
     FilesItem,
-    CampsItem,
+    CampItem,
     LocationItem,
     FaqItem,
     SelectComponent,
@@ -374,6 +375,14 @@ export default {
     },
     changeHeaderImages(event) {
       this.content.files = event.files;
+    },
+    changeCampItem(event) {
+      const pageItemId = event.id;
+      const groupId = event.groupId;
+      const itemIndex = this.content.pageItems.findIndex(
+        (p) => p.id == pageItemId && p.type == "campItem",
+      );
+      this.content.pageItems[itemIndex].groupId = groupId;
     },
     slugyfy(text) {
       return kebabCase(text);

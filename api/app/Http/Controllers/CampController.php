@@ -15,7 +15,14 @@ class CampController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 10);
-        $camps = Camp::paginate($perPage);
+        $query = Camp::query();
+        if($request->has('group_id')) {
+            $groupId = $request->input('group_id');
+            $query->whereHas('groups', function($q) use ($groupId) {
+                $q->where('group_id', $groupId);
+            });
+        }
+        $camps = $query->paginate($perPage);
 
         return response()->json($camps);
     }
