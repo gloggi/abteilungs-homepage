@@ -42,14 +42,14 @@
             />
           </div>
           <div>
-          <TextInput
-            :label="$t('dashboard.sort')"
-            type="number"
-            v-model="content.sort"
-            :errors="errors.sort"
-          />
-          <InfoField :info="$t('dashboard.sectionSortInfo')" />
-        </div>
+            <TextInput
+              :label="$t('dashboard.sort')"
+              type="number"
+              v-model="content.sort"
+              :errors="errors.sort"
+            />
+            <InfoField :info="$t('dashboard.sectionSortInfo')" />
+          </div>
           <div class="">
             <FormLabel>{{ $t("dashboard.sectionColor") }}</FormLabel>
             <ColorPicker v-model="content.color" :errors="errors.color" />

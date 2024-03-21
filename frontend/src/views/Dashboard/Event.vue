@@ -2,13 +2,18 @@
   <div>
     <ItemHeaderTemplate
       :title="content.title"
-      :dublicate="true"
       :content="content"
       @errors="handleErrors"
       @clearErrors="errors = {}"
       entity="events"
       backLinkTo="Events"
-    />
+    >
+      <template v-slot:buttons-before>
+        <ActionButton @click="dublicateItem">
+          <font-awesome-icon :icon="icons.faCopy" class="h-6 w-6" />
+        </ActionButton>
+      </template>
+    </ItemHeaderTemplate>
     <Card class="mt-4">
       <div class="flex flex-col space-y-2">
         <TextInput
@@ -99,6 +104,7 @@ import {
   faChevronLeft,
   faTrash,
   faPlus,
+  faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
@@ -106,6 +112,7 @@ import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 import { isBefore, format, addHours } from "date-fns";
 import FilesSelector from "../../components/admin/FilesSelector.vue";
 import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
+import ActionButton from "../../components/admin/ActionButton.vue";
 export default {
   components: {
     Card,
@@ -117,6 +124,7 @@ export default {
     MultipleSelect,
     FilesSelector,
     BreakpointSpaceManager,
+    ActionButton,
   },
   data() {
     return {
@@ -129,6 +137,7 @@ export default {
         faChevronLeft,
         faTrash,
         faPlus,
+        faCopy,
       },
       locations: [],
       groups: [],
@@ -230,6 +239,27 @@ export default {
         });
       } catch (e) {
         console.log(e);
+      }
+    },
+    async dublicateItem() {
+      try {
+        const copy = { ...this.content };
+        delete copy.id;
+        delete copy.createdAt;
+        delete copy.updatedAt;
+        const response = await this.callApi("post", `/events`, copy);
+        if (response.data.id) {
+          // Using nextTick to ensure the page has updated
+          this.$nextTick(() => {
+            this.$router.push({
+              name: this.$route.name,
+              params: { id: response.data.id },
+            });
+          });
+        }
+        this.notifyUser(this.$t("dashboard.itemDuplicated"));
+      } catch (e) {
+        this.handleErrors(e);
       }
     },
   },

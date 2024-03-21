@@ -9,16 +9,14 @@
       </ActionButton>
     </router-link>
     <div class="flex space-x-2">
-      <ActionButton v-if="dublicate" @click="dublicateItem">
-        <font-awesome-icon :icon="icons.faCopy" class="h-6 w-6" />
-      </ActionButton>
+      <slot name="buttons-before"></slot>
       <ActionButton v-if="!noDelete" @click="deleteItem">
         <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
       </ActionButton>
       <ActionButton @click="updateItem">
         <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
       </ActionButton>
-      <slot name="buttons"></slot>
+      <slot name="buttons-after"></slot>
     </div>
   </div>
 </template>
@@ -37,7 +35,7 @@ export default {
     Card,
     ActionButton,
   },
-  props: ["title", "content", "backLinkTo", "entity", "noDelete", "dublicate"],
+  props: ["title", "content", "backLinkTo", "entity", "noDelete"],
   emits: ["errors", "clearErrors"],
   data() {
     return {
@@ -91,24 +89,6 @@ export default {
         } else if (e.response.status === 403) {
           this.notifyUser(this.$t("dashboard.noPermission"));
         }
-      }
-    },
-    async dublicateItem() {
-      try {
-        const copy = { ...this.content };
-        delete copy.id;
-        delete copy.createdAt;
-        delete copy.updatedAt;
-        const response = await this.callApi("post", `/${this.entity}`, copy);
-        if (response.data.id) {
-          this.$router.push({
-            name: this.$route.name,
-            params: { id: response.data.id },
-          });
-        }
-        this.notifyUser(this.$t("dashboard.itemDuplicated"));
-      } catch (e) {
-        this.handleErrors(e);
       }
     },
     async updateItem() {

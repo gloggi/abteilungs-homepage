@@ -24,6 +24,7 @@ class Group extends Model
         'enable_group_page',
         'region',
         'external_link',
+        'group_leader_id',
     ];
 
     protected $appends = ['route','has_page'];
@@ -69,5 +70,10 @@ class Group extends Model
     public function page()
     {
         return $this->hasOne(Page::class);
+    }
+
+    public function groupLeader()
+    {
+        return $this->belongsTo(User::class, 'group_leader_id');
     }
 }

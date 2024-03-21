@@ -12,23 +12,14 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
+        if($request->has('dashboard')){
+            $perPage = $request->input('per_page', 10);
+        }else{
+            $perPage = $request->input('per_page', 100);
+        }
         $users = User::with('roles')->paginate($perPage, ['*'], 'page', $page);
-        $data = $users->items();
-        $meta = [
-            'current_page' => $users->currentPage(),
-            'from' => $users->firstItem(),
-            'last_page' => $users->lastPage(),
-            'path' => $users->path(),
-            'per_page' => $users->perPage(),
-            'to' => $users->lastItem(),
-            'total' => $users->total(),
-        ];
-        return response()->json([
-            'data' => $data,
-            'meta' => $meta
-        ]);
+        return response()->json($users);
     }
 
     public function store(Request $request)

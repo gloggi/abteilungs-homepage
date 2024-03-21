@@ -15,7 +15,7 @@ class GroupController extends Controller
     {
         $user = Auth::user();
         $groups = $groups = Group::select('groups.*')
-        ->with(['file', 'section', 'predecessors', 'successors', 'parent'])
+        ->with(['file', 'section', 'predecessors', 'successors', 'parent', 'groupLeader'])
         ->leftJoin('sections', 'groups.section_id', '=', 'sections.id')
         ->orderBy('sections.sort', 'asc');
         if ($request->has('dashboard') && $user->hasRole('unitleader')) {

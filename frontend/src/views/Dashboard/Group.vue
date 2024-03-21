@@ -71,6 +71,14 @@
               :options="groups"
             />
           </BreakpointSpaceManager>
+          <SelectComponent
+            :label="$t('dashboard.groupLeader')"
+            :value="content.groupLeaderId"
+            selection="GroupLeader"
+            @selectGroupLeader="handleSelectGroupLeader"
+            :options="formatedUsers"
+            :errors="errors.groupType"
+          />
           <TextInput
             :label="$t('dashboard.midataId')"
             type="number"
@@ -137,6 +145,7 @@ export default {
       loadedKey: 0,
       errors: {},
       groups: [],
+      users: [],
       genders: [
         { id: 1, name: "Mixed" },
         { id: 2, name: "Male" },
@@ -205,6 +214,14 @@ export default {
         console.log(e);
       }
     },
+    async getUsers() {
+      try {
+        const response = await this.callApi("get", `/users`);
+        this.users = response.data.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     handleSection(sectionId) {
       this.content.sectionId = sectionId;
     },
@@ -217,6 +234,9 @@ export default {
     handleErrors(errors) {
       this.errors = errors;
     },
+    handleSelectGroupLeader(userId) {
+      this.content.groupLeaderId = userId;
+    },
     changeHeaderImages(event) {
       this.content.headerImages = event.files;
     },
@@ -224,10 +244,21 @@ export default {
       this.content.files = event.files;
     },
   },
+  computed: {
+    formatedUsers() {
+      return this.users.map((user) => {
+        return {
+          id: user.id,
+          name: `${user.nickname} (${user.firstname} ${user.lastname})`,
+        };
+      });
+    },
+  },
   async created() {
     await this.getSections();
     await this.getGroups();
     await this.getGroup();
+    await this.getUsers();
   },
 };
 </script>

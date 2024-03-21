@@ -11,7 +11,12 @@ class LocationController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
+        if($request->has('dashboard')){
+            $perPage = $request->input('per_page', 10);
+        }else{
+            $perPage = $request->input('per_page', 100);
+        }
+       
         $locations = Location::paginate($perPage);
 
         return response()->json($locations);

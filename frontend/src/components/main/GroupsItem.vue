@@ -114,9 +114,7 @@
           </p>
           <template v-if="currentGroupChildren.length > 0">
             <p class="main-text text-lg">
-              <span class="font-semibold">{{
-                $t("page.groupChildren")
-              }}</span>
+              <span class="font-semibold">{{ $t("page.groupChildren") }}</span>
             </p>
             <ul class="list-disc pl-6 main-text text-lg">
               <li v-for="c in currentGroupChildren" :key="c.id">
@@ -152,11 +150,18 @@
               </li>
             </ul>
           </template>
-          <p class="main-text text-lg">
+          <p class="main-text text-lg" v-if="currentGroup.groupLeader">
             <span class="font-semibold">{{ $t("page.contactLabel") }}: </span>
-            <a class="link" :href="`mailto:${currentGroup.contact}`">{{
-              $t("page.groupLeadership")
-            }}</a>
+            <a class="link" :href="`mailto:${currentGroup.groupLeader.email}`"
+              >{{
+                `${currentGroup.groupLeader.firstname} ${currentGroup.groupLeader.lastname}`
+              }}
+              {{
+                currentGroup.groupLeader.nickname
+                  ? `v/o ${currentGroup.groupLeader.nickname}`
+                  : ""
+              }}</a
+            >
           </p>
         </div>
         <BasicButton
@@ -188,10 +193,9 @@ export default {
     sections() {
       return this.$store.state.sections.sections;
     },
-    currentGroupChildren(){
+    currentGroupChildren() {
       return this.groups.filter((g) => g.parent?.id === this.currentGroup.id);
-
-    }
+    },
   },
   methods: {
     getSections() {

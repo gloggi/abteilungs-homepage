@@ -1,5 +1,5 @@
 <template>
-  <div v-if="content" :key="loadedKey">
+  <div v-if="content">
     <ItemHeaderTemplate
       :title="content.title"
       :content="content"
@@ -8,7 +8,12 @@
       entity="pages"
       backLinkTo="Pages"
     >
-      <template v-slot:buttons>
+      <template v-slot:buttons-before>
+        <ActionButton @click="dublicateItem">
+          <font-awesome-icon :icon="icons.faCopy" class="h-6 w-6" />
+        </ActionButton>
+      </template>
+      <template v-slot:buttons-after>
         <ActionButton @click="visitPage">
           <font-awesome-icon :icon="icons.faEye" class="h-6 w-6" />
         </ActionButton>
@@ -184,12 +189,11 @@
 </template>
 
 <script>
-//import Textarea from "../../components/admin/Textarea.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/AddPageItem.vue";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faCopy } from "@fortawesome/free-solid-svg-icons";
 import TextItem from "../../components/admin/PageItems/TextItem.vue";
 import ImageItem from "../../components/admin/PageItems/ImageItem.vue";
 import { kebabCase } from "lodash";
@@ -245,6 +249,7 @@ export default {
       isDragging: false,
       icons: {
         faEye,
+        faCopy,
       },
       groups: [],
       isGroupPage: false,
@@ -254,17 +259,18 @@ export default {
     await this.getPage();
     await this.getGroups();
   },
-  computed: {},
+  computed: {
+    contentId() {
+      return this.$route.params.id;
+    },
+  },
   methods: {
     async getPage() {
       try {
-        if (this.$route.params.id === "new") {
+        if (this.contentId === "new") {
           return;
         }
-        const response = await this.callApi(
-          "get",
-          `/pages/${this.$route.params.id}`,
-        );
+        const response = await this.callApi("get", `/pages/${this.contentId}`);
         this.content = response.data;
         this.isGroupPage = !!this.content.groupId;
         this.loadedKey++;
@@ -310,7 +316,6 @@ export default {
       this.updatePage();
     },
     changeImageItem(event) {
-      console.log(event);
       const pageItemId = event.id;
       const files = event.files.files;
       const itemIndex = this.content.pageItems.findIndex(
@@ -390,12 +395,47 @@ export default {
         params: { path: this.content.route },
       });
     },
+    async dublicateItem() {
+      try {
+        const copy = { ...this.content };
+        delete copy.id;
+        delete copy.createdAt;
+        delete copy.updatedAt;
+        copy.pageItems.forEach((p) => {
+          delete p.id;
+          delete p.createdAt;
+          delete p.updatedAt;
+        });
+        copy.title = `${copy.title} (Kopie)`;
+        copy.route = `${copy.route}-kopie`;
+        const response = await this.callApi("post", `/pages`, copy);
+        if (response.data.id) {
+          // Using nextTick to ensure the page has updated
+          this.$nextTick(() => {
+            this.$router.push({
+              name: this.$route.name,
+              params: { id: response.data.id },
+            });
+          });
+        }
+        this.notifyUser(this.$t("dashboard.itemDuplicated"));
+      } catch (e) {
+        this.handleErrors(e);
+      }
+    },
   },
   watch: {
     "content.title"(newVal) {
-      if (this.$route.params.id == "new") {
+      if (this.contentId == "new") {
         this.content.route = this.slugyfy(newVal);
       }
+    },
+    $route: {
+      imediade: true,
+      handler: function () {
+        this.content = {};
+        this.getPage();
+      },
     },
   },
 };

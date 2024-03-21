@@ -211,9 +211,11 @@ export default {
     },
     changeOrder(newField) {
       this.content.fields = this.content.fields.filter(
-        (f) => `${f.label}${f.inputType}` !== `${newField.label}${newField.inputType}`,
+        (f) =>
+          `${f.label}${f.inputType}` !==
+          `${newField.label}${newField.inputType}`,
       );
-      this.content.fields.push(newField)
+      this.content.fields.push(newField);
       this.content.fields = this.content.fields.sort((a, b) => a.sort - b.sort);
       this.content.fields.forEach((f, i) => (f.sort = i));
       //this.updateForm();
@@ -266,21 +268,19 @@ export default {
     },
     getTypeName(inputType) {
       if (inputType === "text") {
-        return this.$t("dashboard.textfield")
-      }else if(inputType === "email"){
-        return this.$t("dashboard.emailfield")
-      }else if(inputType === "number"){
-        return this.$t("dashboard.numberfield")
-      }else if(inputType === "date"){
-        return this.$t("dashboard.datefield")
-      }else if(inputType === "time"){
-        return this.$t("dashboard.timefield")
+        return this.$t("dashboard.textfield");
+      } else if (inputType === "email") {
+        return this.$t("dashboard.emailfield");
+      } else if (inputType === "number") {
+        return this.$t("dashboard.numberfield");
+      } else if (inputType === "date") {
+        return this.$t("dashboard.datefield");
+      } else if (inputType === "time") {
+        return this.$t("dashboard.timefield");
+      } else {
+        return inputType;
       }
-      else {
-        return inputType
-      }
-
-    }
+    },
   },
   async created() {
     await this.getForm();

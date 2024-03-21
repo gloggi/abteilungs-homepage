@@ -165,8 +165,10 @@ export const messages = {
       externalLink: "Externer Link",
       externalLinkInfo:
         "Wenn ein externer Link eingegeben wird, wird der User statt auf die Gruppenseite auf die angegebene URL weitergeleitet.",
-       emailfield: "E-Mail-Feld",
-       sectionSortInfo: "Dieses Feld dient dazu, die Stufen und Gruppen in der korrekten Reihenfolge darzustellen."
+      emailfield: "E-Mail-Feld",
+      sectionSortInfo:
+        "Dieses Feld dient dazu, die Stufen und Gruppen in der korrekten Reihenfolge darzustellen.",
+      groupLeader: "Einheitsleitung",
     },
     page: {
       campDateLabel: "Lagerdatum",
