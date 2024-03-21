@@ -40,7 +40,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FilesItemsTableSeeder::class);
         $this->call(FilesItemFileTableSeeder::class);
         $this->call(CampsTableSeeder::class);
-        $this->call(MigrationsTableSeeder::class);
         $this->call(FaqsTableSeeder::class);
         $this->call(QuestionsTableSeeder::class);
         $this->call(FooterLinksTableSeeder::class);
