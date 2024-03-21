@@ -36,4 +36,9 @@ class Camp extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'camp_groups', 'camp_id', 'group_id');
+    }
 }

@@ -29,7 +29,7 @@ class PageController extends Controller
             $groupIds = $user->groups->pluck('id');
             $query->whereIn('group_id', $groupIds);
         } 
-        $pages = $query
+        $pages = $query->orderBy('updated_at', 'desc')
             ->paginate($perPage);
 
         return response()->json($pages);

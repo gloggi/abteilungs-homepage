@@ -16,6 +16,11 @@
           v-model="content.name"
           :errors="errors.name"
         />
+        <MultipleSelect
+          :label="$t('dashboard.groups')"
+          v-model="content.groups"
+          :options="groups"
+        />
         <div class="flex flex-col space-y-2">
           <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
           <Editor
@@ -65,6 +70,7 @@ import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import { format } from "date-fns";
+import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 export default {
   components: {
     Card,
@@ -72,6 +78,7 @@ export default {
     ItemHeaderTemplate,
     Editor,
     FormLabel,
+    MultipleSelect,
   },
   data() {
     return {
@@ -93,7 +100,7 @@ export default {
           `/camps/${this.$route.params.id}`,
         );
         this.content = response.data;
-        console.log(this.content);
+        this.content.groups = this.content.groups.map((group) => group.id);
         this.loadedKey++;
       } catch (e) {
         console.log(e);
@@ -118,9 +125,15 @@ export default {
       if (!date) return "";
       return format(new Date(date), "dd.MM.yyyy HH:mm");
     },
+    getGroups() {
+      this.callApi("get", "/groups").then((response) => {
+        this.groups = response.data.data;
+      });
+    },
   },
   async created() {
     await this.getCamp();
+    await this.getGroups();
   },
 };
 </script>

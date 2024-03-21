@@ -11,7 +11,11 @@ class FooterLinkController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
+        if($request->has('dashboard')){
+            $perPage = $request->input('per_page', 10);
+        }else{
+            $perPage = $request->input('per_page', 100);
+        }
         $footerLinks = FooterLink::orderBy('sort')->paginate($perPage);
 
         return response()->json($footerLinks);

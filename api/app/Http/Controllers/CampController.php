@@ -29,7 +29,7 @@ class CampController extends Controller
 
     public function show($id)
     {
-        $camp = Camp::find($id);
+        $camp = Camp::with(['groups'])->find($id);
 
         if (!$camp) {
             return response()->json(['message' => 'Camp not found'], 404);
@@ -47,6 +47,7 @@ class CampController extends Controller
         }
 
         $camp->update($request->validated());
+        $camp->groups()->sync($request->input('groups', []));
 
         return response()->json($camp);
     }
