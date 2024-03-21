@@ -401,6 +401,7 @@ export default {
         delete copy.id;
         delete copy.createdAt;
         delete copy.updatedAt;
+        delete copy.groupId;
         copy.pageItems.forEach((p) => {
           delete p.id;
           delete p.createdAt;
