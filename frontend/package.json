@@ -40,6 +40,7 @@
     "gsap": "^3.12.4",
     "html-prettify": "^1.0.7",
     "lodash": "^4.17.21",
+    "nanoid": "^5.0.6",
     "ol": "^8.2.0",
     "postcss": "^8",
     "swissgrid": "^1.0.5",

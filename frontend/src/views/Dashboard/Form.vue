@@ -163,7 +163,7 @@ import DragItemBox from "../../components/admin/DragItemBox.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
-
+import { nanoid } from "nanoid";
 export default {
   components: {
     Card,
@@ -211,26 +211,22 @@ export default {
     },
     changeOrder(newField) {
       this.content.fields = this.content.fields.filter(
-        (f) =>
-          `${f.label}${f.inputType}` !==
-          `${newField.label}${newField.inputType}`,
+        (f) => f.id !== newField.id || f.tempId !== newField.tempId,
       );
       this.content.fields.push(newField);
       this.content.fields = this.content.fields.sort((a, b) => a.sort - b.sort);
       this.content.fields.forEach((f, i) => (f.sort = i));
-      //this.updateForm();
     },
     addField(field) {
+      field.tempId = nanoid();
       this.content.fields.push(field);
       this.content.fields = this.content.fields.sort((a, b) => a.sort - b.sort);
       this.content.fields.forEach((f, i) => (f.sort = i));
-      //this.updateForm();
     },
-    deleteField(idAndType) {
+    deleteField(item) {
       this.content.fields = this.content.fields.filter(
-        (f) => `${f.id}${f.type}` !== idAndType,
+        (f) => f.sort !== item.sort,
       );
-      //this.updateForm();
     },
     async getForm() {
       try {

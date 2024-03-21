@@ -212,7 +212,7 @@ import FaqItem from "../../components/admin/PageItems/FaqItem.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
 import GroupEventsItem from "../../components/admin/PageItems/GroupEventsItem.vue";
 import ActionButton from "../../components/admin/ActionButton.vue";
-
+import { nanoid } from "nanoid";
 export default {
   components: {
     TextInput,
@@ -296,6 +296,7 @@ export default {
       }
     },
     addItem(field) {
+      field.tempId = nanoid();
       this.content.pageItems.push(field);
       this.content.pageItems = this.content.pageItems.sort(
         (a, b) => a.sort - b.sort,
@@ -303,17 +304,19 @@ export default {
       this.content.pageItems.forEach((p, i) => (p.sort = i));
     },
     changeOrder(newItem) {
-      const itemIndex = this.content.pageItems.findIndex(
-        (p) => p.id == newItem.id,
-      );
-      this.content.pageItems[itemIndex] = newItem;
-      this.updatePage();
-    },
-    deleteItem(idAndType) {
       this.content.pageItems = this.content.pageItems.filter(
-        (p) => `${p.id}${p.type}` !== idAndType,
+        (p) => p.id !== newItem.id || p.tempId !== newItem.tempId,
       );
-      this.updatePage();
+      this.content.pageItems.push(newItem);
+      this.content.pageItems = this.content.pageItems.sort(
+        (a, b) => a.sort - b.sort,
+      );
+      this.content.pageItems.forEach((p, i) => (p.sort = i));
+    },
+    deleteItem(item) {
+      this.content.pageItems = this.content.pageItems.filter(
+        (p) => p.type !== item.type || p.sort !== item.sort,
+      );
     },
     changeImageItem(event) {
       const pageItemId = event.id;

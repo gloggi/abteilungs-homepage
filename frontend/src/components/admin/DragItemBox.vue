@@ -20,7 +20,7 @@
     <hr />
     <div class="w-full px-3 flex justify-end">
       <div class="">
-        <button @click="$emit('delete', `${item.id}${item.type}`)">
+        <button @click="$emit('delete', item)">
           <font-awesome-icon
             :icon="icons.faTrash"
             class="h-4 w-4 hover:text-gray-400 text-gray-500"
