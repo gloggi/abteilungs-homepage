@@ -2,30 +2,29 @@
   <div class="relative">
     <li
       @click="showDropdown = !showDropdown"
-      class="min-w-[130px] flex flex-row space-x-2 items-center font-light p-3 py-5 md:py-0 md:p-0 hover:text-secondary text-white main-text md:text-2xl cursor-pointer"
+      class="flex flex-row space-x-2 items-center font-light p-3 py-5 md:py-0 md:p-0 hover:text-secondary text-white main-text md:text-2xl cursor-pointer"
     >
       <div>{{ $t("page.groups") }}</div>
       <font-awesome-icon class="" :icon="icons.faCaretDown" />
     </li>
-    <transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
-      <ul
-        v-if="showDropdown"
-        class="absolute z-10 bg-primary w-full h-full rounded-lg"
-      >
-        <template v-for="group in groups" :key="group.id">
-          <li
-            v-if="group.hasPage"
-            class="font-light p-3 py-5 pl-8 md:py-2 md:p-3 w-full md:px-5 hover:text-secondary text-white main-text md:text-2xl"
-          >
-            <router-link
-              @click="showDropdown = false"
-              :to="`/group/${group.route}`"
-              >{{ group.name }}</router-link
+    <div class="absolute z-10 right-0 w-full md:w-fit">
+      <transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
+        <ul v-if="showDropdown" class="bg-primary w-full h-full rounded-lg">
+          <template v-for="group in groups" :key="group.id">
+            <li
+              v-if="group.hasPage"
+              class="font-light p-3 py-5 pl-8 md:py-2 md:p-3 w-full md:px-5 hover:text-secondary text-white main-text md:text-2xl"
             >
-          </li>
-        </template>
-      </ul>
-    </transition>
+              <router-link
+                @click="showDropdown = false"
+                :to="`/group/${group.route}`"
+                >{{ group.name }}</router-link
+              >
+            </li>
+          </template>
+        </ul>
+      </transition>
+    </div>
   </div>
 </template>
 

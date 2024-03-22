@@ -1,10 +1,14 @@
 <template>
-  <router-link
-    v-if="!group.externalLink"
-    :to="group.hasPage ? `/group/${group.route}` : '#'"
-    >{{ group.name }}</router-link
+  <router-link v-if="group.hasPage" :to="`/group/${group.route}`">{{
+    group.name
+  }}</router-link>
+  <a
+    v-else-if="group.externalLink"
+    :href="group.externalLink"
+    target="_blank"
+    >{{ group.name }}</a
   >
-  <a v-else :href="group.externalLink" target="_blank">{{ group.name }}</a>
+  <span v-else>{{ group.name }}</span>
 </template>
 <script>
 export default {

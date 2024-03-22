@@ -92,8 +92,8 @@ export default {
     },
     isSameDay(date1, date2) {
       return (
-        format(new Date(date1), "dd.MM.yyyy") ===
-        format(new Date(date2), "dd.MM.yyyy")
+        format(new Date(date1), "dd.MM.yyyy", { locale: de }) ===
+        format(new Date(date2), "dd.MM.yyyy", { locale: de })
       );
     },
     getDate(camp) {
@@ -101,18 +101,20 @@ export default {
         return this.formatDate(camp.startAt);
       }
       if (
-        format(new Date(camp.startAt), "yyyy") ===
-        format(new Date(camp.finishAt), "yyyy")
+        format(new Date(camp.startAt), "yyyy", { locale: de }) ===
+        format(new Date(camp.finishAt), "yyyy", { locale: de })
       ) {
-        return `${format(new Date(camp.startAt), "dd.")} - ${format(
-          new Date(camp.finishAt),
-          "dd. MMMM yyyy",
-        )}`;
+        return `${format(new Date(camp.startAt), "dd.", {
+          locale: de,
+        })} - ${format(new Date(camp.finishAt), "dd. MMMM yyyy", {
+          locale: de,
+        })}`;
       }
-      return `${format(new Date(camp.startAt), "dd. MMMM yyyy")} - ${format(
-        new Date(camp.finishAt),
-        "dd. MMMM yyyy",
-      )}`;
+      return `${format(new Date(camp.startAt), "dd. MMMM yyyy", {
+        locale: de,
+      })} - ${format(new Date(camp.finishAt), "dd. MMMM yyyy", {
+        locale: de,
+      })}`;
     },
     beforeEnter(el) {
       el.style.height = "0";

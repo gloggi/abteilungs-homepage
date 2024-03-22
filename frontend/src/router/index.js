@@ -232,6 +232,10 @@ const routes = [
     name: "Home2",
     component: Home,
   },
+  {
+    path: "/:path/",
+    redirect: { name: "Home2" },
+  },
 ];
 
 const router = createRouter({

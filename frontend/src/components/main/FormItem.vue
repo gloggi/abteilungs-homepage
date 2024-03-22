@@ -1,6 +1,6 @@
 <template>
   <ContentWrapper>
-    <form class="space-y-5" @submit.prevent="handleForm">
+    <form v-if="item.form" class="space-y-5" @submit.prevent="handleForm">
       <HeadingTwo class="text-primary">{{ item.form.name }}</HeadingTwo>
       <div v-if="submitSuccess" class="p-5 rounded-lg bg-primary">
         <HeadingThree class="text-white font-bold">
