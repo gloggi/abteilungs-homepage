@@ -1,12 +1,20 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./router";
+import { getRouter } from "./router";
 import store from "./store";
 import { mixin } from "./mixins.js";
 import "./assets/tailwind.css";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { messages } from "./translations.js";
 import { createI18n } from "vue-i18n";
+
+const i18n = createI18n({
+  locale: window.navigator.language,
+  fallbackLocale: "de",
+  messages,
+});
+
+const router = getRouter(i18n.global.t);
 
 router.beforeEach((to, from, next) => {
   let splitPath = to.path.split("/");
@@ -16,12 +24,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-});
-
-const i18n = createI18n({
-  locale: window.navigator.language,
-  fallbackLocale: "de",
-  messages,
 });
 
 const app = createApp(App)

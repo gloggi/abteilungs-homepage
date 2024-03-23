@@ -1,7 +1,9 @@
 <template>
-  <router-link v-if="group.hasPage" :to="`/group/${group.route}`">{{
-    group.name
-  }}</router-link>
+  <router-link
+    v-if="group.hasPage"
+    :to="`/${$t('page.groupPagePath')}/${group.route}`"
+    >{{ group.name }}</router-link
+  >
   <a
     v-else-if="group.externalLink"
     :href="group.externalLink"

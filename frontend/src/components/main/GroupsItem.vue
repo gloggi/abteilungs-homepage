@@ -238,7 +238,7 @@ export default {
       }
     },
     goToGroupPage(route) {
-      this.$router.push(`/group/${route}`);
+      this.$router.push(`/${$t("page.groupPagePath")}/${route}`);
     },
   },
   async created() {

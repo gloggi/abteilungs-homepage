@@ -28,229 +28,220 @@ import Camp from "../views/Dashboard/Camp.vue";
 import Faqs from "../views/Dashboard/Faqs.vue";
 import Faq from "../views/Dashboard/Faq.vue";
 
-const routes = [
-  {
-    path: "",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-    children: [
-      {
-        path: "",
-        name: "DashboardHome",
-        component: DashboardHome,
-        meta: {
-          title: "Dashboard",
+export const getRouter = ($t) => {
+  const routes = [
+    {
+      path: "",
+      name: "Home",
+      component: Home,
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: Login,
+    },
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      component: Dashboard,
+      children: [
+        {
+          path: "",
+          name: "DashboardHome",
+          component: DashboardHome,
+          meta: {
+            title: "Dashboard",
+          },
         },
-      },
-      {
-        path: "menu",
-        name: "Menu",
-        component: Menu,
-        meta: {
-          title: "Menu",
+        {
+          path: "menu",
+          name: "Menu",
+          component: Menu,
+          meta: {
+            title: $t("dashboard.menu"),
+          },
         },
-      },
-      {
-        path: "pages",
-        name: "Pages",
-        component: Pages,
-        meta: {
-          title: "Pages",
+        {
+          path: "pages",
+          name: "Pages",
+          component: Pages,
+          meta: {
+            title: $t("dashboard.pages"),
+          },
         },
-      },
-      {
-        path: "pages/:id",
-        name: "Page",
-        component: Page,
-      },
-      {
-        path: "sections",
-        name: "Sections",
-        component: Sections,
-        meta: {
-          title: "Sections",
+        {
+          path: "pages/:id",
+          name: "Page",
+          component: Page,
         },
-      },
-      {
-        path: "sections/:id",
-        name: "Section",
-        component: Section,
-      },
-      {
-        path: "groups",
-        name: "Groups",
-        component: Groups,
-        meta: {
-          title: "Groups",
+        {
+          path: "sections",
+          name: "Sections",
+          component: Sections,
+          meta: {
+            title: $t("dashboard.sections"),
+          },
         },
-      },
-      {
-        path: "groups/:id",
-        name: "Group",
-        component: Group,
-      },
-      {
-        path: "contacts",
-        name: "Contacts",
-        component: Contacts,
-        meta: {
-          title: "Contacts",
+        {
+          path: "sections/:id",
+          name: "Section",
+          component: Section,
         },
-      },
-      {
-        path: "files",
-        name: "Files",
-        component: FileUploadTest,
-        meta: {
-          title: "Files",
+        {
+          path: "groups",
+          name: "Groups",
+          component: Groups,
+          meta: {
+            title: $t("dashboard.groups"),
+          },
         },
-      },
-      {
-        path: "contacts/:id",
-        name: "Contact",
-        component: Contact,
-        meta: {
-          title: "Contact",
+        {
+          path: "groups/:id",
+          name: "Group",
+          component: Group,
         },
-      },
-      {
-        path: "media",
-        name: "Media",
-        component: Media,
-        meta: {
-          title: "Media",
+        {
+          path: "contacts",
+          name: "Contacts",
+          component: Contacts,
+          meta: {
+            title: $t("dashboard.contacts"),
+          },
         },
-      },
-      {
-        path: "forms",
-        name: "Forms",
-        component: Forms,
-        meta: {
-          title: "Forms",
+        {
+          path: "contacts/:id",
+          name: "Contact",
+          component: Contact,
+          meta: {
+            title: $t("dashboard.contact"),
+          },
         },
-      },
-      {
-        path: "forms/:id",
-        name: "Form",
-        component: Form,
-      },
-      {
-        path: "locations",
-        name: "Locations",
-        component: Locations,
-        meta: {
-          title: "Locations",
+        {
+          path: "media",
+          name: "Media",
+          component: Media,
+          meta: {
+            title: $t("dashboard.media"),
+          },
         },
-      },
-      {
-        path: "locations/:id",
-        name: "Location",
-        component: Location,
-      },
-      {
-        path: "faqs",
-        name: "Faqs",
-        component: Faqs,
-        meta: {
-          title: "FAQs",
+        {
+          path: "forms",
+          name: "Forms",
+          component: Forms,
+          meta: {
+            title: $t("dashboard.forms"),
+          },
         },
-      },
-      {
-        path: "faqs/:id",
-        name: "Faq",
-        component: Faq,
-      },
-      {
-        path: "events",
-        name: "Events",
-        component: Events,
-        meta: {
-          title: "Events",
+        {
+          path: "forms/:id",
+          name: "Form",
+          component: Form,
         },
-      },
-      {
-        path: "events/:id",
-        name: "Event",
-        component: Event,
-      },
-      {
-        path: "camps",
-        name: "Camps",
-        component: Camps,
-        meta: {
-          title: "Camps",
+        {
+          path: "locations",
+          name: "Locations",
+          component: Locations,
+          meta: {
+            title: $t("dashboard.locations"),
+          },
         },
-      },
-      {
-        path: "camps/:id",
-        name: "Camp",
-        component: Camp,
-        meta: {
-          title: "Camp",
+        {
+          path: "locations/:id",
+          name: "Location",
+          component: Location,
         },
-      },
-      {
-        path: "users",
-        name: "Users",
-        component: Users,
-        meta: {
-          title: "Users",
+        {
+          path: "faqs",
+          name: "Faqs",
+          component: Faqs,
+          meta: {
+            title: $t("dashboard.faqs"),
+          },
         },
-      },
-      {
-        path: "users/:id",
-        name: "User",
-        component: User,
-      },
-      {
-        path: "settings",
-        name: "Settings",
-        component: Settings,
-        meta: {
-          title: "Settings",
+        {
+          path: "faqs/:id",
+          name: "Faq",
+          component: Faq,
         },
-      },
-    ],
-  },
-  {
-    path: "/group/:id",
-    name: "GroupPage",
-    component: Home,
-  },
-  {
-    path: "/:path",
-    name: "Home2",
-    component: Home,
-  },
-  {
-    path: "/:path/",
-    redirect: { name: "Home2" },
-  },
-];
+        {
+          path: "events",
+          name: "Events",
+          component: Events,
+          meta: {
+            title: $t("dashboard.events"),
+          },
+        },
+        {
+          path: "events/:id",
+          name: "Event",
+          component: Event,
+        },
+        {
+          path: "camps",
+          name: "Camps",
+          component: Camps,
+          meta: {
+            title: $t("dashboard.camps"),
+          },
+        },
+        {
+          path: "camps/:id",
+          name: "Camp",
+          component: Camp,
+        },
+        {
+          path: "users",
+          name: "Users",
+          component: Users,
+          meta: {
+            title: $t("dashboard.users"),
+          },
+        },
+        {
+          path: "users/:id",
+          name: "User",
+          component: User,
+        },
+        {
+          path: "settings",
+          name: "Settings",
+          component: Settings,
+          meta: {
+            title: $t("dashboard.settings"),
+          },
+        },
+      ],
+    },
+    {
+      path: `/${$t("page.groupPagePath")}/:id`,
+      name: "GroupPage",
+      component: Home,
+    },
+    {
+      path: "/:path",
+      name: "Home2",
+      component: Home,
+    },
+    {
+      path: "/:path/",
+      redirect: { name: "Home2" },
+    },
+  ];
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-  scrollBehavior() {
-    // always scroll to top
-    return { top: 0 };
-  },
-});
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  }
-  next();
-});
+  const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes,
+    scrollBehavior() {
+      // always scroll to top
+      return { top: 0 };
+    },
+  });
+  router.beforeEach((to, from, next) => {
+    if (to.meta.title) {
+      document.title = to.meta.title;
+    }
+    next();
+  });
 
-export default router;
+  return router;
+};

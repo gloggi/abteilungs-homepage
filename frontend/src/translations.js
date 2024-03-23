@@ -216,6 +216,7 @@ export const messages = {
       endLocationLabel: "Schlussort",
       divisions: "Abteilungen",
       groupChildren: "Untergeordnete Gruppen",
+      groupPagePath: "gruppen",
     },
   },
 };

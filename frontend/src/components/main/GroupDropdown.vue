@@ -17,7 +17,7 @@
             >
               <router-link
                 @click="showDropdown = false"
-                :to="`/group/${group.route}`"
+                :to="`/${$t('page.groupPagePath')}/${group.route}`"
                 >{{ group.name }}</router-link
               >
             </li>
