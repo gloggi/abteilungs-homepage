@@ -78,8 +78,8 @@ cat ~/.ssh/known_hosts
 echo "Checking PHP version:"
 ssh -l $SSH_USERNAME -p $SSH_PORT -T $SSH_HOST <<EOF
   set -e
-  php -v
   cd $SSH_BACKEND_DIRECTORY
+  php -v
   php -r "if(PHP_VERSION_ID<${PHP_MIN_VERSION_ID:-80100}){echo \"Your PHP version is too old\\nYou might be able to use these instructions on your hosting as well: https://www.cyon.ch/support/a/php-standardversion-fur-die-kommandozeile-festlegen\n\";exit(1);}"
 
   if [ -d "api" ]; then
