@@ -10,9 +10,9 @@
         class="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-between w-full"
       >
         <div class="flex flex-col main-text">
-          <h2 class="header-text-2 text-4xl text-primary pb-3">
+          <HeadingThree class="text-primary">
             {{ contact.role }}
-          </h2>
+          </HeadingThree>
           <p>
             {{ contact.firstname }} {{ contact.lastname }}
             {{ contact.nickname ? "v/o" : "" }} {{ contact.nickname }}
@@ -35,6 +35,7 @@
 </template>
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
+import HeadingThree from "./HeadingThree.vue";
 import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
@@ -62,6 +63,6 @@ export default {
   async created() {
     await this.getContacts();
   },
-  components: { HeadingTwo, ContentWrapper },
+  components: { HeadingTwo, ContentWrapper, HeadingThree },
 };
 </script>

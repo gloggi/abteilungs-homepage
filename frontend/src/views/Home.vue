@@ -71,9 +71,6 @@ export default {
       try {
         const response = await this.callApi("get", `/pages/${pageRoute}`);
         this.page = response.data;
-        document.title = `${this.page.title || ""} | ${
-          this.settings.divisionName || ""
-        }`;
       } catch (error) {
         if (this.settings.notFoundPage) {
           return this.getPage(this.settings.notFoundPage.route);
@@ -108,6 +105,16 @@ export default {
   watch: {
     $route() {
       this.routeHandler();
+    },
+    settings() {
+      document.title = `${this.page.title || ""} | ${
+        this.settings.divisionName || ""
+      }`;
+    },
+    page() {
+      document.title = `${this.page.title || ""} | ${
+        this.settings.divisionName || ""
+      }`;
     },
   },
   async created() {
