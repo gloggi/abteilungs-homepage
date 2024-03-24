@@ -171,6 +171,7 @@ export default {
             params: {
               page: this.page,
               dashboard: true,
+              perPage: 10,
             },
           },
         );

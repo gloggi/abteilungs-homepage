@@ -15,7 +15,7 @@ class FileController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 100);
+        $perPage = $request->input('per_page');
         $extensions = $request->input('extensions');
         $user = Auth::user();
         $query = File::orderBy("id", "desc");

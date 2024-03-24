@@ -21,11 +21,8 @@ class GroupController extends Controller
         if ($request->has('dashboard') && $user->hasRole('unitleader')) {
             $groups = $groups->whereIn('id', $user->groups->pluck('id'));
         }
-        if($request->has('dashboard')){
-            $perPage = $request->input('per_page', 10);
-        }else{
-            $perPage = $request->input('per_page', 100);
-        }
+        
+        $perPage = $request->input('per_page');
        
         $groups = $groups->paginate($perPage);
 
