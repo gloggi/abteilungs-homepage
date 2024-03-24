@@ -24,10 +24,13 @@
       v-model="modifiableSettings.divisionName"
       :errors="errors.divisionName"
     />
-    <div class="flex flex-col md:flex-row w-full md:justify-around items-center md:items-start">
+    <div
+      class="flex flex-col md:flex-row w-full md:justify-around items-center md:items-start"
+    >
       <div>
         <FormLabel>{{ $t("dashboard.divisionLogo") }}</FormLabel>
         <LogoDisplay
+          :allowedExtensions="['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp']"
           :logo="modifiableSettings.divisionLogo"
           @selectImage="(e) => updateLogo('divisionLogo', e)"
         />
@@ -37,6 +40,7 @@
         <LogoDisplay
           :logo="modifiableSettings.websiteIcon"
           @selectImage="(e) => updateLogo('websiteIcon', e)"
+          :allowedExtensions="['png', 'jpg', 'jpeg', 'gif', 'webp']"
         />
       </div>
       <div>
@@ -44,8 +48,9 @@
         <LogoDisplay
           :logo="modifiableSettings.socialIcon"
           @selectImage="(e) => updateLogo('socialIcon', e)"
+          :allowedExtensions="['png', 'jpg', 'jpeg']"
         />
-        <InfoField class="w-48 " :info="$t('dashboard.socialIconInfo')" />
+        <InfoField class="w-48" :info="$t('dashboard.socialIconInfo')" />
       </div>
     </div>
     <div class="flex space-x-8">
@@ -153,7 +158,7 @@ export default {
   },
   methods: {
     updateLogo(key, file) {
-      this.modifiableSettings[`${key}Id`] = file?.id?file?.id: null;
+      this.modifiableSettings[`${key}Id`] = file?.id ? file?.id : null;
     },
     async getSettings() {
       try {

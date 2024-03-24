@@ -23,7 +23,7 @@
   <MediaModal
     v-if="showModal"
     :pre-selected="[logo]"
-    :extensions="['jpg', 'png', 'gif', 'svg']"
+    :extensions="allowedExtensions"
     @close="closeHandler"
     @select="selectHandler"
     :max-select="1"
@@ -35,7 +35,20 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 export default {
   components: { MediaModal },
   emits: ["selectImage"],
-  props: ["logo", "objectContain"],
+  props: {
+    logo: {
+      type: Object,
+      default: undefined,
+    },
+    objectContain: {
+      type: Boolean,
+      default: false,
+    },
+    allowedExtensions: {
+      type: Array,
+      default: () => ["jpg", "png", "gif", "svg"],
+    },
+  },
   data() {
     return {
       showModal: false,

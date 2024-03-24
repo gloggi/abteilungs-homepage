@@ -170,7 +170,8 @@ export const messages = {
         "Dieses Feld dient dazu, die Stufen und Gruppen in der korrekten Reihenfolge darzustellen.",
       groupLeader: "Einheitsleitung",
       socialIcon: "Social-Media-Icon",
-      socialIconInfo: "Wird angezeigt, wenn der Link zur Webseite in sozialen Medien oder Messengern geteilt wird.",
+      socialIconInfo:
+        "Wird angezeigt, wenn der Link zur Webseite in sozialen Medien oder Messengern geteilt wird.",
     },
     page: {
       campDateLabel: "Lagerdatum",
