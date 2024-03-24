@@ -22,7 +22,7 @@ class GroupController extends Controller
             $groups = $groups->whereIn('id', $user->groups->pluck('id'));
         }
         
-        $perPage = $request->input('per_page');
+        $perPage = $request->input('per_page', 1000);
        
         $groups = $groups->paginate($perPage);
 

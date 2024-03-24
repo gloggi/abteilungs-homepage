@@ -17,7 +17,7 @@ class FormController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page');
+        $perPage = $request->input('per_page', 1000);
         $user = Auth::user();
         $query = Form::query();
         if ($request->has('dashboard') && !$user->hasRole('admin')) {

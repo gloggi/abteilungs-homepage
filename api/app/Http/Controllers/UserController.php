@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $page = $request->input('page', 1);
-        $perPage = $request->input('per_page');
+        $perPage = $request->input('per_page', 1000);
         $users = User::with('roles')->paginate($perPage, ['*'], 'page', $page);
         return response()->json($users);
     }

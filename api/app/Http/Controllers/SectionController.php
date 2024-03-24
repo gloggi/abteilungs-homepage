@@ -11,7 +11,7 @@ class SectionController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page');
+        $perPage = $request->input('per_page', 1000);
         $sections = Section::with(['file', 'files', 'groups', 'groups.file'])->orderBy('sort')
             ->paginate($perPage);
 

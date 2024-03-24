@@ -12,7 +12,7 @@ class FaqController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page');
+        $perPage = $request->input('per_page', 1000);
         $query = Faq::with('questions');
         $user = Auth::user();
         if($request->has('dashboard')&& !$user->hasRole('admin')){

@@ -10,7 +10,7 @@ class MenuItemController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page');
+        $perPage = $request->input('per_page', 1000);
         $page = $request->input('page', 1);
         $menuItems = MenuItem::with("page")->paginate($perPage, ['*'], 'page', $page);
 

@@ -29,7 +29,7 @@ class PageController extends Controller
             $groupIds = $user->groups->pluck('id');
             $query->whereIn('group_id', $groupIds);
         } 
-        $perPage = $request->input('per_page');
+        $perPage = $request->input('per_page', 1000);
         $pages = $query->orderBy('updated_at', 'desc')
             ->paginate($perPage);
 
