@@ -23,7 +23,8 @@ class Setting extends Model
         'show_alert',
         'alert_url',
         'not_found_page_id',
-        'is_region'
+        'is_region',
+        'social_icon_id',
     ];
 
 
@@ -35,6 +36,11 @@ class Setting extends Model
     public function websiteIcon()
     {
         return $this->belongsTo(File::class, 'website_icon_id');
+    }
+
+    public function socialIcon()
+    {
+        return $this->belongsTo(File::class, 'social_icon_id');
     }
 
     public function notFoundPage()

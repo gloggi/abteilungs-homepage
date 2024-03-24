@@ -24,7 +24,8 @@ class UpdateSettingRequest extends FormRequest
             'show_alert' => 'nullable|boolean',
             'alert_url' => 'nullable|string',
             'not_found_page_id' => 'nullable|integer|exists:pages,id',
-            'is_region' => 'nullable|boolean'
+            'is_region' => 'nullable|boolean',
+            'social_icon_id' => 'nullable|integer|exists:files,id',
         ];
     }
 }

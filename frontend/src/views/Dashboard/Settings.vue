@@ -24,20 +24,28 @@
       v-model="modifiableSettings.divisionName"
       :errors="errors.divisionName"
     />
-    <div class="flex flex-col md:flex-row">
-      <div class="w-1/2">
+    <div class="flex flex-col md:flex-row w-full md:justify-around items-center md:items-start">
+      <div>
         <FormLabel>{{ $t("dashboard.divisionLogo") }}</FormLabel>
         <LogoDisplay
           :logo="modifiableSettings.divisionLogo"
           @selectImage="(e) => updateLogo('divisionLogo', e)"
         />
       </div>
-      <div class="w-1/2">
+      <div>
         <FormLabel>{{ $t("dashboard.websiteIcon") }}</FormLabel>
         <LogoDisplay
           :logo="modifiableSettings.websiteIcon"
           @selectImage="(e) => updateLogo('websiteIcon', e)"
         />
+      </div>
+      <div>
+        <FormLabel>{{ $t("dashboard.socialIcon") }}</FormLabel>
+        <LogoDisplay
+          :logo="modifiableSettings.socialIcon"
+          @selectImage="(e) => updateLogo('socialIcon', e)"
+        />
+        <InfoField class="w-48 " :info="$t('dashboard.socialIconInfo')" />
       </div>
     </div>
     <div class="flex space-x-8">
@@ -118,6 +126,7 @@ import ActionButton from "../../components/admin/ActionButton.vue";
 import SmallTitle from "../../components/admin/SmallTitle.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
+import InfoField from "../../components/admin/InfoField.vue";
 
 export default {
   components: {
@@ -130,6 +139,7 @@ export default {
     SmallTitle,
     CheckBox,
     SelectComponent,
+    InfoField,
   },
   data() {
     return {
@@ -143,7 +153,7 @@ export default {
   },
   methods: {
     updateLogo(key, file) {
-      this.modifiableSettings[`${key}Id`] = file.id;
+      this.modifiableSettings[`${key}Id`] = file?.id?file?.id: null;
     },
     async getSettings() {
       try {
