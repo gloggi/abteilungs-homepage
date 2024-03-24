@@ -21,6 +21,7 @@ export const messages = {
       viaPbsMiData: "Via PBS MiData einloggen",
       menuAndLinks: "Menü & Links",
       groups: "Gruppen",
+      contact: "Kontakt",
       contacts: "Kontakte",
       sections: "Stufen",
       events: "Veranstaltungen",

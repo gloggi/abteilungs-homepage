@@ -107,13 +107,13 @@ export default {
       this.routeHandler();
     },
     settings() {
-      document.title = `${this.page.title || ""} | ${
-        this.settings.divisionName || ""
+      document.title = `${this.page?.title || ""} | ${
+        this.settings?.divisionName || ""
       }`;
     },
     page() {
-      document.title = `${this.page.title || ""} | ${
-        this.settings.divisionName || ""
+      document.title = `${this.page?.title || ""} | ${
+        this.settings?.divisionName || ""
       }`;
     },
   },

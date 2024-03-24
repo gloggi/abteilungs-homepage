@@ -211,7 +211,6 @@ import {
   faHeading,
   faAlignRight,
 } from "@fortawesome/free-solid-svg-icons";
-import prettify from "html-prettify";
 import MediaModal from "../MediaModal.vue";
 import Modal from "../Modal.vue";
 import TextInput from "../TextInput.vue";
@@ -247,11 +246,7 @@ export default {
     };
   },
   methods: {
-    prettifyHTML(html) {
-      return prettify(html);
-    },
     swapEditorContent() {
-      this.inputModel = prettify(this.inputModel);
       this.showHTML = !this.showHTML;
     },
     addImage() {
@@ -310,12 +305,14 @@ export default {
     },
   },
   mounted() {
-    console.log(this.placeholder);
     this.editor = new Editor({
       content: this.inputModel,
-
       onBlur: () => {
-        this.$emit("update:modelValue", this.editor.getHTML());
+        if (this.editor.isEmpty) {
+          this.$emit("update:modelValue", null);
+        } else {
+          this.$emit("update:modelValue", this.editor.getHTML());
+        }
       },
       extensions: [
         StarterKit.configure({
@@ -330,6 +327,13 @@ export default {
             },
           },
           heading: false,
+          hardBreak: {
+            addKeyboardShortcuts() {
+              return {
+                Enter: () => this.editor.commands.setHardBreak(),
+              };
+            },
+          },
         }),
         HeadingExtension.configure({ levels: [1, 2] }).extend({
           levels: [1, 2],
@@ -366,13 +370,6 @@ export default {
         Placeholder.configure({
           placeholder: this.placeholder,
         }),
-        HardBreak.extend({
-          addKeyboardShortcuts() {
-            return {
-              Enter: () => this.editor.commands.setHardBreak(),
-            };
-          },
-        }),
         Table.configure({
           HTMLAttributes: {
             class: "main-text w-full",
@@ -390,7 +387,6 @@ export default {
       },
     });
   },
-
   beforeUnmount() {
     this.editor.destroy();
   },
