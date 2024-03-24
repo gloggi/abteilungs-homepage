@@ -88,7 +88,6 @@
               {{ $t("dashboard.events") }}
             </SidebarItem>
             <SidebarItem
-              v-if="isAdmin"
               to="/dashboard/camps"
               :icon="icons.faCampground"
               @click="hideMobileMenu = true"

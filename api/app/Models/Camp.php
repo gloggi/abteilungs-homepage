@@ -41,4 +41,9 @@ class Camp extends Model
     {
         return $this->belongsToMany(Group::class, 'camp_groups', 'camp_id', 'group_id');
     }
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'camp_files', 'camp_id', 'file_id');
+    }
 }

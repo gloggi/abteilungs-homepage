@@ -21,6 +21,54 @@
           v-model="content.groups"
           :options="groups"
         />
+        <TextInput
+          :label="$t('dashboard.midataLink')"
+          type="url"
+          v-model="content.externalApplicationLink"
+          :errors="errors.externalApplicationLink"
+        />
+        <BreakPointSpaceManager>
+          <TextInput
+            :label="$t('dashboard.applicationOpeningAt')"
+            type="date"
+            v-model="content.applicationOpeningAt"
+            :errors="errors.applicationOpeningAt"
+          />
+          <TextInput
+            :label="$t('dashboard.applicationClosingAt')"
+            type="date"
+            v-model="content.applicationClosingAt"
+            :errors="errors.applicationClosingAt"
+          />
+        </BreakPointSpaceManager>
+        <BreakPointSpaceManager>
+          <TextInput
+            :label="$t('dashboard.startAt')"
+            type="datetime-local"
+            v-model="content.startAt"
+            :errors="errors.startAt"
+          />
+          <TextInput
+            :label="$t('dashboard.finishAt')"
+            type="datetime-local"
+            v-model="content.finishAt"
+            :errors="errors.finishAt"
+          />
+        </BreakPointSpaceManager>
+        <BreakPointSpaceManager>
+          <TextInput
+            :label="$t('dashboard.participantsCount')"
+            type="number"
+            v-model="content.participantsCount"
+            :errors="errors.participantsCount"
+          />
+          <TextInput
+            :label="$t('dashboard.maximumParticipants')"
+            type="number"
+            v-model="content.maximumParticipants"
+            :errors="errors.maximumParticipants"
+          />
+        </BreakPointSpaceManager>
         <div class="flex flex-col space-y-2">
           <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
           <Editor
@@ -28,35 +76,13 @@
             :placeholder="content.description"
           />
         </div>
-        <div class="flex">
-          <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>{{ $t("dashboard.applicationOpeningAt") }}</FormLabel>
-            {{ formatDate(content.applicationOpeningAt) }}
-          </div>
-          <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>{{ $t("dashboard.applicationClosingAt") }}</FormLabel>
-            {{ formatDate(content.applicationClosingAt) }}
-          </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>{{ $t("dashboard.startAt") }}</FormLabel>
-            {{ formatDate(content.startAt) }}
-          </div>
-          <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>{{ $t("dashboard.finishAt") }}</FormLabel>
-            {{ formatDate(content.finishAt) }}
-          </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>{{ $t("dashboard.participantsCount") }}</FormLabel>
-            {{ content.participantCount }}
-          </div>
-          <div class="flex flex-col space-y-2 w-full">
-            <FormLabel>{{ $t("dashboard.maximumParticipants") }}</FormLabel>
-            {{ content.maximumParticipants }}
-          </div>
+        <div class="flex flex-col space-y-2">
+          <FormLabel>{{ $t("dashboard.files") }}</FormLabel>
+          <FilesSelector
+            :key="loadedKey"
+            :item="{ files: content.files }"
+            @changeFiles="changeFiles"
+          />
         </div>
       </div>
     </Card>
@@ -71,6 +97,8 @@ import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import { format } from "date-fns";
 import MultipleSelect from "../../components/admin/MultipleSelect.vue";
+import BreakPointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
+import FilesSelector from "../../components/admin/FilesSelector.vue";
 export default {
   components: {
     Card,
@@ -79,6 +107,8 @@ export default {
     Editor,
     FormLabel,
     MultipleSelect,
+    BreakPointSpaceManager,
+    FilesSelector,
   },
   data() {
     return {
@@ -129,6 +159,9 @@ export default {
       this.callApi("get", "/groups").then((response) => {
         this.groups = response.data.data;
       });
+    },
+    changeFiles(event) {
+      this.content.files = event.files;
     },
   },
   async created() {

@@ -139,7 +139,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
 });
 
 Route::get('/camps', [CampController::class, 'index']);
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function() {
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function() {
     Route::get('/camps/{id}', [CampController::class, 'show']);
     Route::post('/camps', [CampController::class, 'store']);
     Route::put('/camps/{id}', [CampController::class, 'update']);

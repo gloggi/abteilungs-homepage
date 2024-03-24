@@ -23,6 +23,7 @@ class UpdateCampRequest extends FormRequest
             'external_application_link' => 'sometimes|required|string|max:255',
             'start_at' => 'nullable|date',
             'finish_at' => 'nullable|date',
+            'files' => 'nullable|array',
             'groups' => 'nullable|array',
         ];
     }
