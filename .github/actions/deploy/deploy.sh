@@ -89,7 +89,7 @@ ssh -l $SSH_USERNAME -p $SSH_PORT -T $SSH_HOST <<EOF
 
   if [ -d "api" ]; then
     cd api
-    php artisan down --render=updating
+    ${PHP_CMD} artisan down --render=updating
   fi
 EOF
 
@@ -127,5 +127,5 @@ ssh -l $SSH_USERNAME -T $SSH_HOST -p $SSH_PORT <<EOF
      -H "Content-Type: application/json" \
      -d "{\"secret_key\":\"$DEPLOYMENT_SECRET_KEY\"}"
 
-  php artisan up
+  ${PHP_CMD} artisan up
 EOF
