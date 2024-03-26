@@ -67,3 +67,4 @@ jobs:
           mail-from-address: ${{ vars.MAIL_FROM_ADDRESS }}
           mail-from-name: ${{ vars.MAIL_FROM_NAME }}
           deployment-secret-key: ${{ secrets.DEPLOYMENT_SECRET_KEY }}
+          php-version: ${{ vars.PHP_VERSION }}

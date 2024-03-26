@@ -4,6 +4,9 @@ set -euo pipefail
 ### Set default SSH port if not provided
 SSH_PORT=${SSH_PORT:-22}
 
+
+PHP_CMD="${PHP_PATH:-php}"
+
 ### BACKEND PREPARATION
 
 cd api
@@ -80,8 +83,8 @@ echo "Checking PHP version:"
 ssh -l $SSH_USERNAME -p $SSH_PORT -T $SSH_HOST <<EOF
   set -e
   cd $SSH_BACKEND_DIRECTORY
-  php -v
-  php -r "if(PHP_VERSION_ID<${PHP_MIN_VERSION_ID:-80100}){echo \"Your PHP version is too old\\nYou might be able to use these instructions on your hosting as well: https://www.cyon.ch/support/a/php-standardversion-fur-die-kommandozeile-festlegen\n\";exit(1);}"
+  ${PHP_CMD} -v -v
+  ${PHP_CMD} -r "if(PHP_VERSION_ID<${PHP_MIN_VERSION_ID:-80100}){echo \"Your PHP version is too old\\nYou might be able to use these instructions on your hosting as well: https://www.cyon.ch/support/a/php-standardversion-fur-die-kommandozeile-festlegen\n\";exit(1);}"
 
   if [ -d "api" ]; then
     cd api
