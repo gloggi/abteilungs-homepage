@@ -6,6 +6,7 @@ SSH_PORT=${SSH_PORT:-22}
 
 
 PHP_CMD="${PHP_PATH:-php}"
+echo "Using PHP command: $PHP_CMD"
 
 ### BACKEND PREPARATION
 
