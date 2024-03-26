@@ -129,8 +129,8 @@ inputs:
     description: 'The secret key for the deployment'
     required: false
   
-  php-version:
-    description: 'The PHP version'
+  php-path:
+    description: 'The PHP path'
     required: false
 
 runs:
@@ -169,5 +169,5 @@ runs:
         MAIL_FROM_ADDRESS: ${{ inputs.mail-from-address }}
         MAIL_FROM_NAME: ${{ inputs.mail-from-name }}
         DEPLOYMENT_SECRET_KEY: ${{ inputs.deployment-secret-key }}
-        PHP_VERSION: ${{ inputs.php-version }}
+        PHP_PATH: ${{ inputs.php-path }}
         
