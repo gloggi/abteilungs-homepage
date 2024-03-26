@@ -14,7 +14,7 @@ class CampController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 1000);
         $query = Camp::query();
         if($request->has('group_id')) {
             $groupId = $request->input('group_id');
@@ -22,7 +22,7 @@ class CampController extends Controller
                 $q->where('group_id', $groupId);
             });
         }
-        $camps = $query->paginate($perPage);
+        $camps = $query->with(['groups', 'files'])->paginate($perPage);
 
         return response()->json($camps);
     }
@@ -30,13 +30,15 @@ class CampController extends Controller
     public function store(StoreCampRequest $request)
     {
         $camp = Camp::create($request->validated());
+        $camp->files()->sync(array_column($request->input('files', []), 'id'));
+        $camp->groups()->sync($request->input('groups', []));
 
         return response()->json($camp, 201);
     }
 
     public function show($id)
     {
-        $camp = Camp::with(['groups'])->find($id);
+        $camp = Camp::with(['groups', 'files'])->find($id);
 
         if (!$camp) {
             return response()->json(['message' => 'Camp not found'], 404);
@@ -54,6 +56,7 @@ class CampController extends Controller
         }
 
         $camp->update($request->validated());
+        $camp->files()->sync(array_column($request->input('files', []), 'id'));
         $camp->groups()->sync($request->input('groups', []));
 
         return response()->json($camp);

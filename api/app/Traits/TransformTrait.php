@@ -6,6 +6,11 @@ trait TransformTrait
 {
     public function normalize($str)
     {
+        $str = str_replace(
+            ['ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'],
+            ['ae', 'oe', 'ue', 'ss', 'Ae', 'Oe', 'Ue'],
+            $str
+        );
         $str = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
 
         return strtolower($str);

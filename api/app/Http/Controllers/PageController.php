@@ -23,13 +23,13 @@ class PageController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
         $user = Auth::user();
         $query = Page::with(['files']);
         if($request->has('dashboard')&& !$user->hasRole('admin')){
             $groupIds = $user->groups->pluck('id');
             $query->whereIn('group_id', $groupIds);
         } 
+        $perPage = $request->input('per_page', 1000);
         $pages = $query->orderBy('updated_at', 'desc')
             ->paginate($perPage);
 

@@ -23,6 +23,8 @@ class StoreCampRequest extends FormRequest
             'external_application_link' => 'required|string|max:255',
             'start_at' => 'nullable|date',
             'finish_at' => 'nullable|date',
+            'files' => 'nullable|array',
+            'groups' => 'nullable|array',
         ];
     }
 }

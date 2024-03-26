@@ -21,9 +21,10 @@ export const messages = {
       viaPbsMiData: "Via PBS MiData einloggen",
       menuAndLinks: "Menü & Links",
       groups: "Gruppen",
+      contact: "Kontakt",
       contacts: "Kontakte",
       sections: "Stufen",
-      events: "Veranstaltungen",
+      events: "Aktivität",
       camps: "Lager",
       locations: "Orte",
       forms: "Formulare",
@@ -146,8 +147,8 @@ export const messages = {
       notFoundPage: "404-Seite",
       replaceFile: "Datei ersetzen",
       group: "Gruppe",
-      groupEvents: "Gruppenveranstaltungen",
-      groupEventsItem: "Gruppenveranstaltungen-Element",
+      groupEvents: "Gruppenaktivitäten",
+      groupEventsItem: "Gruppenaktivitäten-Element",
       isGroupPage: "Ist eine Gruppenseite?",
       clickToAddPageItem:
         "Klicke hier, um ein neues Seitenelement hinzuzufügen",
@@ -169,6 +170,9 @@ export const messages = {
       sectionSortInfo:
         "Dieses Feld dient dazu, die Stufen und Gruppen in der korrekten Reihenfolge darzustellen.",
       groupLeader: "Einheitsleitung",
+      socialIcon: "Social-Media-Icon",
+      socialIconInfo:
+        "Wird angezeigt, wenn der Link zur Webseite in sozialen Medien oder Messengern geteilt wird.",
     },
     page: {
       campDateLabel: "Lagerdatum",
@@ -197,7 +201,7 @@ export const messages = {
       submit: "Absenden",
       groups: "Gruppen",
       downloads: "Downloads",
-      events: "Anlässe",
+      events: "Aktivitäten",
       ageLabel: "Alter",
       genderLabel: "Geschlecht",
       predecessorGroups: "Vorgängergruppen",
@@ -207,7 +211,7 @@ export const messages = {
       contactLabel: "Kontakt",
       groupLeadership: "Gruppenleitung",
       goToGroupPage: "Zur Gruppenseite",
-      noEventsAvailable: "Es sind momentan keine Anlässe verfügbar.",
+      noEventsAvailable: "Es sind momentan keine Aktivitäten verfügbar.",
       noCampsAvailable: "Es sind momentan keine Lager verfügbar.",
       formSuccessMessage:
         "Vielen Dank! Das Formular wurde erfolgreich abgesendet.",

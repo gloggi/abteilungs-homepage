@@ -82,7 +82,7 @@
       class="w-full mx-5 md:mx-0 md:w-1/2 h-full bg-white flex flex-col rounded-lg"
     >
       <div
-        class="bg-primary px-3 py-5 flex justify-between items-end rounded-t-lg"
+        class="bg-primary px-8 py-5 flex justify-between items-end rounded-t-lg"
       >
         <h2 class="text-white text-heading-3 text-6xl">
           {{ currentGroup.name }}

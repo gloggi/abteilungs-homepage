@@ -43,6 +43,13 @@
             <p v-else-if="camp.description" class="main-text text-xl">
               {{ camp.description }}
             </p>
+            <h4
+              v-if="camp.files.length > 0"
+              class="font-bold text-3xl text-primary pt-2"
+            >
+              {{ $t("page.downloadsLabel") }}
+            </h4>
+            <FilesItem v-if="camp.files.length > 0" :files="camp.files" />
             <div class="flex justify-end w-full">
               <BasicButton class="self-end" v-if="camp.externalApplicationLink">
                 <a :href="camp.externalApplicationLink">
@@ -62,11 +69,13 @@ import { format } from "date-fns";
 import { de } from "date-fns/locale";
 import { gsap } from "gsap";
 import BasicButton from "./BasicButton.vue";
+import FilesItem from "./FilesItem.vue";
 
 export default {
   components: {
     HeadingTwo,
     BasicButton,
+    FilesItem,
   },
   props: {
     open: {

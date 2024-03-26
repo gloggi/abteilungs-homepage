@@ -61,6 +61,7 @@ rm -f .env
 cp .env.example .env
 
 sed -ri "s~^VITE_BACKEND_URL=.*$~VITE_BACKEND_URL=$BACKEND_URL~" .env
+sed -ri "s~^VITE_APP_NAME=.*$~VITE_APP_NAME=$APP_NAME~" .env
 
 docker compose run --rm --no-deps --entrypoint "/bin/sh -c 'npm install && npm run build --no-unsafe-inline'" frontend
 

@@ -17,7 +17,7 @@ class SettingController extends Controller
 
     public function show()
     {
-        $setting = Setting::with(['divisionLogo', 'websiteIcon', 'notFoundPage'])->find(1);
+        $setting = Setting::with(['divisionLogo', 'websiteIcon', 'socialIcon', 'notFoundPage'])->find(1);
         if(!Auth::user()||!Auth::user()->hasRole('admin')) {
             
             $setting = $setting->makeHidden(['midata_id', 'midata_api_key' ]);
