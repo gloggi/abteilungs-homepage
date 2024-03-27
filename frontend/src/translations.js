@@ -24,7 +24,7 @@ export const messages = {
       contact: "Kontakt",
       contacts: "Kontakte",
       sections: "Stufen",
-      events: "Aktivität",
+      events: "Aktivitäten",
       camps: "Lager",
       locations: "Orte",
       forms: "Formulare",
