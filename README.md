@@ -94,5 +94,6 @@ In diesem Beispiel legen wir ein Deployment für die Abteilung Lagom unter der A
     * `MAIL_ENCRYPTION`: Verschlüsselungsmethode für Emails (z.B. tls, ssl, none)
     * `MAIL_FROM_ADDRESS`: Standard-Absenderadresse für ausgehende Emails
     * `MAIL_FROM_NAME`: Standard-Absendername für ausgehende Emails
+    * `PHP_PATH`:  Pfad zur PHP-Version, die während des Deployments verwendet werden soll (default php)
 7. In [nightly.yml](https://github.com/gloggi/abteilungs-homepage/blob/master/.github/workflows/nightly.yml) einen Punkt `- uses: repo-sync/github-sync@v2` inkl. Unterpunkten kopieren und destination-branch auf `deploy-lagom` anpassen (muss mit `deploy-` anfangen und `lagom` muss ganz genau gleich geschrieben sein wie das GitHub Environment heisst)
 8. Code von master auf den neuen Branch deploy-lagom pushen und in GitHub Actions zuschauen wie das Deployment zum ersten Mal läuft
