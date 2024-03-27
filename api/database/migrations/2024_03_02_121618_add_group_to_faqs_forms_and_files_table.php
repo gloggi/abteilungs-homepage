@@ -47,6 +47,6 @@ return new class extends Migration
             $table->dropForeign(['group_id']);
             $table->dropColumn('group_id');
         });
-      
+
     }
 };

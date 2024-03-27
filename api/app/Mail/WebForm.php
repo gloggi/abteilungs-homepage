@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -14,7 +13,9 @@ class WebForm extends Mailable
     use Queueable, SerializesModels;
 
     public $formData;
+
     public $form;
+
     public $settings;
 
     /**
@@ -46,7 +47,7 @@ class WebForm extends Mailable
             view: 'emails.webform',
             with: [
                 'data' => $this->formData,
-                'form' => $this->form, 
+                'form' => $this->form,
                 'settings' => $this->settings,
             ]
         );

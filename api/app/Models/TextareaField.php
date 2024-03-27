@@ -20,7 +20,7 @@ class TextareaField extends Model
 
     public function getTypeAttribute()
     {
-        return "textareaField";
+        return 'textareaField';
     }
 
     public function form()

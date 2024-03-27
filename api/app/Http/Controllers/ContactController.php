@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateContactRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
-
 class ContactController extends Controller
 {
     public function index(Request $request)
@@ -30,7 +29,7 @@ class ContactController extends Controller
     {
         $contact = Contact::with('file')->find($id);
 
-        if (!$contact) {
+        if (! $contact) {
             return response()->json(['message' => 'Contact not found'], 404);
         }
 
@@ -41,7 +40,7 @@ class ContactController extends Controller
     {
         $contact = Contact::find($id);
 
-        if (!$contact) {
+        if (! $contact) {
             return response()->json(['message' => 'Contact not found'], 404);
         }
 
@@ -54,7 +53,7 @@ class ContactController extends Controller
     {
         $contact = Contact::find($id);
 
-        if (!$contact) {
+        if (! $contact) {
             return response()->json(['message' => 'Contact not found'], 404);
         }
 

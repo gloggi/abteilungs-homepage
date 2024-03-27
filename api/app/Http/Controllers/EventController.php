@@ -25,22 +25,22 @@ class EventController extends Controller
 
         $query = Event::with(['startLocation', 'endLocation', 'groups', 'files', 'user']);
         if ($groupId) {
-            $query->whereHas('groups', function($query) use ($groupId) {
+            $query->whereHas('groups', function ($query) use ($groupId) {
                 $query->where('groups.id', $groupId);
             });
         }
         if ($request->has('dashboard') && $user->hasRole('unitleader')) {
-            $query->whereHas('groups', function($query) use ($user) {
+            $query->whereHas('groups', function ($query) use ($user) {
                 $query->whereIn('groups.id', $user->groups->pluck('id'));
             });
         }
         $events = $query->get();
 
-        $upcomingEvents = $events->filter(function($event) use ($currentDateTime) {
+        $upcomingEvents = $events->filter(function ($event) use ($currentDateTime) {
             return $event->start_time >= $currentDateTime;
         })->sortBy('start_time');
 
-        $pastEvents = $events->reject(function($event) use ($currentDateTime) {
+        $pastEvents = $events->reject(function ($event) use ($currentDateTime) {
             return $event->start_time >= $currentDateTime;
         })->sortByDesc('start_time');
 
@@ -60,12 +60,11 @@ class EventController extends Controller
         return response()->json($paginatedEvents);
     }
 
-
     public function store(StoreEventRequest $request)
     {
         $validated = $request->validated();
         $event = Event::create($validated);
-        if (!array_key_exists('user_id', $validated)) {
+        if (! array_key_exists('user_id', $validated)) {
             $event->user_id = Auth::user()->id;
             $event->save();
         }
@@ -79,7 +78,7 @@ class EventController extends Controller
     {
         $event = Event::with(['groups', 'files', 'user'])->find($id);
 
-        if (!$event) {
+        if (! $event) {
             return response()->json(['message' => 'Event not found'], 404);
         }
 
@@ -90,7 +89,7 @@ class EventController extends Controller
     {
         $event = Event::find($id);
 
-        if (!$event) {
+        if (! $event) {
             return response()->json(['message' => 'Event not found'], 404);
         }
 
@@ -105,7 +104,7 @@ class EventController extends Controller
     {
         $event = Event::find($id);
 
-        if (!$event) {
+        if (! $event) {
             return response()->json(['message' => 'Event not found'], 404);
         }
 
@@ -124,14 +123,14 @@ class EventController extends Controller
             $midataBaseUrl = config('services.midata.base_url');
             $response = Http::get("{$midataBaseUrl}/de/groups/{$midataId}/events/simple.json?token={$token}");
             $externalEvents = $response->json();
-            if (!array_key_exists('linked', $externalEvents)) {
+            if (! array_key_exists('linked', $externalEvents)) {
                 continue;
             }
             $eventDatesMap = collect($externalEvents['linked']['event_dates'])->keyBy('id');
 
             foreach ($externalEvents['events'] as $externalEvent) {
                 $eventDateIds = $externalEvent['links']['dates'] ?? [];
-                $eventDate = collect($eventDateIds)->map(fn($id) => $eventDatesMap->get($id))->first();
+                $eventDate = collect($eventDateIds)->map(fn ($id) => $eventDatesMap->get($id))->first();
                 $locationId = Location::firstWhere('name', $eventDate['location'])->id ?? null;
                 $event = Event::updateOrCreate(
                     ['midata_id' => $externalEvent['id']],
@@ -149,7 +148,6 @@ class EventController extends Controller
                 $group = Group::where('midata_id', $midataId)->first();
                 $event->groups()->sync([$group->id]);
             }
-
 
             $event->save();
 

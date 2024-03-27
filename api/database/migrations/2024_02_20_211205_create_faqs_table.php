@@ -28,7 +28,7 @@ return new class extends Migration
                 ->on('faqs')
                 ->onDelete('cascade');
             $table->timestamps();
-            
+
         });
     }
 

@@ -30,7 +30,7 @@ class SectionController extends Controller
     {
         $section = Section::with(['file', 'files'])->find($id);
 
-        if (!$section) {
+        if (! $section) {
             return response()->json(['message' => 'Section not found'], 404);
         }
 
@@ -41,7 +41,7 @@ class SectionController extends Controller
     {
         $section = Section::find($id);
 
-        if (!$section) {
+        if (! $section) {
             return response()->json(['message' => 'Section not found'], 404);
         }
 
@@ -55,7 +55,7 @@ class SectionController extends Controller
     {
         $section = Section::find($id);
 
-        if (!$section) {
+        if (! $section) {
             return response()->json(['message' => 'Section not found'], 404);
         }
 

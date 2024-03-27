@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class SectionsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,13 +13,11 @@ class SectionsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('sections')->delete();
-        
-        \DB::table('sections')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('sections')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'Biberstufe',
                 'color' => '#9b9292',
@@ -30,9 +27,8 @@ class SectionsTableSeeder extends Seeder
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:32:21',
                 'updated_at' => '2024-03-05 15:20:37',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'name' => 'Wolfsstufe',
                 'color' => '#3eb9bb',
@@ -42,9 +38,8 @@ class SectionsTableSeeder extends Seeder
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:32:40',
                 'updated_at' => '2024-03-05 15:20:57',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'name' => 'Pfadistufe',
                 'color' => '#cd922d',
@@ -54,9 +49,8 @@ class SectionsTableSeeder extends Seeder
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:32:55',
                 'updated_at' => '2024-03-05 15:21:22',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
                 'name' => 'Piostufe',
                 'color' => '#e22828',
@@ -66,21 +60,19 @@ class SectionsTableSeeder extends Seeder
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:33:10',
                 'updated_at' => '2024-03-05 15:21:35',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
                 'name' => 'Roverstufe',
                 'color' => '#595959',
                 'from_age' => 17,
                 'to_age' => 99,
-                'file_id' => NULL,
+                'file_id' => null,
                 'description' => '<p class="main-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',
                 'created_at' => '2023-12-11 12:33:29',
                 'updated_at' => '2023-12-16 22:41:50',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

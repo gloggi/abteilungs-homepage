@@ -14,5 +14,4 @@ class UpdateFooterLinkRequest extends FormRequest
             'sort' => 'sometimes|required|integer',
         ];
     }
-
 }

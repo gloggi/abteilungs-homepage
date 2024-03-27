@@ -12,7 +12,7 @@ class LocationController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 1000);
-       
+
         $locations = Location::paginate($perPage);
 
         return response()->json($locations);
@@ -29,7 +29,7 @@ class LocationController extends Controller
     {
         $location = Location::find($id);
 
-        if (!$location) {
+        if (! $location) {
             return response()->json(['message' => 'Location not found'], 404);
         }
 
@@ -40,7 +40,7 @@ class LocationController extends Controller
     {
         $location = Location::find($id);
 
-        if (!$location) {
+        if (! $location) {
             return response()->json(['message' => 'Location not found'], 404);
         }
 
@@ -53,7 +53,7 @@ class LocationController extends Controller
     {
         $location = Location::find($id);
 
-        if (!$location) {
+        if (! $location) {
             return response()->json(['message' => 'Location not found'], 404);
         }
 

@@ -157,25 +157,25 @@ return [
     'url' => 'Das :attribute muss eine gültige URL sein.',
     'ulid' => 'Das :attribute muss eine gültige ULID sein.',
     'uuid' => 'Das :attribute muss eine gültige UUID sein.',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Benutzerdefinierte Validierungssprachzeilen
     |--------------------------------------------------------------------------
     |
     | Hier können Sie benutzerdefinierte Validierungsnachrichten für Attribute angeben,
-    | indem Sie die Konvention "attribute.rule" verwenden, um die Zeilen zu benennen. 
+    | indem Sie die Konvention "attribute.rule" verwenden, um die Zeilen zu benennen.
     | Dies erleichtert das Spezifizieren einer spezifischen benutzerdefinierten Sprachzeile
     | für eine gegebene Attributregel.
     |
     */
-    
+
     'custom' => [
         'attribut-name' => [
             'regel-name' => 'benutzerdefinierte-nachricht',
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Benutzerdefinierte Validierungsattribute
@@ -186,7 +186,7 @@ return [
     | Dies hilft uns, unsere Nachricht ausdrucksvoller zu gestalten.
     |
     */
-    
+
     'attributes' => [
         // StorePageRequest.php
         'title' => 'Titel',
@@ -202,7 +202,7 @@ return [
         'page_items.*.form_id' => 'Formular',
         'page_items.*.location_id' => 'Ort',
         'page_items.*.faq_id' => 'FAQ',
-    
+
         // UpdateContactRequest.php
         'firstname' => 'Vorname',
         'lastname' => 'Nachname',
@@ -211,7 +211,7 @@ return [
         'email' => 'E-Mail',
         'sort' => 'Sortieren',
         'file_id' => 'Datei',
-    
+
         // StoreSectionRequest.php
         'name' => 'Name',
         'color' => 'Farbe',
@@ -220,7 +220,7 @@ return [
         'file_id' => 'Datei',
         'description' => 'Beschreibung',
         'files' => 'Dateien',
-    
+
         // UpdateCampRequest.php
         'name' => 'Name',
         'description' => 'Beschreibung',
@@ -235,7 +235,7 @@ return [
         'external_application_link' => 'Externer Anmeldelink',
         'start_at' => 'Start',
         'finish_at' => 'Ende',
-    
+
         // StoreGroupRequest.php
         'name' => 'Name',
         'color' => 'Farbe',
@@ -250,7 +250,7 @@ return [
         'predecessors' => 'Vorgänger',
         'successors' => 'Nachfolger',
         'enable_group_page' => 'Gruppenseite aktivieren',
-    
+
         // StoreEventRequest.php
         'title' => 'Titel',
         'description' => 'Beschreibung',
@@ -263,7 +263,7 @@ return [
         'files' => 'Dateien',
         'user_id' => 'Benutzer',
         'external_application_link' => 'Externer Bewerbungslink',
-    
+
         // UpdateFormRequest.php
         'name' => 'Name',
         'email' => 'E-Mail',
@@ -274,17 +274,17 @@ return [
         'fields.*.sort' => 'Sortieren',
         'fields.*.option_fields' => 'Optionsfelder',
         'fields.*.label' => 'Beschriftung',
-    
+
         // StoreFooterLinkRequest.php
         'title' => 'Titel',
         'url' => 'URL',
         'sort' => 'Sortieren',
-    
+
         // UpdateLocationRequest.php
         'name' => 'Name',
         'lat' => 'Breitengrad',
         'long' => 'Längengrad',
-    
+
         // UpdateFaqRequest.php
         'title' => 'Titel',
         'questions.*.question' => 'Frage',
@@ -292,7 +292,7 @@ return [
         'questions.*.id' => 'ID',
         'questions.*.open' => 'Öffnen',
         'questions.*.sort' => 'Sortieren',
-    
+
         // StoreContactRequest.php
         'firstname' => 'Vorname',
         'lastname' => 'Nachname',
@@ -301,7 +301,7 @@ return [
         'email' => 'E-Mail',
         'sort' => 'Sortieren',
         'file_id' => 'Datei',
-    
+
         // UpdateSectionRequest.php
         'name' => 'Name',
         'color' => 'Farbe',
@@ -310,12 +310,12 @@ return [
         'file_id' => 'Datei',
         'description' => 'Beschreibung',
         'files' => 'Dateien',
-    
+
         // StoreLocationRequest.php
         'name' => 'Name',
         'lat' => 'Breitengrad',
         'long' => 'Längengrad',
-    
+
         // UpdateEventRequest.php
         'title' => 'Titel',
         'start_time' => 'Startzeit',
@@ -328,7 +328,7 @@ return [
         'files' => 'Dateien',
         'user_id' => 'Benutzer',
         'external_application_link' => 'Externer Anmeldelink',
-    
+
         // StoreFaqRequest.php
         'title' => 'Titel',
         'questions.*.question' => 'Frage',
@@ -336,7 +336,7 @@ return [
         'questions.*.id' => 'ID',
         'questions.*.open' => 'Öffnen',
         'questions.*.sort' => 'Sortieren',
-    
+
         // UpdateGroupRequest.php
         'name' => 'Name',
         'color' => 'Farbe',
@@ -351,12 +351,12 @@ return [
         'predecessors' => 'Vorgänger',
         'successors' => 'Nachfolger',
         'enable_group_page' => 'Gruppenseite aktivieren',
-    
+
         // UpdateFooterLinkRequest.php
         'title' => 'Titel',
         'url' => 'URL',
         'sort' => 'Sortieren',
-    
+
         // StoreFormRequest.php
         'name' => 'Name',
         'email' => 'E-Mail',
@@ -368,5 +368,5 @@ return [
         'fields.*.option_fields' => 'Optionsfelder',
         'fields.*.label' => 'Beschriftung',
     ],
-    
+
 ];

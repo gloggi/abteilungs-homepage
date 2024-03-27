@@ -15,7 +15,7 @@ class LocationItem extends Model
 
     public function getTypeAttribute()
     {
-        return "locationItem";
+        return 'locationItem';
     }
 
     public function page()

@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('settings', function (Blueprint $table) {
-           $table->string('alert_text')->nullable()->after('contact_in_footer');
-           $table->string('alert_bg_color')->nullable()->after('alert_text');
-           $table->string('alert_text_color')->nullable()->after('alert_bg_color');
-           $table->boolean('show_alert')->default(false)->after('alert_text_color');
-           $table->string('alert_url')->nullable()->after('show_alert');
+            $table->string('alert_text')->nullable()->after('contact_in_footer');
+            $table->string('alert_bg_color')->nullable()->after('alert_text');
+            $table->string('alert_text_color')->nullable()->after('alert_bg_color');
+            $table->boolean('show_alert')->default(false)->after('alert_text_color');
+            $table->string('alert_url')->nullable()->after('show_alert');
         });
     }
 

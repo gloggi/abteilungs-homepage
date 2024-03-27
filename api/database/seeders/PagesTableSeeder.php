@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class PagesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,23 +13,20 @@ class PagesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('pages')->delete();
-        
-        \DB::table('pages')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('pages')->insert([
+            0 => [
                 'id' => 1,
-                'group_id' => NULL,
+                'group_id' => null,
                 'title' => 'Home',
-                'route' => NULL,
+                'route' => null,
                 'big_header' => 1,
                 'created_at' => '2024-03-05 14:44:38',
                 'updated_at' => '2024-03-05 17:27:29',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'group_id' => 7,
                 'title' => 'Whales',
@@ -38,39 +34,35 @@ class PagesTableSeeder extends Seeder
                 'big_header' => 0,
                 'created_at' => '2024-03-05 16:15:16',
                 'updated_at' => '2024-03-05 16:15:16',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
-                'group_id' => NULL,
+                'group_id' => null,
                 'title' => 'Kontakt',
                 'route' => 'kontakt',
                 'big_header' => 0,
                 'created_at' => '2024-03-05 17:13:33',
                 'updated_at' => '2024-03-05 17:13:33',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
-                'group_id' => NULL,
+                'group_id' => null,
                 'title' => 'Über uns',
                 'route' => 'uber-uns',
                 'big_header' => 0,
                 'created_at' => '2024-03-05 17:16:39',
                 'updated_at' => '2024-03-05 17:16:39',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
-                'group_id' => NULL,
+                'group_id' => null,
                 'title' => 'Fragen',
                 'route' => 'faq',
                 'big_header' => 0,
                 'created_at' => '2024-03-05 17:17:38',
                 'updated_at' => '2024-03-05 17:17:38',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'id' => 6,
                 'group_id' => 1,
                 'title' => 'Bears',
@@ -78,9 +70,8 @@ class PagesTableSeeder extends Seeder
                 'big_header' => 0,
                 'created_at' => '2024-03-05 19:33:11',
                 'updated_at' => '2024-03-05 19:33:11',
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'id' => 7,
                 'group_id' => 9,
                 'title' => 'Owls',
@@ -88,29 +79,26 @@ class PagesTableSeeder extends Seeder
                 'big_header' => 0,
                 'created_at' => '2024-03-05 19:34:37',
                 'updated_at' => '2024-03-05 19:34:37',
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'id' => 8,
-                'group_id' => NULL,
+                'group_id' => null,
                 'title' => '404',
                 'route' => '404',
                 'big_header' => 0,
                 'created_at' => '2024-03-05 19:42:26',
                 'updated_at' => '2024-03-05 19:42:26',
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'id' => 9,
-                'group_id' => NULL,
+                'group_id' => null,
                 'title' => 'Schnuppertag',
                 'route' => 'schnuppertag',
                 'big_header' => 0,
                 'created_at' => '2024-03-11 20:30:21',
                 'updated_at' => '2024-03-11 20:30:21',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class SelectFieldsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class SelectFieldsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('select_fields')->delete();
-        
-        
-        
+
     }
 }

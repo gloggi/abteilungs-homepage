@@ -14,5 +14,4 @@ class StoreFooterLinkRequest extends FormRequest
             'sort' => 'required|integer',
         ];
     }
-
 }

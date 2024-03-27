@@ -48,13 +48,13 @@ class WaitForDb extends Command
     {
         $dbIsOnline = false;
 
-        while (!$dbIsOnline) {
+        while (! $dbIsOnline) {
             try {
                 DB::connection()->getPdo();
                 $dbIsOnline = true;
-                $this->info("DB connection successful!");
+                $this->info('DB connection successful!');
             } catch (\Exception $e) {
-                $this->info("DB connection failed, still waiting for DB to come online...");
+                $this->info('DB connection failed, still waiting for DB to come online...');
                 sleep($this->interval);
             }
         }

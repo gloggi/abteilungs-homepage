@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('events', function (Blueprint $table) {
-            
+
             $table->unsignedBigInteger('user_id')->nullable()->after('external_application_link');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
@@ -24,9 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('events', function (Blueprint $table) {
-            
+
             $table->dropForeign(['user_id']);
-            
+
             $table->dropColumn('user_id');
         });
     }

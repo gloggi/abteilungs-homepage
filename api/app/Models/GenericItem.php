@@ -8,7 +8,6 @@ class GenericItem extends Model
 {
     protected $fillable = ['type', 'page_id', 'sort'];
 
-
     public function page()
     {
         return $this->belongsTo(Page::class);

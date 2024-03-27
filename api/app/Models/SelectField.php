@@ -20,7 +20,7 @@ class SelectField extends Model
 
     public function getTypeAttribute()
     {
-        return "selectField";
+        return 'selectField';
     }
 
     public function form()

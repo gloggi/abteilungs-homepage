@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCampRequest extends FormRequest
 {
-
     public function rules()
     {
         return [

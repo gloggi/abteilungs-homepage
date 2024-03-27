@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Models\CampItem;
@@ -20,15 +19,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
-
     public function index(Request $request)
     {
         $user = Auth::user();
         $query = Page::with(['files']);
-        if($request->has('dashboard')&& !$user->hasRole('admin')){
+        if ($request->has('dashboard') && ! $user->hasRole('admin')) {
             $groupIds = $user->groups->pluck('id');
             $query->whereIn('group_id', $groupIds);
-        } 
+        }
         $perPage = $request->input('per_page', 1000);
         $pages = $query->orderBy('updated_at', 'desc')
             ->paginate($perPage);
@@ -40,19 +38,15 @@ class PageController extends Controller
     {
         $validatedData = $request->validated();
         $user = Auth::user();
-        if(!$user->hasRole('admin')){
-            if(isset($validatedData['group_id'])){
+        if (! $user->hasRole('admin')) {
+            if (isset($validatedData['group_id'])) {
                 $groups = $user->groups->pluck('id');
                 $groupId = $validatedData['group_id'];
-                if(!$groups->contains($groupId)){
+                if (! $groups->contains($groupId)) {
                     return response()->json(['message' => 'Unauthorized'], 403);
                 }
+            }
         }
-    }
-        
-       
-       
-
 
         $page = Page::create($validatedData);
 
@@ -68,20 +62,19 @@ class PageController extends Controller
         ], 201);
     }
 
-
     public function update(UpdatePageRequest $request, $id)
     {
         $page = Page::find($id);
-        if (!$page) {
+        if (! $page) {
             return response()->json(['message' => 'Page not found'], 404);
         }
-        
+
         $validatedData = $request->validated();
         $user = Auth::user();
-        if(!$user->hasRole('admin')){
+        if (! $user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
             $groupId = $validatedData['group_id'];
-            if(!$groups->contains($groupId)){
+            if (! $groups->contains($groupId)) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
@@ -93,13 +86,13 @@ class PageController extends Controller
         foreach ($currentPageItems as $currentField) {
             $found = false;
             foreach ($validatedData['page_items'] as $pageItemData) {
-                if (!isset($pageItemData['id']) || ($currentField->id == $pageItemData['id'] && $currentField->type == $pageItemData['type'])) {
+                if (! isset($pageItemData['id']) || ($currentField->id == $pageItemData['id'] && $currentField->type == $pageItemData['type'])) {
                     $found = true;
 
                     break;
                 }
             }
-            if (!$found) {
+            if (! $found) {
                 $currentField->delete();
             }
         }
@@ -115,14 +108,14 @@ class PageController extends Controller
 
     public function show($routeOrId)
     {
-        $routeOrId = $routeOrId == "0" ? null : $routeOrId;
+        $routeOrId = $routeOrId == '0' ? null : $routeOrId;
 
         $page = Page::with('files')
             ->where(function ($query) use ($routeOrId) {
                 $query->where('route', $routeOrId)
                     ->orWhere('id', $routeOrId);
             })->first();
-        if (!$page) {
+        if (! $page) {
             return response()->json(['message' => 'Page not found'], 404);
         }
         $pageItems = $page->getAllItems();
@@ -132,6 +125,7 @@ class PageController extends Controller
                 $currentField->form->fields = $currentField->form->getAllFields();
             }
         }
+
         return response()->json(array_merge($page->toArray(), [
             'page_items' => $pageItems,
         ]), 200);
@@ -142,14 +136,14 @@ class PageController extends Controller
     {
         $page = Page::find($id);
 
-        if (!$page) {
+        if (! $page) {
             return response()->json(['message' => 'Page not found'], 404);
         }
         $user = Auth::user();
-        if(!$user->hasRole('admin')){
+        if (! $user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
             $groupId = $page->group_id;
-            if(!$groups->contains($groupId)){
+            if (! $groups->contains($groupId)) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
@@ -161,7 +155,7 @@ class PageController extends Controller
 
     private function createPageItemsFromValidatedData(Page $page, $validatedData)
     {
-        if (!isset($validatedData['page_items'])) {
+        if (! isset($validatedData['page_items'])) {
             return;
         }
         $validatedData['page_items'] = collect($validatedData['page_items'])->sortBy('sort')->values()->all();
@@ -176,7 +170,7 @@ class PageController extends Controller
                             'body' => $pageItemData['body'] ?? '',
                             'show_fleur_de_lis' => $pageItemData['show_fleur_de_lis'] ?? false,
                             'page_id' => $page->id,
-                            'sort' => $sort_counter
+                            'sort' => $sort_counter,
                         ]
                     );
                     break;
@@ -185,7 +179,7 @@ class PageController extends Controller
                         ['id' => $pageItemData['id'] ?? null],
                         [
                             'page_id' => $page->id,
-                            'sort' => $sort_counter
+                            'sort' => $sort_counter,
                         ]
                     );
                     $fileIds = isset($pageItemData['files']) ? array_column($pageItemData['files'], 'id') : [];
@@ -212,7 +206,7 @@ class PageController extends Controller
                         [
                             'page_id' => $page->id,
                             'title' => $pageItemData['title'] ?? '',
-                            'sort' => $sort_counter
+                            'sort' => $sort_counter,
                         ]
                     );
                     $fileIds = isset($pageItemData['files']) ? array_column($pageItemData['files'], 'id') : [];
@@ -229,7 +223,7 @@ class PageController extends Controller
                         [
                             'page_id' => $page->id,
                             'sort' => $sort_counter,
-                            'type' => 'contactItem'
+                            'type' => 'contactItem',
                         ]
                     );
 
@@ -240,7 +234,7 @@ class PageController extends Controller
                         [
                             'page_id' => $page->id,
                             'sort' => $sort_counter,
-                            'type' => 'groupsItem'
+                            'type' => 'groupsItem',
                         ]
                     );
                     break;
@@ -250,7 +244,7 @@ class PageController extends Controller
                         [
                             'page_id' => $page->id,
                             'sort' => $sort_counter,
-                            'type' => 'sectionsItem'
+                            'type' => 'sectionsItem',
                         ]
                     );
                     break;
@@ -285,7 +279,7 @@ class PageController extends Controller
                     );
                     break;
                 case 'groupEventsItem':
-                   GroupEventsItem::updateOrCreate(
+                    GroupEventsItem::updateOrCreate(
                         ['id' => $pageItemData['id'] ?? null],
                         [
                             'page_id' => $page->id,
@@ -300,5 +294,4 @@ class PageController extends Controller
             $sort_counter++;
         }
     }
-
 }

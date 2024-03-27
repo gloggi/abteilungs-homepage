@@ -12,7 +12,7 @@ class TextItem extends Model
 
     public function getTypeAttribute()
     {
-        return "textItem";
+        return 'textItem';
     }
 
     public function page()

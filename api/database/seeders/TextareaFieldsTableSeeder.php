@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class TextareaFieldsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,13 +13,11 @@ class TextareaFieldsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('textarea_fields')->delete();
-        
-        \DB::table('textarea_fields')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('textarea_fields')->insert([
+            0 => [
                 'id' => 1,
                 'label' => 'Nachricht',
                 'required' => 1,
@@ -28,9 +25,8 @@ class TextareaFieldsTableSeeder extends Seeder
                 'form_id' => 1,
                 'created_at' => '2024-03-05 17:09:08',
                 'updated_at' => '2024-03-05 17:09:21',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'label' => 'Nachricht',
                 'required' => 1,
@@ -38,9 +34,8 @@ class TextareaFieldsTableSeeder extends Seeder
                 'form_id' => 2,
                 'created_at' => '2024-03-05 19:37:01',
                 'updated_at' => '2024-03-05 19:37:08',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

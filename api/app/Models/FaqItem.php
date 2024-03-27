@@ -15,7 +15,7 @@ class FaqItem extends Model
 
     public function getTypeAttribute()
     {
-        return "faqItem";
+        return 'faqItem';
     }
 
     public function page()

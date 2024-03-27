@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\User;
@@ -13,17 +12,17 @@ class MiDataProvider extends AbstractProvider implements Provider
 
     protected $scopeSeparator = ' ';
 
-
     protected function getAuthUrl($state)
     {
         $midataBaseUrl = config('services.midata.base_url');
+
         return $this->buildAuthUrlFromBase("{$midataBaseUrl}/oauth/authorize", $state);
     }
-
 
     protected function getTokenUrl()
     {
         $midataBaseUrl = config('services.midata.base_url');
+
         return "{$midataBaseUrl}/oauth/token";
     }
 
@@ -36,6 +35,7 @@ class MiDataProvider extends AbstractProvider implements Provider
                 'X-Scope' => 'with_roles',
             ],
         ]);
+
         return json_decode($response->getBody(), true);
     }
 
@@ -49,6 +49,4 @@ class MiDataProvider extends AbstractProvider implements Provider
             'email' => $user['email'],
         ]);
     }
-
-
 }

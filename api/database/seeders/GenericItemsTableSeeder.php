@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class GenericItemsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,49 +13,43 @@ class GenericItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('generic_items')->delete();
-        
-        \DB::table('generic_items')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('generic_items')->insert([
+            0 => [
                 'id' => 1,
                 'type' => 'groupsItem',
                 'sort' => 0,
                 'page_id' => 4,
                 'created_at' => '2024-03-05 17:16:39',
                 'updated_at' => '2024-03-05 17:16:39',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'type' => 'contactItem',
                 'sort' => 1,
                 'page_id' => 4,
                 'created_at' => '2024-03-05 17:16:39',
                 'updated_at' => '2024-03-05 17:16:39',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'type' => 'sectionsItem',
                 'sort' => 2,
                 'page_id' => 4,
                 'created_at' => '2024-03-05 17:16:39',
                 'updated_at' => '2024-03-05 17:16:39',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
                 'type' => 'campsItem',
                 'sort' => 3,
                 'page_id' => 1,
                 'created_at' => '2024-03-11 20:28:32',
                 'updated_at' => '2024-03-11 20:28:32',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

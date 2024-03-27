@@ -12,7 +12,7 @@ class FilesItem extends Model
 
     public function getTypeAttribute()
     {
-        return "filesItem";
+        return 'filesItem';
     }
 
     public function files()

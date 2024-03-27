@@ -9,7 +9,6 @@ class Camp extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'midata_id',
         'name',
@@ -25,7 +24,7 @@ class Camp extends Model
         'canton',
         'external_application_link',
         'start_at',
-        'finish_at'
+        'finish_at',
     ];
 
     protected $dates = [
@@ -34,7 +33,7 @@ class Camp extends Model
         'start_at',
         'finish_at',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function groups()

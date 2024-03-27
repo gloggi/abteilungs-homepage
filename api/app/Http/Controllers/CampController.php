@@ -16,9 +16,9 @@ class CampController extends Controller
     {
         $perPage = $request->input('per_page', 1000);
         $query = Camp::query();
-        if($request->has('group_id')) {
+        if ($request->has('group_id')) {
             $groupId = $request->input('group_id');
-            $query->whereHas('groups', function($q) use ($groupId) {
+            $query->whereHas('groups', function ($q) use ($groupId) {
                 $q->where('group_id', $groupId);
             });
         }
@@ -40,7 +40,7 @@ class CampController extends Controller
     {
         $camp = Camp::with(['groups', 'files'])->find($id);
 
-        if (!$camp) {
+        if (! $camp) {
             return response()->json(['message' => 'Camp not found'], 404);
         }
 
@@ -51,7 +51,7 @@ class CampController extends Controller
     {
         $camp = Camp::find($id);
 
-        if (!$camp) {
+        if (! $camp) {
             return response()->json(['message' => 'Camp not found'], 404);
         }
 
@@ -66,7 +66,7 @@ class CampController extends Controller
     {
         $camp = Camp::find($id);
 
-        if (!$camp) {
+        if (! $camp) {
             return response()->json(['message' => 'Camp not found'], 404);
         }
 
@@ -79,7 +79,7 @@ class CampController extends Controller
     {
         $setting = Setting::find(1);
         $token = $setting->midata_api_key;
-        if(!$token) {
+        if (! $token) {
             return response()->json(['message' => 'MiData API key not found'], 404);
         }
         $midataId = $setting->midata_id;
@@ -91,7 +91,7 @@ class CampController extends Controller
 
         foreach ($externalCamps['events'] as $externalCamp) {
             $eventDateIds = $externalCamp['links']['dates'] ?? [];
-            $eventDate = collect($eventDateIds)->map(fn($id) => $eventDatesMap->get($id))->first();
+            $eventDate = collect($eventDateIds)->map(fn ($id) => $eventDatesMap->get($id))->first();
 
             $cost = $externalCamp['cost'];
             $numericCost = preg_replace('/[^0-9.]+/', '', $cost);
@@ -117,5 +117,4 @@ class CampController extends Controller
 
         return response()->json(['message' => 'External camps synced successfully']);
     }
-
 }

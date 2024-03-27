@@ -12,16 +12,18 @@ class SettingController extends Controller
     {
         $setting = Setting::firstOrNew(['id' => 1]);
         $setting->fill($request->validated())->save();
+
         return response()->json($setting);
     }
 
     public function show()
     {
         $setting = Setting::with(['divisionLogo', 'websiteIcon', 'socialIcon', 'notFoundPage'])->find(1);
-        if(!Auth::user()||!Auth::user()->hasRole('admin')) {
-            
-            $setting = $setting->makeHidden(['midata_id', 'midata_api_key' ]);
+        if (! Auth::user() || ! Auth::user()->hasRole('admin')) {
+
+            $setting = $setting->makeHidden(['midata_id', 'midata_api_key']);
         }
+
         return response()->json($setting);
     }
 }

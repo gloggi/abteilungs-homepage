@@ -12,8 +12,6 @@ class FooterLink extends Model
 
     public function getTypeAttribute()
     {
-        return "footerLink";
+        return 'footerLink';
     }
-
-
 }

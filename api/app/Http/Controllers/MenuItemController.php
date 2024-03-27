@@ -5,20 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
 
-
 class MenuItemController extends Controller
 {
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 1000);
         $page = $request->input('page', 1);
-        $menuItems = MenuItem::with("page")->paginate($perPage, ['*'], 'page', $page);
+        $menuItems = MenuItem::with('page')->paginate($perPage, ['*'], 'page', $page);
 
         $data = $menuItems->items();
         $data = collect($data)->sortBy('sort')->values()->all();
         foreach ($data as $item) {
             if ($item->page) {
-                $item->url = "/".$item->page->route;
+                $item->url = '/'.$item->page->route;
                 $item->title = $item->page->title;
                 unset($item->page);
             }
@@ -32,9 +31,10 @@ class MenuItemController extends Controller
             'to' => $menuItems->lastItem(),
             'total' => $menuItems->total(),
         ];
+
         return response()->json([
             'data' => $data,
-            'meta' => $meta
+            'meta' => $meta,
         ]);
     }
 
@@ -46,16 +46,19 @@ class MenuItemController extends Controller
         if ($existingMenuItemOfPage && $request->input('page_id')) {
             $existingMenuItemOfPage->sort = $request->input('sort');
             $existingMenuItemOfPage->save();
+
             return response()->json($existingMenuItemOfPage);
         }
         if ($existingMenuItemOfCustom && $request->input('url')) {
             $existingMenuItemOfCustom->sort = $request->input('sort');
             $existingMenuItemOfCustom->save();
+
             return response()->json($existingMenuItemOfCustom);
         }
         if ($existingMenuItemOfSpecial && $request->input('special')) {
             $existingMenuItemOfSpecial->sort = $request->input('sort');
             $existingMenuItemOfSpecial->save();
+
             return response()->json($existingMenuItemOfSpecial);
         }
         $menuItem = new MenuItem;
@@ -65,15 +68,15 @@ class MenuItemController extends Controller
         $menuItem->sort = $request->input('sort');
         $menuItem->page_id = $request->input('page_id');
         $menuItem->save();
+
         return response()->json($menuItem);
     }
-
 
     public function destroy($id)
     {
         $menuItem = MenuItem::find($id);
         $menuItem->delete();
+
         return response()->json('MenuItem removed successfully');
     }
-
 }

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class ContactsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,13 +13,11 @@ class ContactsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('contacts')->delete();
-        
-        \DB::table('contacts')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('contacts')->insert([
+            0 => [
                 'id' => 1,
                 'firstname' => 'Mia',
                 'lastname' => 'Bianchi',
@@ -31,9 +28,8 @@ class ContactsTableSeeder extends Seeder
                 'sort' => 1.1,
                 'created_at' => '2024-03-05 15:09:50',
                 'updated_at' => '2024-03-05 15:09:50',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'firstname' => 'Marco',
                 'lastname' => 'Steiner',
@@ -44,9 +40,8 @@ class ContactsTableSeeder extends Seeder
                 'sort' => 1.2,
                 'created_at' => '2024-03-05 15:10:54',
                 'updated_at' => '2024-03-05 15:10:54',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'firstname' => 'Lara',
                 'lastname' => 'Ngombo',
@@ -57,9 +52,8 @@ class ContactsTableSeeder extends Seeder
                 'sort' => 6.1,
                 'created_at' => '2024-03-05 15:12:35',
                 'updated_at' => '2024-03-05 15:16:19',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
                 'firstname' => 'Anna',
                 'lastname' => 'Zimmermann',
@@ -70,9 +64,8 @@ class ContactsTableSeeder extends Seeder
                 'sort' => 5.1,
                 'created_at' => '2024-03-05 15:13:36',
                 'updated_at' => '2024-03-05 15:16:12',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
                 'firstname' => 'Raj',
                 'lastname' => 'Patel',
@@ -83,9 +76,8 @@ class ContactsTableSeeder extends Seeder
                 'sort' => 4.1,
                 'created_at' => '2024-03-05 15:14:47',
                 'updated_at' => '2024-03-05 15:16:02',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'id' => 6,
                 'firstname' => 'Sophie',
                 'lastname' => 'Müller',
@@ -96,9 +88,8 @@ class ContactsTableSeeder extends Seeder
                 'sort' => 3.1,
                 'created_at' => '2024-03-05 15:15:28',
                 'updated_at' => '2024-03-05 15:15:47',
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'id' => 7,
                 'firstname' => 'Luca',
                 'lastname' => 'Rossi',
@@ -109,9 +100,8 @@ class ContactsTableSeeder extends Seeder
                 'sort' => 2.1,
                 'created_at' => '2024-03-05 15:17:16',
                 'updated_at' => '2024-03-05 15:17:16',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

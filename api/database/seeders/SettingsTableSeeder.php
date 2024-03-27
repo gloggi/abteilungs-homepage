@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class SettingsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,13 +13,11 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('settings')->delete();
-        
-        \DB::table('settings')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('settings')->insert([
+            0 => [
                 'id' => 1,
                 'site_title' => 'Pfadi Lagom',
                 'division_name' => 'Pfadi Lagom',
@@ -36,12 +33,11 @@ class SettingsTableSeeder extends Seeder
                 'alert_text_color' => '#ffffff',
                 'show_alert' => 1,
                 'alert_url' => 'https://demo.gloggi.ch/schnuppertag',
-                'created_at' => NULL,
+                'created_at' => null,
                 'updated_at' => '2024-03-05 19:42:36',
                 'not_found_page_id' => 8,
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

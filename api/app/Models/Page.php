@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class Page extends Model
 {
     protected $fillable = ['title', 'route', 'file_ids', 'big_header', 'group_id'];
@@ -64,6 +63,7 @@ class Page extends Model
 
         return $this->hasMany(LocationItem::class)->with('location');
     }
+
     public function faqItems()
     {
 
@@ -112,7 +112,7 @@ class Page extends Model
         $items = $items->concat($groupEventsItems);
         $items = $items->concat($campItems);
 
-        $items = $items->sortBy('sort')->values()->all();;
+        $items = $items->sortBy('sort')->values()->all();
 
         return $items;
     }

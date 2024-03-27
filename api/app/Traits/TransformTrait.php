@@ -26,7 +26,7 @@ trait TransformTrait
         return trim($str, '_');
     }
 
-    function toCamelCase($str)
+    public function toCamelCase($str)
     {
 
         $str = $this->normalize($str);
@@ -37,6 +37,4 @@ trait TransformTrait
 
         return lcfirst($str);
     }
-
-
 }

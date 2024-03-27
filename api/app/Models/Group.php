@@ -27,7 +27,7 @@ class Group extends Model
         'group_leader_id',
     ];
 
-    protected $appends = ['route','has_page'];
+    protected $appends = ['route', 'has_page'];
 
     public function getRouteAttribute()
     {
@@ -38,9 +38,6 @@ class Group extends Model
     {
         return $this->page ? true : false;
     }
-
-
-
 
     public function section()
     {

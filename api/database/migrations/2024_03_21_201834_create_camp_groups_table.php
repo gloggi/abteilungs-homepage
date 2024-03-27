@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->foreign('camp_id')->references('id')->on('camps')->onDelete('cascade');
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
-            
+
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('camp_groups');
-        
+
     }
 };

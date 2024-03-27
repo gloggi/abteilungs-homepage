@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-
     protected $fillable = [
         'site_title',
         'division_name',
@@ -26,7 +25,6 @@ class Setting extends Model
         'is_region',
         'social_icon_id',
     ];
-
 
     public function divisionLogo()
     {

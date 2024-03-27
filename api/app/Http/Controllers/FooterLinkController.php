@@ -28,7 +28,7 @@ class FooterLinkController extends Controller
     {
         $footerLink = FooterLink::find($id);
 
-        if (!$footerLink) {
+        if (! $footerLink) {
             return response()->json(['message' => 'Footer link not found'], 404);
         }
 
@@ -39,7 +39,7 @@ class FooterLinkController extends Controller
     {
         $footerLink = FooterLink::find($id);
 
-        if (!$footerLink) {
+        if (! $footerLink) {
             return response()->json(['message' => 'Footer link not found'], 404);
         }
 
@@ -52,7 +52,7 @@ class FooterLinkController extends Controller
     {
         $footerLink = FooterLink::find($id);
 
-        if (!$footerLink) {
+        if (! $footerLink) {
             return response()->json(['message' => 'Footer link not found'], 404);
         }
 

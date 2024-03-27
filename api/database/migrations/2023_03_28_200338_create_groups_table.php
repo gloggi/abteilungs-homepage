@@ -47,7 +47,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-       
+
         Schema::dropIfExists('group_headers');
         Schema::dropIfExists('group_files');
         Schema::dropIfExists('groups');

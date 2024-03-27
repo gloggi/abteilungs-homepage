@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class EventFilesTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class EventFilesTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('event_files')->delete();
-        
-        
-        
+
     }
 }

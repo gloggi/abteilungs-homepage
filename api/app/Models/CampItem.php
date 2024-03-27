@@ -15,7 +15,7 @@ class CampItem extends Model
 
     public function getTypeAttribute()
     {
-        return "campItem";
+        return 'campItem';
     }
 
     public function page()

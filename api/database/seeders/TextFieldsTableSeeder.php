@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class TextFieldsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,13 +13,11 @@ class TextFieldsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('text_fields')->delete();
-        
-        \DB::table('text_fields')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('text_fields')->insert([
+            0 => [
                 'id' => 1,
                 'label' => 'Vorname',
                 'input_type' => 'text',
@@ -29,9 +26,8 @@ class TextFieldsTableSeeder extends Seeder
                 'form_id' => 1,
                 'created_at' => '2024-03-05 17:07:37',
                 'updated_at' => '2024-03-05 17:07:49',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'label' => 'Nachname',
                 'input_type' => 'text',
@@ -40,9 +36,8 @@ class TextFieldsTableSeeder extends Seeder
                 'form_id' => 1,
                 'created_at' => '2024-03-05 17:07:49',
                 'updated_at' => '2024-03-05 17:08:09',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'label' => 'E-Mail',
                 'input_type' => 'email',
@@ -51,9 +46,8 @@ class TextFieldsTableSeeder extends Seeder
                 'form_id' => 1,
                 'created_at' => '2024-03-05 17:08:09',
                 'updated_at' => '2024-03-05 17:08:20',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
                 'label' => 'Geburtstag',
                 'input_type' => 'date',
@@ -62,9 +56,8 @@ class TextFieldsTableSeeder extends Seeder
                 'form_id' => 1,
                 'created_at' => '2024-03-05 17:08:20',
                 'updated_at' => '2024-03-05 17:08:37',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
                 'label' => 'Geschwister',
                 'input_type' => 'time',
@@ -73,9 +66,8 @@ class TextFieldsTableSeeder extends Seeder
                 'form_id' => 1,
                 'created_at' => '2024-03-05 17:08:37',
                 'updated_at' => '2024-03-05 17:08:59',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'id' => 6,
                 'label' => 'Lieblingsuhrzeit',
                 'input_type' => 'time',
@@ -84,9 +76,8 @@ class TextFieldsTableSeeder extends Seeder
                 'form_id' => 1,
                 'created_at' => '2024-03-05 17:08:59',
                 'updated_at' => '2024-03-05 17:09:08',
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'id' => 7,
                 'label' => 'Pfadiname',
                 'input_type' => 'text',
@@ -95,9 +86,8 @@ class TextFieldsTableSeeder extends Seeder
                 'form_id' => 2,
                 'created_at' => '2024-03-05 19:36:48',
                 'updated_at' => '2024-03-05 19:37:01',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

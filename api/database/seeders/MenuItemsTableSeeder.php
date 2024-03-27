@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class MenuItemsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,79 +13,71 @@ class MenuItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('menu_items')->delete();
-        
-        \DB::table('menu_items')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('menu_items')->insert([
+            0 => [
                 'id' => 1,
-                'title' => NULL,
-                'url' => NULL,
-                'special' => NULL,
+                'title' => null,
+                'url' => null,
+                'special' => null,
                 'page_id' => 1,
                 'sort' => 0,
                 'created_at' => '2024-03-05 16:00:27',
                 'updated_at' => '2024-03-05 16:00:27',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'title' => 'Group Dropdown',
-                'url' => NULL,
+                'url' => null,
                 'special' => 'groupPages',
-                'page_id' => NULL,
+                'page_id' => null,
                 'sort' => 5,
                 'created_at' => '2024-03-05 16:16:52',
                 'updated_at' => '2024-03-05 17:18:33',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'title' => 'Gloggi',
                 'url' => 'https://gloggi.ch',
-                'special' => NULL,
-                'page_id' => NULL,
+                'special' => null,
+                'page_id' => null,
                 'sort' => 4,
                 'created_at' => '2024-03-05 17:15:51',
                 'updated_at' => '2024-03-05 17:18:33',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'id' => 4,
-                'title' => NULL,
-                'url' => NULL,
-                'special' => NULL,
+                'title' => null,
+                'url' => null,
+                'special' => null,
                 'page_id' => 3,
                 'sort' => 1,
                 'created_at' => '2024-03-05 17:15:55',
                 'updated_at' => '2024-03-05 17:15:55',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
-                'title' => NULL,
-                'url' => NULL,
-                'special' => NULL,
+                'title' => null,
+                'url' => null,
+                'special' => null,
                 'page_id' => 4,
                 'sort' => 2,
                 'created_at' => '2024-03-05 17:18:31',
                 'updated_at' => '2024-03-05 17:18:31',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'id' => 6,
-                'title' => NULL,
-                'url' => NULL,
-                'special' => NULL,
+                'title' => null,
+                'url' => null,
+                'special' => null,
                 'page_id' => 5,
                 'sort' => 3,
                 'created_at' => '2024-03-05 17:18:33',
                 'updated_at' => '2024-03-05 17:18:33',
-            ),
-        ));
-        
-        
+            ],
+        ]);
+
     }
 }

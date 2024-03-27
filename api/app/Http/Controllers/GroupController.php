@@ -10,20 +10,19 @@ use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
-
     public function index(Request $request)
     {
         $user = Auth::user();
         $groups = $groups = Group::select('groups.*')
-        ->with(['file', 'section', 'predecessors', 'successors', 'parent', 'groupLeader'])
-        ->leftJoin('sections', 'groups.section_id', '=', 'sections.id')
-        ->orderBy('sections.sort', 'asc');
+            ->with(['file', 'section', 'predecessors', 'successors', 'parent', 'groupLeader'])
+            ->leftJoin('sections', 'groups.section_id', '=', 'sections.id')
+            ->orderBy('sections.sort', 'asc');
         if ($request->has('dashboard') && $user->hasRole('unitleader')) {
             $groups = $groups->whereIn('id', $user->groups->pluck('id'));
         }
-        
+
         $perPage = $request->input('per_page', 1000);
-       
+
         $groups = $groups->paginate($perPage);
 
         return response()->json($groups);
@@ -52,9 +51,9 @@ class GroupController extends Controller
 
             $group = $filteredGroups->first();
         }
-        if($group->page){
+        if ($group->page) {
             $group->page->page_items = $group->page->getAllItems();
-            
+
             $pageItems = $group->page->page_items;
 
             foreach ($pageItems as $currentField) {
@@ -65,7 +64,7 @@ class GroupController extends Controller
             }
         }
 
-        if (!$group) {
+        if (! $group) {
             return response()->json(['message' => 'Group not found'], 404);
         }
 
@@ -76,11 +75,11 @@ class GroupController extends Controller
     {
         $group = Group::find($id);
 
-        if (!$group) {
+        if (! $group) {
             return response()->json(['message' => 'Group not found'], 404);
         }
         $user = Auth::user();
-        if ($user->hasRole('unitleader') && !$user->groups->contains($group)) {
+        if ($user->hasRole('unitleader') && ! $user->groups->contains($group)) {
             return response()->json(['message' => 'You are not allowed to update this group'], 403);
         }
 
@@ -96,7 +95,7 @@ class GroupController extends Controller
     {
         $group = Group::find($id);
 
-        if (!$group) {
+        if (! $group) {
             return response()->json(['message' => 'Group not found'], 404);
         }
 

@@ -15,7 +15,7 @@ class ImageItem extends Model
 
     public function getTypeAttribute()
     {
-        return "imageItem";
+        return 'imageItem';
     }
 
     public function page()
@@ -28,5 +28,4 @@ class ImageItem extends Model
         return $this->belongsToMany(File::class, 'image_item_file');
 
     }
-
 }

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string("firstname")->nullable();
-            $table->string("lastname")->nullable();
-            $table->string("nickname")->nullable();
-            $table->string("email")->nullable();
-            $table->string("role")->nullable();
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
+            $table->string('nickname')->nullable();
+            $table->string('email')->nullable();
+            $table->string('role')->nullable();
             $table->unsignedBigInteger('file_id')->nullable();
             $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
             $table->float('sort')->default(0.0);

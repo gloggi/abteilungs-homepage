@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class UserController extends Controller
 {
     public function index(Request $request)
@@ -15,6 +14,7 @@ class UserController extends Controller
         $page = $request->input('page', 1);
         $perPage = $request->input('per_page', 1000);
         $users = User::with('roles')->paginate($perPage, ['*'], 'page', $page);
+
         return response()->json($users);
     }
 
@@ -26,17 +26,19 @@ class UserController extends Controller
         $user->lastname = $request->input('lastname');
         $user->email = $request->input('email');
         $user->save();
+
         return response()->json($user);
     }
 
     public function show($id)
     {
         $user = User::with('roles')->with('groups')->find($id);
-        if($user->hasRole('admin')){
+        if ($user->hasRole('admin')) {
             $user->role = 1;
-        }else if($user->hasRole('unitleader')){
+        } elseif ($user->hasRole('unitleader')) {
             $user->role = 2;
         }
+
         return response()->json($user);
     }
 
@@ -44,7 +46,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json([
                 'status' => false,
             ], 404);
@@ -61,13 +63,14 @@ class UserController extends Controller
         $validated = $request->validated();
         $user->update($validated);
         $user->roles()->detach();
-        if($request['role']==1){
+        if ($request['role'] == 1) {
             $user->assignRole('admin');
-        }else if($request['role']==2){
+        } elseif ($request['role'] == 2) {
             $user->assignRole('unitleader');
         }
         $user->save();
         $user->groups()->sync($validated['groups']);
+
         return response()->json($user);
     }
 
@@ -75,7 +78,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
+
         return response()->json('User removed successfully');
     }
-
 }

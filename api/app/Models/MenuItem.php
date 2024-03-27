@@ -14,18 +14,18 @@ class MenuItem extends Model
         'url',
         'page_id',
         'sort',
-        'special'
+        'special',
     ];
+
     protected $appends = ['type'];
 
     public function getTypeAttribute()
     {
-        return "menuItem";
+        return 'menuItem';
     }
 
     public function page()
     {
         return $this->belongsTo(Page::class);
     }
-
 }

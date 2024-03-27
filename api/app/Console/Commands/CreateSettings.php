@@ -3,11 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Schema;
-
 use Spatie\Permission\Models\Role;
 
 class CreateSettings extends Command
@@ -35,8 +32,9 @@ class CreateSettings extends Command
         Role::findOrCreate('unitleader');
         $this->info('Roles created');
 
-        if (!Schema::hasTable('settings')) {
+        if (! Schema::hasTable('settings')) {
             $this->error('The settings table does not exist!');
+
             return;
         }
 
@@ -46,12 +44,12 @@ class CreateSettings extends Command
 
         $existingSettings = DB::table('settings')->first();
 
-        if (!$existingSettings) {
-           
+        if (! $existingSettings) {
+
             DB::table('settings')->insert([$settings]);
-            $this->info("All settings have been inserted.");
+            $this->info('All settings have been inserted.');
         } else {
-            
+
             foreach ($settings as $key => $value) {
                 if (is_null($existingSettings->{$key})) {
                     DB::table('settings')

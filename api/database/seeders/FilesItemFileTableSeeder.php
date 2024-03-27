@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class FilesItemFileTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,11 +13,8 @@ class FilesItemFileTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('files_item_file')->delete();
-        
-        
-        
+
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('groups', function (Blueprint $table) {
             $table->boolean('enable_group_page')->default(true);
-           
+
         });
     }
 

@@ -14,12 +14,10 @@ class InviteController extends Controller
             $token = Str::random(16);
         } while (Invite::where('token', $token)->first());
 
-
         $invite = Invite::create([
             'email' => $request->get('email'),
-            'token' => $token
+            'token' => $token,
         ]);
         //Mail::to($request->get('email'))->send(new InviteCreated($invite));
     }
-
 }

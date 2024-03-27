@@ -15,7 +15,7 @@ class GroupEventsItem extends Model
 
     public function getTypeAttribute()
     {
-        return "groupEventsItem";
+        return 'groupEventsItem';
     }
 
     public function page()

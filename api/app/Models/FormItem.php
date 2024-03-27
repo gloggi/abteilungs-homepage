@@ -15,7 +15,7 @@ class FormItem extends Model
 
     public function getTypeAttribute()
     {
-        return "formItem";
+        return 'formItem';
     }
 
     public function page()

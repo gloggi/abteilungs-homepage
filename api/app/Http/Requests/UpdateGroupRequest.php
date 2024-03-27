@@ -6,13 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateGroupRequest extends FormRequest
 {
-
-
     public function rules()
     {
         $id = $this->route('id');
+
         return [
-            'name' => 'sometimes|string|max:255|unique:groups,name,' . $id,
+            'name' => 'sometimes|string|max:255|unique:groups,name,'.$id,
             'color' => 'sometimes|required|string|max:255',
             'midata_id' => 'nullable|integer',
             'region' => 'nullable|string|max:255',

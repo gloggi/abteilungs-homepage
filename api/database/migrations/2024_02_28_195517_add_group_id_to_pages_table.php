@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
         });
         Schema::table('groups', function (Blueprint $table) {
-           $table->dropColumn('description');
-           $table->dropColumn('enable_group_page');
+            $table->dropColumn('description');
+            $table->dropColumn('enable_group_page');
         });
 
         Schema::dropIfExists('group_headers');

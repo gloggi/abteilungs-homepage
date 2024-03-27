@@ -14,13 +14,12 @@ use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
 {
-
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 1000);
         $user = Auth::user();
         $query = Form::query();
-        if ($request->has('dashboard') && !$user->hasRole('admin')) {
+        if ($request->has('dashboard') && ! $user->hasRole('admin')) {
             $groupIds = $user->groups->pluck('id');
             $query->whereIn('group_id', $groupIds);
         }
@@ -35,7 +34,7 @@ class FormController extends Controller
 
         $validatedData = $request->validated();
         $user = Auth::user();
-        if(!$user->hasRole('admin')&&!isset($validatedData['group_id'])){
+        if (! $user->hasRole('admin') && ! isset($validatedData['group_id'])) {
             $groups = $user->groups->pluck('id');
             $validatedData['group_id'] = $groups->first();
         }
@@ -54,15 +53,15 @@ class FormController extends Controller
     public function update(UpdateFormRequest $request, $id)
     {
         $form = Form::find($id);
-        if (!$form) {
+        if (! $form) {
             return response()->json(['message' => 'Form not found'], 404);
         }
         $validatedData = $request->validated();
         $user = Auth::user();
-        if(!$user->hasRole('admin')){
+        if (! $user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
             $groupId = isset($validatedData['group_id']) ? $validatedData['group_id'] : null;
-            if(!$groupId||!$groups->contains($groupId)){
+            if (! $groupId || ! $groups->contains($groupId)) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
@@ -75,13 +74,13 @@ class FormController extends Controller
         foreach ($currentFields as $currentField) {
             $found = false;
             foreach ($validatedData['fields'] as $fieldData) {
-                if (!isset($fieldData['id']) || ($currentField->id == $fieldData['id'] && $currentField->type == $fieldData['type'])) {
+                if (! isset($fieldData['id']) || ($currentField->id == $fieldData['id'] && $currentField->type == $fieldData['type'])) {
                     $found = true;
 
                     break;
                 }
             }
-            if (!$found) {
+            if (! $found) {
                 $currentField->delete();
             }
         }
@@ -98,6 +97,7 @@ class FormController extends Controller
     public function show($id)
     {
         $form = Form::find($id);
+
         return response()->json(array_merge($form->toArray(), [
             'fields' => $form->getAllFields(),
         ]), 200);
@@ -108,14 +108,14 @@ class FormController extends Controller
     {
         $form = Form::find($id);
 
-        if (!$form) {
+        if (! $form) {
             return response()->json(['message' => 'Form not found'], 404);
         }
         $user = Auth::user();
-        if(!$user->hasRole('admin')){
+        if (! $user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
             $groupId = $form->group_id;
-            if(!$groups->contains($groupId)){
+            if (! $groups->contains($groupId)) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
@@ -127,7 +127,7 @@ class FormController extends Controller
 
     private function createFieldsFromValidatedData(Form $form, $validatedData)
     {
-        if (!isset($validatedData['fields'])) {
+        if (! isset($validatedData['fields'])) {
             return;
         }
         $validatedData['fields'] = collect($validatedData['fields'])->sortBy('sort')->values()->all();
@@ -142,7 +142,7 @@ class FormController extends Controller
                             'form_id' => $form->id,
                             'required' => $fieldData['required'] ?? false,
                             'input_type' => $fieldData['input_type'],
-                            'sort' => $sort_counter
+                            'sort' => $sort_counter,
                         ]
                     );
                     break;
@@ -153,7 +153,7 @@ class FormController extends Controller
                             'label' => $fieldData['label'] ?? '',
                             'form_id' => $form->id,
                             'required' => $fieldData['required'] ?? false,
-                            'sort' => $sort_counter
+                            'sort' => $sort_counter,
                         ]
                     );
                     break;
@@ -164,11 +164,10 @@ class FormController extends Controller
                             'label' => $fieldData['label'] ?? '',
                             'form_id' => $form->id,
                             'required' => $fieldData['required'] ?? false,
-                            'sort' => $sort_counter
+                            'sort' => $sort_counter,
                         ]
                     );
                     if (isset($fieldData['option_fields'])) {
-
 
                         foreach ($fieldData['option_fields'] as $option) {
 
@@ -176,7 +175,7 @@ class FormController extends Controller
                                 ['id' => $option['id'] ?? null],
                                 [
                                     'name' => $option['name'],
-                                    'select_field_id' => $selectField->id
+                                    'select_field_id' => $selectField->id,
                                 ]
                             );
 
@@ -189,5 +188,4 @@ class FormController extends Controller
             $sort_counter++;
         }
     }
-
 }

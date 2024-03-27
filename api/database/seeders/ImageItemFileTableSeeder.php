@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class ImageItemFileTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,48 +13,41 @@ class ImageItemFileTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('image_item_file')->delete();
-        
-        \DB::table('image_item_file')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('image_item_file')->insert([
+            0 => [
                 'image_item_id' => 1,
                 'file_id' => 30,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            1 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            1 => [
                 'image_item_id' => 1,
                 'file_id' => 25,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            2 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            2 => [
                 'image_item_id' => 1,
                 'file_id' => 24,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            3 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            3 => [
                 'image_item_id' => 2,
                 'file_id' => 36,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            4 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            4 => [
                 'image_item_id' => 2,
                 'file_id' => 39,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
+
     }
 }

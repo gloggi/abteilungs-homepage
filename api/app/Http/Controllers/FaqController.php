@@ -15,10 +15,10 @@ class FaqController extends Controller
         $perPage = $request->input('per_page', 1000);
         $query = Faq::with('questions');
         $user = Auth::user();
-        if($request->has('dashboard')&& !$user->hasRole('admin')){
+        if ($request->has('dashboard') && ! $user->hasRole('admin')) {
             $groupIds = $user->groups->pluck('id');
             $query->whereIn('group_id', $groupIds);
-        } 
+        }
 
         $faqs = $query->paginate($perPage);
 
@@ -29,7 +29,7 @@ class FaqController extends Controller
     {
         $validated = $request->validated();
         $user = Auth::user();
-        if(!$user->hasRole('admin')&&!isset($validated['group_id'])){
+        if (! $user->hasRole('admin') && ! isset($validated['group_id'])) {
             $groups = $user->groups->pluck('id');
             $validated['group_id'] = $groups->first();
         }
@@ -41,13 +41,12 @@ class FaqController extends Controller
             foreach ($validated['questions'] as $questionData) {
                 $questionData['sort'] = floor($questionData['sort']);
                 $faq->questions()->updateOrCreate(
-                    ['id' => $questionData['id'] ?? null], 
+                    ['id' => $questionData['id'] ?? null],
                     $questionData
                 );
             }
-    
+
         }
-    
 
         return response()->json($faq, 201);
     }
@@ -56,7 +55,7 @@ class FaqController extends Controller
     {
         $faq = Faq::with('questions')->find($id);
 
-        if (!$faq) {
+        if (! $faq) {
             return response()->json(['message' => 'Faq not found'], 404);
         }
 
@@ -67,15 +66,15 @@ class FaqController extends Controller
     {
         $faq = Faq::find($id);
 
-        if (!$faq) {
+        if (! $faq) {
             return response()->json(['message' => 'Question not found'], 404);
         }
         $validated = $request->validated();
         $user = Auth::user();
-        if(!$user->hasRole('admin')){
+        if (! $user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
             $groupId = $validated['group_id'];
-            if(!$groups->contains($groupId)){
+            if (! $groups->contains($groupId)) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
@@ -86,11 +85,11 @@ class FaqController extends Controller
             $questions = $validated['questions'];
             foreach ($questions as $questionData) {
                 $faq->questions()->updateOrCreate(
-                    ['id' => $questionData['id'] ?? null], 
+                    ['id' => $questionData['id'] ?? null],
                     $questionData
                 );
             }
-    
+
         }
 
         return response()->json($faq);
@@ -100,14 +99,14 @@ class FaqController extends Controller
     {
         $faq = Faq::find($id);
 
-        if (!$faq) {
+        if (! $faq) {
             return response()->json(['message' => 'Question not found'], 404);
         }
         $user = Auth::user();
-        if(!$user->hasRole('admin')){
+        if (! $user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
             $groupId = $faq->group_id;
-            if(!$groups->contains($groupId)){
+            if (! $groups->contains($groupId)) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
