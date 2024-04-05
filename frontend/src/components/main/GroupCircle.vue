@@ -9,11 +9,13 @@
     >
       <img :src="genderIcon" class="w-[65%] h-[65%]" />
     </div>
-    <img
-      v-if="group.file?.path"
-      :src="backendURL + group.file?.path"
-      class="w-[60%] h-[60%]"
-    />
+    <span class="w-[75%] h-[75%]">
+      <img
+        v-if="group.file?.path"
+        :src="backendURL + group.file?.path"
+        class="object-contain w-[100%] h-[100%]"
+      />
+    </span>
   </div>
 </template>
 <script>
