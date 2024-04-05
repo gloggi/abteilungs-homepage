@@ -20,7 +20,7 @@ jobs:
 
   deploy:
     name: "Deploy"
-    if: ${{ github.event_name == 'push' && needs.get-environment-name.outputs.environment }}
+    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.get-environment-name.outputs.environment }}
     needs:
       - get-environment-name
     environment: ${{ needs.get-environment-name.outputs.environment }}
