@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AutoResponse;
 use App\Mail\WebForm;
 use App\Models\Form;
 use App\Models\Setting;
@@ -40,6 +41,13 @@ class WebFormController extends Controller
         $setting = Setting::with(['divisionLogo', 'websiteIcon', 'notFoundPage'])->find(1);
 
         Mail::to($form->email)->send(new WebForm($form, $matchedFields, $setting));
+        if ($form->enable_autoresponse && $form->autoresponse_email_field_id) {
+            $autoresponseEmail = $filledForm[$this->toSnakeCase($form->autoresponseField->label)];
+            $autoresponseMessage = $form->autoresponse_message;
+            $autoresponseSubject = $form->autoresponse_subject;
+
+            Mail::to($autoresponseEmail)->send(new AutoResponse($autoresponseSubject, $autoresponseMessage, $setting));
+        }
 
         return response()->json(['message' => 'Sent!'], 201);
     }

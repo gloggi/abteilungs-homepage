@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Form extends Model
 {
-    protected $fillable = ['name', 'email', 'subject', 'group_id'];
+    protected $fillable = ['name', 'email', 'subject', 'group_id', 'enable_autoresponse', 'autoresponse_subject', 'autoresponse_message', 'autoresponse_email_field_id'];
 
     public function textFields()
     {
@@ -26,6 +26,11 @@ class Form extends Model
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function autoresponseField()
+    {
+        return $this->belongsTo(TextField::class, 'autoresponse_email_field_id');
     }
 
     public function getAllFields()

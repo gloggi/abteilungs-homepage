@@ -36,6 +36,36 @@
           selection="Group"
           @selectGroup="handleSelectGroup"
         />
+        <CheckBox
+          :label="$t('dashboard.enableAutoresponse')"
+          v-model="content.enableAutoresponse"
+        />
+        <div v-if="content.enableAutoresponse" class="space-y-2">
+          <SelectComponent
+            :label="$t('dashboard.autoresponseEmailField')"
+            :value="content.autoresponseEmailFieldId"
+            :options="possibleEmailFields"
+            :errors="errors.autoresponseEmailField"
+            selection="Field"
+            @selectField="handleSelectField"
+          />
+          <TextInput
+            :label="$t('dashboard.autoresponseSubject')"
+            type="text"
+            v-model="content.autoresponseSubject"
+            :errors="errors.autoresponseSubject"
+          />
+          <div>
+            <FormLabel>
+              {{ $t("dashboard.autoresponseMessage") }}
+            </FormLabel>
+            <Editor
+              :label="$t('dashboard.autoresponseMessage')"
+              v-model="content.autoresponseMessage"
+              :errors="errors.autoresponseMessage"
+            />
+          </div>
+        </div>
       </div>
     </Card>
     <div class="">
@@ -164,6 +194,8 @@ import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
 import { nanoid } from "nanoid";
+import Editor from "../../components/admin/Editor/Editor.vue";
+import FormLabel from "../../components/admin/FormLabel.vue";
 export default {
   components: {
     Card,
@@ -173,6 +205,8 @@ export default {
     ItemHeaderTemplate,
     CheckBox,
     SelectComponent,
+    Editor,
+    FormLabel,
   },
   data() {
     return {
@@ -262,6 +296,9 @@ export default {
     async handleSelectGroup(value) {
       this.content.groupId = value;
     },
+    handleSelectField(value) {
+      this.content.autoresponseEmailFieldId = value;
+    },
     getTypeName(inputType) {
       if (inputType === "text") {
         return this.$t("dashboard.textfield");
@@ -276,6 +313,16 @@ export default {
       } else {
         return inputType;
       }
+    },
+  },
+  computed: {
+    possibleEmailFields() {
+      return this.content.fields
+        .filter((f) => f.inputType === "email")
+        .map((f) => ({
+          id: f.id,
+          name: f.label,
+        }));
     },
   },
   async created() {

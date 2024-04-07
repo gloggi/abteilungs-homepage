@@ -173,6 +173,10 @@ export const messages = {
       socialIcon: "Social-Media-Icon",
       socialIconInfo:
         "Wird angezeigt, wenn der Link zur Webseite in sozialen Medien oder Messengern geteilt wird.",
+      enableAutoresponse: "Automatische Antwort aktivieren",
+      autoresponseEmailField: "E-Mail-Feld für automatische Antwort",
+      autoresponseSubject: "Betreff für automatische Antwort",
+      autoresponseMessage: "Nachricht für automatische Antwort",
     },
     page: {
       campDateLabel: "Lagerdatum",
