@@ -60,7 +60,7 @@ class TextFieldsTableSeeder extends Seeder
             4 => [
                 'id' => 5,
                 'label' => 'Geschwister',
-                'input_type' => 'time',
+                'input_type' => 'number',
                 'required' => 0,
                 'sort' => 4,
                 'form_id' => 1,

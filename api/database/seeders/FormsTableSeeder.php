@@ -21,7 +21,7 @@ class FormsTableSeeder extends Seeder
                 'id' => 1,
                 'group_id' => null,
                 'name' => 'Kontakt',
-                'email' => 'kantakt@pfadi-lagom.ch',
+                'email' => 'kontakt@pfadi-lagom.ch',
                 'subject' => 'Kontaktformular',
                 'message' => null,
                 'created_at' => '2024-03-05 17:06:07',
