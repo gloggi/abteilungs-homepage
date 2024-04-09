@@ -1,155 +1,152 @@
 <template>
-  <div class="rounded-lg bg-gray-100 p-2">
+  <div class="rounded-lg p-2">
     <div v-if="editor" class="flex justify-between">
       <div class="flex flex-col">
-        <div class="flex">
-          <EditorButton
-            @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-            :active="editor.isActive('heading', { level: 2 })"
-          >
-            <font-awesome-icon class="h-4 w-4" :icon="icons.faHeading" /><sub
-              class="font-bold"
-              >2</sub
-            >
-          </EditorButton>
-          <EditorButton
-            @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-            :active="editor.isActive('heading', { level: 3 })"
-          >
-            <font-awesome-icon class="h-4 w-4" :icon="icons.faHeading" /><sub
-              class="font-bold"
-              >3</sub
-            >
-          </EditorButton>
-          <EditorButton @click.self.prevent>
-            <input
-              type="color"
-              @input="
-                editor.chain().focus().setColor($event.target.value).run()
-              "
-              :value="
-                () =>
-                  editor.getAttributes('textStyle').color == ''
-                    ? '#000000'
-                    : editor.getAttributes('textStyle')
-              "
-            />
-          </EditorButton>
-        </div>
-        <div class="flex flex-col md:flex-row">
-          <div>
+        <div
+          class="flex flex-col items-start md:flex-row space-y-1 md:space-y-0 md:space-x-3"
+        >
+          <div class="flex">
             <EditorButton
-              class="font-bold"
+              @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+              :active="editor.isActive('heading', { level: 2 })"
+              class="rounded-l-lg border-l whitespace-nowrap"
+            >
+              <font-awesome-icon class="size-4" :icon="icons.faHeading" /><sub
+                class="font-bold"
+                >2</sub
+              >
+            </EditorButton>
+            <EditorButton
+              @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+              :active="editor.isActive('heading', { level: 3 })"
+              class="rounded-r-lg whitespace-nowrap"
+            >
+              <font-awesome-icon class="size-4" :icon="icons.faHeading" /><sub
+                class="font-bold"
+                >3</sub
+              >
+            </EditorButton>
+          </div>
+          <div class="flex">
+            <EditorButton @click.self.prevent class="rounded-l-lg border-l">
+              <EditorColorPicker v-model="textColor" />
+            </EditorButton>
+
+            <EditorButton
               @click="editor.chain().focus().toggleBold().run()"
               :active="editor.isActive('bold')"
             >
-              Bold
+              <font-awesome-icon class="size-5" :icon="icons.faBold" />
             </EditorButton>
             <EditorButton
-              class="italic"
               @click="editor.chain().focus().toggleItalic().run()"
               :active="editor.isActive('italic')"
             >
-              Italic
+              <font-awesome-icon class="size-5" :icon="icons.faItalic" />
             </EditorButton>
             <EditorButton
-              class="line-through"
+              @click="editor.chain().focus().toggleUnderline().run()"
+              :active="editor.isActive('underline')"
+            >
+              <font-awesome-icon class="size-5" :icon="icons.faUnderline" />
+            </EditorButton>
+            <EditorButton
               @click="editor.chain().focus().toggleStrike().run()"
               :active="editor.isActive('strike')"
+              class="rounded-r-lg"
             >
-              strike
+              <font-awesome-icon class="size-5" :icon="icons.faStrikethrough" />
             </EditorButton>
+          </div>
+          <div class="flex">
             <EditorButton
               @click="editor.chain().focus().toggleBulletList().run()"
               :active="editor.isActive('bulletList')"
+              class="rounded-l-lg border-l"
             >
-              <font-awesome-icon class="h-5 w-5" :icon="icons.faList" />
+              <font-awesome-icon class="size-5" :icon="icons.faList" />
+            </EditorButton>
+            <EditorButton
+              @click="editor.chain().focus().toggleOrderedList().run()"
+              :active="editor.isActive('orderedList')"
+              class="rounded-r-lg"
+            >
+              <font-awesome-icon class="size-5" :icon="icons.faListOl" />
             </EditorButton>
           </div>
-          <div>
-            <EditorButton @click="addImage">
-              <font-awesome-icon class="h-5 w-5" :icon="icons.faImage" />
+          <div class="flex">
+            <EditorButton @click="addImage" class="rounded-l-lg border-l">
+              <font-awesome-icon class="size-5" :icon="icons.faImage" />
             </EditorButton>
-            <EditorButton v-if="!editor.isActive('link')" @click="askForLink">
-              <font-awesome-icon class="h-5 w-5" :icon="icons.faLink" />
+            <EditorButton
+              v-if="!editor.isActive('link')"
+              @click="askForLink"
+              class="rounded-r-lg"
+            >
+              <font-awesome-icon class="size-5" :icon="icons.faLink" />
             </EditorButton>
+          </div>
+          <div class="flex">
             <EditorButton
               v-if="editor.isActive('link')"
               @click="editor.chain().focus().unsetLink().run()"
+              class="rounded-r-lg"
             >
-              <font-awesome-icon class="h-5 w-5" :icon="icons.faLinkSlash" />
+              <font-awesome-icon class="size-5" :icon="icons.faLinkSlash" />
             </EditorButton>
-            <EditorButton @click="swapEditorContent" :active="showHTML">
-              <font-awesome-icon class="h-5 w-5" :icon="icons.faCode" />
+          </div>
+          <div class="flex">
+            <EditorButton
+              @click="editor.chain().focus().setTextAlign('left').run()"
+              :active="editor.isActive({ textAlign: 'left' })"
+              class="rounded-l-lg border-l"
+            >
+              <font-awesome-icon class="size-5" :icon="icons.faAlignLeft" />
+            </EditorButton>
+
+            <EditorButton
+              @click="editor.chain().focus().setTextAlign('center').run()"
+              :active="editor.isActive({ textAlign: 'center' })"
+            >
+              <font-awesome-icon class="size-5" :icon="icons.faAlignCenter" />
             </EditorButton>
             <EditorButton
               @click="editor.chain().focus().setTextAlign('right').run()"
               :active="editor.isActive({ textAlign: 'right' })"
+              class="rounded-r-lg"
             >
-              <font-awesome-icon class="h-5 w-5" :icon="icons.faAlignRight" />
+              <font-awesome-icon class="size-5" :icon="icons.faAlignRight" />
+            </EditorButton>
+          </div>
+          <EditorButton
+            @click="swapEditorContent"
+            :active="showHTML"
+            class="rounded-lg border-l"
+          >
+            <font-awesome-icon class="size-5" :icon="icons.faCode" />
+          </EditorButton>
+          <div class="flex">
+            <EditorButton
+              @click="editor.chain().focus().undo().run()"
+              class="rounded-l-lg border-l"
+            >
+              <font-awesome-icon
+                class="size-5"
+                :icon="icons.faArrowRotateLeft"
+              />
+            </EditorButton>
+            <EditorButton
+              @click="editor.chain().focus().redo().run()"
+              class="rounded-r-lg"
+            >
+              <font-awesome-icon
+                class="size-5"
+                :icon="icons.faArrowRotateRight"
+              />
             </EditorButton>
           </div>
         </div>
       </div>
-      <div class="flex items-start">
-        <EditorButton @click="editor.chain().focus().undo().run()">
-          <font-awesome-icon class="h-6 w-6" :icon="icons.faArrowRotateLeft" />
-        </EditorButton>
-        <EditorButton @click="editor.chain().focus().redo().run()">
-          <font-awesome-icon class="h-6 w-6" :icon="icons.faArrowRotateRight" />
-        </EditorButton>
-      </div>
-    </div>
-    <div v-if="editor && false" class="grid grid-cols-10 gap-1">
-      <EditorButton
-        @click="editor.chain().focus().toggleCode().run()"
-        :active="editor.isActive('code')"
-      >
-        code
-      </EditorButton>
-      <EditorButton @click="editor.chain().focus().unsetAllMarks().run()">
-        clear marks
-      </EditorButton>
-      <EditorButton @click="editor.chain().focus().clearNodes().run()">
-        clear nodes
-      </EditorButton>
-      <EditorButton
-        @click="editor.chain().focus().setParagraph().run()"
-        :active="editor.isActive('paragraph')"
-      >
-        paragraph
-      </EditorButton>
-
-      <EditorButton
-        @click="editor.chain().focus().toggleBulletList().run()"
-        :active="editor.isActive('bulletList')"
-      >
-        bullet list
-      </EditorButton>
-      <EditorButton
-        @click="editor.chain().focus().toggleOrderedList().run()"
-        :active="editor.isActive('orderedList')"
-      >
-        ordered list
-      </EditorButton>
-      <EditorButton
-        @click="editor.chain().focus().toggleCodeBlock().run()"
-        :active="editor.isActive('codeBlock')"
-      >
-        code block
-      </EditorButton>
-      <EditorButton
-        @click="editor.chain().focus().toggleBlockquote().run()"
-        :active="editor.isActive('blockquote')"
-      >
-        blockquote
-      </EditorButton>
-      <EditorButton @click="editor.chain().focus().setHorizontalRule().run()">
-        horizontal rule
-      </EditorButton>
-      <EditorButton @click="editor.chain().focus().setHardBreak().run()">
-        hard break
-      </EditorButton>
     </div>
     <editor-content v-if="!showHTML" :editor="editor" />
     <textarea
@@ -199,22 +196,32 @@ import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
+import Underline from "@tiptap/extension-underline";
 import EditorButton from "./EditorButton.vue";
 import {
   faArrowRotateLeft,
   faArrowRotateRight,
   faList,
+  faListOl,
   faCode,
   faLink,
   faLinkSlash,
   faImage,
   faHeading,
   faAlignRight,
+  faAlignLeft,
+  faAlignCenter,
+  faBold,
+  faItalic,
+  faStrikethrough,
+  faFont,
+  faUnderline,
 } from "@fortawesome/free-solid-svg-icons";
 import MediaModal from "../MediaModal.vue";
 import Modal from "../Modal.vue";
 import TextInput from "../TextInput.vue";
 import ActionButton from "../ActionButton.vue";
+import EditorColorPicker from "./EditorColorPicker.vue";
 export default {
   props: ["modelValue", "placeholder"],
   components: {
@@ -224,6 +231,7 @@ export default {
     Modal,
     TextInput,
     ActionButton,
+    EditorColorPicker,
   },
   data() {
     return {
@@ -236,12 +244,20 @@ export default {
         faArrowRotateLeft,
         faArrowRotateRight,
         faList,
+        faListOl,
         faCode,
         faLink,
         faLinkSlash,
         faImage,
         faHeading,
         faAlignRight,
+        faAlignLeft,
+        faAlignCenter,
+        faBold,
+        faItalic,
+        faStrikethrough,
+        faFont,
+        faUnderline,
       },
     };
   },
@@ -281,7 +297,7 @@ export default {
       this.editor
         .chain()
         .focus()
-        .setImage({ src: this.backendURL + "/" + selected[0].path })
+        .setImage({ src: this.backendURL + selected[0].path })
         .run();
     },
   },
@@ -301,6 +317,16 @@ export default {
       },
       set(value) {
         this.$emit("update:modelValue", value);
+      },
+    },
+    textColor: {
+      get() {
+        return this.editor.getAttributes("textStyle").color
+          ? this.editor.getAttributes("textStyle").color
+          : "#333333";
+      },
+      set(value) {
+        this.editor.chain().focus().setColor(value).run();
       },
     },
   },
@@ -323,7 +349,12 @@ export default {
           },
           bulletList: {
             HTMLAttributes: {
-              class: "list-disc pl-6",
+              class: "list-disc pl-6 main-text",
+            },
+          },
+          orderedList: {
+            HTMLAttributes: {
+              class: "list-decimal pl-6 main-text",
             },
           },
           heading: false,
@@ -378,6 +409,11 @@ export default {
         TableRow,
         TableHeader,
         TableCell,
+        Underline.configure({
+          HTMLAttributes: {
+            class: "underline",
+          },
+        }),
       ],
       editorProps: {
         attributes: {

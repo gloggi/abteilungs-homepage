@@ -1,8 +1,8 @@
 <template>
   <button
-    :class="`rounded-lg ${
-      active ? 'bg-gray-900 text-white' : 'bg-white'
-    } hover:bg-gray-900 hover:text-white border border-gray-200 p-1 text-sm`"
+    :class="`${
+      active ? 'bg-gray-100 ' : 'bg-white'
+    } hover:bg-gray-100  border-y border-r border-gray-700 p-1 text-sm text-gray-700 aspect-square`"
   >
     <slot></slot>
   </button>
