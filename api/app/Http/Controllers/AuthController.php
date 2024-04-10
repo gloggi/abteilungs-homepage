@@ -42,7 +42,10 @@ class AuthController extends Controller
                 $user->assignRole('admin');
             } elseif ($midata_group_ids = $this->hasRole($midataUser->user, 'Einheitsleiter*in', $groupIds)) {
                 $user->assignRole('unitleader');
-            }
+            } elseif ($midata_group_ids = $this->hasRole($midataUser->user, 'Leitung', $groupIds)) {
+                $user->assignRole('unitleader');
+            } 
+            
             $groups = Group::whereIn('midata_id', $midata_group_ids)->get();
 
             $user->groups()->sync($groups);
