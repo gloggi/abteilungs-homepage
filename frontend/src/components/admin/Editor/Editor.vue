@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-lg p-2">
+  <div class="rounded-lg pt-2">
     <div v-if="editor" class="flex justify-between">
       <div class="flex flex-col">
         <div
@@ -28,13 +28,10 @@
             </EditorButton>
           </div>
           <div class="flex">
-            <EditorButton @click.self.prevent class="rounded-l-lg border-l">
-              <EditorColorPicker v-model="textColor" />
-            </EditorButton>
-
             <EditorButton
               @click="editor.chain().focus().toggleBold().run()"
               :active="editor.isActive('bold')"
+              class="rounded-l-lg border-l"
             >
               <font-awesome-icon class="size-5" :icon="icons.faBold" />
             </EditorButton>
@@ -53,9 +50,11 @@
             <EditorButton
               @click="editor.chain().focus().toggleStrike().run()"
               :active="editor.isActive('strike')"
-              class="rounded-r-lg"
             >
               <font-awesome-icon class="size-5" :icon="icons.faStrikethrough" />
+            </EditorButton>
+            <EditorButton @click.self.prevent class="rounded-r-lg">
+              <EditorColorPicker v-model="textColor" />
             </EditorButton>
           </div>
           <div class="flex">
@@ -97,22 +96,34 @@
           </div>
           <div class="flex">
             <EditorButton
-              @click="editor.chain().focus().setTextAlign('left').run()"
-              :active="editor.isActive({ textAlign: 'left' })"
+              @click="handleAlign('left', 'float-left')"
+              :active="
+                editor.isActive({ textAlign: 'left' }) ||
+                (editor.isActive('image') &&
+                  editor.getAttributes('image').class === 'float-left')
+              "
               class="rounded-l-lg border-l"
             >
               <font-awesome-icon class="size-5" :icon="icons.faAlignLeft" />
             </EditorButton>
 
             <EditorButton
-              @click="editor.chain().focus().setTextAlign('center').run()"
-              :active="editor.isActive({ textAlign: 'center' })"
+              @click="handleAlign('center', 'block mx-auto')"
+              :active="
+                editor.isActive({ textAlign: 'center' }) ||
+                (editor.isActive('image') &&
+                  editor.getAttributes('image').class === 'block mx-auto')
+              "
             >
               <font-awesome-icon class="size-5" :icon="icons.faAlignCenter" />
             </EditorButton>
             <EditorButton
-              @click="editor.chain().focus().setTextAlign('right').run()"
-              :active="editor.isActive({ textAlign: 'right' })"
+              @click="handleAlign('right', 'float-right')"
+              :active="
+                editor.isActive({ textAlign: 'right' }) ||
+                (editor.isActive('image') &&
+                  editor.getAttributes('image').class === 'float-right')
+              "
               class="rounded-r-lg"
             >
               <font-awesome-icon class="size-5" :icon="icons.faAlignRight" />
@@ -152,7 +163,7 @@
     <textarea
       v-else
       v-model="inputModel"
-      class="appearance-none border-0 w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 h-48 overflow-scroll font-mono"
+      class="appearance-none w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 h-48 overflow-scroll font-mono focus:ring-0 border border-gray-700 focus:border-gray-700"
     >
     </textarea>
   </div>
@@ -184,19 +195,19 @@
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import HeadingExtension from "@tiptap/extension-heading";
-import ImageResize from "tiptap-extension-resize-image";
+import Image from "@tiptap/extension-image";
 import LinkExtension from "@tiptap/extension-link";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import TextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/core";
 import Placeholder from "@tiptap/extension-placeholder";
-import HardBreak from "@tiptap/extension-hard-break";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import Underline from "@tiptap/extension-underline";
+import Resizable from "./resizable-image";
 import EditorButton from "./EditorButton.vue";
 import {
   faArrowRotateLeft,
@@ -300,6 +311,19 @@ export default {
         .setImage({ src: this.backendURL + selected[0].path })
         .run();
     },
+    handleAlign(text, imageClass) {
+      this.editor.chain().focus();
+      if (this.editor.isActive("image")) {
+        console.log("image");
+        this.editor
+          .chain()
+          .updateAttributes("image", { class: imageClass })
+          .run();
+      } else {
+        console.log("text");
+        this.editor.chain().setTextAlign(text).run();
+      }
+    },
   },
   watch: {
     modelValue(value) {
@@ -394,7 +418,22 @@ export default {
         }),
         TextStyle,
         Color,
-        ImageResize,
+        Image.configure({
+          inline: true,
+        }),
+
+        Resizable.configure({
+          types: ["image", "video"],
+          handlerStyle: {
+            // handler point style
+            width: "8px",
+            height: "8px",
+            background: "#111827",
+          },
+          layerStyle: {
+            border: "2px dashed #111827",
+          },
+        }),
         TextAlign.configure({
           types: ["heading", "paragraph"],
         }),
@@ -418,7 +457,7 @@ export default {
       editorProps: {
         attributes: {
           class:
-            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 min-h-[12rem] overflow-scroll",
+            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 min-h-[12rem] overflow-scroll border border-gray-700",
         },
       },
     });
