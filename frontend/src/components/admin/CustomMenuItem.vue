@@ -8,7 +8,7 @@
     <div class="rounded-t-lg bg-gray-200 p-3">
       <div
         id="dragbutton"
-        class="w-full flex justify-center text-gray-400"
+        class="w-full flex justify-center text-gray-400 cursor-grab"
         @mouseover="allowDrag = true"
         @mouseleave="allowDrag = false"
       >

@@ -8,7 +8,7 @@
   >
     <div
       id="dragbutton"
-      class="w-full flex justify-center text-gray-400"
+      class="w-full flex justify-center text-gray-400 cursor-grab"
       @mouseover="allowDrag = true"
       @mouseleave="allowDrag = false"
     >
