@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Traits\TransformTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Group extends Model
 {
-    use HasFactory, TransformTrait;
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -31,7 +31,7 @@ class Group extends Model
 
     public function getRouteAttribute()
     {
-        return $this->toCamelCase($this->name);
+        return Str::kebab($this->name);
     }
 
     public function getHasPageAttribute()

@@ -6,15 +6,13 @@ use App\Mail\AutoResponse;
 use App\Mail\WebForm;
 use App\Models\Form;
 use App\Models\Setting;
-use App\Traits\TransformTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class WebFormController extends Controller
 {
-    use TransformTrait;
-
     public function store(Request $request)
     {
         $form = Form::find($request->id);
@@ -24,7 +22,7 @@ class WebFormController extends Controller
         $matchedFields = [];
         foreach ($filledForm as $key => $value) {
             foreach ($fields as $field) {
-                if (isset($field['label']) && $key === $this->toSnakeCase($field['label'])) {
+                if (isset($field['label']) && $key === Str::snake($field['label'])) {
                     if ($field['input_type'] == 'date') {
                         $matchedFields[$field['label']] = Carbon::parse($value)->format('d.m.Y');
                     } elseif ($field['input_type'] == 'email') {
