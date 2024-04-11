@@ -57,6 +57,7 @@
 
       <FormLabel>{{ $t("dashboard.headerImages") }}</FormLabel>
       <BannerImageSelector
+        :key="loadedKey"
         :info="$t('dashboard.infoAspectRatio')"
         :item="content"
         @changeImages="changeHeaderImages"

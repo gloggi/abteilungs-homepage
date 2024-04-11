@@ -23,16 +23,16 @@
       </div>
     </div>
     <img
-      v-if="!noImages"
-      ref="currentImageRef"
-      class="fixed -z-10 h-[475px] w-full object-cover"
-      :src="`${backendURL}${currentImage}`"
+      ref="firstImageRef"
+      v-if="firstImage"
+      class="h-[475px] w-full object-cover fixed -z-10"
+      :src="`${backendURL}${firstImage}`"
     />
     <img
-      v-if="moreThanOneImage"
-      ref="nextImageRef"
-      class="fixed -z-10 h-[475px] w-full object-cover"
-      :src="`${backendURL}${nextImage}`"
+      ref="secondImageRef"
+      v-if="secondImage"
+      class="h-[475px] w-full object-cover fixed -z-20"
+      :src="`${backendURL}${secondImage}`"
     />
     <div
       v-if="noImages"
@@ -50,26 +50,34 @@ export default {
   },
   data() {
     return {
-      imageIndex: 0,
-      currentImage: undefined,
-      nextImage: undefined,
-      interval: undefined,
+      imageIDX: -1,
+      firstImage: undefined,
+      secondImage: undefined,
       noImages: this.images.length === 0,
+      animationDuration: 1,
+      displayTime: 5000,
     };
   },
   methods: {
-    prepareNextImage() {
-      this.imageIndex = (this.imageIndex + 1) % this.images.length;
-      this.nextImage = this.images[this.imageIndex].path;
-      gsap.set(this.$refs.nextImageRef, { opacity: 0 });
+    getImageIndex() {
+      this.imageIDX = (this.imageIDX + 1) % this.images.length;
+      return this.imageIDX;
     },
     changeImage() {
-      gsap.to(this.$refs.nextImageRef, {
-        opacity: 1,
-        duration: 1,
-        onComplete: () => {
-          this.currentImage = this.nextImage;
-          this.prepareNextImage();
+      gsap.to(this.$refs.firstImageRef, {
+        opacity: 0,
+        duration: this.animationDuration,
+        onComplete: async () => {
+          await new Promise((resolve) => setTimeout(resolve, this.displayTime));
+          this.firstImage = this.images[this.getImageIndex()]?.path;
+          gsap.to(this.$refs.firstImageRef, {
+            opacity: 1,
+            duration: this.animationDuration,
+            onComplete: () => {
+              this.secondImage = this.images[this.getImageIndex()]?.path;
+              setTimeout(this.changeImage, this.displayTime);
+            },
+          });
         },
       });
     },
@@ -80,14 +88,11 @@ export default {
     },
   },
   mounted() {
-    this.currentImage = this.images[this.imageIndex]?.path;
+    this.firstImage = this.images[this.getImageIndex()]?.path;
     if (this.moreThanOneImage) {
-      this.prepareNextImage();
-      this.interval = setInterval(this.changeImage, 5000);
+      this.secondImage = this.images[this.getImageIndex()]?.path;
+      setTimeout(this.changeImage, this.displayTime);
     }
-  },
-  beforeUnmount() {
-    clearInterval(this.interval);
   },
 };
 </script>

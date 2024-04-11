@@ -56,6 +56,7 @@ export default {
         if (!this.group.hasPage) {
           this.$router.go(-1);
         }
+        this.page = undefined;
         this.pageType = "groupPage";
       } else {
         let pageRoute = this.$route.path.substring(1);
@@ -63,6 +64,7 @@ export default {
           pageRoute = 0;
         }
         await this.getPage(pageRoute);
+        this.group = undefined;
         this.pageType = "regularPage";
       }
       this.pageKey++;
@@ -99,22 +101,21 @@ export default {
     },
     handlePageChange(event) {
       console.log(event);
-      //this.routeHandler()
+    },
+  },
+  computed: {
+    metaTitle() {
+      return `${this.page?.title || this.group?.page?.title || ""} | ${
+        this.settings?.divisionName || ""
+      }`;
     },
   },
   watch: {
     $route() {
       this.routeHandler();
     },
-    settings() {
-      document.title = `${this.page?.title || ""} | ${
-        this.settings?.divisionName || ""
-      }`;
-    },
-    page() {
-      document.title = `${this.page?.title || ""} | ${
-        this.settings?.divisionName || ""
-      }`;
+    metaTitle() {
+      document.title = this.metaTitle;
     },
   },
   async created() {

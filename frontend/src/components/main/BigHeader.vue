@@ -19,16 +19,16 @@
     </div>
     <div class="fixed -z-10 h-screen w-screen">
       <img
-        ref="currentImageRef"
-        v-if="currentImage"
-        class="h-screen w-screen object-cover absolute"
-        :src="`${backendURL}${currentImage}`"
+        ref="firstImageRef"
+        v-if="firstImage"
+        class="h-screen w-screen object-cover absolute z-20"
+        :src="`${backendURL}${firstImage}`"
       />
       <img
-        ref="nextImageRef"
-        v-if="nextImage"
-        class="h-screen w-screen object-cover absolute"
-        :src="`${backendURL}${nextImage}`"
+        ref="secondImageRef"
+        v-if="secondImage"
+        class="h-screen w-screen object-cover absolute z-10"
+        :src="`${backendURL}${secondImage}`"
       />
       <div
         v-if="noImages"
@@ -42,28 +42,39 @@
 import { gsap } from "gsap";
 
 export default {
-  props: { images: { type: Array, default: () => [] } },
+  props: {
+    images: { type: Array, default: () => [] },
+  },
   data() {
     return {
-      imageIndex: 0,
-      currentImage: undefined,
-      nextImage: undefined,
+      imageIDX: -1,
+      firstImage: undefined,
+      secondImage: undefined,
       noImages: this.images.length === 0,
+      animationDuration: 1,
+      displayTime: 5000,
     };
   },
   methods: {
-    prepareNextImage() {
-      this.imageIndex = (this.imageIndex + 1) % this.images.length;
-      this.nextImage = this.images[this.imageIndex].path;
-      gsap.set(this.$refs.nextImageRef, { opacity: 0 });
+    getImageIndex() {
+      this.imageIDX = (this.imageIDX + 1) % this.images.length;
+      return this.imageIDX;
     },
     changeImage() {
-      gsap.to(this.$refs.nextImageRef, {
-        opacity: 1,
-        duration: 0.7,
-        onComplete: () => {
-          this.currentImage = this.nextImage;
-          this.prepareNextImage();
+      gsap.to(this.$refs.firstImageRef, {
+        opacity: 0,
+        duration: this.animationDuration,
+        onComplete: async () => {
+          await new Promise((resolve) => setTimeout(resolve, this.displayTime));
+          this.firstImage = this.images[this.getImageIndex()]?.path;
+          gsap.to(this.$refs.firstImageRef, {
+            opacity: 1,
+            duration: this.animationDuration,
+            onComplete: () => {
+              this.secondImage = this.images[this.getImageIndex()]?.path;
+              setTimeout(this.changeImage, this.displayTime);
+            },
+          });
         },
       });
     },
@@ -74,11 +85,10 @@ export default {
     },
   },
   mounted() {
-    this.currentImage = this.images[this.imageIndex]?.path;
-
+    this.firstImage = this.images[this.getImageIndex()]?.path;
     if (this.moreThanOneImage) {
-      this.prepareNextImage();
-      setInterval(this.changeImage, 5000);
+      this.secondImage = this.images[this.getImageIndex()]?.path;
+      setTimeout(this.changeImage, this.displayTime);
     }
   },
 };
