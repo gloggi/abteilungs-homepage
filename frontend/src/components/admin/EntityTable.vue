@@ -28,7 +28,7 @@
   <div
     v-for="(item, j) in content"
     :key="`row-${j}`"
-    class="bg-white w-full p-3 border-b flex justify-between items-center"
+    class="bg-white w-full p-3 border-b flex justify-between items-center overflow-y-hidden"
   >
     <div class="w-10">
       <input
@@ -171,7 +171,7 @@ export default {
             params: {
               page: this.page,
               dashboard: true,
-              perPage: 10,
+              perPage: 20,
             },
           },
         );

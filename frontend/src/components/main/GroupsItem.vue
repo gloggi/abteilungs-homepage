@@ -92,6 +92,7 @@
           :style="`background-color: ${currentGroup.color}`"
         >
           <img
+            v-if="currentGroup.file"
             :src="backendURL + currentGroup.file?.path"
             class="w-[60%] h-[60%]"
           />

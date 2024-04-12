@@ -56,6 +56,7 @@ export default {
       noImages: this.images.length === 0,
       animationDuration: 1,
       displayTime: 5000,
+      timeout: undefined,
     };
   },
   methods: {
@@ -75,7 +76,7 @@ export default {
             duration: this.animationDuration,
             onComplete: () => {
               this.secondImage = this.images[this.getImageIndex()]?.path;
-              setTimeout(this.changeImage, this.displayTime);
+              this.timeout = setTimeout(this.changeImage, this.displayTime);
             },
           });
         },
@@ -91,8 +92,11 @@ export default {
     this.firstImage = this.images[this.getImageIndex()]?.path;
     if (this.moreThanOneImage) {
       this.secondImage = this.images[this.getImageIndex()]?.path;
-      setTimeout(this.changeImage, this.displayTime);
+      this.timeout = setTimeout(this.changeImage, this.displayTime);
     }
+  },
+  beforeDestroy() {
+    clearTimeout(this.timeout);
   },
 };
 </script>

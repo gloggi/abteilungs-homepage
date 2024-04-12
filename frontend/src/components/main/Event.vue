@@ -54,8 +54,13 @@
         <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
           <div v-if="show" class="h-full">
             <MapComponent
+              v-if="event.startLocation || event.endLocation"
               class="w-full h-96"
               :markers="[event.startLocation, event.endLocation]"
+              :markerTexts="[
+                $t('page.startLocationLabelShort'),
+                $t('page.endLocationLabelShort'),
+              ]"
             />
             <div class="p-3">
               <div v-html="event.description" v-router-link></div>

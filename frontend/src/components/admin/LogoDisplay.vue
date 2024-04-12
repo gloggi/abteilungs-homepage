@@ -1,12 +1,16 @@
 <template>
   <div class="relative">
     <div class="relative rounded-full h-48 w-48 border bg-gray-200">
-      <img
-        v-if="file"
-        :src="`${backendURL}${file.thumbnail}`"
-        class="aspect-square h-full w-full rounded-full"
-        :class="`${objectContain ? 'object-contain' : 'object-cover'}`"
-      />
+      <div
+        class="flex justify-center items-center rounded-full overflow-hidden size-full"
+      >
+        <img
+          v-if="file"
+          :src="`${backendURL}${file.thumbnail}`"
+          class="aspect-square"
+          :style="{ height: `${size}%`, width: `${size}%` }"
+        />
+      </div>
       <div class="absolute top-3 right-3 flex justify-center items-center">
         <button
           @click="showModal = true"
@@ -43,6 +47,10 @@ export default {
     objectContain: {
       type: Boolean,
       default: false,
+    },
+    size: {
+      type: Number,
+      default: 100,
     },
     allowedExtensions: {
       type: Array,

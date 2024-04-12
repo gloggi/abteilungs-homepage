@@ -20,6 +20,9 @@
           }}
         </option>
       </select>
+      <div v-if="errors" class="text-red-400 text-xs">
+        {{ errors.join(" ") }}
+      </div>
       <div
         v-if="showDropdown"
         class="absolute bg-white z-30 rounded-lg w-full overflow-auto max-h-60"
@@ -54,6 +57,10 @@ export default {
     modelValue: {},
     options: {
       default: [],
+    },
+    errors: {
+      type: Array,
+      default: () => [],
     },
   },
   data() {

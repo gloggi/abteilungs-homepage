@@ -1,9 +1,9 @@
 <template>
-  <div
-    v-if="Math.ceil(totalItems / itemsPerPage) > 1"
-    class="flex rounded-b-lg p-0 bg-white"
-  >
-    <div class="flex justify-center w-full border-t border-gray-200">
+  <div class="flex rounded-b-lg p-0 bg-white min-h-2">
+    <div
+      v-if="Math.ceil(totalItems / itemsPerPage) > 1"
+      class="flex justify-center w-full border-t border-gray-200"
+    >
       <button
         v-for="i in Math.ceil(totalItems / itemsPerPage)"
         @click="$emit('goToPage', i)"

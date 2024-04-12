@@ -1,27 +1,29 @@
 <template>
-  <div class="bg-gray-50 rounded-lg p-5 flex items-center mb-2">
-    <h2 class="font-extrabold text-4xl">{{ name }}</h2>
-  </div>
-  <div :class="`flex justify-between mb-2`">
-    <ActionButton v-if="itemsSelected" @click="deleteItems">
-      <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
-    </ActionButton>
-    <div class="w-full flex justify-end space-x-2">
-      <ActionButton v-if="midataSync" @click="syncEntity">
-        <MiDataSync class="h-6 w-6" />
-      </ActionButton>
-      <ActionButton v-if="create" @click="createEntity">
-        <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6" />
-      </ActionButton>
+  <div>
+    <div class="bg-gray-50 rounded-lg p-5 flex items-center mb-2">
+      <h2 class="font-extrabold text-4xl">{{ name }}</h2>
     </div>
+    <div :class="`flex justify-between mb-2`">
+      <ActionButton v-if="itemsSelected" @click="deleteItems">
+        <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
+      </ActionButton>
+      <div class="w-full flex justify-end space-x-2">
+        <ActionButton v-if="midataSync" @click="syncEntity">
+          <MiDataSync class="h-6 w-6" />
+        </ActionButton>
+        <ActionButton v-if="create" @click="createEntity">
+          <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6" />
+        </ActionButton>
+      </div>
+    </div>
+    <EntityTable
+      :key="tableKey"
+      :entity="entity"
+      @changeSelected="changeSelected"
+      :titles="titles"
+      :columns="columns"
+    />
   </div>
-  <EntityTable
-    :key="tableKey"
-    :entity="entity"
-    @changeSelected="changeSelected"
-    :titles="titles"
-    :columns="columns"
-  />
 </template>
 
 <script>

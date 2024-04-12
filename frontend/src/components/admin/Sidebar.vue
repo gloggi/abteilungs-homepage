@@ -213,7 +213,7 @@ export default {
     },
     enter(el, done) {
       gsap.to(el, {
-        width: "auto",
+        width: "16rem",
         overflow: "hidden",
         whiteSpace: "nowrap",
         breakAfter: "avoid",
