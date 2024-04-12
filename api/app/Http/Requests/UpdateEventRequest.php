@@ -13,7 +13,7 @@ class UpdateEventRequest extends FormRequest
             'start_time' => 'sometimes|required|date',
             'end_time' => 'sometimes|required|date',
             'groups' => 'sometimes|required|array',
-            'start_location_id' => 'sometimes|required|integer|exists:locations,id',
+            'start_location_id' => 'nullable|integer|exists:locations,id',
             'end_location_id' => 'nullable|integer|exists:locations,id',
             'description' => 'nullable|string',
             'take_with_you' => 'nullable|string',
