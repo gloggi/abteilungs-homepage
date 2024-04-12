@@ -8,20 +8,25 @@ import { Map, View } from "ol";
 import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { XYZ, Vector as VectorSource } from "ol/source";
 import { fromLonLat } from "ol/proj";
-import { Icon, Style } from "ol/style";
+import { Icon, Style, Text, Fill, Stroke } from "ol/style";
 import { boundingExtent } from "ol/extent";
 import Point from "ol/geom/Point";
 import Feature from "ol/Feature";
 import { defaults as defaultControls, ScaleLine } from "ol/control";
 
 export default {
-  props: ["markers"],
+  props: ["markers", "markerTexts"],
   async mounted() {
+    this.sameLocations = this.markers.every(
+      (marker, index, array) =>
+        marker.lat === array[0].lat && marker.long === array[0].long,
+    );
     this.initializeMap();
   },
   data() {
     return {
       map: undefined,
+      sameLocations: false,
     };
   },
   methods: {
@@ -60,29 +65,49 @@ export default {
       const svgBlob = new Blob([svgString], { type: "image/svg+xml" });
       return URL.createObjectURL(svgBlob);
     },
+    getIconStyle(text) {
+      return new Style({
+        image: new Icon({
+          src: this.formatIcon(),
+          height: 50,
+          anchor: [0.5, 1],
+        }),
+        text: new Text({
+          text,
+          offsetY: -58,
+          fill: new Fill({
+            color: this.settings.primaryColor,
+          }),
+          stroke: new Stroke({
+            color: "#ffff",
+            width: 4,
+          }),
+          font: "semibold 16px Source Sans Pro, system-ui",
+        }),
+      });
+    },
     initializeMarkers() {
       const vectorSource = new VectorSource();
       var coordinates = this.markers.map((marker) => {
         return fromLonLat([marker.long, marker.lat]);
       });
-      const markerIcon = this.formatIcon();
 
       var extent = boundingExtent(coordinates);
-      const iconStyle = new Style({
-        image: new Icon({
-          src: markerIcon,
-          scale: 1,
-          anchor: [0.5, 1],
-        }),
-      });
 
-      for (let marker of this.markers) {
-        const markerPoint = new Point(fromLonLat([marker.long, marker.lat]));
+      for (let i = 0; i < this.markers.length; i++) {
+        const markerPoint = new Point(
+          fromLonLat([this.markers[i].long, this.markers[i].lat]),
+        );
         const iconFeature = new Feature({
           geometry: markerPoint,
         });
-
-        iconFeature.setStyle(iconStyle);
+        const markerText =
+          this.markerTexts &&
+          this.markerTexts.length - 1 >= i &&
+          !this.sameLocations
+            ? this.markerTexts[i]
+            : undefined;
+        iconFeature.setStyle(this.getIconStyle(markerText));
 
         vectorSource.addFeature(iconFeature);
       }

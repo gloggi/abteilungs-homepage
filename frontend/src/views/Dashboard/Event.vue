@@ -34,6 +34,7 @@
           :label="$t('dashboard.groups')"
           v-model="content.groups"
           :options="groups"
+          :errors="errors.groups"
         />
         <BreakpointSpaceManager>
           <TextInput
