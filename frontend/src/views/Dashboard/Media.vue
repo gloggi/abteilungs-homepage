@@ -12,38 +12,41 @@
     >
       <div class="bg-gray-50 rounded-lg w-full">
         <img
-          :src="`${backendURL}${file.thumbnail}`"
+          :src="`${backendURL}${file.thumbnail}?cb=${this.cacheBust}`"
           class="w-full rounded-lg object-contain p-1 roundd-lg aspect-square"
         />
       </div>
     </button>
   </div>
   <Modal v-if="showModal" @close="showModal = false">
-    <div
-      :key="modalContentKey"
-      v-if="content"
-      class="flex h-full p-3 space-x-2"
-    >
-      <div class="flex justify-center items-center w-2/3">
+    <div v-if="content" class="flex h-full p-3 space-x-2">
+      <div
+        id="fileContainer"
+        :key="currentSelectionKey"
+        class="flex justify-center items-center w-2/3"
+      >
         <img
           v-if="isImage()"
-          :src="`${backendURL}${selectedFile.path}`"
+          :src="`${backendURL}${selectedFile.path}?cb=${this.cacheBust}`"
           class="w-auto"
           style="max-height: 90vh"
         />
         <object
           v-else-if="selectedFile.extension == 'pdf'"
-          :data="`${backendURL}${selectedFile.path}`"
+          :data="`${backendURL}${selectedFile.path}?cb=${this.cacheBust}`"
           height="550px"
           type="application/pdf"
           style="aspect-ratio: 1 / 1.42"
         />
         <video v-else-if="selectedFile.extension == 'mp4'" controls>
-          <source :src="`${backendURL}${selectedFile.path}`" type="video/mp4" />
+          <source
+            :src="`${backendURL}${selectedFile.path}?cb=${this.cacheBust}`"
+            type="video/mp4"
+          />
         </video>
         <audio v-else-if="selectedFile.extension == 'mp3'" controls>
           <source
-            :src="`${backendURL}${selectedFile.path}`"
+            :src="`${backendURL}${selectedFile.path}?cb=${this.cacheBust}`"
             type="audio/mpeg"
           />
         </audio>
@@ -124,6 +127,8 @@ export default {
       listKey: 0,
       showModal: false,
       selectedFile: undefined,
+      currentSelectionKey: 0,
+      cacheBust: Date.now(),
       icons: {
         faTrash,
         faArrowsRotate,
@@ -188,9 +193,8 @@ export default {
         formData.append("category", "test");
         await this.callApi("post", `/files/${this.selectedFile.id}`, formData);
         await this.getMedia();
-        this.showModal = false;
-        this.listKey++;
         this.notifyUser("File replaced");
+        this.cacheBust = Date.now();
       } catch (e) {
         console.log(e);
       }
