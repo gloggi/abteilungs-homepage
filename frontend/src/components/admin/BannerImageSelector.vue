@@ -27,7 +27,7 @@
     <MediaModal
       v-if="showModal"
       @close="showModal = false"
-      :extensions="['jpg', 'png', 'gif', 'svg']"
+      :extensions="['jpg', 'jpeg', 'png', 'gif', 'svg']"
       :pre-selected="preSelectedImages"
       @select="selectHandler"
       :max-select="1000"

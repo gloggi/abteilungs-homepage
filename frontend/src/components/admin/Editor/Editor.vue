@@ -172,7 +172,7 @@
     @close="showMediaModal = false"
     @select="handleSelect"
     :max-select="1"
-    :extensions="['jpg', 'png', 'gif', 'svg']"
+    :extensions="['jpg', 'jpeg', 'png', 'gif', 'svg']"
   />
   <Modal v-if="showLinkModal" @close="showLinkModal = false">
     <form @submit.prevent="setLink" class="p-3 flex space-x-2 items-end">
