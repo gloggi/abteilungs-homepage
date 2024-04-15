@@ -22,7 +22,7 @@ class WebFormController extends Controller
         $matchedFields = [];
         foreach ($filledForm as $key => $value) {
             foreach ($fields as $field) {
-                if (isset($field['label']) && $key === Str::snake($field['label'])) {
+                if (isset($field['label']) && $key === Str::snake(str_replace('-', '', $field['label']))) {
                     if ($field['input_type'] == 'date') {
                         $matchedFields[$field['label']] = Carbon::parse($value)->format('d.m.Y');
                     } elseif ($field['input_type'] == 'email') {
@@ -40,7 +40,7 @@ class WebFormController extends Controller
 
         Mail::to($form->email)->send(new WebForm($form, $matchedFields, $setting));
         if ($form->enable_autoresponse && $form->autoresponse_email_field_id) {
-            $autoresponseEmail = $filledForm[$this->toSnakeCase($form->autoresponseField->label)];
+            $autoresponseEmail = $filledForm[Str::snake(str_replace('-', '', $form->autoresponseField->label))];
             $autoresponseMessage = $form->autoresponse_message;
             $autoresponseSubject = $form->autoresponse_subject;
 
