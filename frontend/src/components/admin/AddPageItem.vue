@@ -6,12 +6,6 @@
     @dragover.prevent
     @drop="handleDrop"
     class="rounded-lg my-1 h-1.5 w-full text-xs hover:text-white"
-    :class="`${
-      dragging
-        ? 'bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500'
-        : 'bg-gray-300 hover:bg-gray-400'
-    } 
-    ${increaseHeight ? 'h-48' : 'h-auto'}`"
   >
     <span v-if="dragging">{{ $t("dashboard.dropPageItemHere") }}</span>
     <span v-else>

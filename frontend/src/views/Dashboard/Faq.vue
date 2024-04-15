@@ -24,7 +24,6 @@
         @selectGroup="handleSelectGroup"
       />
     </Card>
-    <h2 class="font-semibold text-2xl">{{ $t("dashboard.questions") }}</h2>
     <AddQuestion
       @changeOrder="changeOrder"
       @select="addField"
@@ -81,6 +80,7 @@ import AddQuestion from "../../components/admin/AddQuestion.vue";
 import DragItemBox from "../../components/admin/DragItemBox.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
+import { nanoid } from "nanoid";
 export default {
   components: {
     Card,
@@ -142,21 +142,21 @@ export default {
       this.errors = errors;
     },
     addField(field) {
+      field.tempId = nanoid();
       this.content.questions.push(field);
       this.sortQuestions();
     },
     deleteField(field) {
       this.content.questions = this.content.questions.filter(
-        (f) => `${f.id}${f.type}` !== field,
+        (f) => f.tempId !== field.tempId || f.id !== field.id,
       );
-      this.updateFaq();
     },
     changeOrder(newField) {
-      const fieldIndex = this.content.questions.findIndex(
-        (f) => f.id == newField.id,
+      this.content.questions = this.content.questions.filter(
+        (f) => f.tempId !== newField.tempId || f.id !== newField.id,
       );
-      this.content.questions[fieldIndex] = newField;
-      this.updateFaq();
+      this.content.questions.push(newField);
+      this.sortQuestions();
     },
     sortQuestions() {
       this.content.questions = this.content.questions.sort(

@@ -53,7 +53,9 @@ class FaqController extends Controller
 
     public function show($id)
     {
-        $faq = Faq::with('questions')->find($id);
+        $faq = Faq::with(['questions' => function ($query) {
+            $query->orderBy('sort');
+        }])->find($id);
 
         if (! $faq) {
             return response()->json(['message' => 'Faq not found'], 404);

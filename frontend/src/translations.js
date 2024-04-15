@@ -177,6 +177,8 @@ export const messages = {
       autoresponseEmailField: "E-Mail-Feld für automatische Antwort",
       autoresponseSubject: "Betreff für automatische Antwort",
       autoresponseMessage: "Nachricht für automatische Antwort",
+      clickToAddQuestionItem: "Klicke hier, um eine neue Frage hinzuzufügen",
+      dropQuestionItemHere: "Ziehe eine Frage hierher, um sie zu verschieben",
     },
     page: {
       campDateLabel: "Lagerdatum",

@@ -18,7 +18,7 @@ class UpdateFaqRequest extends FormRequest
             'questions.*.answer' => 'sometimes|required|string',
             'questions.*.id' => 'nullable|integer',
             'questions.*.open' => 'nullable|boolean',
-            'questions.*.sort' => 'nullable',
+            'questions.*.sort' => 'sometimes|required',
         ];
     }
 }
