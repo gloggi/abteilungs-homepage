@@ -54,7 +54,17 @@ export default {
     },
     allowedExtensions: {
       type: Array,
-      default: () => ["jpg", "png", "gif", "svg"],
+      default: () => [
+        "png",
+        "jpeg",
+        "jpg",
+        "gif",
+        "svg",
+        "bmp",
+        "webp",
+        "tiff",
+        "ico",
+      ],
     },
   },
   data() {
