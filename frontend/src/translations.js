@@ -112,13 +112,13 @@ export const messages = {
       longitude: "Längengrad",
       permalink: "Permalink",
       campsMessage:
-        "An dieser Stelle werden alle Lager angezeigt, die Sie im Lager-Tab eingegeben haben.",
+        "An dieser Stelle werden alle Lager angezeigt, die du im Lager-Tab eingegeben hast.",
       contactsMessage:
-        "An dieser Stelle werden alle Kontakte angezeigt, die Sie im Kontakte-Tab eingegeben haben.",
+        "An dieser Stelle werden alle Kontakte angezeigt, die du im Kontakte-Tab eingegeben hast.",
       groupsMessage:
-        "An dieser Stelle werden alle Gruppen angezeigt, die Sie im Gruppen-Tab erstellt haben.",
+        "An dieser Stelle werden alle Gruppen angezeigt, die du im Gruppen-Tab erstellt hast.",
       sectionsMessage:
-        "An dieser Stelle werden alle Stufen mit ihren Beschreibungen angezeigt, die Sie im Stufen-Tab erstellt haben.",
+        "An dieser Stelle werden alle Stufen mit ihren Beschreibungen angezeigt, die du im Stufen-Tab erstellt hast.",
       showFleurDeLis: "Pfadililie anzeigen",
       text: "Text",
       form: "Formular",
