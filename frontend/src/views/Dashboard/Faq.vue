@@ -171,6 +171,7 @@ export default {
     },
   },
   async created() {
+    await this.$store.dispatch("groups/fetchGroups");
     await this.getFaq();
   },
 };

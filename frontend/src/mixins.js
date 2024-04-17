@@ -39,7 +39,9 @@ export const mixin = {
       return this.$store.state.user.isUnitLeader;
     },
     userGroups() {
-      return this.$store.state.user.groups;
+      return this.isAdmin
+        ? this.$store.state.groups.groups
+        : this.$store.state.user.groups;
     },
   },
   methods: {

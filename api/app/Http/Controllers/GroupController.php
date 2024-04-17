@@ -18,7 +18,7 @@ class GroupController extends Controller
             ->leftJoin('sections', 'groups.section_id', '=', 'sections.id')
             ->orderBy('sections.sort', 'asc');
         if ($request->has('dashboard') && $user->hasRole('unitleader')) {
-            $groups = $groups->whereIn('id', $user->groups->pluck('id'));
+            $groups = $groups->whereIn('groups.id', $user->groups->pluck('id'));
         }
 
         $perPage = $request->input('per_page', 1000);
