@@ -67,7 +67,12 @@ class Page extends Model
     public function faqItems()
     {
 
-        return $this->hasMany(FaqItem::class)->with('faq')->with('faq.questions');
+        return $this->hasMany(FaqItem::class)
+            ->with(['faq' => function ($query) {
+                $query->with(['questions' => function ($query) {
+                    $query->orderBy('sort', 'asc');
+                }]);
+            }]);
     }
 
     public function groupEventsItems()
