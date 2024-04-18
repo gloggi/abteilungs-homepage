@@ -120,7 +120,7 @@ export const messages = {
         "An dieser Stelle werden alle Gruppen angezeigt, die du im Gruppen-Tab erstellt hast.",
       sectionsMessage:
         "An dieser Stelle werden alle Stufen mit ihren Beschreibungen angezeigt, die du im Stufen-Tab erstellt hast.",
-      showFleurDeLis: "Pfadililie anzeigen",
+      showSectionOrGroupLogo: "Zeige Logo von ...",
       text: "Text",
       form: "Formular",
       location: "Ort",

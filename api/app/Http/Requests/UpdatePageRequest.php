@@ -20,7 +20,7 @@ class UpdatePageRequest extends FormRequest
             'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem,campItem,locationItem,faqItem,groupEventsItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
-            'page_items.*.show_fleur_de_lis' => 'nullable',
+            'page_items.*.section_id' => 'nullable',
             'page_items.*.files' => 'nullable',
             'page_items.*.form_id' => 'nullable',
             'page_items.*.location_id' => 'nullable',

@@ -168,7 +168,8 @@ class PageController extends Controller
                         [
                             'title' => $pageItemData['title'] ?? '',
                             'body' => $pageItemData['body'] ?? '',
-                            'show_fleur_de_lis' => $pageItemData['show_fleur_de_lis'] ?? false,
+                            'section_id' => $pageItemData['section_id'] ?? null,
+                            'group_id' => $pageItemData['group_id'] ?? null,
                             'page_id' => $page->id,
                             'sort' => $sort_counter,
                         ]

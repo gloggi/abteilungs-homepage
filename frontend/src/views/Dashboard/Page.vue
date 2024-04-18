@@ -80,7 +80,8 @@
         :item="pageItem"
         v-model:title="pageItem.title"
         v-model:body="pageItem.body"
-        v-model:fleurDeLis="pageItem.showFleurDeLis"
+        v-model:sectionId="pageItem.sectionId"
+        v-model:groupId="pageItem.groupId"
       />
       <ImageItem
         v-if="pageItem.type == 'imageItem'"
