@@ -74,7 +74,12 @@ export default {
   },
   methods: {
     selectLogo(id) {
-      const name = this.groupsAndSections.find((obj) => obj.id === id).name;
+      const name = this.groupsAndSections.find((obj) => obj.id === id)?.name;
+      if (!name) {
+        this.groupIdValue = null;
+        this.sectionIdValue = null;
+        return;
+      }
       this.groupIdValue = this.groups.find((group) => group.name === name)?.id;
       this.sectionIdValue = this.sections.find(
         (section) => section.name === name,
