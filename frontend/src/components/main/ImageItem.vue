@@ -4,7 +4,7 @@
       <img
         v-if="currentImage"
         class="w-full object-cover"
-        style="aspect-ratio: 32/9"
+        style="aspect-ratio: 24/9"
         :src="backendURL + currentImage"
       />
     </transition>
