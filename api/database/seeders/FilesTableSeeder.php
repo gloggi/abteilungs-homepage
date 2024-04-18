@@ -416,6 +416,16 @@ class FilesTableSeeder extends Seeder
                 'created_at' => '2024-03-05 17:26:34',
                 'updated_at' => '2024-03-05 17:26:34',
             ],
+            39 => [
+                'id' => '40',
+                'name' => 'rover',
+                'path' => $this->image('images/rover.svg'),
+                'thumbnail' => $this->image('images/rover.svg'),
+                'extension' => 'svg',
+                'category' => 'general',
+                'created_at' => '2024-04-18 22:30:00',
+                'updated_at' => '2024-04-18 22:30:00',
+            ]
         ]);
 
     }
