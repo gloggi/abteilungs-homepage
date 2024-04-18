@@ -5,7 +5,7 @@
     :titles="`${$t('dashboard.image')},${$t('dashboard.nickname')},${$t(
       'dashboard.role',
     )},${$t('dashboard.email')}`"
-    columns="file:image(thumbnail),nickname:link(id),role,email"
+    columns="file:image(thumbnail;rounded),nickname:link(id),role,email"
     pushAfterCreationTo="Contact"
   />
 </template>

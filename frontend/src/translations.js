@@ -4,7 +4,8 @@ export const messages = {
       hello: "Hallo {name}!",
       formFields: "Formularfelder",
       pageItems: "Seitenelemente",
-      dragAndDrop: "oder drag and drop",
+      uploadFile: "Datei hochladen",
+      dragAndDrop: "oder per Drag & Drop ziehen",
       noItemsAvailable: "Keine Elemente verfügbar.",
       itemDeleted: "Artikel gelöscht",
       itemCreated: "Artikel erstellt",
@@ -179,6 +180,7 @@ export const messages = {
       autoresponseMessage: "Nachricht für automatische Antwort",
       clickToAddQuestionItem: "Klicke hier, um eine neue Frage hinzuzufügen",
       dropQuestionItemHere: "Ziehe eine Frage hierher, um sie zu verschieben",
+      noValue: "Kein Wert",
     },
     page: {
       campDateLabel: "Lagerdatum",

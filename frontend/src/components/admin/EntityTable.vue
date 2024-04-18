@@ -1,7 +1,7 @@
 <template>
   <div
     :key="`table-${tableKey}`"
-    class="bg-gray-50 w-full flex justify-between items-center p-3 rounded-t-md"
+    class="bg-gray-50 w-full flex justify-start items-center p-3 rounded-t-md"
   >
     <div class="w-10">
       <input
@@ -12,13 +12,16 @@
         class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-900"
       />
     </div>
-    <div
-      v-for="(key, i) in getTitles"
-      :key="`text-${i}`"
-      class="text"
-      :style="`width: ${columnWidth}%;`"
-    >
-      {{ key }}
+
+    <div class="flex flex-col md:flex-row justify-between w-full">
+      <div
+        v-for="(key, i) in getTitles"
+        :key="`text-${i}`"
+        class="text hidden md:block"
+        :style="`width: ${columnWidth}%;`"
+      >
+        {{ key }}
+      </div>
     </div>
   </div>
   <hr />
@@ -28,7 +31,7 @@
   <div
     v-for="(item, j) in content"
     :key="`row-${j}`"
-    class="bg-white w-full p-3 border-b flex justify-between items-center overflow-y-hidden"
+    class="bg-white w-full p-3 border-b flex justify-start items-center overflow-y-hidden"
   >
     <div class="w-10">
       <input
@@ -38,33 +41,53 @@
         class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-900"
       />
     </div>
-    <div
-      v-for="(key, i) in keys"
-      :key="`text-${j}-${i}`"
-      class="text"
-      :style="`width: ${columnWidth}%;`"
-    >
-      <template v-if="actions[key] && actions[key].actionName == 'link'">
-        <router-link
-          class="text-sm text-blue-600 hover:text-blue-900"
-          :to="`${entity}/${item[actions[key].actionArgument]}`"
-          >{{ item[key] || "No name provided" }}</router-link
-        >
-      </template>
+    <template v-for="(key, i) in keys" :key="`text-${j}-${i}`">
       <template v-if="actions[key] && actions[key].actionName == 'image'">
-        <div v-if="item[key]" class="flex justify-start items-center">
-          <img
-            class="h-10 rounded-lg"
-            :src="`${backendURL}${item[key].thumbnail}`"
+        <div class="justify-start items-center md:hidden px-5">
+          <ColoredLogoCircle
+            class="size-20"
+            :size="actions[key].args.includes('color') ? 65 : 100"
+            :src="item[key] ? `${backendURL}${item[key].thumbnail}` : undefined"
+            :backgroundColor="item?.color"
           />
         </div>
       </template>
-      <template v-if="actions[key] && actions[key].actionName == 'date'">
-        <div class="text-sm text-gray-500">{{ formatDate(item[key]) }}</div>
-      </template>
-      <template v-if="!actions[key]">
-        <div class="text-sm text-gray-500">{{ getValue(item, key) }}</div>
-      </template>
+    </template>
+    <div
+      class="flex flex-col md:flex-row md:items-center justify-between w-full"
+    >
+      <div
+        v-for="(key, i) in keys"
+        :key="`text-${j}-${i}`"
+        class="text"
+        :style="`width: ${isDesktop ? columnWidth : '100'}%;`"
+      >
+        <template v-if="actions[key] && actions[key].actionName == 'link'">
+          <router-link
+            class="text-sm text-blue-600 hover:text-blue-900"
+            :to="`${entity}/${item[actions[key].actionArgument]}`"
+            >{{ item[key] || $t("dashboard.noValue") }}</router-link
+          >
+        </template>
+        <template v-if="actions[key] && actions[key].actionName == 'image'">
+          <div class="justify-start items-center hidden md:block">
+            <ColoredLogoCircle
+              class="size-16"
+              :size="actions[key].args.includes('color') ? 65 : 100"
+              :src="
+                item[key] ? `${backendURL}${item[key].thumbnail}` : undefined
+              "
+              :backgroundColor="item?.color"
+            />
+          </div>
+        </template>
+        <template v-if="actions[key] && actions[key].actionName == 'date'">
+          <div class="text-sm text-gray-500">{{ formatDate(item[key]) }}</div>
+        </template>
+        <template v-if="!actions[key]">
+          <div class="text-sm text-gray-500">{{ getValue(item, key) }}</div>
+        </template>
+      </div>
     </div>
   </div>
   <PaginationNav
@@ -79,8 +102,9 @@
 import { get } from "lodash";
 import PaginationNav from "./PaginationNav.vue";
 import { format } from "date-fns";
+import ColoredLogoCircle from "./ColoredLogoCircle.vue";
 export default {
-  components: { /* Button, */ PaginationNav },
+  components: { PaginationNav, ColoredLogoCircle },
   props: ["entity", "columns", "titles"],
   emits: ["changeSelected"],
   data() {
@@ -96,6 +120,7 @@ export default {
       checkBoxValues: {},
       tableKey: 0,
       selected: new Set([]),
+      isDesktop: window.innerWidth > 768,
     };
   },
   computed: {
@@ -190,25 +215,37 @@ export default {
         console.log(e);
       }
     },
-    entryProcesser() {
+    entryProcessor() {
       const columns = this.columns.split(",");
       this.keys = columns.map((column) => {
-        if (column.split(":").length == 1) {
+        if (column.split(":").length === 1) {
           return column;
         } else {
-          const [c, action] = column.split(":");
-          const [actionName, actionArgument] = action.split(/\(|\)/);
-          this.actions[c] = { actionName, actionArgument };
-
-          return c;
+          const [columnName, action] = column.split(":");
+          const [actionName, ...params] = action.split(/\(|\)/);
+          this.actions[columnName] = {
+            actionName,
+          };
+          if (params.length > 0) {
+            const actionParams = params[0].split(";");
+            this.actions[columnName].actionArgument = actionParams[0];
+            this.actions[columnName].args = actionParams.slice(1);
+          }
+          return columnName;
         }
       });
     },
   },
+  mounted() {
+    window.addEventListener("resize", this.handleResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   async created() {
     await this.getItems();
     this.setUpBoxes();
-    this.entryProcesser();
+    this.entryProcessor();
   },
 };
 </script>

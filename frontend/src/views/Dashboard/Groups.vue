@@ -7,7 +7,7 @@
     :titles="`${$t('dashboard.image')},${$t('dashboard.name')},${$t(
       'dashboard.section',
     )}`"
-    columns="file:image(thumbnail),name:link(id),section.name"
+    columns="file:image(thumbnail;color),name:link(id),section.name"
     pushAfterCreationTo="Group"
     :create="isAdmin"
   />

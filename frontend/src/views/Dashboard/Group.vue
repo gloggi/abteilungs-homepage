@@ -17,6 +17,7 @@
           :logo="content.file"
           @selectImage="updateLogo"
           :size="65"
+          :backgroundColor="content.color"
         />
         <div class="space-y-2 w-full">
           <TextInput

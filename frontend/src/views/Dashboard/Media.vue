@@ -19,11 +19,11 @@
     </button>
   </div>
   <Modal v-if="showModal" @close="showModal = false">
-    <div v-if="content" class="flex h-full p-3 space-x-2">
+    <div v-if="content" class="flex flex-col md:flex-row h-full p-3 space-x-2">
       <div
         id="fileContainer"
         :key="currentSelectionKey"
-        class="flex justify-center items-center w-2/3"
+        class="flex justify-center items-center w-full md:w-2/3"
       >
         <img
           v-if="isImage()"
@@ -57,8 +57,8 @@
           style="max-height: 90vh"
         />
       </div>
-      <div class="w-1/3">
-        <div class="flex justify-end w-full space-x-2">
+      <div class="w-full md:w-1/3">
+        <div class="flex justify-end w-full space-x-2 pt-2 md:pt-0">
           <ActionButton @click="deleteFile" :reverse="true">
             <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
           </ActionButton>
@@ -66,7 +66,7 @@
             <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
           </ActionButton>
         </div>
-        <div class="flex flex-col space-y-2 pt-8 w-full">
+        <div class="flex flex-col space-y-2 md:pt-8 w-full">
           <TextInput
             :label="$t('dashboard.name')"
             v-model="selectedFile.name"

@@ -1,27 +1,21 @@
 <template>
   <div class="relative">
-    <div class="relative rounded-full h-48 w-48 border bg-gray-200">
-      <div
-        class="flex justify-center items-center rounded-full overflow-hidden size-full"
+    <ColoredLogoCircle
+      class="size-48"
+      :src="file ? `${backendURL}${file.thumbnail}` : undefined"
+      :size="size"
+      :backgroundColor="backgroundColor"
+    />
+    <div class="absolute top-3 right-3 flex justify-center items-center">
+      <button
+        @click="showModal = true"
+        class="rounded-full w-7 aspect-square bg-white border"
       >
-        <img
-          v-if="file"
-          :src="`${backendURL}${file.thumbnail}`"
-          class="aspect-square"
-          :style="{ height: `${size}%`, width: `${size}%` }"
+        <font-awesome-icon
+          :icon="icons.faPencil"
+          class="text-gray-700 h-4 w-4"
         />
-      </div>
-      <div class="absolute top-3 right-3 flex justify-center items-center">
-        <button
-          @click="showModal = true"
-          class="rounded-full w-7 aspect-square bg-white border"
-        >
-          <font-awesome-icon
-            :icon="icons.faPencil"
-            class="text-gray-700 h-4 w-4"
-          />
-        </button>
-      </div>
+      </button>
     </div>
   </div>
   <MediaModal
@@ -36,8 +30,9 @@
 <script>
 import MediaModal from "../../components/admin/MediaModal.vue";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import ColoredLogoCircle from "./ColoredLogoCircle.vue";
 export default {
-  components: { MediaModal },
+  components: { MediaModal, ColoredLogoCircle },
   emits: ["selectImage"],
   props: {
     logo: {
@@ -51,6 +46,10 @@ export default {
     size: {
       type: Number,
       default: 100,
+    },
+    backgroundColor: {
+      type: String,
+      default: "#e5e7eb",
     },
     allowedExtensions: {
       type: Array,

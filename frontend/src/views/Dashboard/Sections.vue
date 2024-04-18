@@ -2,10 +2,10 @@
   <OverviewTemplate
     :name="$t('dashboard.sections')"
     entity="sections"
-    :titles="`${$t('dashboard.name')},${$t('dashboard.fromAge')},${$t(
-      'dashboard.toAge',
-    )}`"
-    columns="name:link(id),fromAge,toAge"
+    :titles="`${$t('dashboard.image')},${$t('dashboard.name')},${$t(
+      'dashboard.fromAge',
+    )},${$t('dashboard.toAge')}`"
+    columns="file:image(thumbnail;color),name:link(id),fromAge,toAge"
     pushAfterCreationTo="Section"
   />
 </template>
