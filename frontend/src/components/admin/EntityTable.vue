@@ -64,7 +64,7 @@
       >
         <template v-if="actions[key] && actions[key].actionName == 'link'">
           <router-link
-            class="text-sm text-gray-600 hover:text-gray-900 font-semibold"
+            class="text-sm text-gray-900 hover:text-gray-600 font-semibold"
             :to="`${entity}/${item[actions[key].actionArgument]}`"
             >{{ item[key] || $t("dashboard.noValue") }}</router-link
           >

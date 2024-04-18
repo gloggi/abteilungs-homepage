@@ -181,6 +181,7 @@ export const messages = {
       clickToAddQuestionItem: "Klicke hier, um eine neue Frage hinzuzufügen",
       dropQuestionItemHere: "Ziehe eine Frage hierher, um sie zu verschieben",
       noValue: "Kein Wert",
+      logo: "Logo",
     },
     page: {
       campDateLabel: "Lagerdatum",

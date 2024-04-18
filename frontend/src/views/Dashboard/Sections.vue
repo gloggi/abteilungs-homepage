@@ -2,7 +2,7 @@
   <OverviewTemplate
     :name="$t('dashboard.sections')"
     entity="sections"
-    :titles="`${$t('dashboard.image')},${$t('dashboard.name')},${$t(
+    :titles="`${$t('dashboard.logo')},${$t('dashboard.name')},${$t(
       'dashboard.fromAge',
     )},${$t('dashboard.toAge')}`"
     columns="file:image(thumbnail;color),name:link(id),fromAge,toAge"

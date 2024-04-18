@@ -4,7 +4,7 @@
       settings.isRegion ? $t('dashboard.divisions') : $t('dashboard.groups')
     "
     entity="groups"
-    :titles="`${$t('dashboard.image')},${$t('dashboard.name')},${$t(
+    :titles="`${$t('dashboard.logo')},${$t('dashboard.name')},${$t(
       'dashboard.section',
     )}`"
     columns="file:image(thumbnail;color),name:link(id),section.name"

@@ -2,9 +2,7 @@
   <div class="rounded-lg pt-2">
     <div v-if="editor" class="flex justify-between">
       <div class="flex flex-col">
-        <div
-          class="flex flex-col items-start md:flex-row space-y-1 md:space-y-0 md:space-x-3"
-        >
+        <div class="flex flex-row flex-wrap items-startspace-y-1 gap-3">
           <div class="flex">
             <EditorButton
               @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
@@ -84,8 +82,6 @@
             >
               <font-awesome-icon class="size-5" :icon="icons.faLink" />
             </EditorButton>
-          </div>
-          <div class="flex">
             <EditorButton
               v-if="editor.isActive('link')"
               @click="editor.chain().focus().unsetLink().run()"
