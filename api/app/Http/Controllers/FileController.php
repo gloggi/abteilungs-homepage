@@ -138,7 +138,7 @@ class FileController extends Controller
     private function storeFileAndCreateThumbnail($fileData, $filename, $newFile)
     {
         Storage::disk('public')->putFileAs('uploads', $fileData, $filename);
-        if (in_array($newFile->extension, ['jpg', 'jpeg', 'png', 'gif'])) {
+        if (in_array(strtolower($newFile->extension), ['jpg', 'jpeg', 'png', 'gif'])) {
             $thumbnailPath = 'thumbnails/'.$filename;
             $thumbnail = Image::make($fileData)->resize(200, null, function ($constraint) {
                 $constraint->aspectRatio();

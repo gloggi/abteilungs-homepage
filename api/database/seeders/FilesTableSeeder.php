@@ -425,7 +425,7 @@ class FilesTableSeeder extends Seeder
                 'category' => 'general',
                 'created_at' => '2024-04-18 22:30:00',
                 'updated_at' => '2024-04-18 22:30:00',
-            ]
+            ],
         ]);
 
     }

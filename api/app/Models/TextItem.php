@@ -17,14 +17,14 @@ class TextItem extends Model
 
     public function getLogoCircleAttribute()
     {
-        if ($this->group&&$this->group->file) {
+        if ($this->group && $this->group->file) {
 
             return [
                 'path' => $this->group->file->path,
                 'color' => $this->group->color,
             ];
         }
-        if ($this->section&&$this->section->file) {
+        if ($this->section && $this->section->file) {
             return [
                 'path' => $this->section->file->path,
             ];

@@ -148,7 +148,7 @@ export default {
         "tiff",
         "ico",
       ];
-      return imageTypes.includes(this.selectedFile.extension);
+      return imageTypes.includes(this.selectedFile.extension.toLowerCase());
     },
     async getMedia() {
       try {
