@@ -19,7 +19,7 @@
             />
           </button>
 
-          <div class="px-5 overflow-y-scroll h-full">
+          <div class="px-5 h-full">
             <slot></slot>
           </div>
         </div>

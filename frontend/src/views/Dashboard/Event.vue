@@ -9,7 +9,7 @@
       backLinkTo="Events"
     >
       <template v-slot:buttons-before>
-        <ActionButton @click="dublicateItem">
+        <ActionButton @click="dublicateItem" :toolTipText="$t('dashboard.duplicateEvent')">
           <font-awesome-icon :icon="icons.faCopy" class="h-6 w-6" />
         </ActionButton>
       </template>

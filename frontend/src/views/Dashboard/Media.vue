@@ -59,10 +59,10 @@
       </div>
       <div class="w-full md:w-1/3">
         <div class="flex justify-end w-full space-x-2 pt-2 md:pt-0">
-          <ActionButton @click="deleteFile" :reverse="true">
+          <ActionButton @click="deleteFile" :reverse="true" :toolTipText="$t('dashboard.deleteFile')">
             <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
           </ActionButton>
-          <ActionButton @click="updateFile" :reverse="true">
+          <ActionButton @click="updateFile" :reverse="true" :toolTipText="$t('dashboard.updateFile')">
             <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
           </ActionButton>
         </div>

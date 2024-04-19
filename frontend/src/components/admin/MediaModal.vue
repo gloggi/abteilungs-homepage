@@ -15,7 +15,7 @@
         @selectItems="selectItemsHandler"
       />
       <div class="pt-3 w-full flex justify-end h-13">
-        <ActionButton :reverse="true" @click="selectAndClose">
+        <ActionButton :reverse="true" @click="selectAndClose" :toolTipText="$t('dashboard.selectAndClose')">
           <font-awesome-icon :icon="icons.faCheck" class="h-6 w-6" />
         </ActionButton>
       </div>

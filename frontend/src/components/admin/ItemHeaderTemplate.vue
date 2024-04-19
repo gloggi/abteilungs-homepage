@@ -10,10 +10,10 @@
     </router-link>
     <div class="flex space-x-2">
       <slot name="buttons-before"></slot>
-      <ActionButton v-if="!noDelete" @click="deleteItem">
+      <ActionButton v-if="!noDelete" @click="deleteItem" :toolTipText="$t('dashboard.deleteItem')">
         <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
       </ActionButton>
-      <ActionButton @click="updateItem">
+      <ActionButton @click="updateItem" :toolTipText="$t('dashboard.saveChanges')">
         <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
       </ActionButton>
       <slot name="buttons-after"></slot>
