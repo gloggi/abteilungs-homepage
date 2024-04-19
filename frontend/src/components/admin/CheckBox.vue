@@ -1,9 +1,10 @@
 <template>
   <div class="flex flex-col">
-    <FormLabel v-if="label">{{ label }}</FormLabel>
+    <FormLabel v-if="label" :for="id">{{ label }}</FormLabel>
     <div class="h-9 flex items-center">
       <label class="relative inline-flex items-center cursor-pointer">
         <input
+          :id="id"
           type="checkbox"
           v-model="checkboxValue"
           class="sr-only peer"
@@ -20,7 +21,7 @@
 import FormLabel from "./FormLabel.vue";
 
 export default {
-  props: ["modelValue", "label"],
+  props: ["modelValue", "label", "id"],
   computed: {
     checkboxValue: {
       get() {

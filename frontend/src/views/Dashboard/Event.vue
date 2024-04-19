@@ -9,7 +9,10 @@
       backLinkTo="Events"
     >
       <template v-slot:buttons-before>
-        <ActionButton @click="dublicateItem" :toolTipText="$t('dashboard.duplicateEvent')">
+        <ActionButton
+          @click="dublicateItem"
+          :toolTipText="$t('dashboard.duplicateEvent')"
+        >
           <font-awesome-icon :icon="icons.faCopy" class="h-6 w-6" />
         </ActionButton>
       </template>
@@ -17,12 +20,14 @@
     <Card class="mt-4">
       <div class="flex flex-col space-y-2">
         <TextInput
+          id="title"
           :label="$t('dashboard.title')"
           type="text"
           v-model="content.title"
           :errors="errors.title"
         />
         <SelectComponent
+          id="responsible"
           :label="$t('dashboard.responsible')"
           selection="User"
           @selectUser="handleSelectUser"
@@ -31,6 +36,7 @@
           :errors="errors.userId"
         />
         <MultipleSelect
+          id="groups"
           :label="$t('dashboard.groups')"
           v-model="content.groups"
           :options="groups"
@@ -38,12 +44,14 @@
         />
         <BreakpointSpaceManager>
           <TextInput
+            id="startTime"
             :label="$t('dashboard.start')"
             type="datetime-local"
             v-model="content.startTime"
             :errors="errors.startTime"
           />
           <TextInput
+            id="endTime"
             :label="$t('dashboard.end')"
             type="datetime-local"
             v-model="content.endTime"
@@ -52,6 +60,7 @@
         </BreakpointSpaceManager>
         <BreakpointSpaceManager>
           <SelectComponent
+            id="startLocation"
             :label="$t('dashboard.startLocation')"
             selection="StartLocation"
             @selectStartLocation="handleSelectStartLocation"
@@ -60,6 +69,7 @@
             :errors="errors.startLocationId"
           />
           <SelectComponent
+            id="endLocation"
             :label="$t('dashboard.endLocation')"
             selection="EndLocation"
             @selectEndLocation="handleSelectEndLocation"
@@ -69,18 +79,25 @@
           />
         </BreakpointSpaceManager>
         <TextInput
+          id="midataLink"
           :label="$t('dashboard.midataLink')"
           type="url"
           v-model="content.externalApplicationLink"
           :errors="errors.externalApplicationLink"
         />
         <div class="flex flex-col space-y-2">
-          <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
-          <Editor v-model="content.description" />
+          <Editor
+            id="description"
+            :label="$t('dashboard.description')"
+            v-model="content.description"
+          />
         </div>
         <div class="flex flex-col space-y-2">
-          <FormLabel>{{ $t("dashboard.takeWithYou") }}</FormLabel>
-          <Editor v-model="content.takeWithYou" />
+          <Editor
+            id="takeWithYou"
+            :label="$t('dashboard.takeWithYou')"
+            v-model="content.takeWithYou"
+          />
         </div>
         <div class="flex flex-col space-y-2">
           <FormLabel>{{ $t("dashboard.files") }}</FormLabel>

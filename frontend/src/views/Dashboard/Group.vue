@@ -21,6 +21,7 @@
         />
         <div class="space-y-2 w-full">
           <TextInput
+            id="name"
             :label="$t('dashboard.name')"
             type="text"
             v-model="content.name"
@@ -28,6 +29,7 @@
           />
           <BreakpointSpaceManager>
             <SelectComponent
+              id="section"
               :label="$t('dashboard.section')"
               @selectSection="(event) => handleSection(event)"
               :value="content.section ? content.section['id'] : null"
@@ -36,6 +38,7 @@
               :errors="errors.sectionId"
             />
             <SelectComponent
+              id="gender"
               :label="$t('dashboard.gender')"
               @selectGender="(event) => handleGender(event)"
               :value="content.gender"
@@ -45,6 +48,7 @@
             />
           </BreakpointSpaceManager>
           <TextInput
+            id="region"
             :label="$t('dashboard.region')"
             type="text"
             v-model="content.region"
@@ -55,6 +59,7 @@
             <ColorPicker v-model="content.color" :errors="errors.color" />
           </div>
           <SelectComponent
+            id="parentGroup"
             :label="$t('dashboard.parentGroup')"
             @selectParentGroup="(event) => handleParentGroup(event)"
             :value="content.parentId ? content.parentId : null"
@@ -63,17 +68,20 @@
           />
           <BreakpointSpaceManager>
             <MultipleSelect
+              id="predecessorGroups"
               :label="$t('dashboard.predecessorGroups')"
               v-model="content.predecessors"
               :options="groups"
             />
             <MultipleSelect
+              id="successorGroups"
               :label="$t('dashboard.successorGroups')"
               v-model="content.successors"
               :options="groups"
             />
           </BreakpointSpaceManager>
           <SelectComponent
+            id="groupLeader"
             :label="$t('dashboard.groupLeader')"
             :value="content.groupLeaderId"
             selection="GroupLeader"
@@ -82,12 +90,14 @@
             :errors="errors.groupType"
           />
           <TextInput
+            id="midataId"
             :label="$t('dashboard.midataId')"
             type="number"
             v-model="content.midataId"
             :errors="errors.midataId"
           />
           <TextInput
+            id="midataLink"
             :label="$t('dashboard.externalLink')"
             type="url"
             placeholder="https://"
@@ -116,10 +126,6 @@ import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import ColorPicker from "../../components/admin/ColorPicker.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
-import Editor from "../../components/admin/Editor/Editor.vue";
-import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
-import FilesSelector from "../../components/admin/FilesSelector.vue";
-import CheckBox from "../../components/admin/CheckBox.vue";
 import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
 import InfoField from "../../components/admin/InfoField.vue";
 export default {
@@ -132,10 +138,6 @@ export default {
     ItemHeaderTemplate,
     ColorPicker,
     FormLabel,
-    Editor,
-    BannerImageSelector,
-    FilesSelector,
-    CheckBox,
     BreakpointSpaceManager,
     InfoField,
   },

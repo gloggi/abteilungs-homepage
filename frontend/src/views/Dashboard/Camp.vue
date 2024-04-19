@@ -11,17 +11,20 @@
     <Card class="mt-4">
       <div class="flex flex-col space-y-2" :key="loadedKey">
         <TextInput
+          id="name"
           :label="$t('dashboard.name')"
           type="text"
           v-model="content.name"
           :errors="errors.name"
         />
         <MultipleSelect
+          id="groups"
           :label="$t('dashboard.groups')"
           v-model="content.groups"
           :options="groups"
         />
         <TextInput
+          id="midataLink"
           :label="$t('dashboard.midataLink')"
           type="url"
           v-model="content.externalApplicationLink"
@@ -29,12 +32,14 @@
         />
         <BreakPointSpaceManager>
           <TextInput
+            id="applicationOpeningAt"
             :label="$t('dashboard.applicationOpeningAt')"
             type="date"
             v-model="content.applicationOpeningAt"
             :errors="errors.applicationOpeningAt"
           />
           <TextInput
+            id="applicationClosingAt"
             :label="$t('dashboard.applicationClosingAt')"
             type="date"
             v-model="content.applicationClosingAt"
@@ -43,12 +48,14 @@
         </BreakPointSpaceManager>
         <BreakPointSpaceManager>
           <TextInput
+            id="startAt"
             :label="$t('dashboard.startAt')"
             type="datetime-local"
             v-model="content.startAt"
             :errors="errors.startAt"
           />
           <TextInput
+            id="finishAt"
             :label="$t('dashboard.finishAt')"
             type="datetime-local"
             v-model="content.finishAt"
@@ -57,12 +64,14 @@
         </BreakPointSpaceManager>
         <BreakPointSpaceManager>
           <TextInput
+            id="participantsCount"
             :label="$t('dashboard.participantsCount')"
             type="number"
             v-model="content.participantsCount"
             :errors="errors.participantsCount"
           />
           <TextInput
+            id="maximumParticipants"
             :label="$t('dashboard.maximumParticipants')"
             type="number"
             v-model="content.maximumParticipants"

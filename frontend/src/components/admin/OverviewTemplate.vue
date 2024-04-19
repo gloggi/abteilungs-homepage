@@ -4,14 +4,26 @@
       <h2 class="font-extrabold text-4xl">{{ name }}</h2>
     </div>
     <div :class="`flex justify-between mb-2`">
-      <ActionButton v-if="itemsSelected" @click="deleteItems" :toolTipText="$t('dashboard.deleteSelectedItems')">
+      <ActionButton
+        v-if="itemsSelected"
+        @click="deleteItems"
+        :toolTipText="$t('dashboard.deleteSelectedItems')"
+      >
         <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
       </ActionButton>
       <div class="w-full flex justify-end space-x-2">
-        <ActionButton v-if="midataSync" @click="syncEntity" :toolTipText="$t('dashboard.midataSync')">
+        <ActionButton
+          v-if="midataSync"
+          @click="syncEntity"
+          :toolTipText="$t('dashboard.midataSync')"
+        >
           <MiDataSync class="h-6 w-6" />
         </ActionButton>
-        <ActionButton v-if="create" @click="createEntity" :toolTipText="$t('dashboard.createEntity')">
+        <ActionButton
+          v-if="create"
+          @click="createEntity"
+          :toolTipText="$t('dashboard.createEntity')"
+        >
           <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6" />
         </ActionButton>
       </div>

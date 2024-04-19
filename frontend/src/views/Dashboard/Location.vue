@@ -18,6 +18,7 @@
       />
       <div class="flex flex-col space-y-2">
         <TextInput
+          id="name"
           :label="$t('dashboard.name')"
           type="text"
           v-model="content.name"
@@ -25,6 +26,7 @@
         />
         <div class="flex space-x-2 w-full">
           <TextInput
+            id="lat"
             class="w-full"
             :label="$t('dashboard.latitudeDD')"
             type="number"
@@ -32,6 +34,7 @@
             :errors="errors.lat"
           />
           <TextInput
+            id="long"
             class="w-full"
             :label="$t('dashboard.longitudeDD')"
             type="number"
@@ -40,6 +43,7 @@
           />
         </div>
         <TextInput
+          id="lv95"
           :label="$t('dashboard.swissCoordinatesLV95')"
           type="text"
           v-model="lv95"

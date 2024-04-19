@@ -239,7 +239,7 @@ export default {
       }
     },
     goToGroupPage(route) {
-      this.$router.push(`/${$t("page.groupPagePath")}/${route}`);
+      this.$router.push(`/${this.$t("page.groupPagePath")}/${route}`);
     },
   },
   async created() {

@@ -1,10 +1,11 @@
 <template>
   <div class="w-full">
-    <FormLabel>
+    <FormLabel :for="id">
       {{ label }}
     </FormLabel>
     <div class="relative" @mouseleave="showDropdown = false">
       <select
+        :id="id"
         @mousedown.prevent
         @click="handleClickSelect"
         class="appearance-none border relative rounded w-full py-2 px-3 text-gray-700 leading-tight border-gray-500 focus:outline-none focus:shadow-outline"
@@ -61,6 +62,10 @@ export default {
     errors: {
       type: Array,
       default: () => [],
+    },
+    id: {
+      type: String,
+      default: "",
     },
   },
   data() {

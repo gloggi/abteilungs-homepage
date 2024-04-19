@@ -95,7 +95,7 @@ export default {
       this.timeout = setTimeout(this.changeImage, this.displayTime);
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearTimeout(this.timeout);
   },
 };

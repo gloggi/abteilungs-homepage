@@ -10,12 +10,14 @@
     />
     <Card class="mt-4">
       <TextInput
+        id="title"
         :label="$t('dashboard.title')"
         type="text"
         v-model="content.title"
         :errors="errors.title"
       />
       <SelectComponent
+        id="groups"
         :label="$t('dashboard.groups')"
         :value="content.groupId"
         :options="userGroups"
@@ -41,6 +43,7 @@
         <div>
           <div class="w-full flex space-x-2">
             <TextInput
+              id="question"
               class="w-full"
               type="text"
               v-model="question.question"

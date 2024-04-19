@@ -15,11 +15,13 @@
   >
     <SmallTitle>{{ $t("dashboard.generalSettings") }}</SmallTitle>
     <TextInput
+      id="siteTitle"
       :label="$t('dashboard.siteTitle')"
       v-model="modifiableSettings.siteTitle"
       :errors="errors.siteTitle"
     />
     <TextInput
+      id="divisionName"
       :label="$t('dashboard.divisionName')"
       v-model="modifiableSettings.divisionName"
       :errors="errors.divisionName"
@@ -64,6 +66,7 @@
       </div>
     </div>
     <SelectComponent
+      id="notFoundPage"
       selection="NotFoundPage"
       :label="$t('dashboard.notFoundPage')"
       @selectNotFoundPage="handleNotFoundPage"
@@ -77,12 +80,14 @@
     />
     <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
     <TextInput
+      id="midataId"
       :label="$t('dashboard.midataId')"
       type="number"
       v-model="modifiableSettings.midataId"
       :errors="errors.midataId"
     />
     <TextInput
+      id="midataApiKey"
       :label="$t('dashboard.midataApiKey')"
       info="Is required to fetch camps from MiData"
       type="text"
@@ -91,8 +96,10 @@
     />
     <SmallTitle>{{ $t("dashboard.footerSettings") }}</SmallTitle>
     <div>
-      <FormLabel>{{ $t("dashboard.contactInFooter") }}</FormLabel>
-      <Editor v-model="modifiableSettings.contactInFooter" />
+      <Editor
+        :label="$t('dashboard.contactInFooter')"
+        v-model="modifiableSettings.contactInFooter"
+      />
     </div>
     <SmallTitle>{{ $t("dashboard.alertBannerSettings") }}</SmallTitle>
     <CheckBox
@@ -110,11 +117,13 @@
       </div>
     </div>
     <TextInput
+      id="alertText"
       class="w-full"
       :label="$t('dashboard.text')"
       v-model="modifiableSettings.alertText"
     />
     <TextInput
+      id="alertUrl"
       :label="$t('dashboard.url')"
       v-model="modifiableSettings.alertUrl"
     />

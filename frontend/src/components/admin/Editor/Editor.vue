@@ -1,5 +1,6 @@
 <template>
   <div class="rounded-lg pt-2">
+    <FormLabel :for="id">{{ label }}</FormLabel>
     <div v-if="editor" class="flex justify-between">
       <div class="flex flex-col">
         <div class="flex flex-row flex-wrap items-startspace-y-1 gap-3">
@@ -179,6 +180,7 @@
         :label="$t('dashboard.link')"
         type="url"
         placeholder="https://"
+        id="link"
       />
       <ActionButton :reverse="true" type="submit">
         <font-awesome-icon class="h-6 w-6" :icon="icons.faLink" />
@@ -229,8 +231,9 @@ import Modal from "../Modal.vue";
 import TextInput from "../TextInput.vue";
 import ActionButton from "../ActionButton.vue";
 import EditorColorPicker from "./EditorColorPicker.vue";
+import FormLabel from "../FormLabel.vue";
 export default {
-  props: ["modelValue", "placeholder"],
+  props: ["modelValue", "placeholder", "id", "label"],
   components: {
     EditorContent,
     EditorButton,
@@ -239,6 +242,7 @@ export default {
     TextInput,
     ActionButton,
     EditorColorPicker,
+    FormLabel,
   },
   data() {
     return {
@@ -280,7 +284,6 @@ export default {
     },
     setLink() {
       this.showLinkModal = false;
-      const previousUrl = this.editor.getAttributes("link").href;
       const url = this.newLink;
 
       if (url === null) {
@@ -454,6 +457,7 @@ export default {
         attributes: {
           class:
             "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 min-h-[12rem] overflow-scroll border border-gray-700",
+          id: this.id,
         },
       },
     });

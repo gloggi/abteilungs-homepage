@@ -5,7 +5,6 @@ import Dashboard from "../views/Dashboard.vue";
 import DashboardHome from "../views/Dashboard/DashboardHome.vue";
 import Pages from "../views/Dashboard/Pages.vue";
 import Page from "../views/Dashboard/Page.vue";
-import FileUploadTest from "../views/Dashboard/FileUploadTest.vue";
 import Media from "../views/Dashboard/Media.vue";
 import Sections from "../views/Dashboard/Sections.vue";
 import Section from "../views/Dashboard/Section.vue";

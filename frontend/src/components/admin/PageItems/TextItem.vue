@@ -15,6 +15,7 @@
             class="w-full md:w-3/4"
             :label="$t('dashboard.title')"
             v-model.lazy="titleValue"
+            id="title"
           />
           <SelectComponent
             :key="loadedKey"
@@ -34,10 +35,8 @@
 
 <script>
 import Card from "../Card.vue";
-import CheckBox from "../CheckBox.vue";
 import DragItemBox from "../DragItemBox.vue";
 import Editor from "../Editor/Editor.vue";
-import FormLabel from "../FormLabel.vue";
 import TextInput from "../TextInput.vue";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import SelectComponent from "../SelectComponent.vue";
@@ -47,8 +46,6 @@ export default {
     Editor,
     Card,
     DragItemBox,
-    FormLabel,
-    CheckBox,
     SelectComponent,
   },
   props: ["title", "body", "item", "boxTitle", "sectionId", "groupId"],

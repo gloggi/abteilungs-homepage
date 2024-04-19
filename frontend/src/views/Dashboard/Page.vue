@@ -21,12 +21,14 @@
     </ItemHeaderTemplate>
     <Card class="space-y-2">
       <TextInput
+        id="title"
         :label="$t('dashboard.title')"
         v-model="content.title"
         :errors="errors.title"
       />
       <div class="flex flex-col md:flex-row">
         <TextInput
+          id="route"
           v-if="!isGroupPage"
           class="mt-2 w-full"
           :disabled="isGroupPage"
@@ -43,6 +45,7 @@
       </div>
       <SelectComponent
         v-if="isGroupPage"
+        id="group"
         :label="$t('dashboard.group')"
         :options="groups"
         selection="Group"

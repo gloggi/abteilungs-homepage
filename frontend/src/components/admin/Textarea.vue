@@ -1,13 +1,13 @@
 <template>
   <div class="">
-    <FormLabel>
+    <FormLabel :for="id">
       {{ label }}
     </FormLabel>
     <textarea
       rows="7"
       v-model="payload"
       class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      :id="label"
+      :id="id"
       :type="type"
       :placeholder="label"
       :disabled="disabled"

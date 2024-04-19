@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <FormLabel>
+    <FormLabel :for="id">
       {{ label }}
     </FormLabel>
     <input
@@ -8,7 +8,7 @@
       :lazy="true"
       class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-gray-900 focus:border-gray-900"
       :class="`${errors ? ' border-red-400' : ''}`"
-      :id="label"
+      :id="id"
       :type="type"
       :readonly="readonly"
       :placeholder="placeholder || label"
@@ -36,6 +36,7 @@ export default {
     "readonly",
     "errors",
     "info",
+    "id",
   ],
   emits: ["update:modelValue", "keyup"],
   computed: {

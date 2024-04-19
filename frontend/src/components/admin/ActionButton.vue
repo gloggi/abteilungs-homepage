@@ -1,12 +1,19 @@
 <template>
   <div class="relative">
-    <Transition enter-active-class="transition ease-out duration-300" leave-active-class="transition ease-in duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+    <Transition
+      enter-active-class="transition ease-out duration-300"
+      leave-active-class="transition ease-in duration-100"
+      enter-from-class="transform opacity-0 scale-95"
+      enter-to-class="transform opacity-100 scale-100"
+      leave-from-class="transform opacity-100 scale-100"
+      leave-to-class="transform opacity-0 scale-95"
+    >
       <div
         v-if="showTT && toolTipText"
         class="absolute z-10 inset-x-0 -top-10 h-full flex flex-col items-center justify-end"
       >
         <div
-          class="p-1 bg-gray-400 rounded-lg text-white text-xs text-center min-w-full "
+          class="p-1 bg-gray-400 rounded-lg text-white text-xs text-center min-w-full"
         >
           {{ toolTipText }}
         </div>
@@ -45,15 +52,15 @@ export default {
   data() {
     return {
       showTT: false,
-      timeout: undefined
+      timeout: undefined,
     };
   },
   methods: {
     showTooltip() {
-      if(this.timeout){
-        return
+      if (this.timeout) {
+        return;
       }
-     this.timeout = setTimeout(() => {
+      this.timeout = setTimeout(() => {
         this.showTT = true;
       }, 500);
     },
@@ -61,7 +68,6 @@ export default {
       clearTimeout(this.timeout);
       this.timeout = undefined;
       this.showTT = false;
-      
     },
   },
   beforeUnmount() {

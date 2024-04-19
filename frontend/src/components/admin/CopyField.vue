@@ -2,6 +2,7 @@
   <TextInput
     @click="highlightValue"
     :label="label"
+    :id="id"
     v-model="inputValue"
     :readonly="true"
   />
@@ -15,7 +16,7 @@ export default {
       inputValue: this.value,
     };
   },
-  props: ["label", "value"],
+  props: ["label", "value", "id"],
   methods: {
     highlightValue(event) {
       event.target.select();

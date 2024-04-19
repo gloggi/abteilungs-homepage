@@ -11,24 +11,28 @@
     <Card>
       <div class="space-y-2 w-full">
         <TextInput
+          id="name"
           :label="$t('dashboard.name')"
           type="text"
           v-model="content.name"
           :errors="errors.name"
         />
         <TextInput
+          id="email"
           :label="$t('dashboard.email')"
           type="text"
           v-model="content.email"
           :errors="errors.email"
         />
         <TextInput
+          id="subject"
           :label="$t('dashboard.subject')"
           type="text"
           v-model="content.subject"
           :errors="errors.subject"
         />
         <SelectComponent
+          id="groups"
           :label="$t('dashboard.groups')"
           :value="content.groupId"
           :options="userGroups"
@@ -42,6 +46,7 @@
         />
         <div v-if="content.enableAutoresponse" class="space-y-2">
           <SelectComponent
+            id="autoresponseEmailField"
             :label="$t('dashboard.autoresponseEmailField')"
             :value="content.autoresponseEmailFieldId"
             :options="possibleEmailFields"
@@ -50,6 +55,7 @@
             @selectField="handleSelectField"
           />
           <TextInput
+            id="autoresponseSubject"
             :label="$t('dashboard.autoresponseSubject')"
             type="text"
             v-model="content.autoresponseSubject"
@@ -86,6 +92,7 @@
         >
           <div class="flex space-x-2">
             <TextInput
+              id="label"
               class="w-full"
               type="text"
               v-model="field.label"
@@ -107,6 +114,7 @@
         >
           <div class="flex space-x-2">
             <TextInput
+              id="label"
               class="w-full"
               type="text"
               v-model="field.label"
@@ -128,6 +136,7 @@
         >
           <div class="flex space-x-2">
             <TextInput
+              id="label"
               class="w-full"
               type="text"
               v-model="field.label"
@@ -157,6 +166,7 @@
               <div class="flex space-x-2 items-center">
                 <font-awesome-icon :icon="icons.faCircle" />
                 <TextInput
+                  id="option"
                   class="w-full"
                   type="text"
                   @keyup="(e) => addOption(e, field)"

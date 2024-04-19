@@ -9,18 +9,21 @@
     <Card class="mt-4">
       <div class="flex flex-col space-y-2">
         <TextInput
+          id="nickname"
           :label="$t('dashboard.nickname')"
           type="text"
           v-model="content.nickname"
         />
         <BreakpointSpaceManager>
           <TextInput
+            id="firstname"
             class="w-full"
             :label="$t('dashboard.firstName')"
             type="text"
             v-model="content.firstname"
           />
           <TextInput
+            id="lastname"
             class="w-full"
             :label="$t('dashboard.lastName')"
             type="text"
@@ -28,11 +31,13 @@
           />
         </BreakpointSpaceManager>
         <MultipleSelect
+          id="groups"
           :label="$t('dashboard.groups')"
           v-model="content.groups"
           :options="groups"
         />
         <SelectComponent
+          id="role"
           :label="$t('dashboard.role')"
           selection="Role"
           @selectRole="handleSelectRole"

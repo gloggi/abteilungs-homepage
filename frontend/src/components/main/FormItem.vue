@@ -74,11 +74,7 @@ export default {
     async handleForm() {
       try {
         this.formContent.id = this.item.form.id;
-        const response = await this.callApi(
-          "post",
-          "/webforms",
-          this.formContent,
-        );
+        await this.callApi("post", "/webforms", this.formContent);
         this.submitSuccess = true;
         this.formContent = {};
       } catch (error) {

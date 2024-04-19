@@ -22,6 +22,7 @@
         />
         <div class="space-y-2 w-full">
           <TextInput
+            id="name"
             :label="$t('dashboard.name')"
             type="text"
             v-model="content.name"
@@ -29,6 +30,7 @@
           />
           <div class="flex flex-row justify-between space-x-2">
             <TextInput
+              id="fromAge"
               class="w-full"
               :label="$t('dashboard.fromAge')"
               type="number"
@@ -36,6 +38,7 @@
               :errors="errors.fromAge"
             />
             <TextInput
+              id="toAge"
               class="w-full"
               :label="$t('dashboard.toAge')"
               type="number"
@@ -65,8 +68,11 @@
             />
           </div>
           <div class="flex-space-y-2">
-            <FormLabel>{{ $t("dashboard.description") }}</FormLabel>
-            <Editor v-model="content.description" />
+            <Editor
+              :label="$t('dashboard.description')"
+              id="description"
+              v-model="content.description"
+            />
           </div>
         </div>
       </div>

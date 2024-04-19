@@ -19,6 +19,7 @@
         />
         <div class="space-y-2 w-full">
           <TextInput
+            id="nickname"
             :label="$t('dashboard.nickname')"
             type="text"
             v-model="content.nickname"
@@ -26,6 +27,7 @@
           />
           <BreakpointSpaceManager>
             <TextInput
+              id="firstname"
               class="w-full"
               :label="$t('dashboard.firstName')"
               type="text"
@@ -33,6 +35,7 @@
               :errors="errors.firstname"
             />
             <TextInput
+              id="lastname"
               class="w-full"
               :label="$t('dashboard.lastName')"
               type="text"
@@ -41,18 +44,21 @@
             />
           </BreakpointSpaceManager>
           <TextInput
+            id="email"
             :label="$t('dashboard.email')"
             type="email"
             v-model="content.email"
             :errors="errors.email"
           />
           <TextInput
+            id="role"
             :label="$t('dashboard.role')"
             type="text"
             v-model="content.role"
             :errors="errors.role"
           />
           <TextInput
+            id="sort"
             :label="$t('dashboard.sort')"
             type="number"
             v-model="content.sort"
