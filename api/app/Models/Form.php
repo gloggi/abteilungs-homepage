@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Form extends Model
 {
+    use Searchable;
+
     protected $fillable = ['name', 'email', 'subject', 'group_id', 'enable_autoresponse', 'autoresponse_subject', 'autoresponse_message', 'autoresponse_email_field_id'];
 
     public function textFields()
@@ -48,5 +51,13 @@ class Form extends Model
         $fields = $fields->sortBy('sort')->values()->all();
 
         return $fields;
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+        ];
     }
 }

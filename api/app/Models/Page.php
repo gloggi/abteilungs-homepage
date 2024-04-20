@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Page extends Model
 {
+    use Searchable;
+
     protected $fillable = ['title', 'route', 'file_ids', 'big_header', 'group_id'];
 
     protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems', 'locationItems', 'faqItems', 'groupEventsItems', 'campItems'];
@@ -120,5 +123,13 @@ class Page extends Model
         $items = $items->sortBy('sort')->values()->all();
 
         return $items;
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'route' => $this->route,
+        ];
     }
 }

@@ -4,7 +4,9 @@
     class="bg-gray-50 w-full flex justify-start items-center p-3 rounded-t-md"
   >
     <div class="w-10">
+      <label class="hidden" for="0"></label>
       <input
+        id="0"
         type="checkbox"
         ref="masterbox"
         v-model="topCheckboxValue"
@@ -34,7 +36,9 @@
     class="bg-white w-full p-3 border-b flex justify-start items-center overflow-y-hidden"
   >
     <div class="w-10">
+      <label class="hidden" :for="`checkbox-${item['id']}`"></label>
       <input
+        :id="`checkbox-${item['id']}`"
         type="checkbox"
         @change="(e) => changeBox(e, item['id'])"
         v-model="checkBoxValues[item['id']]"
@@ -105,7 +109,7 @@ import { format } from "date-fns";
 import ColoredLogoCircle from "./ColoredLogoCircle.vue";
 export default {
   components: { PaginationNav, ColoredLogoCircle },
-  props: ["entity", "columns", "titles"],
+  props: ["entity", "columns", "titles", "searchString"],
   emits: ["changeSelected"],
   data() {
     return {
@@ -141,6 +145,9 @@ export default {
         }
       },
       deep: true,
+    },
+    searchString() {
+      this.getItems();
     },
   },
   methods: {
@@ -197,6 +204,7 @@ export default {
               page: this.page,
               dashboard: true,
               perPage: 20,
+              search: this.searchString,
             },
           },
         );

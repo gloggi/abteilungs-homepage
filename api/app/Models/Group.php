@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Group extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'name',
@@ -20,7 +21,6 @@ class Group extends Model
         'gender',
         'parent_id',
         'midata_id',
-        'description',
         'enable_group_page',
         'region',
         'external_link',
@@ -72,5 +72,12 @@ class Group extends Model
     public function groupLeader()
     {
         return $this->belongsTo(User::class, 'group_leader_id');
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+        ];
     }
 }

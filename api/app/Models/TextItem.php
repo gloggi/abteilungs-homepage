@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class TextItem extends Model
 {
+    use Searchable;
+
     protected $fillable = ['title', 'body', 'page_id', 'sort', 'section_id', 'group_id'];
 
     protected $appends = ['type', 'logoCircle'];
@@ -46,5 +49,13 @@ class TextItem extends Model
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'body' => $this->body,
+        ];
     }
 }

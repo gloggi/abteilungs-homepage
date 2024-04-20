@@ -16,6 +16,10 @@ class CampController extends Controller
     {
         $perPage = $request->input('per_page', 1000);
         $query = Camp::query();
+        if ($request->has('search')) {
+            $searchResults = Camp::search($request->input('search'))->get();
+            $query = $query->whereIn('id', $searchResults->pluck('id'));
+        }
         if ($request->has('group_id')) {
             $groupId = $request->input('group_id');
             $query->whereHas('groups', function ($q) use ($groupId) {

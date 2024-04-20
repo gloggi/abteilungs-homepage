@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFaqRequest;
 use App\Http\Requests\UpdateFaqRequest;
 use App\Models\Faq;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,13 @@ class FaqController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 1000);
-        $query = Faq::with('questions');
+        $query = Faq::query();
+        if ($request->has('search')) {
+            $faqSearchResults = Faq::search($request->get('search'))->get()->pluck('id');
+            $questionSearchResults = Question::search($request->get('search'))->get()->pluck('faq_id');
+            $query = Faq::whereIn('id', $faqSearchResults->merge($questionSearchResults));
+        }
+        $query = $query->with('questions');
         $user = Auth::user();
         if ($request->has('dashboard') && ! $user->hasRole('admin')) {
             $groupIds = $user->groups->pluck('id');

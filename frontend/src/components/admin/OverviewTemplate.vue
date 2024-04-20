@@ -28,12 +28,14 @@
         </ActionButton>
       </div>
     </div>
+    <SearchField v-if="showSearch" v-model="searchString" />
     <EntityTable
       :key="tableKey"
       :entity="entity"
       @changeSelected="changeSelected"
       :titles="titles"
       :columns="columns"
+      :searchString="searchString"
     />
   </div>
 </template>
@@ -43,6 +45,7 @@ import EntityTable from "@/components/admin/EntityTable.vue";
 import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import MiDataSync from "@/icons/MiDataSync.vue";
 import ActionButton from "./ActionButton.vue";
+import SearchField from "./SearchField.vue";
 export default {
   props: {
     name: String,
@@ -58,13 +61,18 @@ export default {
       type: Boolean,
       default: true,
     },
+    showSearch: {
+      type: Boolean,
+      default: true,
+    },
   },
-  components: { EntityTable, MiDataSync, ActionButton },
+  components: { EntityTable, MiDataSync, ActionButton, SearchField },
   data() {
     return {
       content: undefined,
       selected: [],
       tableKey: 0,
+      searchString: undefined,
       icons: {
         faTrash,
         faPlus,

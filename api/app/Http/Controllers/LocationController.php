@@ -12,8 +12,13 @@ class LocationController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 1000);
+        $query = Location::query();
+        if ($request->has('search')) {
+            $searchResults = Location::search($request->input('search'))->get();
+            $query = $query->whereIn('id', $searchResults->pluck('id'));
+        }
 
-        $locations = Location::paginate($perPage);
+        $locations = $query->paginate($perPage);
 
         return response()->json($locations);
     }

@@ -22,7 +22,13 @@ class PageController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $query = Page::with(['files']);
+        $query = Page::query();
+        if ($request->has('search')) {
+            $pageSearchResults = Page::search($request->get('search'))->get()->pluck('id');
+            $textItemsSearchResults = TextItem::search($request->get('search'))->get()->pluck('page_id');
+            $query = Page::whereIn('id', $pageSearchResults->merge($textItemsSearchResults));
+        }
+        $query = $query->with('files');
         if ($request->has('dashboard') && ! $user->hasRole('admin')) {
             $groupIds = $user->groups->pluck('id');
             $query->whereIn('group_id', $groupIds);

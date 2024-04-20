@@ -13,19 +13,25 @@ class GroupController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $groups = $groups = Group::select('groups.*')
+        $query = Group::query();
+        $query = $query->select('groups.*')
             ->with(['file', 'section', 'predecessors', 'successors', 'parent', 'groupLeader'])
             ->leftJoin('sections', 'groups.section_id', '=', 'sections.id')
             ->orderBy('sections.sort', 'asc');
-        if ($request->has('dashboard') && $user->hasRole('unitleader')) {
-            $groups = $groups->whereIn('groups.id', $user->groups->pluck('id'));
+
+        if ($request->has('search')) {
+            $groupSearchResults = Group::search($request->input('search'))->get()->pluck('id');
+            $userGroups = $user->groups->pluck('id');
+            $query->whereIn('groups.id', $groupSearchResults->merge($userGroups));
+        } elseif ($request->has('dashboard') && $user->hasRole('unitleader')) {
+            $query = $query->whereIn('groups.id', $user->groups->pluck('id'));
         }
 
         $perPage = $request->input('per_page', 1000);
 
-        $groups = $groups->paginate($perPage);
+        $query = $query->paginate($perPage);
 
-        return response()->json($groups);
+        return response()->json($query);
     }
 
     public function store(StoreGroupRequest $request)

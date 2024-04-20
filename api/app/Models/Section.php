@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Section extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = ['name', 'description', 'from_age', 'to_age', 'file_id', 'file_ids', 'color', 'sort'];
 
@@ -25,5 +26,13 @@ class Section extends Model
     public function groups()
     {
         return $this->hasMany(Group::class);
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+        ];
     }
 }

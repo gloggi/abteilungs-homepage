@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Faq extends Model
 {
+    use Searchable;
+
     protected $fillable = [
         'title',
         'group_id',
@@ -19,5 +22,12 @@ class Faq extends Model
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+        ];
     }
 }

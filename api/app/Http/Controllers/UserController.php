@@ -13,7 +13,12 @@ class UserController extends Controller
     {
         $page = $request->input('page', 1);
         $perPage = $request->input('per_page', 1000);
-        $users = User::with('roles')->paginate($perPage, ['*'], 'page', $page);
+        $query = User::query();
+        if ($request->has('search')) {
+            $searchResults = User::search($request->input('search'))->get();
+            $query = $query->whereIn('id', $searchResults->pluck('id'));
+        }
+        $users = $query->with('roles')->paginate($perPage, ['*'], 'page', $page);
 
         return response()->json($users);
     }

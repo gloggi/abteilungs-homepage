@@ -19,6 +19,10 @@ class FormController extends Controller
         $perPage = $request->input('per_page', 1000);
         $user = Auth::user();
         $query = Form::query();
+        if ($request->has('search')) {
+            $searchResults = Form::search($request->input('search'))->get();
+            $query = $query->whereIn('id', $searchResults->pluck('id'));
+        }
         if ($request->has('dashboard') && ! $user->hasRole('admin')) {
             $groupIds = $user->groups->pluck('id');
             $query->whereIn('group_id', $groupIds);

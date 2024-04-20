@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Camp extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'midata_id',
@@ -44,5 +45,16 @@ class Camp extends Model
     public function files()
     {
         return $this->belongsToMany(File::class, 'camp_files', 'camp_id', 'file_id');
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'custom_description' => $this->custom_description,
+            'location' => $this->location,
+            'canton' => $this->canton,
+        ];
     }
 }

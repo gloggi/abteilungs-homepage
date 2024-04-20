@@ -24,6 +24,10 @@ class EventController extends Controller
         $user = Auth::user();
 
         $query = Event::with(['startLocation', 'endLocation', 'groups', 'files', 'user']);
+        if ($request->has('search')) {
+            $searchResults = Event::search($request->input('search'))->get();
+            $query = $query->whereIn('id', $searchResults->pluck('id'));
+        }
         if ($groupId) {
             $query->whereHas('groups', function ($query) use ($groupId) {
                 $query->where('groups.id', $groupId);

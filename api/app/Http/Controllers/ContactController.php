@@ -12,7 +12,12 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 1000);
-        $contacts = Contact::with('file')->orderBy('sort', 'asc')
+        $query = Contact::query();
+        if ($request->has('search')) {
+            $searchResults = Contact::search($request->input('search'))->get();
+            $query = $query->whereIn('id', $searchResults->pluck('id'));
+        }
+        $contacts = $query->with('file')->orderBy('sort', 'asc')
             ->paginate($perPage);
 
         return response()->json($contacts);
