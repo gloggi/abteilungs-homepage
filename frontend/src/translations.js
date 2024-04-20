@@ -191,6 +191,10 @@ export const messages = {
       duplicateEvent: "Aktivität duplizieren",
       deleteFile: "Datei löschen",
       updateFile: "Datei aktualisieren",
+      menuUpdated: "Das Menü wurde erfolgreich aktualisiert.",
+      menuItemDeleted: "Der Menüpunkt wurde erfolgreich gelöscht.",
+      footerLinkAdded: "Der Fusszeilenlink wurde erfolgreich hinzugefügt.",
+      footerLinkError: "Der Fusszeilenlink hat keinen Titel oder gültige URL.",
     },
     page: {
       campDateLabel: "Lagerdatum",

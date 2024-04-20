@@ -134,6 +134,7 @@ export default {
     async saveMenuItem(menuItem) {
       try {
         await this.callApi("post", "menuitems", menuItem);
+        this.notifyUser(this.$t("dashboard.menuUpdated"));
       } catch (error) {
         console.log(error);
       }
@@ -141,6 +142,7 @@ export default {
     async deleteMenuItem(menuItem) {
       try {
         await this.callApi("delete", `menuitems/${menuItem.id}`);
+        this.notifyUser(this.$t("dashboard.menuItemDeleted"));
       } catch (error) {
         console.log(error);
       }
@@ -157,7 +159,11 @@ export default {
       try {
         const response = await this.callApi("post", "footerlinks", link);
         this.footerLinks.push(response.data.data);
+        this.notifyUser(this.$t("dashboard.footerLinkAdded"));
       } catch (error) {
+        if (error.response.status === 422) {
+          this.notifyUser(this.$t("dashboard.footerLinkError"));
+        }
         console.log(error);
       }
     },

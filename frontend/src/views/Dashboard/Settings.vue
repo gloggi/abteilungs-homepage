@@ -4,7 +4,10 @@
   </div>
   <div class="flex justify-end mb-2">
     <div>
-      <ActionButton @click="updateSettings">
+      <ActionButton
+        @click="updateSettings"
+        :toolTipText="$t('dashboard.saveChanges')"
+      >
         <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
       </ActionButton>
     </div>
