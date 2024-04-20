@@ -195,6 +195,7 @@ export const messages = {
       menuItemDeleted: "Der Menüpunkt wurde erfolgreich gelöscht.",
       footerLinkAdded: "Der Fusszeilenlink wurde erfolgreich hinzugefügt.",
       footerLinkError: "Der Fusszeilenlink hat keinen Titel oder gültige URL.",
+      fileExtensionNotSupported: "Dateientyp wird nicht unterstützt.",
     },
     page: {
       campDateLabel: "Lagerdatum",
