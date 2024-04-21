@@ -186,7 +186,7 @@ export default {
         this.menuItems = this.menuItems.filter((mI) => mI.id !== menuItem.id);
       } else if (menuItem.special === "groupPages") {
         menuItem = {
-          title: "Group Dropdown",
+          title: this.$t("dashboard.groupPagesDropdown"),
           sort: menuItem.sort,
           special: "groupPages",
         };

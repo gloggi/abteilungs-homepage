@@ -8,7 +8,7 @@
       v-for="file in content"
       :key="file.id"
       :class="`bg-gray-200 rounded-lg h-w-full ${
-        isItemIncluded(file) ? 'ring-4 ring-offset-2 ring-blue-400' : ''
+        isItemIncluded(file) ? 'ring-4 ring-offset-2 ring-gray-600' : ''
       }`"
       @click="selectItem(file)"
     >

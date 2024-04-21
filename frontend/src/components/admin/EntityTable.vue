@@ -11,7 +11,7 @@
         ref="masterbox"
         v-model="topCheckboxValue"
         @change="topCheckboxHandler"
-        class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-900"
+        class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-400"
       />
     </div>
 
@@ -42,7 +42,7 @@
         type="checkbox"
         @change="(e) => changeBox(e, item['id'])"
         v-model="checkBoxValues[item['id']]"
-        class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-900"
+        class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-400"
       />
     </div>
     <template v-for="(key, i) in keys" :key="`text-${j}-${i}`">
@@ -159,9 +159,9 @@ export default {
     },
     changeBox(event, iri) {
       if (event.target.checked) {
-        this.selected.add(iri);
+        this.selected.add(`${iri}`);
       } else {
-        this.selected.delete(iri);
+        this.selected.delete(`${iri}`);
       }
 
       this.$emit("changeSelected", Array.from(this.selected));
