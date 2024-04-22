@@ -6,7 +6,7 @@
       <div
         class="md:w-[900px] flex flex-col md:flex-row items-start w-full px-5 md:px-0 md:justify-between py-6 md:space-y-0 space-y-10"
       >
-        <div>
+        <div class="md:w-1/3" v-if="groups.length > 0">
           <h2 class="text-heading-2 text-primary text-4xl">
             {{
               settings.isRegion ? $t("page.divisions") : $t("page.groupsTitle")
@@ -32,7 +32,7 @@
             </template>
           </ul>
         </div>
-        <div>
+        <div class="md:w-1/3">
           <h2 class="text-heading-2 text-primary text-4xl">
             {{ $t("page.linksTitle") }}
           </h2>
@@ -47,7 +47,10 @@
             </li>
           </ul>
         </div>
-        <div>
+        <div
+          class="md:w-1/3"
+          v-if="settings?.contactInFooter && settings?.contactInFooter !== ''"
+        >
           <h2 class="text-heading-2 text-primary text-4xl">
             {{ $t("page.contactTitle") }}
           </h2>
