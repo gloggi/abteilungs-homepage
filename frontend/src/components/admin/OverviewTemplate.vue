@@ -36,6 +36,7 @@
       :titles="titles"
       :columns="columns"
       :searchString="searchString"
+      :cover="cover"
     />
   </div>
 </template>
@@ -64,6 +65,10 @@ export default {
     showSearch: {
       type: Boolean,
       default: true,
+    },
+    cover: {
+      type: Boolean,
+      default: false,
     },
   },
   components: { EntityTable, MiDataSync, ActionButton, SearchField },

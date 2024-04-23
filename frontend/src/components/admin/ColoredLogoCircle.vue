@@ -7,6 +7,7 @@
         v-if="src"
         :src="src"
         class="aspect-square"
+        :class="{ 'object-cover': cover }"
         :style="{ height: `${size}%`, width: `${size}%` }"
       />
     </div>
@@ -26,6 +27,10 @@ export default {
     backgroundColor: {
       type: String,
       default: "#e5e7eb",
+    },
+    cover: {
+      type: Boolean,
+      default: false,
     },
   },
 };

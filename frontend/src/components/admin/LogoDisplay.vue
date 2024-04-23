@@ -5,6 +5,7 @@
       :src="file ? `${backendURL}${file.thumbnail}` : undefined"
       :size="size"
       :backgroundColor="backgroundColor"
+      :cover="cover"
     />
     <div class="absolute top-3 right-3 flex justify-center items-center">
       <button
@@ -64,6 +65,10 @@ export default {
         "tiff",
         "ico",
       ],
+    },
+    cover: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

@@ -53,6 +53,7 @@
             :size="actions[key].args.includes('color') ? 65 : 100"
             :src="item[key] ? `${backendURL}${item[key].thumbnail}` : undefined"
             :backgroundColor="item?.color"
+            :cover="cover"
           />
         </div>
       </template>
@@ -82,6 +83,7 @@
                 item[key] ? `${backendURL}${item[key].thumbnail}` : undefined
               "
               :backgroundColor="item?.color"
+              :cover="cover"
             />
           </div>
         </template>
@@ -109,7 +111,7 @@ import { format } from "date-fns";
 import ColoredLogoCircle from "./ColoredLogoCircle.vue";
 export default {
   components: { PaginationNav, ColoredLogoCircle },
-  props: ["entity", "columns", "titles", "searchString"],
+  props: ["entity", "columns", "titles", "searchString", "cover"],
   emits: ["changeSelected"],
   data() {
     return {

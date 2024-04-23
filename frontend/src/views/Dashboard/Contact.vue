@@ -16,6 +16,7 @@
           :key="loadedKey"
           :logo="content.file"
           @selectImage="updateLogo"
+          :cover="true"
         />
         <div class="space-y-2 w-full">
           <TextInput

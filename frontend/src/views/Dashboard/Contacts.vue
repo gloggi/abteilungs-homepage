@@ -7,6 +7,7 @@
     )},${$t('dashboard.email')}`"
     columns="file:image(thumbnail;rounded),nickname:link(id),role,email"
     pushAfterCreationTo="Contact"
+    :cover="true"
   />
 </template>
 
