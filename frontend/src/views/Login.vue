@@ -54,7 +54,18 @@ export default {
       },
     };
   },
-  computed: {},
+  watch: {
+    isAdmin() {
+      if (this.isAdmin) {
+        this.$router.push("/dashboard");
+      }
+    },
+    isUnitLeader() {
+      if (this.isUnitLeader) {
+        this.$router.push("/dashboard");
+      }
+    },
+  },
   methods: {
     async login() {
       try {
@@ -88,7 +99,7 @@ export default {
     },
   },
   created() {
-    if (this.isUnitLeader || this.isUnitMember) {
+    if (this.isUnitLeader || this.isAdmin) {
       this.$router.push("/dashboard");
     }
     this.handleOAuthCode();

@@ -50,7 +50,6 @@
             <ActionButton
               @click="saveRoute"
               :reverse="true"
-              :toolTipText="$t('dashboard.update')"
               size="small"
             >
               <font-awesome-icon :icon="icons.faCheck" class="size-4" />
