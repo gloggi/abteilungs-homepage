@@ -23,14 +23,16 @@
       </div>
     </Transition>
     <button
-      class="rounded-full size-10 flex justify-center items-center transition-colors duration-300 ease-in-out"
+      class="rounded-full flex justify-center items-center transition-colors duration-300 ease-in-out"
       @mouseover.self="showTooltip"
       @mouseleave.self="hideTooltip"
-      :class="
-        reverse
-          ? 'bg-gray-400 hover:bg-white text-white hover:text-gray-400'
-          : 'bg-white hover:bg-gray-400 text-gray-400 hover:text-white'
-      "
+      :class="{
+        'size-8': size === 'small',
+        'size-10': size === 'normal',
+        'size-12': size === 'large',
+        'bg-gray-400 hover:bg-white text-white hover:text-gray-400': reverse,
+        'bg-white hover:bg-gray-400 text-gray-400 hover:text-white': !reverse,
+      }"
     >
       <slot></slot>
     </button>
@@ -47,6 +49,10 @@ export default {
     toolTipText: {
       type: String,
       default: "",
+    },
+    size: {
+      type: String,
+      default: "normal",
     },
   },
   data() {

@@ -3,14 +3,17 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePageRequest extends FormRequest
 {
     public function rules()
     {
+        $pageId = $this->route('id');
+
         return [
             'title' => 'sometimes|required|string|max:255',
-            'route' => 'nullable',
+            'route' => ['nullable', Rule::unique('pages')->ignore($pageId)],
             'big_header' => 'boolean|nullable',
             'files' => 'nullable',
             'group_id' => 'nullable',

@@ -7,6 +7,7 @@
       @clearErrors="errors = {}"
       entity="pages"
       backLinkTo="Pages"
+      @updatedItem="handleUpdatedItem"
     >
       <template v-slot:buttons-before>
         <ActionButton @click="dublicateItem">
@@ -26,17 +27,54 @@
         v-model="content.title"
         :errors="errors.title"
       />
-      <div class="flex flex-col md:flex-row">
-        <TextInput
-          id="route"
-          v-if="!isGroupPage"
-          class="mt-2 w-full"
-          :disabled="isGroupPage"
-          :label="$t('dashboard.route')"
-          :info="$t('dashboard.infoRootDirectory')"
-          v-model="content.route"
-          :errors="errors.route"
-        />
+      <div class="flex flex-col md:flex-row items-center">
+        <div v-if="!isGroupPage" class="w-full flex flex-col">
+          <FormLabel>{{ $t("dashboard.route") }}</FormLabel>
+          <div v-if="routeInEdit" class="flex flex-row items-center space-x-2">
+            <div>
+              <div class="flex flex-row items-center">
+                <p class="text-lg text-gray-900 font-semibold">
+                  {{ baseUrl }}
+                </p>
+                <input
+                  id="route"
+                  type="text"
+                  class="p-0 text-lg font-semibold rounded focus:outline-none focus:shadow-outline focus:ring-gray-900 focus:border-gray-900"
+                  v-model="content.route"
+                />
+              </div>
+              <div v-if="errors.route" class="text-red-400 text-xs">
+                {{ errors.route.join(" ") }}
+              </div>
+            </div>
+            <ActionButton
+              @click="saveRoute"
+              :reverse="true"
+              :toolTipText="$t('dashboard.update')"
+              size="small"
+            >
+              <font-awesome-icon :icon="icons.faCheck" class="size-4" />
+            </ActionButton>
+          </div>
+          <div v-else class="flex flex-row items-center space-x-2">
+            <router-link
+              v-if="content.route"
+              class="text-lg text-gray-900 hover:text-gray-600 font-semibold"
+              :to="{ name: 'Home2', params: { path: content.route } }"
+            >
+              {{ `${baseUrl}${this.content.route || ""}` }}
+            </router-link>
+            <ActionButton
+              @click="routeInEdit = true"
+              :reverse="true"
+              :toolTipText="$t('dashboard.editRoute')"
+              size="small"
+            >
+              <font-awesome-icon :icon="icons.faPen" class="size-4" />
+            </ActionButton>
+          </div>
+          <InfoField :info="$t('dashboard.infoRootDirectory')" />
+        </div>
         <CheckBox
           class="mt-2 md:ml-2 text-nowrap"
           :label="$t('dashboard.isGroupPage')"
@@ -199,7 +237,12 @@ import TextInput from "../../components/admin/TextInput.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/AddPageItem.vue";
-import { faEye, faCopy } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faCopy,
+  faPen,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import TextItem from "../../components/admin/PageItems/TextItem.vue";
 import ImageItem from "../../components/admin/PageItems/ImageItem.vue";
 import { kebabCase } from "lodash";
@@ -219,6 +262,7 @@ import SelectComponent from "../../components/admin/SelectComponent.vue";
 import GroupEventsItem from "../../components/admin/PageItems/GroupEventsItem.vue";
 import ActionButton from "../../components/admin/ActionButton.vue";
 import { nanoid } from "nanoid";
+import InfoField from "../../components/admin/InfoField.vue";
 export default {
   components: {
     TextInput,
@@ -241,6 +285,7 @@ export default {
     SelectComponent,
     GroupEventsItem,
     ActionButton,
+    InfoField,
   },
   data() {
     return {
@@ -256,9 +301,12 @@ export default {
       icons: {
         faEye,
         faCopy,
+        faPen,
+        faCheck,
       },
       groups: [],
       isGroupPage: false,
+      routeInEdit: false,
     };
   },
   async created() {
@@ -268,6 +316,11 @@ export default {
   computed: {
     contentId() {
       return this.$route.params.id;
+    },
+    baseUrl() {
+      return `${window.location.protocol}//${window.location.hostname}${
+        window.location.port ? ":" + window.location.port : ""
+      }/`;
     },
   },
   methods: {
@@ -440,6 +493,13 @@ export default {
       } catch (e) {
         this.handleErrors(e);
       }
+    },
+    saveRoute() {
+      this.content.route = this.content.route;
+      this.routeInEdit = false;
+    },
+    handleUpdatedItem() {
+      this.routeInEdit = false;
     },
   },
   watch: {

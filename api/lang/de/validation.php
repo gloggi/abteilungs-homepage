@@ -190,7 +190,7 @@ return [
     'attributes' => [
         // StorePageRequest.php
         'title' => 'Titel',
-        'route' => 'Permalink',
+        'route' => 'Permalink-Feld',
         'big_header' => 'Großer Header',
         'files' => 'Dateien',
         'page_items.*.sort' => 'Sortieren',

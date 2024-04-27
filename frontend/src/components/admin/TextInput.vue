@@ -4,8 +4,7 @@
       {{ label }}
     </FormLabel>
     <input
-      v-model.lazy="payload"
-      :lazy="true"
+      v-model="payload"
       class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-gray-900 focus:border-gray-900"
       :class="`${errors ? ' border-red-400' : ''}`"
       :id="id"

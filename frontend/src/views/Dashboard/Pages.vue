@@ -2,7 +2,7 @@
   <OverviewTemplate
     :name="$t('dashboard.pages')"
     entity="pages"
-    :titles="`${$t('dashboard.title')},${$t('dashboard.permalink')}`"
+    :titles="`${$t('dashboard.title')},${$t('dashboard.path')}`"
     columns="title:link(id),route"
     pushAfterCreationTo="Page"
     :create="isAdmin"

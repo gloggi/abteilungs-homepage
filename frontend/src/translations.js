@@ -196,6 +196,8 @@ export const messages = {
       footerLinkAdded: "Der Fusszeilenlink wurde erfolgreich hinzugefügt.",
       footerLinkError: "Der Fusszeilenlink hat keinen Titel oder gültige URL.",
       fileExtensionNotSupported: "Dateientyp wird nicht unterstützt.",
+      editRoute: "Permalink bearbeiten",
+      path: "Pfad",
     },
     page: {
       campDateLabel: "Lagerdatum",

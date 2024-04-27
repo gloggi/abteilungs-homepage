@@ -43,7 +43,7 @@ export default {
     ActionButton,
   },
   props: ["title", "content", "backLinkTo", "entity", "noDelete"],
-  emits: ["errors", "clearErrors"],
+  emits: ["errors", "clearErrors", "updatedItem"],
   data() {
     return {
       icons: {
@@ -109,6 +109,7 @@ export default {
           `/${this.entity}/${this.contentId}`,
           this.content,
         );
+        this.$emit("updatedItem");
 
         this.notifyUser(this.$t("dashboard.itemUpdated"));
       } catch (e) {
