@@ -47,11 +47,7 @@
                 {{ errors.route.join(" ") }}
               </div>
             </div>
-            <ActionButton
-              @click="saveRoute"
-              :reverse="true"
-              size="small"
-            >
+            <ActionButton @click="saveRoute" :reverse="true" size="small">
               <font-awesome-icon :icon="icons.faCheck" class="size-4" />
             </ActionButton>
           </div>

@@ -198,6 +198,9 @@ export const messages = {
       fileExtensionNotSupported: "Dateientyp wird nicht unterstützt.",
       editRoute: "Permalink bearbeiten",
       path: "Pfad",
+      allEntitiesWereSynced: "Alle {name} wurden erfolgreich synchronisiert.",
+      allSelectedEntitiesWereDeleted:
+        "Alle ausgewählten {name} wurden gelöscht.",
     },
     page: {
       campDateLabel: "Lagerdatum",

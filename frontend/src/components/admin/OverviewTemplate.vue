@@ -102,7 +102,11 @@ export default {
         );
         this.selected = [];
         this.tableKey++;
-        this.notifyUser(`All selected ${this.name} were deleted`);
+        this.notifyUser(
+          this.$t("dashboard.allSelectedEntitiesWereDeleted", {
+            name: this.name,
+          }),
+        );
       } catch (e) {
         console.log(e);
       }
@@ -111,7 +115,9 @@ export default {
       try {
         await this.callApi("post", `${this.entity}/sync`);
         this.tableKey++;
-        this.notifyUser(`All ${this.name} were synced`);
+        this.notifyUser(
+          this.$t("dashboard.allEntitiesWereSynced", { name: this.name }),
+        );
       } catch (e) {
         console.log(e);
       }
