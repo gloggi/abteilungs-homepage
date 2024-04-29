@@ -112,7 +112,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
-        :key="i"
+        :key="`textItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
         v-model:title="pageItem.title"
         v-model:body="pageItem.body"
@@ -127,7 +127,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
-        :key="i"
+        :key="`imageItem-${pageItem.id || pageItem.tempId}`"
       />
       <FilesItem
         v-if="pageItem.type == 'filesItem'"
@@ -138,7 +138,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
-        :key="i"
+        :key="`filesItem-${pageItem.id || pageItem.tempId}`"
       />
       <FormItem
         v-if="pageItem.type == 'formItem'"
@@ -146,7 +146,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
-        :key="i"
+        :key="`formItem-${pageItem.id || pageItem.tempId}`"
         @changeForm="changeFormItem"
         :item="pageItem"
       />
@@ -156,7 +156,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
-        :key="i"
+        :key="`contactItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
       <GroupsItem
@@ -165,7 +165,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
-        :key="i"
+        :key="`groupsItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
       <SectionsItem
@@ -174,7 +174,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
-        :key="i"
+        :key="`sectionsItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
       <CampItem
@@ -184,7 +184,7 @@
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
         @changeCamp="changeCampItem"
-        :key="i"
+        :key="`campItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
       <LocationItem
@@ -193,7 +193,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
-        :key="i"
+        :key="`locationItem-${pageItem.id || pageItem.tempId}`"
         @changeLocation="changeLocationItem"
         :item="pageItem"
       />
@@ -204,7 +204,7 @@
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
         @changeFaq="changeFaqItem"
-        :key="i"
+        :key="`faqItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
       <GroupEventsItem
@@ -214,7 +214,7 @@
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
         @changeGroupEvents="changeGroupEvents"
-        :key="i"
+        :key="`groupEventsItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
       <AddPageItem
@@ -374,9 +374,13 @@ export default {
     },
     changeImageItem(event) {
       const pageItemId = event.id;
+      const pageItemIdTempId = event.tempId;
       const files = event.files.files;
       const itemIndex = this.content.pageItems.findIndex(
-        (p) => p.id == pageItemId && p.type == "imageItem",
+        (p) =>
+          p.id == pageItemId &&
+          p.tempId == pageItemIdTempId &&
+          p.type == "imageItem",
       );
       this.content.pageItems[itemIndex].files = files;
     },

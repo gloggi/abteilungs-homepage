@@ -86,22 +86,32 @@ class PageController extends Controller
         }
         $page->update($validatedData);
         $page->files()->sync(array_column($request->input('files', []), 'id'));
-        $this->createPageItemsFromValidatedData($page, $validatedData);
 
-        $currentPageItems = $page->getAllItems();
-        foreach ($currentPageItems as $currentField) {
-            $found = false;
-            foreach ($validatedData['page_items'] as $pageItemData) {
-                if (! isset($pageItemData['id']) || ($currentField->id == $pageItemData['id'] && $currentField->type == $pageItemData['type'])) {
-                    $found = true;
+        $currentItems = collect($page->getAllItems());
+        $validatedItems = collect($validatedData['page_items']);
 
-                    break;
-                }
-            }
-            if (! $found) {
-                $currentField->delete();
+        $currentItemKeys = $currentItems->map(function ($item) {
+            return ['id' => $item->id, 'type' => $item->type];
+        });
+
+        $validatedItemKeys = $validatedItems->map(function ($item) {
+            return ['id' => $item['id'] ?? null, 'type' => $item['type']];
+        });
+
+        $idsToDelete = $currentItemKeys->filter(function ($currentKey) use ($validatedItemKeys) {
+            return ! $validatedItemKeys->contains(function ($validatedKey) use ($currentKey) {
+                return $validatedKey['id'] === $currentKey['id'] && $validatedKey['type'] === $currentKey['type'];
+            });
+        });
+
+        foreach ($currentItems as $item) {
+            if ($idsToDelete->contains(['id' => $item->id, 'type' => $item->type])) {
+                $item->delete();
+                unset($item);
             }
         }
+
+        $this->createPageItemsFromValidatedData($page, $validatedData);
         $page = Page::find($id);
 
         return response()->json([

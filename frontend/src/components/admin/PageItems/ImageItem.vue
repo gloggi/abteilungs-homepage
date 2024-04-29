@@ -44,7 +44,11 @@ export default {
   methods: {
     selectHandler(selectedImages) {
       this.preSelectedImages = selectedImages;
-      this.$emit("changeImages", { id: this.item.id, files: selectedImages });
+      this.$emit("changeImages", {
+        id: this.item.id,
+        tempId: this.item.tempId,
+        files: selectedImages,
+      });
     },
     removeSelectedImage(image) {
       this.preSelectedImages = this.preSelectedImages.filter(
