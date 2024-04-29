@@ -72,22 +72,32 @@ class FormController extends Controller
 
         $form->update($validatedData);
 
-        $this->createFieldsFromValidatedData($form, $validatedData);
+        $currentFields = collect($form->getAllFields());
+        $validatedFields = collect($validatedData['fields']);
 
-        $currentFields = $form->getAllFields();
-        foreach ($currentFields as $currentField) {
-            $found = false;
-            foreach ($validatedData['fields'] as $fieldData) {
-                if (! isset($fieldData['id']) || ($currentField->id == $fieldData['id'] && $currentField->type == $fieldData['type'])) {
-                    $found = true;
+        $currentFieldKeys = $currentFields->map(function ($field) {
+            return ['id' => $field->id, 'type' => $field->type];
+        });
 
-                    break;
-                }
-            }
-            if (! $found) {
-                $currentField->delete();
+        $validatedFieldKeys = $validatedFields->map(function ($field) {
+            return ['id' => $field['id'] ?? null, 'type' => $field['type']];
+        });
+
+        $idsToDelete = $currentFieldKeys->filter(function ($currentKey) use ($validatedFieldKeys) {
+            return ! $validatedFieldKeys->contains(function ($validatedKey) use ($currentKey) {
+                return $validatedKey['id'] === $currentKey['id'] && $validatedKey['type'] === $currentKey['type'];
+            });
+        });
+
+        foreach ($currentFields as $field) {
+            if ($idsToDelete->contains(['id' => $field->id, 'type' => $field->type])) {
+                $field->delete();
+                unset($field);
             }
         }
+
+        $this->createFieldsFromValidatedData($form, $validatedData);
+
         $form = Form::find($id);
 
         return response()->json([
