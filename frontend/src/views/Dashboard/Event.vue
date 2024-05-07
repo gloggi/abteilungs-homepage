@@ -10,6 +10,12 @@
     >
       <template v-slot:buttons-before>
         <ActionButton
+          @click="goToMail"
+          :toolTipText="$t('dashboard.createEmail')"
+        >
+          <font-awesome-icon :icon="icons.faEnvelope" class="h-6 w-6" />
+        </ActionButton>
+        <ActionButton
           @click="dublicateItem"
           :toolTipText="$t('dashboard.duplicateEvent')"
         >
@@ -123,6 +129,7 @@ import {
   faTrash,
   faPlus,
   faCopy,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import FormLabel from "../../components/admin/FormLabel.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
@@ -156,6 +163,7 @@ export default {
         faTrash,
         faPlus,
         faCopy,
+        faEnvelope,
       },
       locations: [],
       groups: [],
@@ -279,6 +287,12 @@ export default {
       } catch (e) {
         this.handleErrors(e);
       }
+    },
+    goToMail() {
+      this.$router.push({
+        name: "Event Mail",
+        params: { eventId: this.$route.params.id },
+      });
     },
   },
   async created() {

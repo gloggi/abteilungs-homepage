@@ -6,7 +6,9 @@
                   <div
                     style="border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; background-color: #4A4A4A">
                     <p style="margin: 0; width: 100%; padding: 12px; text-align: center; font-size: 12px; color: #fff">
+                    @if (!isset($hideAutoGeneration))
                       Dieses E-Mail wurde automatisch von der Abteilungswebseite gesendet.
+                    @endif
                     </p>
                   </div>
                 </td>

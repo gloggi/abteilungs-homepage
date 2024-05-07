@@ -26,6 +26,7 @@ import Camps from "../views/Dashboard/Camps.vue";
 import Camp from "../views/Dashboard/Camp.vue";
 import Faqs from "../views/Dashboard/Faqs.vue";
 import Faq from "../views/Dashboard/Faq.vue";
+import EventMail from "../views/Dashboard/EventMail.vue";
 
 export const getRouter = ($t) => {
   const routes = [
@@ -174,6 +175,11 @@ export const getRouter = ($t) => {
           path: "events/:id",
           name: "Event",
           component: Event,
+        },
+        {
+          path: "events/:id/mail",
+          name: "Event Mail",
+          component: EventMail,
         },
         {
           path: "camps",

@@ -201,6 +201,12 @@ export const messages = {
       allEntitiesWereSynced: "Alle {name} wurden erfolgreich synchronisiert.",
       allSelectedEntitiesWereDeleted:
         "Alle ausgewählten {name} wurden gelöscht.",
+      createEmail: "E-Mail erstellen",
+      sendEmail: "E-Mail senden",
+      from: "Von",
+      to: "An",
+      emailContent: "E-Mail-Inhalt",
+      emailSent: "Das E-Mail wurde erfolgreich gesendet.",
     },
     page: {
       campDateLabel: "Lagerdatum",

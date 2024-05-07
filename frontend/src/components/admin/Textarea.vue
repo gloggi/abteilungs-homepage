@@ -19,7 +19,7 @@
 import { computed } from "vue";
 import FormLabel from "./FormLabel.vue";
 export default {
-  props: ["label", "type", "content", "modelValue", "disabled"],
+  props: ["label", "type", "content", "modelValue", "disabled", "id"],
   setup(props, { emit }) {
     const payload = computed({
       get: () => props.modelValue,

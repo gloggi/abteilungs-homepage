@@ -18,6 +18,7 @@
         <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
       </ActionButton>
       <ActionButton
+        v-if="!noUpdate"
         @click="updateItem"
         :toolTipText="$t('dashboard.saveChanges')"
       >
@@ -42,7 +43,7 @@ export default {
     Card,
     ActionButton,
   },
-  props: ["title", "content", "backLinkTo", "entity", "noDelete"],
+  props: ["title", "content", "backLinkTo", "entity", "noDelete", "noUpdate"],
   emits: ["errors", "clearErrors", "updatedItem"],
   data() {
     return {

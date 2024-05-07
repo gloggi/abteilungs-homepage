@@ -122,6 +122,8 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
     Route::put('/events/{id}', [EventController::class, 'update']);
     Route::delete('/events/{id}', [EventController::class, 'destroy']);
     Route::post('/events/sync', [EventController::class, 'syncExternalEvents']);
+    Route::get('/events/{id}/mail', [EventController::class, 'getMail']);
+    Route::post('/events/{id}/mail', [EventController::class, 'sendMail']);
 });
 
 Route::get('/footerlinks', [FooterLinkController::class, 'index']);

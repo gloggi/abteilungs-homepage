@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Mail\EventInfo;
 use App\Models\Event;
 use App\Models\Group;
 use App\Models\Location;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -158,5 +160,89 @@ class EventController extends Controller
         }
 
         return response()->json(['message' => 'External events synced successfully']);
+    }
+
+    public function getMail($id)
+    {
+        $event = Event::with(['groups', 'files', 'user', 'startLocation', 'endLocation'])->find($id);
+
+        if (! $event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+        $subject = 'Infos '.$event->title;
+        $from = $event->user->firstname.' '.$event->user->lastname.($event->user->nickname ? (' v/o '.$event->user->nickname) : '');
+        $bbc = $event->user->email;
+        $content = $this->getMailText($event);
+
+        return response()->json([
+            'subject' => $subject,
+            'from' => $from,
+            'content' => $content,
+            'bcc' => $bbc,
+        ]);
+    }
+
+    private function getMailText($event)
+    {
+        $date = Carbon::parse($event->start_time)->format('d.m.Y H:i').' - '.Carbon::parse($event->end_time)->format('H:i');
+        $name = $event->user->nickname ? $event->user->nickname : ($event->user->firstname.' '.$event->user->lastname);
+        $location = $event->startLocation->name;
+        $mailText = "<p class='main-text'>Hallo zusammen</p><p class='main-text'>
+        {$event->description}
+        <br>
+        <strong>Datum und Zeit</strong>: 
+        {$date}
+        <br>
+        <strong>Besammlung</strong>: 
+        {$event->startLocation->name}
+        <br>
+        <strong>Schluss</strong>: 
+        {$event->endLocation->name}
+        <br><br><strong>Mitnehmen</strong>:<br>
+        {$event->take_with_you}
+        <br>
+        Bei Fragen kannst Du dich gerne bei mir melden.
+        <br>
+        <br>
+        Liebe Grüsse<br>
+        {$name}
+        </p>";
+
+        return $mailText;
+    }
+
+    public function sendMail(Request $request, $id)
+    {
+        $event = Event::with(['groups', 'files', 'user', 'startLocation', 'endLocation'])->find($id);
+
+        if (! $event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+
+        $subject = $request->input('subject');
+        $from = $request->input('from');
+        $content = $request->input('content');
+        $bcc = $request->input('bcc');
+        $fromName = $request->input('from');
+        $replyToMail = $event->user->email;
+
+        $toMails = $request->input('receiver');
+        $setting = Setting::find(1);
+        preg_match_all('/[a-z0-9_\-\+\.]+@[a-z0-9\-\.]+\.[a-z]{2,}/i', $toMails, $matches);
+        $emails = $matches[0];
+
+        $validatedEmails = array_filter($emails, function ($email) {
+            return filter_var($email, FILTER_VALIDATE_EMAIL);
+        });
+
+        if (empty($validatedEmails)) {
+            return response()->json(['message' => 'Du hast keine gültigen E-Mail-Adressen eingegeben.'], 400);
+        }
+
+        foreach ($validatedEmails as $email) {
+            Mail::to($email)->send(new EventInfo($subject, $content, $fromName, $replyToMail, $setting));
+        }
+
+        return response()->json(['message' => 'Mail sent!'], 201);
     }
 }
