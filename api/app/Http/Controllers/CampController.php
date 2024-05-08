@@ -8,6 +8,8 @@ use App\Models\Camp;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class CampController extends Controller
@@ -15,20 +17,53 @@ class CampController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 1000);
-        $query = Camp::query();
+        $groupId = $request->input('group_id');
+        $currentDateTime = now();
+        $user = Auth::user();
+
+        $query = Camp::with(['groups', 'files']);
+
         if ($request->has('search')) {
             $searchResults = Camp::search($request->input('search'))->get();
-            $query = $query->whereIn('id', $searchResults->pluck('id'));
+            $query->whereIn('id', $searchResults->pluck('id'));
         }
-        if ($request->has('group_id')) {
-            $groupId = $request->input('group_id');
-            $query->whereHas('groups', function ($q) use ($groupId) {
-                $q->where('group_id', $groupId);
+
+        if ($groupId) {
+            $query->whereHas('groups', function ($query) use ($groupId) {
+                $query->where('groups.id', $groupId);
             });
         }
-        $camps = $query->with(['groups', 'files'])->paginate($perPage);
 
-        return response()->json($camps);
+        if ($request->has('dashboard') && $user->hasRole('unitleader')) {
+            $query->whereHas('groups', function ($query) use ($user) {
+                $query->whereIn('groups.id', $user->groups->pluck('id'));
+            });
+        }
+
+        $camps = $query->get();
+
+        $upcomingCamps = $camps->filter(function ($camp) use ($currentDateTime) {
+            return $camp->finish_at > $currentDateTime;
+        })->sortBy('finish_at');
+
+        $pastCamps = $camps->reject(function ($camp) use ($currentDateTime) {
+            return $camp->finish_at > $currentDateTime;
+        })->sortByDesc('finish_at');
+
+        if ($request->has('dashboard') && $user) {
+            $sortedCamps = $upcomingCamps->merge($pastCamps);
+        } else {
+            $sortedCamps = $upcomingCamps;
+        }
+
+        $paginatedCamps = new LengthAwarePaginator(
+            $sortedCamps->forPage($request->page, $perPage)->values(),
+            $sortedCamps->count(),
+            $perPage,
+            $request->page
+        );
+
+        return response()->json($paginatedCamps);
     }
 
     public function store(StoreCampRequest $request)
