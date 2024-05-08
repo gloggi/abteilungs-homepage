@@ -87,8 +87,10 @@ class FileController extends Controller
         ]);
         $fileData = $request->file('file');
         $file = File::findOrFail($id);
-        $user = Auth::user();
-        if (! $user->hasRole('admin')) {
+        $user = Auth::user()->load('groups');
+        $userGroupIds = $user->groups->pluck('id');
+        $userHasGroupId = $userGroupIds->contains($file->group_id);
+        if (! $user->hasRole('admin') && ! $userHasGroupId) {
             if ($file->user_id !== $user->id) {
                 return response()->json(['message' => 'You are not allowed to update this file'], 403);
             }

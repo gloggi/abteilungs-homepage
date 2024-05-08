@@ -60,6 +60,7 @@ export default {
       this.selectHandler(this.preSelectedImages);
     },
     handleFilesChange(event) {
+      event.title = this.title;
       this.$emit("changeFiles", event);
     },
   },
