@@ -23,7 +23,7 @@
   <div v-else>
     <img
       class="w-full object-cover"
-      style="aspect-ratio: 32/9"
+      style="aspect-ratio: 24/9"
       v-if="currentImage"
       :src="backendURL + currentImage"
     />
