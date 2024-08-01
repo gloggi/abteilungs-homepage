@@ -1,31 +1,17 @@
 <template>
   <AlertBar v-if="settings.showAlert" />
-  <GroupPage
-    :key="`group-${pageKey}`"
-    v-if="pageType === 'groupPage'"
-    :group="group"
-  >
-    <template v-slot:navbar>
-      <NavBar :menuItems="menuItems" />
-    </template>
-  </GroupPage>
-  <RegularPage
-    :key="`page-${pageKey}`"
-    v-if="!pageNonExistent && pageType === 'regularPage'"
-    :page="page"
-  >
+  <RegularPage :key="`page-${pageKey}`" v-if="!pageNonExistent" :page="page">
     <template v-slot:navbar>
       <NavBar :menuItems="menuItems" />
     </template>
   </RegularPage>
-  <FooterComponent v-if="pageType && !pageNonExistent" />
+  <FooterComponent v-if="!pageNonExistent" />
   <CookieBanner />
 </template>
 <script>
 import NavBar from "../components/main/NavBar.vue";
 import FooterComponent from "../components/main/FooterComponent.vue";
 import RegularPage from "./RegularPage.vue";
-import GroupPage from "./GroupPage.vue";
 import CookieBanner from "../components/main/CookieBanner.vue";
 import AlertBar from "../components/main/AlertBar.vue";
 
@@ -34,7 +20,6 @@ export default {
     NavBar,
     FooterComponent,
     RegularPage,
-    GroupPage,
     CookieBanner,
     AlertBar,
   },
@@ -43,35 +28,36 @@ export default {
       page: undefined,
       pageKey: 0,
       menuItems: [],
-      pageType: undefined,
       group: undefined,
       pageNonExistent: false,
     };
   },
   methods: {
     async routeHandler() {
+      let pageRoute = undefined;
       if (this.$route.name == "GroupPage") {
-        let groupId = this.$route.params.id;
-        await this.getGroup(groupId);
-        if (!this.group.hasPage) {
-          this.$router.go(-1);
-        }
-        this.page = undefined;
-        this.pageType = "groupPage";
+        pageRoute = this.$route.path.split(
+          `/${this.$t("page.groupPagePath")}/`,
+        )[1];
       } else {
-        let pageRoute = this.$route.path.substring(1);
+        pageRoute = this.$route.path.substring(1);
         if (pageRoute === "") {
           pageRoute = 0;
         }
-        await this.getPage(pageRoute);
-        this.group = undefined;
-        this.pageType = "regularPage";
       }
+      await this.getPage(pageRoute);
+      this.group = undefined;
       this.pageKey++;
     },
     async getPage(pageRoute) {
+      const token = localStorage.getItem(pageRoute);
       try {
-        const response = await this.callApi("get", `/pages/${pageRoute}`);
+        const response = await this.callApi(
+          "get",
+          `/pages/${pageRoute}`,
+          {},
+          { params: { token } },
+        );
         this.page = response.data;
       } catch (error) {
         if (this.settings.notFoundPage) {

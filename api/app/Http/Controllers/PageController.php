@@ -15,7 +15,10 @@ use App\Models\LocationItem;
 use App\Models\Page;
 use App\Models\TextItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class PageController extends Controller
 {
@@ -53,6 +56,9 @@ class PageController extends Controller
                 }
             }
         }
+        if (isset($validatedData['password'])) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
 
         $page = Page::create($validatedData);
 
@@ -76,6 +82,9 @@ class PageController extends Controller
         }
 
         $validatedData = $request->validated();
+        if (isset($validatedData['password'])) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
         $user = Auth::user();
         if (! $user->hasRole('admin')) {
             $groups = $user->groups->pluck('id');
@@ -125,6 +134,7 @@ class PageController extends Controller
     public function show($routeOrId)
     {
         $routeOrId = $routeOrId == '0' ? null : $routeOrId;
+        $user = Auth::user();
 
         $page = Page::with('files')
             ->where(function ($query) use ($routeOrId) {
@@ -133,6 +143,16 @@ class PageController extends Controller
             })->first();
         if (! $page) {
             return response()->json(['message' => 'Page not found'], 404);
+        }
+        if (! $user && $page->password && ! $this->checkToken(request()->input('token'), $page->id)) {
+            return response()->json(array_merge($page->toArray(), [
+                'page_items' => [
+                    [
+                        'id' => 0,
+                        'type' => 'passwordItem',
+                    ],
+                ],
+            ]), 200);
         }
         $pageItems = $page->getAllItems();
         foreach ($pageItems as $currentField) {
@@ -310,5 +330,47 @@ class PageController extends Controller
             }
             $sort_counter++;
         }
+    }
+
+    public function getPageToken(Request $request)
+    {
+        $route = $request->input('route');
+        $page = Page::where('route', $route)->first();
+
+        if (! $page) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
+
+        $password = $request->input('password');
+        error_log($page->password);
+
+        if (! Hash::check($password, $page->password)) {
+            return response()->json(['error' => 'Invalid password'], 403);
+        }
+
+        $payload = [
+            'page_id' => $page->id,
+            'issued_at' => Carbon::now()->timestamp,
+            'expires_at' => Carbon::now()->addDay()->timestamp,
+        ];
+
+        $token = Crypt::encrypt($payload);
+
+        return response()->json(['token' => $token]);
+    }
+
+    private function checkToken($token, $pageId)
+    {
+        if (! $token) {
+            return false;
+        }
+        $payload = Crypt::decrypt($token);
+
+        if (Carbon::now()->timestamp > $payload['expires_at'] || $payload['page_id'] !== $pageId) {
+            return false;
+        }
+
+        return true;
+
     }
 }

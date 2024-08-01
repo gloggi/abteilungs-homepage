@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
 });
 
 Route::get('/pages/{id}', [PageController::class, 'show']);
+Route::post('/pages/token', [PageController::class, 'getPageToken']);
 Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function () {
     Route::get('/pages', [PageController::class, 'index']);
     Route::post('/pages', [PageController::class, 'store']);

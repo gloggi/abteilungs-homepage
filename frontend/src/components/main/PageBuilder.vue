@@ -27,6 +27,10 @@
         v-if="pageItem.type == 'groupEventsItem'"
         :item="pageItem"
       />
+      <PasswordItem
+        :route="page.route"
+        v-if="pageItem.type == 'passwordItem'"
+      />
     </template>
   </PageWrapper>
 </template>
@@ -43,6 +47,7 @@ import TextItem from "./TextItem.vue";
 import LocationItem from "./LocationItem.vue";
 import FaqItem from "./FaqItem.vue";
 import GroupEventsItem from "./GroupEventsItem.vue";
+import PasswordItem from "./PasswordItem.vue";
 
 export default {
   props: ["page"],
@@ -74,6 +79,7 @@ export default {
     LocationItem,
     FaqItem,
     GroupEventsItem,
+    PasswordItem,
   },
 };
 </script>

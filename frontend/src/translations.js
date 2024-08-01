@@ -207,6 +207,10 @@ export const messages = {
       to: "An",
       emailContent: "E-Mail-Inhalt",
       emailSent: "Das E-Mail wurde erfolgreich gesendet.",
+      password: "Passwort",
+      passwordProtected: "Passwortgeschützt",
+      passwordInfo:
+        "Das Passwort wird verschlüsselt gespeichert und wird deshalb nicht angezeigt auch wenn es bereits gesetzt wurde.",
     },
     page: {
       campDateLabel: "Lagerdatum",
@@ -257,6 +261,8 @@ export const messages = {
       divisions: "Abteilungen",
       groupChildren: "Untergeordnete Gruppen",
       groupPagePath: "gruppen",
+      openProtectedPage: "Geschützte Seite öffnen",
+      wrongPassword: "Das Passwort ist nicht korrekt.",
     },
   },
 };

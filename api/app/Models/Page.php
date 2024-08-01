@@ -9,9 +9,11 @@ class Page extends Model
 {
     use Searchable;
 
-    protected $fillable = ['title', 'route', 'file_ids', 'big_header', 'group_id'];
+    protected $fillable = ['title', 'route', 'file_ids', 'big_header', 'group_id', 'password'];
 
-    protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems', 'locationItems', 'faqItems', 'groupEventsItems', 'campItems'];
+    protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems', 'locationItems', 'faqItems', 'groupEventsItems', 'campItems', 'password'];
+
+    protected $appends = ['password_protected'];
 
     public function files()
     {
@@ -131,5 +133,10 @@ class Page extends Model
             'title' => $this->title,
             'route' => $this->route,
         ];
+    }
+
+    public function getPasswordProtectedAttribute()
+    {
+        return ! empty($this->password);
     }
 }

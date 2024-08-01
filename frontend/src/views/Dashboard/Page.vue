@@ -27,7 +27,7 @@
         v-model="content.title"
         :errors="errors.title"
       />
-      <div class="flex flex-col md:flex-row items-center">
+      <div class="flex flex-col md:flex-row items-center space-x-4">
         <div v-if="!isGroupPage" class="w-full flex flex-col">
           <FormLabel>{{ $t("dashboard.route") }}</FormLabel>
           <div v-if="routeInEdit" class="flex flex-row items-center space-x-2">
@@ -75,6 +75,11 @@
           :label="$t('dashboard.isGroupPage')"
           v-model="isGroupPage"
         />
+        <CheckBox
+          class="mt-2 md:ml-2 text-nowrap"
+          :label="$t('dashboard.passwordProtected')"
+          v-model="content.passwordProtected"
+        />
       </div>
       <SelectComponent
         v-if="isGroupPage"
@@ -86,6 +91,16 @@
         :value="content.groupId"
         :errors="errors.groupId"
       />
+      <div>
+        <TextInput
+          v-if="content.passwordProtected"
+          id="password"
+          :label="$t('dashboard.password')"
+          v-model="content.password"
+          :errors="errors.password"
+          :info="$t('dashboard.passwordInfo')"
+        />
+      </div>
       <CheckBox
         :label="$t('dashboard.showBigHeader')"
         v-model="content.bigHeader"
@@ -513,6 +528,11 @@ export default {
         this.content = {};
         this.getPage();
       },
+    },
+    "content.passwordProtected"(newVal) {
+      if (!newVal) {
+        this.content.password = null;
+      }
     },
   },
 };
