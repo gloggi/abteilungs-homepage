@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OptionField extends Model
 {
-    protected $fillable = ['select_field_id', 'name', 'sort'];
+    protected $fillable = ['select_field_id', 'name', 'sort', 'uuid'];
 
     public function selectField()
     {

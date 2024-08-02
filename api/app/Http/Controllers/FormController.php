@@ -11,6 +11,7 @@ use App\Models\TextareaField;
 use App\Models\TextField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
@@ -157,6 +158,7 @@ class FormController extends Controller
                             'required' => $fieldData['required'] ?? false,
                             'input_type' => $fieldData['input_type'],
                             'sort' => $sort_counter,
+                            'uuid' => $fieldData['uuid'] ?? (string) Str::uuid(),
                         ]
                     );
                     break;
@@ -168,6 +170,7 @@ class FormController extends Controller
                             'form_id' => $form->id,
                             'required' => $fieldData['required'] ?? false,
                             'sort' => $sort_counter,
+                            'uuid' => $fieldData['uuid'] ?? (string) Str::uuid(),
                         ]
                     );
                     break;
@@ -179,6 +182,7 @@ class FormController extends Controller
                             'form_id' => $form->id,
                             'required' => $fieldData['required'] ?? false,
                             'sort' => $sort_counter,
+                            'uuid' => $fieldData['uuid'] ?? (string) Str::uuid(),
                         ]
                     );
                     if (isset($fieldData['option_fields'])) {
@@ -190,6 +194,7 @@ class FormController extends Controller
                                 [
                                     'name' => $option['name'],
                                     'select_field_id' => $selectField->id,
+                                    'uuid' => $fieldData['uuid'] ?? (string) Str::uuid(),
                                 ]
                             );
 

@@ -22,7 +22,7 @@ class WebFormController extends Controller
         $matchedFields = [];
         foreach ($filledForm as $key => $value) {
             foreach ($fields as $field) {
-                if (isset($field['label']) && $key === Str::snake(str_replace('-', '', $field['label']))) {
+                if (isset($field['uuid']) && str_replace('_', '', $key) === str_replace('-', '', $field['uuid'])) {
                     if ($field['input_type'] == 'date') {
                         $matchedFields[$field['label']] = Carbon::parse($value)->format('d.m.Y');
                     } elseif ($field['input_type'] == 'email') {
@@ -35,7 +35,6 @@ class WebFormController extends Controller
                 }
             }
         }
-
         $setting = Setting::with(['divisionLogo', 'websiteIcon', 'notFoundPage'])->find(1);
 
         Mail::to($form->email)->send(new WebForm($form, $matchedFields, $setting));

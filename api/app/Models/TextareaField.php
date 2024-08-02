@@ -3,17 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class TextareaField extends Model
 {
-    protected $fillable = ['form_id', 'label', 'sort', 'required'];
+    protected $fillable = ['form_id', 'label', 'sort', 'required', 'uuid'];
 
     protected $appends = ['type', 'key'];
 
     public function getKeyAttribute()
     {
-        return Str::camel($this->label);
+        return str_replace('-', '', $this->uuid);
     }
 
     public function getTypeAttribute()
