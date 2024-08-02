@@ -247,11 +247,11 @@ export default {
       }
       field.optionFields.push({ name: event.target.value });
       event.target.value = "";
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await new Promise((resolve) => setTimeout(resolve, 15));
       const textFieldToFocus = document.getElementById(
         `selectFieldOption-${field.sort}-${field.optionFields.length - 1}`,
       );
-      textFieldToFocus.childNodes[1].focus();
+      textFieldToFocus.focus();
     },
     changeOrder(newField) {
       this.content.fields = this.content.fields.filter(
