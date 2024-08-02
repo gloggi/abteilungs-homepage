@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -139,7 +140,8 @@ class PageController extends Controller
         $page = Page::with('files')
             ->where(function ($query) use ($routeOrId) {
                 $query->where('route', $routeOrId)
-                    ->orWhere('id', $routeOrId);
+                    ->orWhere('id', $routeOrId)
+                    ->orWhere('route', Str::slug($routeOrId));
             })->first();
         if (! $page) {
             return response()->json(['message' => 'Page not found'], 404);
