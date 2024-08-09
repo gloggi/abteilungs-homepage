@@ -9,6 +9,7 @@ export const user = {
       isAdmin: false,
       isUnitLeader: false,
       groups: [],
+      groupIds: [],
     };
   },
   mutations: {
@@ -29,6 +30,7 @@ export const user = {
     },
     setGroups(state, groups) {
       state.groups = groups;
+      state.groupIds = groups.map((group) => group.id);
     },
   },
   actions: {
@@ -48,6 +50,10 @@ export const user = {
       } catch (error) {
         console.log("User not logged in");
       }
+    },
+    logout({ commit }) {
+      localStorage.removeItem("token");
+      commit("clear");
     },
   },
   getters: {},

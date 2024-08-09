@@ -1,11 +1,16 @@
 <template>
   <AlertBar v-if="settings.showAlert" />
-  <RegularPage :key="`page-${pageKey}`" v-if="!pageNonExistent" :page="page">
+  <UserBar v-if="showUserBar" :pageId="page.id" :groupId="page.groupId" />
+  <RegularPage
+    :key="`page-${pageKey}`"
+    v-if="page && !pageNonExistent"
+    :page="page"
+  >
     <template v-slot:navbar>
       <NavBar :menuItems="menuItems" />
     </template>
   </RegularPage>
-  <FooterComponent v-if="!pageNonExistent" />
+  <FooterComponent v-if="page && !pageNonExistent" />
   <CookieBanner />
 </template>
 <script>
@@ -14,6 +19,7 @@ import FooterComponent from "../components/main/FooterComponent.vue";
 import RegularPage from "./RegularPage.vue";
 import CookieBanner from "../components/main/CookieBanner.vue";
 import AlertBar from "../components/main/AlertBar.vue";
+import UserBar from "../components/main/UserBar.vue";
 
 export default {
   components: {
@@ -22,6 +28,7 @@ export default {
     RegularPage,
     CookieBanner,
     AlertBar,
+    UserBar,
   },
   data() {
     return {
@@ -77,14 +84,6 @@ export default {
         console.log(error);
       }
     },
-    async getGroup(groupId) {
-      try {
-        const response = await this.callApi("get", `/groups/${groupId}`);
-        this.group = response.data;
-      } catch (error) {
-        //console.log(error);
-      }
-    },
     handlePageChange(event) {
       console.log(event);
     },
@@ -94,6 +93,10 @@ export default {
       return `${this.page?.title || this.group?.page?.title || ""} | ${
         this.settings?.divisionName || ""
       }`;
+    },
+    showUserBar() {
+      const user = this.$store.state.user;
+      return this.$store.state.user.user && (user.isAdmin || user.isUnitLeader);
     },
   },
   watch: {

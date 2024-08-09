@@ -2,6 +2,9 @@
   <div
     v-if="show"
     class="fixed w-full py-3 px-8 z-50 main-text font-bold rounded-b-lg flex items-center"
+    :class="{
+      'mt-8': showUserBar,
+    }"
     :style="`background-color: ${settings.alertBgColor};color: ${settings.alertTextColor}`"
   >
     <div class="w-full">
@@ -39,6 +42,11 @@ export default {
       console.log(this.settings.alertText);
       localStorage.setItem("alert", this.settings.alertText);
       this.show = false;
+    },
+  },
+  computed: {
+    showUserBar() {
+      return this.isAdmin || this.isUnitLeader;
     },
   },
   created() {

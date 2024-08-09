@@ -211,6 +211,9 @@ export const messages = {
       passwordProtected: "Passwortgeschützt",
       passwordInfo:
         "Das Passwort wird verschlüsselt gespeichert und wird deshalb nicht angezeigt auch wenn es bereits gesetzt wurde.",
+      editPage: "Diese Seite bearbeiten",
+      editEvents: "Aktivitäten bearbeiten",
+      goToDashboard: "Zum Dashboard",
     },
     page: {
       campDateLabel: "Lagerdatum",
