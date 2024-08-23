@@ -90,6 +90,13 @@
         <template v-if="actions[key] && actions[key].actionName == 'date'">
           <div class="text-sm text-gray-500">{{ formatDate(item[key]) }}</div>
         </template>
+        <template v-if="actions[key] && actions[key].actionName == 'list'">
+          <div class="text-sm text-gray-500">
+            {{
+              item[key].map((v) => v[actions[key].actionArgument]).join(", ")
+            }}
+          </div>
+        </template>
         <template v-if="!actions[key]">
           <div class="text-sm text-gray-500">{{ getValue(item, key) }}</div>
         </template>

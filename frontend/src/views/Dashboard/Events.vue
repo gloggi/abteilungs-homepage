@@ -4,8 +4,8 @@
     entity="events"
     :titles="`${$t('dashboard.title')},${$t('dashboard.start')},${$t(
       'dashboard.end',
-    )}`"
-    columns="title:link(id),startTime:date,endTime:date"
+    )},${$t('dashboard.groups')}`"
+    columns="title:link(id),startTime:date,endTime:date,groups:list(name)"
     pushAfterCreationTo="Event"
     :midataSync="true"
   />
