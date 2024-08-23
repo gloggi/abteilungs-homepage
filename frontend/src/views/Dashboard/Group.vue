@@ -151,9 +151,9 @@ export default {
       groups: [],
       users: [],
       genders: [
-        { id: 1, name: "Mixed" },
-        { id: 2, name: "Male" },
-        { id: 3, name: "Female" },
+        { id: 1, name: this.$t("dashboard.mixed") },
+        { id: 2, name: this.$t("dashboard.male") },
+        { id: 3, name: this.$t("dashboard.female") },
       ],
       icons: {
         faArrowsRotate,

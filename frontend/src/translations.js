@@ -214,6 +214,9 @@ export const messages = {
       editPage: "Diese Seite bearbeiten",
       editEvents: "Aktivitäten bearbeiten",
       goToDashboard: "Zum Dashboard",
+      mixed: "Gemischt",
+      male: "Jungs",
+      female: "Mädchen",
     },
     page: {
       campDateLabel: "Lagerdatum",
