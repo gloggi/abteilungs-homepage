@@ -258,7 +258,7 @@ export const messages = {
       noEventsAvailable: "Es sind momentan keine Aktivitäten verfügbar.",
       noCampsAvailable: "Es sind momentan keine Lager verfügbar.",
       formSuccessMessage:
-        "Vielen Dank! Das Formular wurde erfolgreich abgesendet.",
+        "Vielen Dank! Das Formular wurde erfolgreich abgeschickt",
       region: "Region",
       startLocationLabel: "Besammlungsort",
       startLocationLabelShort: "Besammlung",

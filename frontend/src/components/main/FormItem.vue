@@ -1,6 +1,11 @@
 <template>
   <ContentWrapper>
-    <form v-if="item.form" class="space-y-5" @submit.prevent="handleForm">
+    <form
+      v-if="item.form"
+      :id="`form-${item.id}`"
+      class="space-y-5"
+      @submit.prevent="handleForm"
+    >
       <HeadingTwo class="text-primary">{{ item.form.name }}</HeadingTwo>
       <div v-if="submitSuccess" class="p-5 rounded-lg bg-primary">
         <HeadingThree class="text-white font-bold">
@@ -50,8 +55,14 @@
           </select>
         </div>
       </div>
-      <BasicButton class="w-full" type="submit">
+      <BasicButton v-if="!isLoading" class="w-full" type="submit">
         {{ $t("page.submit") }}
+      </BasicButton>
+      <BasicButton v-else class="w-full" disabled type="submit">
+        <div class="flex items-center justify-center">
+          <Spinner class="w-fit" />
+          <div>{{ $t("page.submit") }}</div>
+        </div>
       </BasicButton>
     </form>
   </ContentWrapper>
@@ -61,6 +72,7 @@ import BasicButton from "./BasicButton.vue";
 import ContentWrapper from "./ContentWrapper.vue";
 import HeadingTwo from "./HeadingTwo.vue";
 import HeadingThree from "./HeadingThree.vue";
+import Spinner from "./Spinner.vue";
 
 export default {
   props: ["item"],
@@ -68,14 +80,20 @@ export default {
     return {
       formContent: {},
       submitSuccess: false,
+      isLoading: false,
     };
   },
   methods: {
     async handleForm() {
       try {
         this.formContent.id = this.item.form.id;
+        this.isLoading = true;
         await this.callApi("post", "/webforms", this.formContent);
+        this.isLoading = false;
         this.submitSuccess = true;
+        document
+          .getElementById(`form-${this.item.id}`)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
         this.formContent = {};
       } catch (error) {
         console.log(error);
@@ -83,6 +101,12 @@ export default {
     },
   },
   async created() {},
-  components: { HeadingTwo, ContentWrapper, BasicButton, HeadingThree },
+  components: {
+    HeadingTwo,
+    ContentWrapper,
+    BasicButton,
+    HeadingThree,
+    Spinner,
+  },
 };
 </script>
