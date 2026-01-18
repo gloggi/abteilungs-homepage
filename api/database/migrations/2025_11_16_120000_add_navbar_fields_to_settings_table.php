@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('navbar_font_color')->default('#ffffff')->after('secondary_color');
 
             // Position of the navbar: on top of the page or between header image and content
-            $table->enum('navbar_position', ['top', 'between_header_and_content'])->default('top')->after('navbar_font_color');
+            $table->enum('navbar_position', ['top', 'between_header_and_content'])->default('between_header_and_content')->after('navbar_font_color');
         });
     }
 
