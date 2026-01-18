@@ -1,5 +1,26 @@
+version: "3.4"
+
 services:
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - '8080:8080'
+  
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./api:/var/www
+      - ./api/public/.htaccess.docker:/var/www/public/.htaccess
 
   mariadb:
     image: mariadb:latest
