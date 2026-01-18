@@ -1,12 +1,20 @@
 <template>
   <div
     class="rounded-t-full"
-    :class="
-      showMobileMenu ? 'bg-primary ' : isDesktop ? 'bg-[#808080]' : 'bg-white'
-    "
+    :class="{
+      'bg-primary': showMobileMenu,
+      'bg-[#808080]': !showMobileMenu && isDesktop,
+      'bg-white': !showMobileMenu && !isDesktop,
+      'pt-8':
+        showUserBar && settings.navbarPosition === 'top' && !alertBarIsVisible,
+      'pt-14':
+        !showUserBar && settings.navbarPosition === 'top' && alertVisible,
+      'pt-20': showUserBar && settings.navbarPosition === 'top' && alertVisible,
+    }"
   >
     <nav
-      class="relative z-10 md:static bg-primary w-full flex h-[75px] -mt-[75px] px-5 flex-col md:flex-row justify-between items-center text-white rounded-lg"
+      class="relative z-10 md:static bg-primary w-full flex h-[75px] px-5 flex-col md:flex-row justify-between items-center text-white rounded-lg"
+      :class="{ '-mt-[75px]': !(settings.navbarPosition == 'top') }"
     >
       <div class="flex justify-between items-center w-full h-full md:w-auto">
         <div class="flex items-center">
@@ -59,7 +67,7 @@ export default {
         faBars,
       },
       showMobileMenu: false,
-      isDesktop: window.innerWidth > 768,
+      isDesktop: window.innerWidth > 1024,
     };
   },
   methods: {
@@ -84,7 +92,7 @@ export default {
       gsap.to(el, { height: "0", duration: 0.3, onComplete: done });
     },
     handleResize() {
-      this.isDesktop = window.innerWidth > 768;
+      this.isDesktop = window.innerWidth > 1024;
     },
   },
   mounted() {
@@ -92,6 +100,15 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
+  },
+  computed: {
+    showUserBar() {
+      const user = this.$store.state.user;
+      return this.$store.state.user.user && (user.isAdmin || user.isUnitLeader);
+    },
+    alertVisible() {
+      return this.settings.showAlert;
+    },
   },
 };
 </script>

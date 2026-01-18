@@ -1,9 +1,18 @@
 <template>
-  <div class="flex">
+  <div
+    class="flex"
+    :class="{ '-mt-[75px]': settings.navbarPosition === 'top' }"
+  >
     <div
-      class="flex flex-col justify-around items-center w-screen h-[475px] pb-[75px] px-5"
+      class="flex flex-col justify-around items-center w-screen px-5 pb-[75px]"
+      :class="{
+        'h-[475px]': !(settings.navbarPosition === 'top'),
+        'h-[550px]': settings.navbarPosition === 'top',
+      }"
     >
-      <div class="flex md:justify-end items-center w-full h-1/2 text-center">
+      <div
+        class="flex md:justify-end items-center w-full h-1/2 text-center pt-[75px]"
+      >
         <img
           class="hidden md:block drop-shadow-xl max-h-full mr-5"
           :src="`${backendURL}${settings?.divisionLogo?.path}`"
@@ -25,18 +34,30 @@
     <img
       ref="firstImageRef"
       v-if="firstImage"
-      class="h-[475px] w-full object-cover fixed -z-10"
+      class="w-full object-cover fixed -z-10"
       :src="`${backendURL}${firstImage}`"
+      :class="{
+        'h-[475px]': !(settings.navbarPosition === 'top'),
+        'h-[550px]': settings.navbarPosition === 'top',
+      }"
     />
     <img
       ref="secondImageRef"
       v-if="secondImage"
-      class="h-[475px] w-full object-cover fixed -z-20"
+      class="w-full object-cover fixed -z-20"
       :src="`${backendURL}${secondImage}`"
+      :class="{
+        'h-[475px]': !(settings.navbarPosition === 'top'),
+        'h-[550px]': settings.navbarPosition === 'top',
+      }"
     />
     <div
       v-if="noImages"
-      class="fixed -z-10 h-[475px] w-full object-cover bg-secondary"
+      class="fixed -z-10 w-full object-cover bg-secondary"
+      :class="{
+        'h-[475px]': !(settings.navbarPosition === 'top'),
+        'h-[550px]': settings.navbarPosition === 'top',
+      }"
     ></div>
   </div>
 </template>

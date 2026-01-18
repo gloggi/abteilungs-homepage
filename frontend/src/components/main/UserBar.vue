@@ -4,7 +4,7 @@
   >
     <div class="flex flex-row space-x-2 items-center">
       <img class="py-1 h-full" :src="logo" />
-      <div class="flex flex-row space-x-5 items-center pl-5">
+      <div class="flex flex-row space-x-5 items-center pl-5 text-nowrap">
         <button @click="goToDashboard">
           <font-awesome-icon :icon="icons.faGauge" />
           {{ $t("dashboard.goToDashboard") }}

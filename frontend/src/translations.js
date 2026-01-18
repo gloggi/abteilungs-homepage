@@ -106,6 +106,8 @@ export const messages = {
       websiteIcon: "Favicon",
       primaryColor: "Primärfarbe",
       secondaryColor: "Sekundärfarbe",
+      navbarFontColor: "Navbar-Schriftfarbe",
+      navbarPosition: "Navbar-Position",
       midataApiKey: "MiData-API-Schlüssel",
       contactInFooter: "Kontakt im Footer",
       image: "Bild",
@@ -217,6 +219,8 @@ export const messages = {
       mixed: "Gemischt",
       male: "Jungs",
       female: "Mädchen",
+      navbarTop: "Navbar oben",
+      navbarBetweenHeaderAndContent: "Navbar zwischen Header und Inhalt",
     },
     page: {
       campDateLabel: "Lagerdatum",

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex">
+  <div
+    class="flex"
+    :class="{ '-mt-[75px]': settings.navbarPosition === 'top' }"
+  >
     <div
       class="flex flex-col justify-center items-center w-screen h-dvh pb-[75px]"
     >

@@ -1,6 +1,7 @@
 <template>
   <li
-    class="font-light p-3 py-5 md:py-0 md:p-0 hover:text-secondary text-white main-text md:text-2xl"
+    class="font-light p-3 py-5 md:py-0 md:p-0 hover:text-secondary main-text md:text-2xl"
+    :style="{ color: settings?.navbarFontColor }"
   >
     <router-link
       v-if="menuItem.pageId"

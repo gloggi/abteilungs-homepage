@@ -7,7 +7,7 @@
     :page="page"
   >
     <template v-slot:navbar>
-      <NavBar :menuItems="menuItems" />
+      <NavBar :menuItems="menuItems" :alertVisible="alertVisible" />
     </template>
   </RegularPage>
   <FooterComponent v-if="page && !pageNonExistent" />
@@ -108,6 +108,9 @@ export default {
     },
   },
   async created() {
+    this.alertVisible =
+      this.settings.showAlert &&
+      localStorage.getItem("alert") !== this.settings.alertText;
     await this.getMenuItems();
     await this.routeHandler();
   },

@@ -24,6 +24,8 @@ class Setting extends Model
         'not_found_page_id',
         'is_region',
         'social_icon_id',
+        'navbar_font_color',
+        'navbar_position',
     ];
 
     public function divisionLogo()

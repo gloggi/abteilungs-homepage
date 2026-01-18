@@ -29,6 +29,16 @@
       v-model="modifiableSettings.divisionName"
       :errors="errors.divisionName"
     />
+    <SelectComponent
+      id="navbarPosition"
+      selection="NavbarPosition"
+      :label="$t('dashboard.navbarPosition')"
+      @selectNavbarPosition="handleNavbarPosition"
+      :returnInt="false"
+      :value="modifiableSettings.navbarPosition"
+      :options="navbarPositionOptions"
+      :errors="errors.navbarPosition"
+    />
     <div
       class="flex flex-col md:flex-row w-full md:justify-around items-center md:items-start"
     >
@@ -66,6 +76,10 @@
       <div class="">
         <FormLabel>{{ $t("dashboard.secondaryColor") }}</FormLabel>
         <ColorPicker v-model="modifiableSettings.secondaryColor" />
+      </div>
+      <div class="">
+        <FormLabel>{{ $t("dashboard.navbarFontColor") }}</FormLabel>
+        <ColorPicker v-model="modifiableSettings.navbarFontColor" />
       </div>
     </div>
     <SelectComponent
@@ -166,6 +180,14 @@ export default {
         faArrowsRotate,
       },
       errors: {},
+      navbarPositionOptions: [
+        { name: this.$t("dashboard.navbarTop"), id: "top", value: "top" },
+        {
+          name: this.$t("dashboard.navbarBetweenHeaderAndContent"),
+          id: "between_header_and_content",
+          value: "between_header_and_content",
+        },
+      ],
     };
   },
   methods: {
@@ -212,6 +234,10 @@ export default {
     },
     handleNotFoundPage(value) {
       this.modifiableSettings.notFoundPageId = value;
+    },
+    handleNavbarPosition(value) {
+      console.log(value);
+      this.modifiableSettings.navbarPosition = value;
     },
   },
   async created() {

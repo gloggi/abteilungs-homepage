@@ -1,7 +1,18 @@
 <template>
-  <BigHeader v-if="page.bigHeader" :images="page.files" />
-  <SmallHeader v-else :title="page.title" :images="page.files" />
-  <slot name="navbar"></slot>
+  <slot
+    v-if="settings && settings.navbarPosition === 'top'"
+    name="navbar"
+  ></slot>
+  <template v-if="page.bigHeader">
+    <BigHeader :images="page.files" />
+  </template>
+  <template v-else>
+    <SmallHeader :title="page.title" :images="page.files" />
+  </template>
+  <slot
+    v-if="settings && settings.navbarPosition !== 'top'"
+    name="navbar"
+  ></slot>
   <PageBuilder :page="page" />
 </template>
 <script>

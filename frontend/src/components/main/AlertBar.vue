@@ -42,6 +42,7 @@ export default {
       console.log(this.settings.alertText);
       localStorage.setItem("alert", this.settings.alertText);
       this.show = false;
+      this.settings.showAlert = false;
     },
   },
   computed: {
@@ -52,6 +53,8 @@ export default {
   created() {
     if (localStorage.getItem("alert") !== this.settings.alertText) {
       this.show = true;
+    } else {
+      this.settings.showAlert = false;
     }
   },
 };

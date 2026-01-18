@@ -31,10 +31,26 @@ import FormLabel from "./FormLabel.vue";
 import InfoField from "./InfoField.vue";
 
 export default {
-  props: ["options", "selection", "value", "label", "errors", "info", "id"],
+  props: {
+    options: null,
+    selection: null,
+    value: null,
+    label: null,
+    errors: null,
+    info: null,
+    id: null,
+    returnInt: {
+      type: Boolean,
+      default: true,
+    },
+  },
   methods: {
     handleChange(event) {
-      this.$emit(`select${this.selection}`, parseInt(event.target.value));
+      if (this.returnInt) {
+        this.$emit(`select${this.selection}`, parseInt(event.target.value));
+      } else {
+        this.$emit(`select${this.selection}`, event.target.value);
+      }
     },
   },
   components: { FormLabel, InfoField },

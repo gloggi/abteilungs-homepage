@@ -2,7 +2,8 @@
   <div class="relative">
     <li
       @click="showDropdown = !showDropdown"
-      class="flex flex-row space-x-2 items-center font-light p-3 py-5 md:py-0 md:p-0 hover:text-secondary text-white main-text md:text-2xl cursor-pointer"
+      class="flex flex-row space-x-2 items-center font-light p-3 py-5 md:py-0 md:p-0 hover:text-secondary main-text md:text-2xl cursor-pointer"
+      :style="{ color: settings?.navbarFontColor }"
     >
       <div>{{ $t("page.groups") }}</div>
       <font-awesome-icon class="" :icon="icons.faCaretDown" />
@@ -13,7 +14,8 @@
           <template v-for="group in groups" :key="group.id">
             <li
               v-if="group.hasPage"
-              class="font-light p-3 py-5 pl-8 md:py-2 md:p-3 w-full md:px-5 hover:text-secondary text-white main-text md:text-2xl"
+              class="font-light p-3 py-5 pl-8 md:py-2 md:p-3 w-full md:px-5 hover:text-secondary main-text md:text-2xl"
+              :style="{ color: settings?.navbarFontColor }"
             >
               <router-link
                 @click="showDropdown = false"
