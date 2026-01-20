@@ -50,19 +50,19 @@
 
 <script>
 import { Editor, EditorContent } from "@tiptap/vue-3";
-import StarterKit from "@tiptap/starter-kit";
-import HeadingExtension from "@tiptap/extension-heading";
-import LinkExtension from "@tiptap/extension-link";
+import { StarterKit } from "@tiptap/starter-kit";
+import { Heading as HeadingExtension } from "@tiptap/extension-heading";
+import { Link as LinkExtension } from "@tiptap/extension-link";
 import { Color } from "@tiptap/extension-color";
-import TextStyle from "@tiptap/extension-text-style";
-import TextAlign from "@tiptap/extension-text-align";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { TextAlign } from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/core";
-import Placeholder from "@tiptap/extension-placeholder";
-import Table from "@tiptap/extension-table";
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import TableRow from "@tiptap/extension-table-row";
-import Underline from "@tiptap/extension-underline";
+import { Placeholder } from "@tiptap/extension-placeholder";
+import { Table } from "@tiptap/extension-table";
+import { TableCell } from "@tiptap/extension-table-cell";
+import { TableHeader } from "@tiptap/extension-table-header";
+import { TableRow } from "@tiptap/extension-table-row";
+import { Underline } from "@tiptap/extension-underline";
 
 import EditorToolbar from "./EditorToolbar.vue";
 import ImageExtension from "./extensions/ImageExtension";
