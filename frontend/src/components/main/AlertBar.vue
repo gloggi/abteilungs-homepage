@@ -3,7 +3,9 @@
     v-if="show"
     class="fixed w-full py-3 px-8 z-50 main-text font-bold rounded-b-lg flex items-center"
     :class="{
-      'mt-8': showUserBar,
+      'mt-8': showUserBar && settings.navbarPosition !== 'top',
+      'bottom-0': settings.navbarPosition === 'top',
+      'rounded-b-none rounded-t-lg': settings.navbarPosition === 'top',
     }"
     :style="`background-color: ${settings.alertBgColor};color: ${settings.alertTextColor}`"
   >

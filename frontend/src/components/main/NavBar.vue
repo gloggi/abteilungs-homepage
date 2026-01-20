@@ -6,10 +6,7 @@
       'bg-[#808080]': !showMobileMenu && isDesktop,
       'bg-white': !showMobileMenu && !isDesktop,
       'pt-8':
-        showUserBar && settings.navbarPosition === 'top' && !alertBarIsVisible,
-      'pt-14':
-        !showUserBar && settings.navbarPosition === 'top' && alertVisible,
-      'pt-20': showUserBar && settings.navbarPosition === 'top' && alertVisible,
+        showUserBar && settings.navbarPosition === 'top',
     }"
   >
     <nav
