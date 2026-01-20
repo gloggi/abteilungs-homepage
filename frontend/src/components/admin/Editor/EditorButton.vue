@@ -1,8 +1,12 @@
 <template>
   <button
-    :class="`${
-      active ? 'bg-gray-100 ' : 'bg-white'
-    } hover:bg-gray-100  border-y border-r border-gray-700 p-1 text-sm text-gray-700 aspect-square`"
+    type="button"
+    :class="[
+      'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background h-8 w-8',
+      active
+        ? 'bg-gray-200 text-gray-900'
+        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900',
+    ]"
   >
     <slot></slot>
   </button>
@@ -15,3 +19,4 @@ export default {
 </script>
 
 <style></style>
+

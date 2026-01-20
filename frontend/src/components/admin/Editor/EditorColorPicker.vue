@@ -7,7 +7,7 @@
       type="color"
     />
     <font-awesome-icon
-      class="h-5 w-5"
+      class="size-4"
       :icon="icons.faFont"
       :style="{ color: value }"
     />

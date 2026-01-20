@@ -1,168 +1,26 @@
 <template>
-  <div class="rounded-lg pt-2">
+  <div class="flex flex-col gap-2">
     <FormLabel :for="id">{{ label }}</FormLabel>
-    <div v-if="editor" class="flex justify-between">
-      <div class="flex flex-col">
-        <div class="flex flex-row flex-wrap items-startspace-y-1 gap-3">
-          <div class="flex">
-            <EditorButton
-              @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-              :active="editor.isActive('heading', { level: 2 })"
-              class="rounded-l-lg border-l whitespace-nowrap"
-            >
-              <font-awesome-icon class="size-4" :icon="icons.faHeading" /><sub
-                class="font-bold"
-                >2</sub
-              >
-            </EditorButton>
-            <EditorButton
-              @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-              :active="editor.isActive('heading', { level: 3 })"
-              class="rounded-r-lg whitespace-nowrap"
-            >
-              <font-awesome-icon class="size-4" :icon="icons.faHeading" /><sub
-                class="font-bold"
-                >3</sub
-              >
-            </EditorButton>
-          </div>
-          <div class="flex">
-            <EditorButton
-              @click="editor.chain().focus().toggleBold().run()"
-              :active="editor.isActive('bold')"
-              class="rounded-l-lg border-l"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faBold" />
-            </EditorButton>
-            <EditorButton
-              @click="editor.chain().focus().toggleItalic().run()"
-              :active="editor.isActive('italic')"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faItalic" />
-            </EditorButton>
-            <EditorButton
-              @click="editor.chain().focus().toggleUnderline().run()"
-              :active="editor.isActive('underline')"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faUnderline" />
-            </EditorButton>
-            <EditorButton
-              @click="editor.chain().focus().toggleStrike().run()"
-              :active="editor.isActive('strike')"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faStrikethrough" />
-            </EditorButton>
-            <EditorButton @click.self.prevent class="rounded-r-lg">
-              <EditorColorPicker v-model="textColor" />
-            </EditorButton>
-          </div>
-          <div class="flex">
-            <EditorButton
-              @click="editor.chain().focus().toggleBulletList().run()"
-              :active="editor.isActive('bulletList')"
-              class="rounded-l-lg border-l"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faList" />
-            </EditorButton>
-            <EditorButton
-              @click="editor.chain().focus().toggleOrderedList().run()"
-              :active="editor.isActive('orderedList')"
-              class="rounded-r-lg"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faListOl" />
-            </EditorButton>
-          </div>
-          <div class="flex">
-            <EditorButton @click="addImage" class="rounded-l-lg border-l">
-              <font-awesome-icon class="size-5" :icon="icons.faImage" />
-            </EditorButton>
-            <EditorButton
-              v-if="!editor.isActive('link')"
-              @click="askForLink"
-              class="rounded-r-lg"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faLink" />
-            </EditorButton>
-            <EditorButton
-              v-if="editor.isActive('link')"
-              @click="editor.chain().focus().unsetLink().run()"
-              class="rounded-r-lg"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faLinkSlash" />
-            </EditorButton>
-          </div>
-          <div class="flex">
-            <EditorButton
-              @click="handleAlign('left', 'float-left')"
-              :active="
-                editor.isActive({ textAlign: 'left' }) ||
-                (editor.isActive('image') &&
-                  editor.getAttributes('image').class === 'float-left')
-              "
-              class="rounded-l-lg border-l"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faAlignLeft" />
-            </EditorButton>
-
-            <EditorButton
-              @click="handleAlign('center', 'block mx-auto')"
-              :active="
-                editor.isActive({ textAlign: 'center' }) ||
-                (editor.isActive('image') &&
-                  editor.getAttributes('image').class === 'block mx-auto')
-              "
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faAlignCenter" />
-            </EditorButton>
-            <EditorButton
-              @click="handleAlign('right', 'float-right')"
-              :active="
-                editor.isActive({ textAlign: 'right' }) ||
-                (editor.isActive('image') &&
-                  editor.getAttributes('image').class === 'float-right')
-              "
-              class="rounded-r-lg"
-            >
-              <font-awesome-icon class="size-5" :icon="icons.faAlignRight" />
-            </EditorButton>
-          </div>
-          <EditorButton
-            @click="swapEditorContent"
-            :active="showHTML"
-            class="rounded-lg border-l"
-          >
-            <font-awesome-icon class="size-5" :icon="icons.faCode" />
-          </EditorButton>
-          <div class="flex">
-            <EditorButton
-              @click="editor.chain().focus().undo().run()"
-              class="rounded-l-lg border-l"
-            >
-              <font-awesome-icon
-                class="size-5"
-                :icon="icons.faArrowRotateLeft"
-              />
-            </EditorButton>
-            <EditorButton
-              @click="editor.chain().focus().redo().run()"
-              class="rounded-r-lg"
-            >
-              <font-awesome-icon
-                class="size-5"
-                :icon="icons.faArrowRotateRight"
-              />
-            </EditorButton>
-          </div>
-        </div>
+    <div
+      class="rounded-md border border-gray-200 bg-white shadow-sm overflow-hidden"
+    >
+      <EditorToolbar
+        v-if="editor"
+        :editor="editor"
+        :showHTML="showHTML"
+        @add-image="addImage"
+        @ask-for-link="askForLink"
+        @swap-editor-content="swapEditorContent"
+      />
+      <div class="relative min-h-[12rem]">
+        <editor-content v-if="!showHTML" :editor="editor" class="p-4" />
+        <textarea
+          v-else
+          v-model="inputModel"
+          class="w-full h-full min-h-[12rem] p-4 font-mono text-sm focus:outline-none resize-none"
+        ></textarea>
       </div>
     </div>
-    <editor-content v-if="!showHTML" :editor="editor" />
-    <textarea
-      v-else
-      v-model="inputModel"
-      class="appearance-none w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 h-48 overflow-scroll font-mono focus:ring-0 border border-gray-700 focus:border-gray-700"
-    >
-    </textarea>
   </div>
   <MediaModal
     v-if="showMediaModal"
@@ -189,11 +47,11 @@
   </Modal>
 </template>
 
+
 <script>
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import HeadingExtension from "@tiptap/extension-heading";
-import Image from "@tiptap/extension-image";
 import LinkExtension from "@tiptap/extension-link";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
@@ -205,43 +63,25 @@ import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import Underline from "@tiptap/extension-underline";
-import Resizable from "./resizable-image";
-import EditorButton from "./EditorButton.vue";
-import {
-  faArrowRotateLeft,
-  faArrowRotateRight,
-  faList,
-  faListOl,
-  faCode,
-  faLink,
-  faLinkSlash,
-  faImage,
-  faHeading,
-  faAlignRight,
-  faAlignLeft,
-  faAlignCenter,
-  faBold,
-  faItalic,
-  faStrikethrough,
-  faFont,
-  faUnderline,
-} from "@fortawesome/free-solid-svg-icons";
+
+import EditorToolbar from "./EditorToolbar.vue";
+import ImageExtension from "./extensions/ImageExtension";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
 import MediaModal from "../MediaModal.vue";
 import Modal from "../Modal.vue";
 import TextInput from "../TextInput.vue";
 import ActionButton from "../ActionButton.vue";
-import EditorColorPicker from "./EditorColorPicker.vue";
 import FormLabel from "../FormLabel.vue";
+
 export default {
   props: ["modelValue", "placeholder", "id", "label"],
   components: {
     EditorContent,
-    EditorButton,
+    EditorToolbar,
     MediaModal,
     Modal,
     TextInput,
     ActionButton,
-    EditorColorPicker,
     FormLabel,
   },
   data() {
@@ -252,23 +92,7 @@ export default {
       showLinkModal: false,
       newLink: undefined,
       icons: {
-        faArrowRotateLeft,
-        faArrowRotateRight,
-        faList,
-        faListOl,
-        faCode,
         faLink,
-        faLinkSlash,
-        faImage,
-        faHeading,
-        faAlignRight,
-        faAlignLeft,
-        faAlignCenter,
-        faBold,
-        faItalic,
-        faStrikethrough,
-        faFont,
-        faUnderline,
       },
     };
   },
@@ -310,19 +134,6 @@ export default {
         .setImage({ src: this.backendURL + selected[0].path })
         .run();
     },
-    handleAlign(text, imageClass) {
-      this.editor.chain().focus();
-      if (this.editor.isActive("image")) {
-        console.log("image");
-        this.editor
-          .chain()
-          .updateAttributes("image", { class: imageClass })
-          .run();
-      } else {
-        console.log("text");
-        this.editor.chain().setTextAlign(text).run();
-      }
-    },
   },
   watch: {
     modelValue(value) {
@@ -340,16 +151,6 @@ export default {
       },
       set(value) {
         this.$emit("update:modelValue", value);
-      },
-    },
-    textColor: {
-      get() {
-        return this.editor.getAttributes("textStyle").color
-          ? this.editor.getAttributes("textStyle").color
-          : "#333333";
-      },
-      set(value) {
-        this.editor.chain().focus().setColor(value).run();
       },
     },
   },
@@ -417,22 +218,7 @@ export default {
         }),
         TextStyle,
         Color,
-        Image.configure({
-          inline: true,
-        }),
-
-        Resizable.configure({
-          types: ["image", "video"],
-          handlerStyle: {
-            // handler point style
-            width: "8px",
-            height: "8px",
-            background: "#111827",
-          },
-          layerStyle: {
-            border: "2px dashed #111827",
-          },
-        }),
+        ImageExtension,
         TextAlign.configure({
           types: ["heading", "paragraph"],
         }),
@@ -456,10 +242,11 @@ export default {
       editorProps: {
         attributes: {
           class:
-            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl my-2 focus:outline-none bg-white rounded-lg p-2 min-h-[12rem] overflow-scroll border border-gray-700",
+            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none min-h-[12rem]",
           id: this.id,
         },
       },
+
     });
   },
   beforeUnmount() {
@@ -474,5 +261,52 @@ export default {
   color: #adb5bd;
   pointer-events: none;
   height: 0;
+}
+
+/* Tiptap Image Resize Styles */
+.ProseMirror img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ResizableNodeView container */
+.ProseMirror [data-resize-container] {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+/* ResizableNodeView wrapper */
+.ProseMirror [data-resize-wrapper] {
+  position: relative;
+  display: inline-block;
+}
+
+/* When node is selected */
+.ProseMirror .ProseMirror-selectednode [data-resize-wrapper],
+.ProseMirror [data-resize-container].ProseMirror-selectednode [data-resize-wrapper] {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Resize handles - hidden by default */
+.ProseMirror [data-resize-handle],
+.ProseMirror [data-image-toolbar] {
+  display: none;
+}
+
+/* Show handles and toolbar when selected */
+.ProseMirror .ProseMirror-selectednode [data-resize-handle],
+.ProseMirror [data-resize-container].ProseMirror-selectednode [data-resize-handle],
+.ProseMirror .ProseMirror-selectednode [data-image-toolbar],
+.ProseMirror [data-resize-container].ProseMirror-selectednode [data-image-toolbar] {
+  display: flex !important; /* Force flex for toolbar, block is fine for handles but handles are div so flex ok? check */
+}
+
+/* Specific fix for handles which are divs and might need block/default */
+.ProseMirror .ProseMirror-selectednode [data-resize-handle],
+.ProseMirror [data-resize-container].ProseMirror-selectednode [data-resize-handle] {
+  display: block !important;
 }
 </style>
