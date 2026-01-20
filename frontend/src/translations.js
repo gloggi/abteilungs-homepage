@@ -221,6 +221,7 @@ export const messages = {
       female: "Mädchen",
       navbarTop: "Navbar oben",
       navbarBetweenHeaderAndContent: "Navbar zwischen Header und Inhalt",
+      viewMode: "Ansicht",
     },
     page: {
       campDateLabel: "Lagerdatum",

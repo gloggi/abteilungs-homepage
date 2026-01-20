@@ -7,11 +7,24 @@
     @endedDragging="$emit('endedDragging')"
   >
     <Card class="space-y-2">
-      <TextInput
-        v-model="titleValue"
-        :label="$t('dashboard.title')"
-        id="title"
-      />
+      <div class="flex flex-row gap-4">
+        <TextInput
+          v-model="titleValue"
+          :label="$t('dashboard.title')"
+          id="title"
+          class="flex-grow"
+        />
+        <SelectComponent
+          id="viewMode"
+          :label="$t('dashboard.viewMode')"
+          :options="viewModes"
+          :value="viewModeValue"
+          :returnInt="false"
+          selection="ViewMode"
+          class="w-1/4"
+          @selectViewMode="handleViewModeChange"
+        />
+      </div>
       <FilesSelector :item="item" @changeFiles="handleFilesChange" />
     </Card>
   </DragItemBox>
@@ -23,9 +36,10 @@ import DragItemBox from "../DragItemBox.vue";
 import FilesSelector from "../FilesSelector.vue";
 import Card from "../Card.vue";
 import TextInput from "../TextInput.vue";
+import SelectComponent from "../SelectComponent.vue";
 
 export default {
-  components: { DragItemBox, FilesSelector, Card, TextInput },
+  components: { DragItemBox, FilesSelector, Card, TextInput, SelectComponent },
   props: ["title", "item", "modelValue", "boxTitle"],
   emits: [
     "updatePage",
@@ -46,6 +60,10 @@ export default {
         faTrash,
         faPlus,
       },
+      viewModes: [
+        { id: "gallery", name: "Galerie" },
+        { id: "list", name: "Liste" },
+      ],
     };
   },
   methods: {
@@ -60,9 +78,22 @@ export default {
       this.selectHandler(this.preSelectedImages);
     },
     handleFilesChange(event) {
+      event.viewMode = this.viewModeValue;
       event.title = this.title;
       this.$emit("changeFiles", event);
     },
+    handleViewModeChange(viewMode) {
+      if (!viewMode) return;
+      this.$emit("changeFiles", {
+        id: this.item.id,
+        files: this.item.files,
+        title: this.title,
+        viewMode: viewMode,
+      });
+    },
+  },
+  created() {
+    this.preSelectedImages = this.item.files;
   },
   computed: {
     titleValue: {
@@ -73,9 +104,9 @@ export default {
         this.$emit("update:title", value);
       },
     },
-  },
-  created() {
-    this.preSelectedImages = this.item.files;
+    viewModeValue() {
+      return this.item.viewMode || "gallery";
+    },
   },
 };
 </script>

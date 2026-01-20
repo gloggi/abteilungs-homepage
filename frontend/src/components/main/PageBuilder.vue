@@ -15,6 +15,7 @@
         v-if="pageItem.type == 'filesItem'"
         :title="pageItem.title"
         :files="pageItem.files"
+        :viewMode="pageItem.viewMode"
       />
       <CampItem v-if="pageItem.type == 'campItem'" :item="pageItem" />
       <LocationItem

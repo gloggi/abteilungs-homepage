@@ -403,11 +403,13 @@ export default {
       const pageItemId = event.id;
       const title = event.title;
       const files = event.files;
+      const viewMode = event.viewMode;
       const itemIndex = this.content.pageItems.findIndex(
         (p) => p.id == pageItemId && p.type == "filesItem",
       );
       this.content.pageItems[itemIndex].title = title;
       this.content.pageItems[itemIndex].files = files;
+      this.content.pageItems[itemIndex].view_mode = viewMode;
     },
     changeFormItem(event) {
       const pageItemId = event.id;

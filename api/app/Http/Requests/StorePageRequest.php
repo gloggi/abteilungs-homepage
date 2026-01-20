@@ -40,6 +40,7 @@ class StorePageRequest extends FormRequest
             'page_items.*.location_id' => 'nullable',
             'page_items.*.faq_id' => 'nullable',
             'page_items.*.group_id' => 'nullable',
+            'page_items.*.view_mode' => 'nullable|string',
         ];
     }
 }

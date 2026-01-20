@@ -240,11 +240,13 @@ class PageController extends Controller
                     );
                     break;
                 case 'filesItem':
+                    error_log($pageItemData['view_mode']);
                     $imageItem = FilesItem::updateOrCreate(
                         ['id' => $pageItemData['id'] ?? null],
                         [
                             'page_id' => $page->id,
                             'title' => $pageItemData['title'] ?? '',
+                            'view_mode' => $pageItemData['view_mode'] ?? 'gallery',
                             'sort' => $sort_counter,
                         ]
                     );
