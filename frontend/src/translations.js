@@ -161,6 +161,7 @@ export const messages = {
       dropFormItemHere:
         "Ziehe ein Formularelement hierher, um es zu verschieben",
       link: "Link",
+      openLink: "Link öffnen",
       region: "Region",
       fileNotSupportedOrTooLarge: "Datei nicht unterstützt oder zu gross",
       noPermission: "Du hast keine Berechtigung dies zu tun",

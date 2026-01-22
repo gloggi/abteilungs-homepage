@@ -29,27 +29,56 @@
     :max-select="1"
     :extensions="['jpg', 'jpeg', 'png', 'gif', 'svg']"
   />
-  <Modal v-if="showLinkModal" @close="showLinkModal = false">
-    <form @submit.prevent="setLink" class="p-3 flex space-x-2 items-end">
-      <TextInput
-        class="w-full"
-        v-model="newLink"
-        :required="true"
-        :label="$t('dashboard.link')"
+  <bubble-menu
+    v-if="editor"
+    :editor="editor"
+    :tippy-options="{ duration: 100, placement: 'bottom' }"
+    :should-show="shouldShowBubbleMenu"
+  >
+    <div class="bg-white border border-gray-200 rounded-lg shadow-lg flex p-2 gap-2 items-center">
+      <input
         type="url"
-        placeholder="https://"
-        id="link"
+        v-model="linkUrl"
+        class="border border-gray-300 rounded px-2 py-1 text-sm text-gray-700 outline-none w-48 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        placeholder="https://..."
+        @keydown.enter.prevent="updateLink"
+        @blur="updateLink"
       />
-      <ActionButton :reverse="true" type="submit">
-        <font-awesome-icon class="h-6 w-6" :icon="icons.faLink" />
-      </ActionButton>
-    </form>
-  </Modal>
+      <button
+        @click="updateLink"
+        class="text-gray-500 hover:text-green-600 transition-colors p-1 rounded hover:bg-gray-100"
+        type="button"
+        title="Apply Link"
+      >
+        <font-awesome-icon :icon="icons.faLink" class="w-4 h-4" />
+      </button>
+      <a
+        v-if="linkUrl"
+        :href="linkUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-500 hover:text-blue-600 transition-colors p-1 rounded hover:bg-gray-100 flex items-center justify-center"
+        :title="$t('dashboard.openLink')"
+      >
+        <font-awesome-icon :icon="icons.faExternalLinkAlt" class="w-4 h-4" />
+      </a>
+      <button
+        @click="removeLink"
+        class="text-gray-500 hover:text-red-600 transition-colors p-1 rounded hover:bg-gray-100"
+        type="button"
+        title="Unlink"
+      >
+        <font-awesome-icon :icon="icons.faUnlink" class="w-4 h-4" />
+      </button>
+    </div>
+  </bubble-menu>
 </template>
 
 
 <script>
+// ... imports
 import { Editor, EditorContent } from "@tiptap/vue-3";
+import { BubbleMenu } from "@tiptap/vue-3/menus";
 import { StarterKit } from "@tiptap/starter-kit";
 import { Heading as HeadingExtension } from "@tiptap/extension-heading";
 import { Link as LinkExtension } from "@tiptap/extension-link";
@@ -66,7 +95,7 @@ import { Underline } from "@tiptap/extension-underline";
 
 import EditorToolbar from "./EditorToolbar.vue";
 import ImageExtension from "./extensions/ImageExtension";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { faLink, faUnlink, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons"; // Added faUnlink
 import MediaModal from "../MediaModal.vue";
 import Modal from "../Modal.vue";
 import TextInput from "../TextInput.vue";
@@ -77,6 +106,7 @@ export default {
   props: ["modelValue", "placeholder", "id", "label"],
   components: {
     EditorContent,
+    BubbleMenu, // Added BubbleMenu
     EditorToolbar,
     MediaModal,
     Modal,
@@ -89,10 +119,12 @@ export default {
       editor: null,
       showHTML: false,
       showMediaModal: false,
-      showLinkModal: false,
-      newLink: undefined,
+      // Removed showLinkModal
+      linkUrl: "", // Added linkUrl
       icons: {
         faLink,
+        faUnlink, // Added faUnlink
+        faExternalLinkAlt,
       },
     };
   },
@@ -104,28 +136,40 @@ export default {
       this.showMediaModal = true;
     },
     askForLink() {
-      this.showLinkModal = true;
-    },
-    setLink() {
-      this.showLinkModal = false;
-      const url = this.newLink;
-
-      if (url === null) {
-        return;
+      const previousUrl = this.editor.getAttributes("link").href;
+      
+      // If already a link, likely want to edit it, so we ensure the menu is visible or focus it. 
+      // But if we want to toggle, we might interpret a click as "unset".
+      // Standard behavior: if selection has logic, we toggle. 
+      if (previousUrl) {
+         this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+         return;
       }
 
-      if (url === "") {
-        this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
-
-        return;
-      }
-
+      // If not a link, set it to empty string to trigger the bubble menu detection
       this.editor
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: url })
+        .setLink({ href: "" })
         .run();
+    },
+    // Removed setLink
+    updateLink() {
+        if (this.linkUrl === "") {
+            this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+            return;
+        }
+
+        this.editor
+            .chain()
+            .focus()
+            .extendMarkRange("link")
+            .setLink({ href: this.linkUrl })
+            .run();
+    },
+    removeLink() {
+        this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
     },
     handleSelect(selected) {
       this.editor
@@ -133,6 +177,10 @@ export default {
         .focus()
         .setImage({ src: this.backendURL + selected[0].path })
         .run();
+    },
+    // Removed onBubbleMenuUpdate as it is handled by onSelectionUpdate
+    shouldShowBubbleMenu({ editor }) {
+      return editor.isActive("link");
     },
   },
   watch: {
@@ -157,6 +205,13 @@ export default {
   mounted() {
     this.editor = new Editor({
       content: this.inputModel,
+      onSelectionUpdate: ({ editor }) => {
+        if (editor.isActive("link")) {
+          this.linkUrl = editor.getAttributes("link").href;
+        } else {
+          this.linkUrl = "";
+        }
+      },
       onBlur: () => {
         if (this.editor.isEmpty) {
           this.$emit("update:modelValue", null);
@@ -212,7 +267,7 @@ export default {
         LinkExtension.configure({
           openOnClick: false,
           HTMLAttributes: {
-            class: "link hover:text-secondary",
+            class: "link",
             target: "_self",
           },
         }),
@@ -244,6 +299,13 @@ export default {
           class:
             "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none min-h-[12rem]",
           id: this.id,
+        },
+        handleClick: (view, pos, event) => {
+          if (event.target.closest("a")) {
+            event.preventDefault();
+            return true;
+          }
+          return false;
         },
       },
 
