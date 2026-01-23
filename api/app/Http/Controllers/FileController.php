@@ -28,6 +28,11 @@ class FileController extends Controller
             $query->whereIn('extension', $extensionsArray);
         }
 
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%");
+        }
+
         $files = $query->paginate($perPage);
 
         return response()->json($files);

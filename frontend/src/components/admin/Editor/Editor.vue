@@ -35,7 +35,9 @@
     :tippy-options="{ duration: 100, placement: 'bottom' }"
     :should-show="shouldShowBubbleMenu"
   >
-    <div class="bg-white border border-gray-200 rounded-lg shadow-lg flex p-2 gap-2 items-center">
+    <div
+      class="bg-white border border-gray-200 rounded-lg shadow-lg flex p-2 gap-2 items-center"
+    >
       <input
         type="url"
         v-model="linkUrl"
@@ -74,7 +76,6 @@
   </bubble-menu>
 </template>
 
-
 <script>
 // ... imports
 import { Editor, EditorContent } from "@tiptap/vue-3";
@@ -95,7 +96,11 @@ import { Underline } from "@tiptap/extension-underline";
 
 import EditorToolbar from "./EditorToolbar.vue";
 import ImageExtension from "./extensions/ImageExtension";
-import { faLink, faUnlink, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons"; // Added faUnlink
+import {
+  faLink,
+  faUnlink,
+  faExternalLinkAlt,
+} from "@fortawesome/free-solid-svg-icons"; // Added faUnlink
 import MediaModal from "../MediaModal.vue";
 import Modal from "../Modal.vue";
 import TextInput from "../TextInput.vue";
@@ -137,13 +142,13 @@ export default {
     },
     askForLink() {
       const previousUrl = this.editor.getAttributes("link").href;
-      
-      // If already a link, likely want to edit it, so we ensure the menu is visible or focus it. 
+
+      // If already a link, likely want to edit it, so we ensure the menu is visible or focus it.
       // But if we want to toggle, we might interpret a click as "unset".
-      // Standard behavior: if selection has logic, we toggle. 
+      // Standard behavior: if selection has logic, we toggle.
       if (previousUrl) {
-         this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
-         return;
+        this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+        return;
       }
 
       // If not a link, set it to empty string to trigger the bubble menu detection
@@ -156,20 +161,20 @@ export default {
     },
     // Removed setLink
     updateLink() {
-        if (this.linkUrl === "") {
-            this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
-            return;
-        }
+      if (this.linkUrl === "") {
+        this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+        return;
+      }
 
-        this.editor
-            .chain()
-            .focus()
-            .extendMarkRange("link")
-            .setLink({ href: this.linkUrl })
-            .run();
+      this.editor
+        .chain()
+        .focus()
+        .extendMarkRange("link")
+        .setLink({ href: this.linkUrl })
+        .run();
     },
     removeLink() {
-        this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
     },
     handleSelect(selected) {
       this.editor
@@ -308,7 +313,6 @@ export default {
           return false;
         },
       },
-
     });
   },
   beforeUnmount() {
@@ -347,7 +351,9 @@ export default {
 
 /* When node is selected */
 .ProseMirror .ProseMirror-selectednode [data-resize-wrapper],
-.ProseMirror [data-resize-container].ProseMirror-selectednode [data-resize-wrapper] {
+.ProseMirror
+  [data-resize-container].ProseMirror-selectednode
+  [data-resize-wrapper] {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
@@ -360,15 +366,21 @@ export default {
 
 /* Show handles and toolbar when selected */
 .ProseMirror .ProseMirror-selectednode [data-resize-handle],
-.ProseMirror [data-resize-container].ProseMirror-selectednode [data-resize-handle],
+.ProseMirror
+  [data-resize-container].ProseMirror-selectednode
+  [data-resize-handle],
 .ProseMirror .ProseMirror-selectednode [data-image-toolbar],
-.ProseMirror [data-resize-container].ProseMirror-selectednode [data-image-toolbar] {
+.ProseMirror
+  [data-resize-container].ProseMirror-selectednode
+  [data-image-toolbar] {
   display: flex !important; /* Force flex for toolbar, block is fine for handles but handles are div so flex ok? check */
 }
 
 /* Specific fix for handles which are divs and might need block/default */
 .ProseMirror .ProseMirror-selectednode [data-resize-handle],
-.ProseMirror [data-resize-container].ProseMirror-selectednode [data-resize-handle] {
+.ProseMirror
+  [data-resize-container].ProseMirror-selectednode
+  [data-resize-handle] {
   display: block !important;
 }
 </style>

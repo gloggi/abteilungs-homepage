@@ -1,27 +1,28 @@
 <template>
-  <Modal @close="close" class="overflow-y-scroll">
-    <div class="flex flex-col space-y-2">
-      <h1 class="text-4xl font-bold pb-2">{{ $t("dashboard.files") }}</h1>
-      <DragAndDropUpload @uploadedFile="gridKey++" />
+  <Modal @close="close" :title="$t('dashboard.files')" size="5xl">
+    <div class="flex flex-col space-y-4">
+      <DragAndDropUpload @uploadedFile="handleUpload" />
 
       <SelectMediaGrid
-        class="overflow-y-scroll"
-        style="max-height: 65vh"
         :key="gridKey"
         :extensions="extensions"
         :maxSelect="maxSelect"
         :category="category"
         :pre-selected="preSelected"
         @selectItems="selectItemsHandler"
+        class="pb-4"
       />
-      <div class="pt-3 w-full flex justify-end h-13">
-        <ActionButton
-          :reverse="true"
+
+      <div
+        class="sticky bottom-0 flex justify-end bg-white/95 py-4 backdrop-blur-sm border-t border-gray-100"
+      >
+        <ButtonComponent
           @click="selectAndClose"
-          :toolTipText="$t('dashboard.selectAndClose')"
+          :disabled="selected.length === 0"
         >
-          <font-awesome-icon :icon="icons.faCheck" class="h-6 w-6" />
-        </ActionButton>
+          <font-awesome-icon :icon="icons.faCheck" class="mr-2 h-4 w-4" />
+          {{ $t("dashboard.selectAndClose") }}
+        </ButtonComponent>
       </div>
     </div>
   </Modal>
@@ -31,10 +32,11 @@
 import DragAndDropUpload from "./DragAndDropUpload.vue";
 import Modal from "./Modal.vue";
 import SelectMediaGrid from "./SelectMediaGrid.vue";
+import ButtonComponent from "./ButtonComponent.vue";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import ActionButton from "./ActionButton.vue";
+
 export default {
-  components: { Modal, DragAndDropUpload, SelectMediaGrid, ActionButton },
+  components: { Modal, DragAndDropUpload, SelectMediaGrid, ButtonComponent },
   emits: ["close", "select"],
   props: {
     category: {
@@ -74,8 +76,13 @@ export default {
     close() {
       this.$emit("close", true);
     },
+    handleUpload() {
+      this.gridKey++;
+    },
   },
-  async created() {},
+  created() {
+    this.selected = this.preSelected || [];
+  },
 };
 </script>
 

@@ -71,7 +71,10 @@
     <EditorButton @click="$emit('add-image')">
       <font-awesome-icon class="size-4" :icon="icons.faImage" />
     </EditorButton>
-    <EditorButton v-if="!editor.isActive('link')" @click="$emit('ask-for-link')">
+    <EditorButton
+      v-if="!editor.isActive('link')"
+      @click="$emit('ask-for-link')"
+    >
       <font-awesome-icon class="size-4" :icon="icons.faLink" />
     </EditorButton>
     <EditorButton

@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <div class="bg-gray-50 rounded-lg p-5 flex items-center mb-2">
-      <h2 class="font-extrabold text-4xl">{{ name }}</h2>
-    </div>
-    <div :class="`flex justify-between mb-2`">
-      <ActionButton
-        v-if="itemsSelected"
-        @click="deleteItems"
-        :toolTipText="$t('dashboard.deleteSelectedItems')"
-      >
-        <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
-      </ActionButton>
-      <div class="w-full flex justify-end space-x-2">
+  <div class="mx-auto max-w-7xl pt-6">
+    <PageHeader :title="name">
+      <template #actions>
+        <ActionButton
+          v-if="itemsSelected"
+          @click="deleteItems"
+          :toolTipText="$t('dashboard.deleteSelectedItems')"
+        >
+          <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
+        </ActionButton>
         <ActionButton
           v-if="midataSync"
           @click="syncEntity"
@@ -26,8 +23,8 @@
         >
           <font-awesome-icon :icon="icons.faPlus" class="h-6 w-6" />
         </ActionButton>
-      </div>
-    </div>
+      </template>
+    </PageHeader>
     <SearchField v-if="showSearch" v-model="searchString" />
     <EntityTable
       :key="tableKey"
@@ -43,6 +40,7 @@
 
 <script>
 import EntityTable from "@/components/admin/EntityTable.vue";
+import PageHeader from "./PageHeader.vue";
 import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import MiDataSync from "@/icons/MiDataSync.vue";
 import ActionButton from "./ActionButton.vue";
@@ -71,7 +69,13 @@ export default {
       default: false,
     },
   },
-  components: { EntityTable, MiDataSync, ActionButton, SearchField },
+  components: {
+    EntityTable,
+    MiDataSync,
+    ActionButton,
+    SearchField,
+    PageHeader,
+  },
   data() {
     return {
       content: undefined,

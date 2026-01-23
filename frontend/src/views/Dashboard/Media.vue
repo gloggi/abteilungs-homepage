@@ -1,221 +1,253 @@
 <template>
-  <DragAndDropUpload @uploadedFile="getMedia" />
-  <div
-    class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 mt-2 py-2"
-    :key="listKey"
-  >
-    <button
-      v-for="file in content"
-      target="_blank"
-      :key="file.id"
-      @click="openFile(file)"
-    >
-      <div class="bg-gray-50 rounded-lg w-full">
-        <img
-          :src="`${backendURL}${file.thumbnail}?cb=${this.cacheBust}`"
-          class="w-full rounded-lg object-contain p-1 roundd-lg aspect-square"
-        />
-      </div>
-    </button>
-  </div>
-  <Modal v-if="showModal" @close="showModal = false">
-    <div v-if="content" class="flex flex-col md:flex-row h-full p-3 space-x-2">
+  <div class="mx-auto max-w-7xl pt-6">
+    <PageHeader :title="$t('dashboard.media')">
+      <template #actions>
+        <ButtonComponent @click="showUploadModal = true">
+          <font-awesome-icon :icon="icons.faPlus" class="mr-2 h-4 w-4" />
+          {{ $t("dashboard.uploadFile") }}
+        </ButtonComponent>
+      </template>
+    </PageHeader>
+
+    <SearchField
+      :modelValue="search"
+      @update:modelValue="onSearch"
+      :filter="filter"
+      @update:filter="onFilter"
+      :filter-options="filterOptions"
+      :placeholder="$t('dashboard.searchFiles')"
+    />
+
+    <div class="relative min-h-[400px]">
       <div
-        id="fileContainer"
-        :key="currentSelectionKey"
-        class="flex justify-center items-center w-full md:w-2/3"
+        v-if="loading"
+        class="absolute inset-0 z-10 flex items-center justify-center bg-white/50 backdrop-blur-sm"
       >
-        <img
-          v-if="isImage()"
-          :src="`${backendURL}${selectedFile.path}?cb=${this.cacheBust}`"
-          class="w-auto"
-          style="max-height: 90vh"
-        />
-        <object
-          v-else-if="selectedFile.extension == 'pdf'"
-          :data="`${backendURL}${selectedFile.path}?cb=${this.cacheBust}`"
-          height="550px"
-          type="application/pdf"
-          style="aspect-ratio: 1 / 1.42"
-        />
-        <video v-else-if="selectedFile.extension == 'mp4'" controls>
-          <source
-            :src="`${backendURL}${selectedFile.path}?cb=${this.cacheBust}`"
-            type="video/mp4"
-          />
-        </video>
-        <audio v-else-if="selectedFile.extension == 'mp3'" controls>
-          <source
-            :src="`${backendURL}${selectedFile.path}?cb=${this.cacheBust}`"
-            type="audio/mpeg"
-          />
-        </audio>
-        <img
-          v-else
-          :src="`${backendURL}${selectedFile.thumbnail}`"
-          class="w-auto"
-          style="max-height: 90vh"
-        />
+        <div
+          class="h-10 w-10 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"
+        ></div>
       </div>
-      <div class="w-full md:w-1/3">
-        <div class="flex justify-end w-full space-x-2 pt-2 md:pt-0">
-          <ActionButton
-            @click="deleteFile"
-            :reverse="true"
-            :toolTipText="$t('dashboard.deleteFile')"
-          >
-            <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
-          </ActionButton>
-          <ActionButton
-            @click="updateFile"
-            :reverse="true"
-            :toolTipText="$t('dashboard.updateFile')"
-          >
-            <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
-          </ActionButton>
-        </div>
-        <div class="flex flex-col space-y-2 md:pt-8 w-full">
-          <TextInput
-            id="name"
-            :label="$t('dashboard.name')"
-            v-model="selectedFile.name"
-          />
-          <CopyField
-            id="extension"
-            :label="$t('dashboard.extension')"
-            :value="selectedFile.extension"
-          />
-          <CopyField
-            id="url"
-            :label="$t('dashboard.url')"
-            :value="`${backendURL}${selectedFile.path}`"
-          />
-          <CopyField
-            id="thumbnailUrl"
-            :label="$t('dashboard.thumbnailUrl')"
-            :value="`${backendURL}${selectedFile.thumbnail}`"
-          />
-          <div>
-            <FormLabel>
-              {{ $t("dashboard.replaceFile") }}
-            </FormLabel>
-            <DragAndDropField @droppedFile="replaceFile" />
-          </div>
-        </div>
-        <div class="flex justify-between pt-5">
-          <div class="font-cursive text-gray-400">
-            {{ $t("dashboard.createdAt") }}
-            {{ formatDateTime(selectedFile.createdAt) }}
-          </div>
-        </div>
-      </div>
+
+      <MediaGrid :files="files" @open="openFile" @delete="confirmDelete" />
     </div>
-  </Modal>
+
+    <div class="mt-6">
+      <PaginationNav
+        :total-items="total"
+        :items-per-page="perPage"
+        :page-number="currentPage"
+        @go-to-page="changePage"
+      />
+    </div>
+
+    <Modal v-if="showModal" @close="closeModal" size="5xl">
+      <MediaDetail
+        v-if="selectedFile"
+        :file="selectedFile"
+        :cacheBust="cacheBust"
+        @update="updateFile"
+        @delete="confirmDelete(selectedFile)"
+        @replace="replaceFile"
+      />
+    </Modal>
+
+    <Modal v-if="showUploadModal" @close="showUploadModal = false">
+      <h2 class="text-xl font-bold mb-4">{{ $t("dashboard.uploadFile") }}</h2>
+      <DragAndDropUpload @uploadedFile="onUploaded" />
+    </Modal>
+  </div>
 </template>
 
 <script>
-import CopyField from "../../components/admin/CopyField.vue";
+import SearchField from "../../components/admin/SearchField.vue";
+import PageHeader from "../../components/admin/PageHeader.vue";
+import MediaGrid from "../../components/admin/media/MediaGrid.vue";
+import MediaDetail from "../../components/admin/media/MediaDetail.vue";
+import PaginationNav from "../../components/admin/PaginationNav.vue";
 import DragAndDropUpload from "../../components/admin/DragAndDropUpload.vue";
 import Modal from "../../components/admin/Modal.vue";
-import TextInput from "../../components/admin/TextInput.vue";
-import { faTrash, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
-import ActionButton from "../../components/admin/ActionButton.vue";
-import DragAndDropField from "../../components/admin/DragAndDropField.vue";
-import FormLabel from "../../components/admin/FormLabel.vue";
+import { debounce } from "lodash";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import ButtonComponent from "../../components/admin/ButtonComponent.vue";
 
 export default {
   components: {
+    SearchField,
+    PageHeader,
+    MediaGrid,
+    MediaDetail,
+    PaginationNav,
     DragAndDropUpload,
     Modal,
-    CopyField,
-    TextInput,
-    ActionButton,
-    DragAndDropField,
-    FormLabel,
+    FontAwesomeIcon,
+    ButtonComponent,
   },
   data() {
     return {
-      content: undefined,
-      listKey: 0,
+      files: [],
+      currentPage: 1,
+      lastPage: 1,
+      total: 0,
+      perPage: 54,
+      search: "",
+      filter: "",
+      loading: false,
       showModal: false,
-      selectedFile: undefined,
-      currentSelectionKey: 0,
+      showUploadModal: false,
+      selectedFile: null,
       cacheBust: Date.now(),
+      extensionMap: {
+        image: "jpg,jpeg,png,gif,webp,svg,bmp,tiff,ico",
+        document: "pdf,doc,docx,txt,rtf,odt",
+        spreadsheet: "xls,xlsx,csv,ods",
+        audio: "mp3,wav,ogg,m4a",
+        video: "mp4,mov,avi,webm,mkv",
+        archive: "zip,rar,7z,tar,gz",
+      },
       icons: {
-        faTrash,
-        faArrowsRotate,
+        faPlus,
       },
     };
   },
-  methods: {
-    isImage() {
-      const imageTypes = [
-        "png",
-        "jpeg",
-        "jpg",
-        "gif",
-        "svg",
-        "bmp",
-        "webp",
-        "tiff",
-        "ico",
+  computed: {
+    filterOptions() {
+      return [
+        { value: "", label: this.$t("dashboard.allTypes") },
+        { value: "image", label: this.$t("dashboard.images") },
+        { value: "document", label: this.$t("dashboard.documents") },
+        { value: "spreadsheet", label: this.$t("dashboard.spreadsheets") },
+        { value: "audio", label: this.$t("dashboard.audio") },
+        { value: "video", label: this.$t("dashboard.video") },
+        { value: "archive", label: this.$t("dashboard.archives") },
       ];
-      return imageTypes.includes(this.selectedFile.extension.toLowerCase());
     },
-    async getMedia() {
+  },
+  created() {
+    this.getFiles();
+  },
+  methods: {
+    async getFiles(page = 1) {
+      this.loading = true;
       try {
-        const response = await this.callApi("get", "/files");
-        this.content = response.data.data;
-        this.listKey++;
+        const params = {
+          per_page: this.perPage,
+          page: page,
+        };
+
+        if (this.search) {
+          params.search = this.search;
+        }
+
+        if (this.filter && this.extensionMap[this.filter]) {
+          params.extensions = this.extensionMap[this.filter];
+        }
+
+        const response = await this.callApi("get", "/files", null, { params });
+        this.files = response.data.data;
+        this.currentPage = response.data.currentPage;
+        this.lastPage = response.data.lastPage;
+        this.total = response.data.total;
+        this.perPage = response.data.perPage;
       } catch (e) {
-        console.log(e);
+        console.error(e);
+        this.notifyUser(this.$t("dashboard.noFilesFound"), "error");
+      } finally {
+        this.loading = false;
       }
     },
-    async deleteFile() {
-      try {
-        await this.callApi("delete", `/files/${this.selectedFile.id}`);
-        await this.getMedia();
-        this.notifyUser("File deleted");
-        this.showModal = false;
-        this.selectedFile = undefined;
-      } catch (e) {
-        console.log(e);
+
+    onSearch: debounce(function (val) {
+      this.search = val;
+      this.getFiles(1);
+    }, 300),
+
+    onFilter(val) {
+      this.filter = val;
+      this.getFiles(1);
+    },
+
+    changePage(page) {
+      if (page >= 1 && page <= this.lastPage) {
+        this.getFiles(page);
       }
     },
-    async updateFile() {
-      try {
-        await this.callApi("put", `/files/${this.selectedFile.id}`, {
-          name: this.selectedFile.name,
-          category: this.selectedFile.category,
-        });
-        await this.getMedia();
-        this.notifyUser("File updated");
-      } catch (e) {
-        console.log(e);
-      }
+
+    onUploaded() {
+      this.getFiles();
+      this.notifyUser(this.$t("dashboard.uploaded"));
+      this.showUploadModal = false;
     },
+
     openFile(file) {
       this.selectedFile = file;
       this.showModal = true;
     },
+
+    closeModal() {
+      this.showModal = false;
+      setTimeout(() => {
+        this.selectedFile = null;
+      }, 300); // Clear after animation
+    },
+
+    async confirmDelete(file) {
+      if (confirm(this.$t("dashboard.confirmDelete"))) {
+        await this.deleteFile(file);
+      }
+    },
+
+    async deleteFile(file) {
+      try {
+        await this.callApi("delete", `/files/${file.id}`);
+        await this.getFiles();
+        this.notifyUser(this.$t("dashboard.itemDeleted"));
+        if (
+          this.showModal &&
+          this.selectedFile &&
+          this.selectedFile.id === file.id
+        ) {
+          this.closeModal();
+        }
+      } catch (e) {
+        console.error(e);
+        this.notifyUser("Error deleting file", "error");
+      }
+    },
+
+    async updateFile(updatedFile) {
+      try {
+        await this.callApi("put", `/files/${updatedFile.id}`, {
+          name: updatedFile.name,
+          category: updatedFile.category,
+        });
+        await this.getFiles();
+        this.notifyUser(this.$t("dashboard.itemUpdated"));
+
+        this.selectedFile = { ...this.selectedFile, ...updatedFile };
+      } catch (e) {
+        console.error(e);
+        this.notifyUser("Error updating file", "error");
+      }
+    },
+
     async replaceFile(file) {
       try {
         const formData = new FormData();
         formData.append("file", file, file.name);
         formData.append("category", "test");
+
         await this.callApi("post", `/files/${this.selectedFile.id}`, formData);
-        await this.getMedia();
-        this.notifyUser("File replaced");
+        await this.getFiles();
+
         this.cacheBust = Date.now();
+        this.cacheBust = Date.now();
+        this.notifyUser(this.$t("dashboard.itemUpdated"));
       } catch (e) {
-        console.log(e);
+        console.error(e);
+        this.notifyUser("Error replacing file", "error");
       }
     },
   },
-  async created() {
-    await this.getMedia();
-  },
 };
 </script>
-
-<style></style>

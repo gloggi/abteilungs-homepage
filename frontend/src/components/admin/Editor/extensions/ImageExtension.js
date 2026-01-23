@@ -155,7 +155,7 @@ const ImageExtension = Image.extend({
             "left-0",
             "-translate-x-1/2",
             "-translate-y-1/2",
-            "cursor-nwse-resize"
+            "cursor-nwse-resize",
           );
         } else if (position === "top-right") {
           handle.classList.add(
@@ -163,7 +163,7 @@ const ImageExtension = Image.extend({
             "right-0",
             "translate-x-1/2",
             "-translate-y-1/2",
-            "cursor-nesw-resize"
+            "cursor-nesw-resize",
           );
         } else if (position === "bottom-left") {
           handle.classList.add(
@@ -171,7 +171,7 @@ const ImageExtension = Image.extend({
             "left-0",
             "-translate-x-1/2",
             "translate-y-1/2",
-            "cursor-nesw-resize"
+            "cursor-nesw-resize",
           );
         } else if (position === "bottom-right") {
           handle.classList.add(
@@ -179,7 +179,7 @@ const ImageExtension = Image.extend({
             "right-0",
             "translate-x-1/2",
             "translate-y-1/2",
-            "cursor-nwse-resize"
+            "cursor-nwse-resize",
           );
         }
 

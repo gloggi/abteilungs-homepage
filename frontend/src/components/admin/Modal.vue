@@ -1,27 +1,34 @@
 <template>
   <div
-    class="fixed inset-0 z-30 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-all"
+    @click.self="handleClose"
   >
     <Fade>
       <div
-        class="flex w-full h-full justy-center items-center xl:p-56 lg:p-24 md:p-16 sm:p-4 p-4"
+        class="relative w-full grid gap-4 rounded-xl bg-white p-6 shadow-2xl border border-gray-100 duration-200 sm:rounded-xl"
+        :class="maxWidthClass"
       >
-        <div
-          class="relative w-full mx-auto p-5 border shadow-lg rounded-lg bg-white max-h-screen"
+        <button
+          @click="handleClose"
+          class="absolute right-4 top-4 z-10 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100 data-[state=open]:text-gray-500"
         >
-          <button
-            @click="handleClose"
-            class="absolute top-2 right-2 rounded-bl-lg text-gray-400"
-          >
-            <font-awesome-icon
-              :icon="icons.faXmark"
-              class="h-6 w-6 text-gray-400"
-            />
-          </button>
+          <font-awesome-icon :icon="icons.faXmark" class="h-4 w-4" />
+          <span class="sr-only">Close</span>
+        </button>
 
-          <div class="px-5 h-full">
-            <slot></slot>
-          </div>
+        <div
+          v-if="title"
+          class="flex flex-col space-y-1.5 text-center sm:text-left"
+        >
+          <h3
+            class="text-lg font-semibold leading-none tracking-tight text-gray-900"
+          >
+            {{ title }}
+          </h3>
+        </div>
+
+        <div class="relative overflow-y-auto max-h-[80vh]">
+          <slot></slot>
         </div>
       </div>
     </Fade>
@@ -30,17 +37,49 @@
 
 <script>
 import Fade from "../../transitions/Fade.vue";
-
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   components: { Fade },
   emits: ["close"],
-  props: ["title"],
+  props: {
+    title: {
+      type: String,
+      default: "",
+    },
+    size: {
+      type: String,
+      default: "medium",
+    },
+  },
+  computed: {
+    maxWidthClass() {
+      switch (this.size) {
+        case "sm":
+          return "max-w-sm";
+        case "lg":
+        case "large":
+          return "max-w-2xl";
+        case "xl":
+          return "max-w-4xl";
+        case "2xl":
+          return "max-w-5xl";
+        case "3xl":
+          return "max-w-6xl";
+        case "4xl":
+          return "max-w-7xl";
+        case "5xl":
+          return "max-w-[1920px]";
+        case "full":
+          return "max-w-[95vw] h-[90vh]";
+        case "medium":
+        default:
+          return "max-w-lg";
+      }
+    },
+  },
   data() {
     return {
-      expanded: false,
-      key: 0,
       icons: {
         faXmark,
       },
@@ -50,12 +89,6 @@ export default {
     handleClose() {
       this.$emit("close", true);
     },
-    handleExpand() {
-      this.expanded = !this.expanded;
-      this.key++;
-    },
   },
 };
 </script>
-
-<style></style>

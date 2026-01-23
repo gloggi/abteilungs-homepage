@@ -1,43 +1,78 @@
 <template>
-  <div class="my-2 flex relative">
-    <div class="absolute left-0 z-10 inset-y-0 flex h-full items-center">
-      <font-awesome-icon
-        :icon="icons.faMagnifyingGlass"
-        class="h-5 w-5 p-2 text-gray-400"
+  <div
+    class="mb-6 flex flex-col gap-4 rounded-xl border border-gray-100 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+  >
+    <div class="relative w-full sm:flex-1">
+      <div
+        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+      >
+        <font-awesome-icon :icon="faMagnifyingGlass" class="text-gray-400" />
+      </div>
+      <input
+        type="text"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
+        class="block w-full rounded-lg border border-gray-200 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        :placeholder="placeholder || $t('dashboard.search')"
       />
     </div>
-    <label class="hidden" for="searchfield"></label>
-    <input
-      id="searchfield"
-      class="appearance-none border-0 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-gray-400 focus:border-gray-400 pl-10"
-      v-model="payload"
-    />
+
+    <div v-if="hasFilters" class="flex w-full items-center gap-2 sm:w-auto">
+      <div class="relative w-full sm:w-48">
+        <select
+          :value="filter"
+          @change="$emit('update:filter', $event.target.value)"
+          class="block w-full rounded-lg border border-gray-200 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        >
+          <option
+            v-for="option in filterOptions"
+            :key="option.value"
+            :value="option.value"
+          >
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
 </template>
+
 <script>
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 export default {
+  name: "SearchField",
+  components: {
+    FontAwesomeIcon,
+  },
   props: {
     modelValue: {
       type: String,
+      default: "",
+    },
+    filter: {
+      type: String,
+      default: "",
+    },
+    filterOptions: {
+      type: Array,
+      default: () => [],
+    },
+    placeholder: {
+      type: String,
+      default: "",
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "update:filter"],
   data() {
     return {
-      icons: {
-        faMagnifyingGlass,
-      },
+      faMagnifyingGlass,
     };
   },
   computed: {
-    payload: {
-      get() {
-        return this.modelValue;
-      },
-      set(value) {
-        this.$emit("update:modelValue", value);
-      },
+    hasFilters() {
+      return this.filterOptions && this.filterOptions.length > 0;
     },
   },
 };

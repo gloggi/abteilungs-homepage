@@ -1,7 +1,10 @@
 <template>
   <ContentWrapper>
     <HeadingTwo class="w-full text-primary">{{ title }}</HeadingTwo>
-    <div v-if="viewMode === 'gallery'" class="p-5 flex justify-center flex-wrap gap gap-5">
+    <div
+      v-if="viewMode === 'gallery'"
+      class="p-5 flex justify-center flex-wrap gap gap-5"
+    >
       <a
         v-for="file in files"
         :key="file.id"
@@ -34,7 +37,9 @@
           />
         </div>
         <div class="flex-grow">
-          <p class="main-text font-medium group-hover:text-primary-dark">{{ file.name }}</p>
+          <p class="main-text font-medium group-hover:text-primary-dark">
+            {{ file.name }}
+          </p>
         </div>
       </a>
     </div>
