@@ -1,41 +1,47 @@
 <template>
-  <ItemBox
-    class="flex flex-col items-stretch px-0 pb-1 pt-1 space-y-2"
-    :draggable="allowDrag"
-    :title="boxTitle"
-    @dragstart="dragStart"
-    @dragend="dragEnd"
+  <div
+    class="rounded-xl border border-gray-200 bg-white text-gray-950 shadow-sm"
   >
     <div
-      id="dragbutton"
-      class="w-full flex justify-center text-gray-400 cursor-grab"
-      @mouseover="allowDrag = true"
-      @mouseleave="allowDrag = false"
+      class="flex flex-row items-center justify-between gap-4 p-4 border-b border-gray-100 bg-gray-50/50 rounded-t-xl"
     >
-      <font-awesome-icon :icon="icons.faGripHorizontal" />
-    </div>
-    <div class="w-full rounded-l-lg px-3">
-      <slot></slot>
-    </div>
-    <hr />
-    <div class="w-full px-3 flex justify-end">
-      <div class="">
-        <button @click="$emit('delete', item)">
-          <font-awesome-icon
-            :icon="icons.faTrash"
-            class="h-4 w-4 hover:text-gray-400 text-gray-500"
-          />
-        </button>
+      <div class="flex flex-row items-center gap-3">
+        <div
+          class="cursor-grab text-gray-400 hover:text-gray-600 active:cursor-grabbing"
+          :draggable="true"
+          @dragstart="dragStart"
+          @dragend="dragEnd"
+        >
+          <font-awesome-icon :icon="icons.faGripVertical" class="h-5 w-5" />
+        </div>
+        <div class="font-semibold text-sm text-gray-900">
+          {{ boxTitle }}
+        </div>
+      </div>
+      <div class="flex flex-row items-center gap-2">
+        <ActionButton
+          @click="$emit('delete', item)"
+          variant="ghost"
+          size="icon"
+          :toolTipText="$t('dashboard.delete')"
+          class="text-gray-400 hover:text-red-500 hover:bg-red-50"
+        >
+          <font-awesome-icon :icon="icons.faTrash" class="h-4 w-4" />
+        </ActionButton>
       </div>
     </div>
-  </ItemBox>
+    <div class="p-4">
+      <slot></slot>
+    </div>
+  </div>
 </template>
+
 <script>
-import ItemBox from "./ItemBox.vue";
-import { faTrash, faGripHorizontal } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faGripVertical } from "@fortawesome/free-solid-svg-icons";
+import ActionButton from "./ActionButton.vue";
 
 export default {
-  components: { ItemBox },
+  components: { ActionButton },
   props: {
     item: {
       type: Object,
@@ -48,25 +54,19 @@ export default {
   emits: ["delete", "startedDragging", "endedDragging"],
   data() {
     return {
-      allowDrag: false,
       icons: {
-        faGripHorizontal,
+        faGripVertical,
         faTrash,
       },
     };
   },
   methods: {
     dragStart(e) {
-      if (!this.allowDrag) {
-        return;
-      }
       e.dataTransfer.setData("text/plain", JSON.stringify(this.item));
       this.$emit("startedDragging", true);
     },
     dragEnd() {
-      this.allowDrag = false;
       this.$emit("endedDragging", true);
-      //this.$store.commit("drag/stopDragging")
     },
   },
 };

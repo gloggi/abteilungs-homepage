@@ -5,13 +5,13 @@
     @dragleave.prevent="increaseHeight = false"
     @dragover.prevent
     @drop="handleDrop"
-    class="rounded-lg my-1 h-1.5 w-full text-xs hover:text-white"
+    class="rounded-lg my-1 w-full text-xs transition-all duration-200 flex items-center justify-center border border-dashed"
     :class="`${
       dragging
-        ? 'bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500'
-        : 'bg-gray-300 hover:bg-gray-400'
+        ? 'bg-gray-100 border-gray-400 text-gray-900 shadow-inner'
+        : 'bg-white hover:bg-gray-50 text-gray-500 hover:text-gray-900 border-gray-300 hover:border-gray-400'
     } 
-    ${increaseHeight ? 'h-48' : 'h-auto'}`"
+    ${increaseHeight ? 'h-32' : 'h-8 py-2'}`"
   >
     <span v-if="dragging">{{ $t("dashboard.dropPageItemHere") }}</span>
     <span v-else>

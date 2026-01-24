@@ -1,162 +1,196 @@
 <template>
-  <div class="absolute bottom-0 top-0 md:static z-30">
-    <div class="-right-16 absolute size-16 bottom-0 md:hidden">
+  <div>
+
+    <Transition
+      enter-active-class="transition-opacity duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition-opacity duration-200 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
       <button
-        @click="hideMobileMenu = !hideMobileMenu"
-        class="size-12 bg-gray-900 rounded-r-lg"
+        v-if="!isDesktop && !isOpen"
+        @click="isOpen = true"
+        class="fixed z-50 right-4 top-4 h-10 w-10 flex items-center justify-center rounded-md bg-gray-900/90 text-white shadow-lg border border-gray-700/50 backdrop-blur-sm hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"
+        aria-label="Open Sidebar"
       >
-        <font-awesome-icon :icon="icons.faBars" class="text-white" />
+        <font-awesome-icon :icon="icons.faBars" class="h-5 w-5" />
       </button>
-    </div>
-    <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
-      <div
-        v-if="!(hideMobileMenu && !isDesktop)"
-        class="bg-gray-900 md:w-64 md:flex flex-col md:rounded-r-lg h-full"
-      >
-        <router-link to="/dashboard" @click="hideMobileMenu = true">
-          <div
-            v-if="settings.divisionLogo?.path"
-            class="w-full flex flex-col justify-center"
-          >
-            <img
-              class="h-32 p-3"
-              :src="`${backendURL}${settings.divisionLogo?.path}`"
-            />
-          </div>
-          <div
-            v-else-if="settings.divisionName"
-            class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 text-center mx-auto p-5 cursor-pointer"
-          >
-            {{ settings.divisionName }}
-          </div>
-          <div class="w-full flex justify-center items-center" v-else>
-            <font-awesome-icon
-              class="h-20 py-5 text-white"
-              :icon="icons.faGhost"
-            />
-          </div>
-        </router-link>
-        <div class="flex flex-col md:justify-between h-full">
-          <div>
-            <SidebarItem
-              v-if="isAdmin"
-              to="/dashboard/menu"
-              :icon="icons.faEllipsis"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.menuAndLinks") }}
-            </SidebarItem>
-            <SidebarItem
-              to="/dashboard/pages"
-              :icon="icons.faBookOpen"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.pages") }}
-            </SidebarItem>
-            <SidebarItem
-              to="/dashboard/groups"
-              :icon="icons.faUsers"
-              @click="hideMobileMenu = true"
-            >
-              {{
-                settings.isRegion
-                  ? $t("dashboard.divisions")
-                  : $t("dashboard.groups")
-              }}
-            </SidebarItem>
-            <SidebarItem
-              v-if="isAdmin"
-              to="/dashboard/contacts"
-              :icon="icons.faAddressCard"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.contacts") }}
-            </SidebarItem>
-            <SidebarItem
-              v-if="isAdmin"
-              to="/dashboard/sections"
-              :icon="icons.faStairs"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.sections") }}
-            </SidebarItem>
-            <SidebarItem
-              to="/dashboard/events"
-              :icon="icons.faCalendarDays"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.events") }}
-            </SidebarItem>
-            <SidebarItem
-              to="/dashboard/camps"
-              :icon="icons.faCampground"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.camps") }}
-            </SidebarItem>
-            <SidebarItem
-              to="/dashboard/locations"
-              :icon="icons.faLocationDot"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.locations") }}
-            </SidebarItem>
-            <SidebarItem
-              to="/dashboard/faqs"
-              :icon="icons.faCircleQuestion"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.faqs") }}
-            </SidebarItem>
-            <SidebarItem
-              to="/dashboard/forms"
-              :icon="icons.faRectangleList"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.forms") }}
-            </SidebarItem>
-            <SidebarItem
-              to="/dashboard/media"
-              :icon="icons.faPhotoVideo"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.media") }}
-            </SidebarItem>
-            <SidebarItem
-              v-if="isAdmin"
-              to="/dashboard/users"
-              :icon="icons.faUser"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.users") }}
-            </SidebarItem>
-            <SidebarItem
-              v-if="isAdmin"
-              to="/dashboard/settings"
-              :icon="icons.faGear"
-              @click="hideMobileMenu = true"
-            >
-              {{ $t("dashboard.settings") }}
-            </SidebarItem>
-          </div>
-          <div class="h-fit">
-            <SidebarItem
-              @click="logout"
-              class=""
-              to=""
-              :icon="icons.faDoorOpen"
-            >
-              {{ $t("dashboard.logout") }}
-            </SidebarItem>
-          </div>
-        </div>
-      </div>
     </Transition>
+
+
+    <Transition
+      enter-active-class="transition-opacity ease-linear duration-300"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition-opacity ease-linear duration-300"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div
+        v-if="isOpen && !isDesktop"
+        class="fixed inset-0 bg-gray-950/80 backdrop-blur-sm z-40 md:hidden"
+        @click="isOpen = false"
+      ></div>
+    </Transition>
+
+
+    <aside
+      class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 border-r border-gray-800 transform transition-transform duration-300 ease-in-out md:static md:translate-x-0 flex flex-col h-full shadow-2xl md:shadow-none"
+      :class="[!isOpen && !isDesktop ? '-translate-x-full' : 'translate-x-0']"
+    >
+
+      <router-link
+        to="/dashboard"
+        @click="isOpen = false"
+        class="flex-shrink-0 flex flex-col justify-center items-center min-h-[5rem] border-b border-gray-800 bg-gray-900/50 backdrop-blur-sm px-4 pt-6 pb-4"
+      >
+        <div
+          v-if="settings.divisionLogo?.path"
+          class="w-full flex justify-center"
+        >
+          <img
+            class="h-28 object-contain p-2 hover:scale-105 transition-transform duration-300"
+            :src="`${backendURL}${settings.divisionLogo?.path}`"
+            alt="Division Logo"
+          />
+        </div>
+        <div
+          v-else-if="settings.divisionName"
+          class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 text-center mx-auto tracking-tight"
+        >
+          {{ settings.divisionName }}
+        </div>
+        <div class="w-full flex justify-center items-center py-4" v-else>
+          <font-awesome-icon
+            class="h-16 text-gray-700 animate-pulse"
+            :icon="icons.faGhost"
+          />
+        </div>
+      </router-link>
+
+
+      <div class="flex-1 overflow-y-auto py-4 custom-scrollbar">
+        <nav class="space-y-1 px-1">
+          <SidebarItem
+            to="/dashboard"
+            :icon="icons.faHome"
+            @click="isOpen = false"
+            :exact="true"
+          >
+            {{ $t("dashboard.home") }}
+          </SidebarItem>
+          <SidebarItem
+            v-if="isAdmin"
+            to="/dashboard/menu"
+            :icon="icons.faEllipsis"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.menuAndLinks") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/pages"
+            :icon="icons.faBookOpen"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.pages") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/groups"
+            :icon="icons.faUsers"
+            @click="isOpen = false"
+          >
+            {{ settings.isRegion ? $t("dashboard.divisions") : $t("dashboard.groups") }}
+          </SidebarItem>
+          <SidebarItem
+            v-if="isAdmin"
+            to="/dashboard/contacts"
+            :icon="icons.faAddressCard"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.contacts") }}
+          </SidebarItem>
+          <SidebarItem
+            v-if="isAdmin"
+            to="/dashboard/sections"
+            :icon="icons.faStairs"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.sections") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/events"
+            :icon="icons.faCalendarDays"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.events") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/camps"
+            :icon="icons.faCampground"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.camps") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/locations"
+            :icon="icons.faLocationDot"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.locations") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/faqs"
+            :icon="icons.faCircleQuestion"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.faqs") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/forms"
+            :icon="icons.faRectangleList"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.forms") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/media"
+            :icon="icons.faPhotoVideo"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.media") }}
+          </SidebarItem>
+          <SidebarItem
+            v-if="isAdmin"
+            to="/dashboard/users"
+            :icon="icons.faUser"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.users") }}
+          </SidebarItem>
+          <SidebarItem
+            v-if="isAdmin"
+            to="/dashboard/settings"
+            :icon="icons.faGear"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.settings") }}
+          </SidebarItem>
+        </nav>
+      </div>
+
+
+      <div class="p-4 border-t border-gray-800 bg-gray-900/50">
+        <SidebarItem @click="logout" to="" :icon="icons.faDoorOpen">
+          {{ $t("dashboard.logout") }}
+        </SidebarItem>
+      </div>
+    </aside>
   </div>
 </template>
 
 <script>
-import { gsap } from "gsap";
 import {
   faStairs,
   faBookOpen,
@@ -174,13 +208,15 @@ import {
   faCircleQuestion,
   faBars,
   faGhost,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
+
 export default {
   components: { SidebarItem },
   data() {
     return {
-      hideMobileMenu: true,
+      isOpen: false,
       isDesktop: window.innerWidth > 768,
       icons: {
         faStairs,
@@ -199,6 +235,7 @@ export default {
         faCircleQuestion,
         faBars,
         faGhost,
+        faHome,
       },
     };
   },
@@ -207,25 +244,11 @@ export default {
       this.$store.dispatch("user/logout");
       this.$router.push("/");
     },
-    beforeEnter(el) {
-      el.style.width = "0";
-      el.style.overflow = "hidden";
-    },
-    enter(el, done) {
-      gsap.to(el, {
-        width: "16rem",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        breakAfter: "avoid",
-        duration: 0.3,
-        onComplete: done,
-      });
-    },
-    leave(el, done) {
-      gsap.to(el, { width: "0", duration: 0.3, onComplete: done });
-    },
     handleResize() {
       this.isDesktop = window.innerWidth > 768;
+      if (this.isDesktop) {
+        this.isOpen = false;
+      }
     },
   },
   mounted() {
@@ -237,4 +260,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #374151;
+  border-radius: 20px;
+}
+</style>

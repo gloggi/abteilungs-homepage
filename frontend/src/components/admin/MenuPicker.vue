@@ -1,23 +1,23 @@
 <template>
   <div class="flex space-x-2">
-    <div class="flex flex-col space-y-2 w-1/2">
-      <p class="text-2xl font-semibold break-words">
+    <div class="flex flex-col space-y-4 w-1/2">
+      <p class="text-lg font-semibold text-gray-900 tracking-tight break-words">
         {{ $t("dashboard.customLinks") }}
       </p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
         @drop="handleDeleteDrop"
-        class="border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
+        class="border border-dashed border-gray-300 bg-gray-50 rounded-lg p-6 text-center shadow-sm"
       >
         <CustomMenuItem />
       </div>
-      <p class="text-2xl font-semibold">{{ $t("dashboard.specialItems") }}</p>
+      <p class="text-lg font-semibold text-gray-900 tracking-tight">{{ $t("dashboard.specialItems") }}</p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
         @drop="handleDeleteDrop"
-        class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
+        class="flex flex-col space-y-2 border border-dashed border-gray-300 bg-gray-50 rounded-lg p-6 text-center shadow-sm"
       >
         <DragableMenuItem
           v-if="showGroupPagesItem"
@@ -26,22 +26,22 @@
           {{ $t("dashboard.groupPagesDropdown") }}
         </DragableMenuItem>
       </div>
-      <p class="text-2xl font-semibold">{{ $t("dashboard.pages") }}</p>
+      <p class="text-lg font-semibold text-gray-900 tracking-tight">{{ $t("dashboard.pages") }}</p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
         @drop="handleDeleteDrop"
-        class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
+        class="flex flex-col space-y-2 border border-dashed border-gray-300 bg-gray-50 rounded-lg p-6 text-center shadow-sm"
       >
         <DragableMenuItem v-for="page in pages" :item="page" :key="page.id">
           {{ page.title }}
         </DragableMenuItem>
       </div>
     </div>
-    <div class="flex flex-col w-1/2 space-y-2">
-      <p class="text-2xl font-semibold">{{ $t("dashboard.menu") }}</p>
+    <div class="flex flex-col w-1/2 space-y-4">
+      <p class="text-lg font-semibold text-gray-900 tracking-tight">{{ $t("dashboard.menu") }}</p>
       <div
-        class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
+        class="flex flex-col space-y-2 border border-dashed border-gray-300 bg-gray-50 rounded-lg p-6 text-center shadow-sm min-h-[150px]"
       >
         <MenuDropZone :index="-1" @dropped-item="handleMenuZoneDrop" />
         <template v-for="(menuItem, i) in menuItems" :key="menuItem.id">
@@ -51,11 +51,11 @@
           <MenuDropZone :index="i" @dropped-item="handleMenuZoneDrop" />
         </template>
       </div>
-      <p class="text-2xl font-semibold break-words">
+      <p class="text-lg font-semibold text-gray-900 tracking-tight break-words">
         {{ $t("dashboard.footerLinks") }}
       </p>
       <div
-        class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
+        class="flex flex-col space-y-2 border border-dashed border-gray-300 bg-gray-50 rounded-lg p-6 text-center shadow-sm min-h-[100px]"
       >
         <MenuDropZone :index="-1" @dropped-item="handleFooterLinksDrop" />
         <template v-for="(footerlink, i) in footerLinks" :key="footerlink.id">
@@ -71,13 +71,13 @@
         @dragenter.prevent=""
         @dragover.prevent
         @drop="handleDeleteDrop"
-        class="flex flex-col space-y-2 border-2 border-gray-400 border-dashed text-center p-5 rounded-lg"
+        class="flex flex-col space-y-2 border border-dashed border-gray-300 bg-gray-50 hover:bg-red-50 hover:border-red-200 transition-colors rounded-lg p-6 text-center shadow-sm group"
       >
         <font-awesome-icon
           :icon="icons.faTrash"
-          class="text-4xl text-gray-400"
+          class="text-4xl text-gray-400 group-hover:text-red-500 transition-colors"
         />
-        <span class="text-gray-400 text-sm">{{
+        <span class="text-gray-400 text-sm group-hover:text-red-400 transition-colors">{{
           $t("dashboard.removeItemFromMenu")
         }}</span>
       </div>

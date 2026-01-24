@@ -1,114 +1,125 @@
 <template>
-  <div
-    :key="`table-${tableKey}`"
-    class="bg-gray-50 w-full flex justify-start items-center p-3 rounded-t-md"
-  >
-    <div class="w-10">
-      <label class="hidden" for="0"></label>
-      <input
-        id="0"
-        type="checkbox"
-        ref="masterbox"
-        v-model="topCheckboxValue"
-        @change="topCheckboxHandler"
-        class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-400"
-      />
-    </div>
+  <div class="w-full rounded-md border border-gray-200 overflow-hidden">
+    <div
+      class="bg-gray-50/50 w-full flex justify-start items-center p-3 border-b border-gray-200 gap-4"
+    >
+      <div class="w-10 flex items-center justify-center flex-none">
+        <label class="hidden" for="master-checkbox"></label>
+        <input
+          id="master-checkbox"
+          type="checkbox"
+          ref="masterbox"
+          v-model="topCheckboxValue"
+          @change="topCheckboxHandler"
+          class="rounded border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
+        />
+      </div>
 
-    <div class="flex flex-col md:flex-row justify-between w-full">
-      <div
-        v-for="(key, i) in getTitles"
-        :key="`text-${i}`"
-        class="text hidden md:block"
-        :style="`width: ${columnWidth}%;`"
-      >
-        {{ key }}
+      <div class="flex flex-col md:flex-row w-full gap-4">
+        <div
+          v-for="(key, i) in getTitles"
+          :key="`text-${i}`"
+          class="hidden md:block text-xs font-medium text-gray-500 uppercase tracking-wider"
+          :class="getColumnClass(keys?.[i])"
+        >
+          {{ key }}
+        </div>
       </div>
     </div>
-  </div>
-  <hr />
-  <div v-if="totalItems == 0" class="bg-white w-full p-3 border-b">
-    {{ $t("dashboard.noItemsAvailable") }}
-  </div>
-  <div
-    v-for="(item, j) in content"
-    :key="`row-${j}`"
-    class="bg-white w-full p-3 border-b flex justify-start items-center overflow-y-hidden"
-  >
-    <div class="w-10">
-      <label class="hidden" :for="`checkbox-${item['id']}`"></label>
-      <input
-        :id="`checkbox-${item['id']}`"
-        type="checkbox"
-        @change="(e) => changeBox(e, item['id'])"
-        v-model="checkBoxValues[item['id']]"
-        class="rounded focus:ring-0 focus:shadow-none ring-offset-0 text-gray-400"
-      />
+
+    <div v-if="totalItems == 0" class="bg-white w-full">
+      <EmptyState :title="$t('dashboard.noItemsAvailable')" />
     </div>
-    <template v-for="(key, i) in keys" :key="`text-${j}-${i}`">
-      <template v-if="actions[key] && actions[key].actionName == 'image'">
-        <div class="justify-start items-center md:hidden px-5">
-          <ColoredLogoCircle
-            class="size-20"
-            :size="actions[key].args.includes('color') ? 65 : 100"
-            :src="item[key] ? `${backendURL}${item[key].thumbnail}` : undefined"
-            :backgroundColor="item?.color"
-            :cover="cover"
-          />
-        </div>
-      </template>
-    </template>
+
     <div
-      class="flex flex-col md:flex-row md:items-center justify-between w-full"
+      v-for="(item, j) in content"
+      :key="`row-${j}`"
+      class="bg-white w-full p-3 border-b border-gray-100 last:border-0 flex justify-start items-center transition-colors hover:bg-gray-50/50 gap-4"
     >
-      <div
-        v-for="(key, i) in keys"
-        :key="`text-${j}-${i}`"
-        class="text"
-        :style="`width: ${isDesktop ? columnWidth : '100'}%;`"
-      >
-        <template v-if="actions[key] && actions[key].actionName == 'link'">
-          <router-link
-            class="text-sm text-gray-900 hover:text-gray-600 font-semibold"
-            :to="`${entity}/${item[actions[key].actionArgument]}`"
-            >{{ item[key] || $t("dashboard.noValue") }}</router-link
-          >
-        </template>
+      <div class="w-10 flex items-center justify-center flex-none">
+        <label class="hidden" :for="`checkbox-${item['id']}`"></label>
+        <input
+          :id="`checkbox-${item['id']}`"
+          type="checkbox"
+          @change="(e) => changeBox(e, item['id'])"
+          v-model="checkBoxValues[item['id']]"
+          class="rounded border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
+        />
+      </div>
+
+      <template v-for="(key, i) in keys" :key="`mobile-img-${j}-${i}`">
         <template v-if="actions[key] && actions[key].actionName == 'image'">
-          <div class="justify-start items-center hidden md:block">
+          <div class="justify-start items-center md:hidden px-4">
             <ColoredLogoCircle
-              class="size-16"
+              class="size-12"
               :size="actions[key].args.includes('color') ? 65 : 100"
-              :src="
-                item[key] ? `${backendURL}${item[key].thumbnail}` : undefined
-              "
+              :src="item[key] ? `${backendURL}${item[key].thumbnail}` : undefined"
               :backgroundColor="item?.color"
               :cover="cover"
             />
           </div>
         </template>
-        <template v-if="actions[key] && actions[key].actionName == 'date'">
-          <div class="text-sm text-gray-500">{{ formatDate(item[key]) }}</div>
-        </template>
-        <template v-if="actions[key] && actions[key].actionName == 'list'">
-          <div class="text-sm text-gray-500">
-            {{
-              item[key].map((v) => v[actions[key].actionArgument]).join(", ")
-            }}
-          </div>
-        </template>
-        <template v-if="!actions[key]">
-          <div class="text-sm text-gray-500">{{ getValue(item, key) }}</div>
-        </template>
+      </template>
+
+      <div
+        class="flex flex-col md:flex-row md:items-center w-full gap-4"
+      >
+        <div
+          v-for="(key, i) in keys"
+          :key="`text-${j}-${i}`"
+          class="text-sm text-gray-700 overflow-hidden text-ellipsis"
+          :class="getColumnClass(key)"
+        >
+          <template v-if="actions[key] && actions[key].actionName == 'link'">
+            <router-link
+              class="font-medium text-gray-900 hover:underline hover:text-gray-900 transition-colors"
+              :to="`${entity}/${item[actions[key].actionArgument]}`"
+              >{{ item[key] || $t("dashboard.noValue") }}</router-link
+            >
+          </template>
+
+          <template v-if="actions[key] && actions[key].actionName == 'image'">
+            <div class="justify-start items-center hidden md:block">
+              <ColoredLogoCircle
+                class="size-10"
+                :size="actions[key].args.includes('color') ? 65 : 100"
+                :src="
+                  item[key] ? `${backendURL}${item[key].thumbnail}` : undefined
+                "
+                :backgroundColor="item?.color"
+                :cover="cover"
+              />
+            </div>
+          </template>
+
+          <template v-if="actions[key] && actions[key].actionName == 'date'">
+            <div class="text-gray-500">{{ formatDate(item[key]) }}</div>
+          </template>
+
+          <template v-if="actions[key] && actions[key].actionName == 'list'">
+            <div class="text-gray-500">
+              {{
+                item[key].map((v) => v[actions[key].actionArgument]).join(", ")
+              }}
+            </div>
+          </template>
+
+          <template v-if="!actions[key]">
+            <div class="text-gray-500">{{ getValue(item, key) }}</div>
+          </template>
+        </div>
       </div>
     </div>
   </div>
-  <PaginationNav
-    :pageNumber="page"
-    :itemsPerPage="itemsPerPage"
-    :totalItems="totalItems"
-    @goToPage="(i) => goToPage(i)"
-  />
+
+  <div class="mt-4">
+    <PaginationNav
+      :pageNumber="page"
+      :itemsPerPage="itemsPerPage"
+      :totalItems="totalItems"
+      @goToPage="(i) => goToPage(i)"
+    />
+  </div>
 </template>
 
 <script>
@@ -116,8 +127,9 @@ import { get } from "lodash";
 import PaginationNav from "./PaginationNav.vue";
 import { format } from "date-fns";
 import ColoredLogoCircle from "./ColoredLogoCircle.vue";
+import EmptyState from "./EmptyState.vue";
 export default {
-  components: { PaginationNav, ColoredLogoCircle },
+  components: { PaginationNav, ColoredLogoCircle, EmptyState },
   props: ["entity", "columns", "titles", "searchString", "cover"],
   emits: ["changeSelected"],
   data() {
@@ -150,7 +162,11 @@ export default {
         if (Object.values(newValue).every((value) => value === true)) {
           this.$refs.masterbox.checked = true;
         } else {
-          this.$refs.masterbox.checked = false;
+          try {
+            this.$refs.masterbox.checked = false;
+          } catch (e) {
+
+          }
         }
       },
       deep: true,
@@ -160,6 +176,13 @@ export default {
     },
   },
   methods: {
+    getColumnClass(key) {
+      if (!this.isDesktop) return "w-full mb-2 md:mb-0";
+      if (this.actions[key]?.actionName === "image") {
+        return "flex-none w-auto";
+      }
+      return "flex-1";
+    },
     getValue(obj, key) {
       return get(obj, key);
     },
@@ -252,6 +275,9 @@ export default {
         }
       });
     },
+    handleResize() {
+      this.isDesktop = window.innerWidth > 768;
+    },
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
@@ -260,9 +286,9 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   async created() {
+    this.entryProcessor();
     await this.getItems();
     this.setUpBoxes();
-    this.entryProcessor();
   },
 };
 </script>

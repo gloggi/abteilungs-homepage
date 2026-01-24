@@ -18,6 +18,6 @@ class InviteController extends Controller
             'email' => $request->get('email'),
             'token' => $token,
         ]);
-        //Mail::to($request->get('email'))->send(new InviteCreated($invite));
+
     }
 }

@@ -1,18 +1,17 @@
 <template>
-  <div class="bg-gray-50 rounded-lg p-5 flex items-center mb-2">
-    <h2 class="font-extrabold text-4xl">
-      {{ $t("dashboard.menuFooterLinks") }}
-    </h2>
-  </div>
-  <div class="bg-gray-50 rounded-lg p-3">
-    <MenuPicker />
+  <div class="mx-auto max-w-7xl pt-6">
+    <PageHeader :title="$t('dashboard.menuFooterLinks')" />
+    <div class="bg-gray-50 rounded-lg p-3">
+      <MenuPicker />
+    </div>
   </div>
 </template>
 <script>
 import MenuPicker from "../../components/admin/MenuPicker.vue";
+import PageHeader from "../../components/admin/PageHeader.vue";
 
 export default {
-  components: { MenuPicker },
+  components: { MenuPicker, PageHeader },
   data() {
     return {};
   },

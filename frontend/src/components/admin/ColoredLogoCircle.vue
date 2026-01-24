@@ -1,14 +1,16 @@
 <template>
-  <div class="rounded-full border" :style="{ backgroundColor }">
-    <div
-      class="flex justify-center items-center rounded-full overflow-hidden size-full"
-    >
+  <div
+    class="rounded-full border border-gray-200 shadow-sm relative overflow-hidden transition-all duration-300"
+    :style="{ backgroundColor }"
+  >
+    <div class="flex h-full w-full items-center justify-center">
       <img
         v-if="src"
         :src="src"
-        class="aspect-square"
-        :class="{ 'object-cover': cover }"
-        :style="{ height: `${size}%`, width: `${size}%` }"
+        class="transition-transform duration-300 hover:scale-105"
+        :class="cover ? 'h-full w-full object-cover' : 'object-contain'"
+        :style="!cover ? { height: `${size}%`, width: `${size}%` } : {}"
+        alt="Logo"
       />
     </div>
   </div>

@@ -188,7 +188,7 @@ export default {
       this.showModal = false;
       setTimeout(() => {
         this.selectedFile = null;
-      }, 300); // Clear after animation
+      }, 300);
     },
 
     async confirmDelete(file) {

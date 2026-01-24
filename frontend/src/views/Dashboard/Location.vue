@@ -7,6 +7,7 @@
       @clearErrors="errors = {}"
       entity="locations"
       backLinkTo="Locations"
+      :modelName="$t('dashboard.location')"
     />
     <Card class="mt-4">
       <LocationPicker

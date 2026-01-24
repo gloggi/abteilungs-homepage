@@ -28,7 +28,7 @@
         <MiDataButton @click="loginWithMiData" type="submit" />
       </div>
     </div>
-    <SuccessMessage />
+    <Toast />
   </div>
 </template>
 <script>
@@ -36,11 +36,11 @@ import TextInput from "../components/admin/TextInput.vue";
 import ButtonComponent from "../components/admin/ButtonComponent.vue";
 import ErrorMessage from "../components/admin/ErrorMessage.vue";
 import MiDataButton from "../components/admin/MiDataButton.vue";
-import SuccessMessage from "../components/admin/SuccessNotification.vue";
+import Toast from "../components/admin/Toast.vue";
 export default {
   name: "Login",
   components: {
-    SuccessMessage,
+    Toast,
     TextInput,
     ButtonComponent,
     ErrorMessage,

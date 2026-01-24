@@ -18,6 +18,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebFormController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,8 @@ Route::get('/auth/midata', [AuthController::class, 'redirectToProvider']);
 Route::post('/auth/midata/callback', [AuthController::class, 'handleProviderCallback']);
 
 Route::middleware('auth:sanctum')->get('/user/info', [UserController::class, 'getUserInfo']);
+
+Route::middleware('auth:sanctum')->get('/dashboard', [DashboardController::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function () {
     Route::get('/users', [UserController::class, 'index']);

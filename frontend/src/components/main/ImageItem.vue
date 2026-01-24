@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style>
-/* Transition Styles */
+
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.6s ease;

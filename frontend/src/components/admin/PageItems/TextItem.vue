@@ -6,35 +6,33 @@
     @startedDragging="$emit('startedDragging')"
     @endedDragging="$emit('endedDragging')"
   >
-    <Card class="space-y-2">
-      <div class="">
-        <div
-          class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2"
-        >
-          <TextInput
-            class="w-full md:w-3/4"
-            :label="$t('dashboard.title')"
-            v-model.lazy="titleValue"
-            id="title"
-          />
-          <SelectComponent
-            :key="loadedKey"
-            class="w-full md:w-1/4 whitespace-nowrap"
-            :label="$t('dashboard.showSectionOrGroupLogo')"
-            :value="groupOrSectionId"
-            :options="groupsAndSections"
-            @selectLogo="selectLogo"
-            selection="Logo"
-          />
-        </div>
-        <Editor v-model="bodyValue" />
+    <div class="space-y-4">
+      <div
+        class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4"
+      >
+        <TextInput
+          class="w-full md:w-3/4"
+          :label="$t('dashboard.title')"
+          v-model.lazy="titleValue"
+          id="title"
+        />
+        <SelectComponent
+          :key="loadedKey"
+          class="w-full md:w-1/4"
+          :label="$t('dashboard.showSectionOrGroupLogo')"
+          :value="groupOrSectionId"
+          :options="groupsAndSections"
+          @selectLogo="selectLogo"
+          selection="Logo"
+        />
       </div>
-    </Card>
+      <Editor v-model="bodyValue" />
+    </div>
   </DragItemBox>
 </template>
 
 <script>
-import Card from "../Card.vue";
+
 import DragItemBox from "../DragItemBox.vue";
 import Editor from "../Editor/Editor.vue";
 import TextInput from "../TextInput.vue";
@@ -44,7 +42,7 @@ export default {
   components: {
     TextInput,
     Editor,
-    Card,
+
     DragItemBox,
     SelectComponent,
   },

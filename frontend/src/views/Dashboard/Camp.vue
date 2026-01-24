@@ -7,6 +7,7 @@
       @clearErrors="errors = {}"
       entity="camps"
       backLinkTo="Camps"
+      :modelName="$t('dashboard.camp')"
     />
     <Card class="mt-4">
       <div class="flex flex-col space-y-2" :key="loadedKey">

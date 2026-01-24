@@ -6,9 +6,7 @@
     @startedDragging="$emit('startedDragging')"
     @endedDragging="$emit('endedDragging')"
   >
-    <Card>
-      <BannerImageSelector :item="item" @changeImages="selectHandler" />
-    </Card>
+    <BannerImageSelector :item="item" @changeImages="selectHandler" />
   </DragItemBox>
 </template>
 
@@ -16,10 +14,10 @@
 import { faXmark, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import DragItemBox from "../DragItemBox.vue";
 import BannerImageSelector from "../BannerImageSelector.vue";
-import Card from "../Card.vue";
+
 
 export default {
-  components: { DragItemBox, BannerImageSelector, Card },
+  components: { DragItemBox, BannerImageSelector },
   props: ["item", "modelValue", "boxTitle"],
   emits: [
     "updatePage",

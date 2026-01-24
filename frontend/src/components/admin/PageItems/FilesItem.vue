@@ -6,7 +6,7 @@
     @startedDragging="$emit('startedDragging')"
     @endedDragging="$emit('endedDragging')"
   >
-    <Card class="space-y-2">
+    <div class="space-y-4">
       <div class="flex flex-row gap-4">
         <TextInput
           v-model="titleValue"
@@ -26,7 +26,7 @@
         />
       </div>
       <FilesSelector :item="item" @changeFiles="handleFilesChange" />
-    </Card>
+    </div>
   </DragItemBox>
 </template>
 
@@ -34,12 +34,12 @@
 import { faXmark, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import DragItemBox from "../DragItemBox.vue";
 import FilesSelector from "../FilesSelector.vue";
-import Card from "../Card.vue";
+
 import TextInput from "../TextInput.vue";
 import SelectComponent from "../SelectComponent.vue";
 
 export default {
-  components: { DragItemBox, FilesSelector, Card, TextInput, SelectComponent },
+  components: { DragItemBox, FilesSelector, TextInput, SelectComponent },
   props: ["title", "item", "modelValue", "boxTitle"],
   emits: [
     "updatePage",

@@ -6,23 +6,21 @@
     @startedDragging="$emit('startedDragging')"
     @endedDragging="$emit('endedDragging')"
   >
-    <Card class="space-y-2">
       <SelectComponent
         selection="Group"
         @selectGroup="handleChange"
         :value="item.groupId"
         :options="options"
       />
-    </Card>
   </DragItemBox>
 </template>
 <script>
-import Card from "../Card.vue";
+
 import DragItemBox from "../DragItemBox.vue";
 import SelectComponent from "../SelectComponent.vue";
 
 export default {
-  components: { Card, DragItemBox, SelectComponent },
+  components: { DragItemBox, SelectComponent },
   props: ["boxTitle", "item"],
   emits: ["delete", "startedDragging", "endedDragging", "changeCamp"],
   data() {

@@ -5,8 +5,8 @@
     </FormLabel>
     <input
       v-model="payload"
-      class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-gray-900 focus:border-gray-900"
-      :class="`${errors ? ' border-red-400' : ''}`"
+      class="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      :class="`${errors ? ' border-red-500' : ''}`"
       :id="id"
       :type="type"
       :readonly="readonly"

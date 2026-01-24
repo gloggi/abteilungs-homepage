@@ -2,33 +2,45 @@ export const notification = {
   namespaced: true,
   state() {
     return {
-      show: false,
-      message: undefined,
-      error: false,
+      notifications: [],
     };
   },
   mutations: {
-    show(state) {
-      state.show = true;
+    add(state, notification) {
+      state.notifications.push(notification);
     },
-    hide(state) {
-      state.show = false;
-    },
-    setMessage(state, message) {
-      state.message = message;
-    },
-    setError(state, error) {
-      state.error = error;
+    remove(state, id) {
+      state.notifications = state.notifications.filter((n) => n.id !== id);
     },
   },
   actions: {
-    notify(context, { message, error }) {
-      context.commit("setMessage", message);
-      context.commit("setError", error);
-      context.commit("show");
-      setTimeout(() => {
-        context.commit("hide");
-      }, 3000);
+    notify(context, payload) {
+      const id = Date.now() + Math.random();
+      let notification = {
+        id,
+        title: "",
+        description: "",
+        variant: "default",
+        duration: 3000,
+      };
+
+
+      if (payload.message && typeof payload.message === "string") {
+        notification.title = payload.error ? "Fehler" : "Erfolg";
+        notification.description = payload.message;
+        notification.variant = payload.error ? "destructive" : "success";
+      } else {
+
+        notification = { ...notification, ...payload, id };
+      }
+
+      context.commit("add", notification);
+
+      if (notification.duration > 0) {
+        setTimeout(() => {
+          context.commit("remove", id);
+        }, notification.duration);
+      }
     },
   },
   getters: {},

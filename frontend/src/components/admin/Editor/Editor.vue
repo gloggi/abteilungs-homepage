@@ -77,7 +77,7 @@
 </template>
 
 <script>
-// ... imports
+
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
 import { StarterKit } from "@tiptap/starter-kit";
@@ -100,7 +100,7 @@ import {
   faLink,
   faUnlink,
   faExternalLinkAlt,
-} from "@fortawesome/free-solid-svg-icons"; // Added faUnlink
+} from "@fortawesome/free-solid-svg-icons";
 import MediaModal from "../MediaModal.vue";
 import Modal from "../Modal.vue";
 import TextInput from "../TextInput.vue";
@@ -111,7 +111,7 @@ export default {
   props: ["modelValue", "placeholder", "id", "label"],
   components: {
     EditorContent,
-    BubbleMenu, // Added BubbleMenu
+    BubbleMenu,
     EditorToolbar,
     MediaModal,
     Modal,
@@ -124,11 +124,11 @@ export default {
       editor: null,
       showHTML: false,
       showMediaModal: false,
-      // Removed showLinkModal
-      linkUrl: "", // Added linkUrl
+
+      linkUrl: "",
       icons: {
         faLink,
-        faUnlink, // Added faUnlink
+        faUnlink,
         faExternalLinkAlt,
       },
     };
@@ -143,15 +143,13 @@ export default {
     askForLink() {
       const previousUrl = this.editor.getAttributes("link").href;
 
-      // If already a link, likely want to edit it, so we ensure the menu is visible or focus it.
-      // But if we want to toggle, we might interpret a click as "unset".
-      // Standard behavior: if selection has logic, we toggle.
+
       if (previousUrl) {
         this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
         return;
       }
 
-      // If not a link, set it to empty string to trigger the bubble menu detection
+
       this.editor
         .chain()
         .focus()
@@ -159,7 +157,7 @@ export default {
         .setLink({ href: "" })
         .run();
     },
-    // Removed setLink
+
     updateLink() {
       if (this.linkUrl === "") {
         this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
@@ -183,7 +181,7 @@ export default {
         .setImage({ src: this.backendURL + selected[0].path })
         .run();
     },
-    // Removed onBubbleMenuUpdate as it is handled by onSelectionUpdate
+
     shouldShowBubbleMenu({ editor }) {
       return editor.isActive("link");
     },
@@ -329,27 +327,27 @@ export default {
   height: 0;
 }
 
-/* Tiptap Image Resize Styles */
+
 .ProseMirror img {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-/* ResizableNodeView container */
+
 .ProseMirror [data-resize-container] {
   position: relative;
   display: inline-block;
   line-height: 0;
 }
 
-/* ResizableNodeView wrapper */
+
 .ProseMirror [data-resize-wrapper] {
   position: relative;
   display: inline-block;
 }
 
-/* When node is selected */
+
 .ProseMirror .ProseMirror-selectednode [data-resize-wrapper],
 .ProseMirror
   [data-resize-container].ProseMirror-selectednode
@@ -358,13 +356,13 @@ export default {
   outline-offset: 2px;
 }
 
-/* Resize handles - hidden by default */
+
 .ProseMirror [data-resize-handle],
 .ProseMirror [data-image-toolbar] {
   display: none;
 }
 
-/* Show handles and toolbar when selected */
+
 .ProseMirror .ProseMirror-selectednode [data-resize-handle],
 .ProseMirror
   [data-resize-container].ProseMirror-selectednode
@@ -373,10 +371,10 @@ export default {
 .ProseMirror
   [data-resize-container].ProseMirror-selectednode
   [data-image-toolbar] {
-  display: flex !important; /* Force flex for toolbar, block is fine for handles but handles are div so flex ok? check */
+  display: flex !important;
 }
 
-/* Specific fix for handles which are divs and might need block/default */
+
 .ProseMirror .ProseMirror-selectednode [data-resize-handle],
 .ProseMirror
   [data-resize-container].ProseMirror-selectednode

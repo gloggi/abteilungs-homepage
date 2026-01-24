@@ -7,6 +7,7 @@
       @clearErrors="errors = {}"
       entity="events"
       backLinkTo="Events"
+      :modelName="$t('dashboard.event')"
     >
       <template v-slot:buttons-before>
         <ActionButton
@@ -275,7 +276,7 @@ export default {
         delete copy.updatedAt;
         const response = await this.callApi("post", `/events`, copy);
         if (response.data.id) {
-          // Using nextTick to ensure the page has updated
+
           this.$nextTick(() => {
             this.$router.push({
               name: this.$route.name,

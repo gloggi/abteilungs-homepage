@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative inline-block">
     <Transition
       enter-active-class="transition ease-out duration-300"
       leave-active-class="transition ease-in duration-100"
@@ -10,41 +10,46 @@
     >
       <div
         v-if="showTT && toolTipText"
-        class="absolute z-10 inset-x-0 -top-10 h-full flex flex-col items-center justify-end"
+        class="absolute z-50 bottom-full left-1/2 mb-2 -translate-x-1/2 flex flex-col items-center"
       >
         <div
-          class="p-1 bg-gray-400 rounded-lg text-white text-xs text-center min-w-full"
+          class="bg-gray-900 text-white text-xs rounded-md px-3 py-1.5 shadow-md whitespace-nowrap animate-in fade-in zoom-in-95 duration-200"
         >
           {{ toolTipText }}
         </div>
         <div
-          class="h-0 w-0 border-x-8 border-x-transparent border-t-8 border-t-gray-400"
+          class="h-0 w-0 border-x-4 border-x-transparent border-t-4 border-t-gray-900"
         ></div>
       </div>
     </Transition>
-    <button
-      class="rounded-full flex justify-center items-center transition-colors duration-300 ease-in-out"
-      @mouseover.self="showTooltip"
-      @mouseleave.self="hideTooltip"
-      :class="{
-        'size-8': size === 'small',
-        'size-10': size === 'normal',
-        'size-12': size === 'large',
-        'bg-gray-400 hover:bg-white text-white hover:text-gray-400': reverse,
-        'bg-white hover:bg-gray-400 text-gray-400 hover:text-white': !reverse,
-      }"
+    <ButtonComponent
+      :variant="buttonVariant"
+      :size="buttonSize"
+      @mouseover="showTooltip"
+      @mouseleave="hideTooltip"
+      @click="$emit('click')"
     >
       <slot></slot>
-    </button>
+    </ButtonComponent>
   </div>
 </template>
+
 <script>
+import ButtonComponent from "./ButtonComponent.vue";
+
 export default {
-  components: {},
+  components: {
+    ButtonComponent,
+  },
+  emits: ["click"],
   props: {
     reverse: {
       type: Boolean,
       default: false,
+    },
+    variant: {
+      type: String,
+      default: null,
     },
     toolTipText: {
       type: String,
@@ -60,6 +65,27 @@ export default {
       showTT: false,
       timeout: undefined,
     };
+  },
+  computed: {
+    buttonVariant() {
+      if (this.variant) return this.variant;
+      return this.reverse ? "default" : "outline";
+    },
+    buttonSize() {
+      // Map legacy sizes to shadcn sizes or pass through if it matches shadcn
+      const validSizes = ["default", "sm", "lg", "icon"];
+      if (validSizes.includes(this.size)) return this.size;
+
+      switch (this.size) {
+        case "small":
+          return "sm";
+        case "large":
+          return "lg";
+        case "normal":
+        default:
+          return "icon"; // Default to icon as it was before for 'normal'
+      }
+    },
   },
   methods: {
     showTooltip() {

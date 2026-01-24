@@ -7,6 +7,7 @@
       :content="content"
       entity="contacts"
       backLinkTo="Contacts"
+      :modelName="$t('dashboard.contact')"
     />
     <Card class="mt-4">
       <div

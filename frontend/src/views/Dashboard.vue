@@ -9,14 +9,14 @@
       </div>
     </div>
   </div>
-  <SuccessMessage />
+  <Toast />
 </template>
 
 <script>
 import Sidebar from "../components/admin/Sidebar.vue";
-import SuccessMessage from "../components/admin/SuccessNotification.vue";
+import Toast from "../components/admin/Toast.vue";
 export default {
-  components: { Sidebar, SuccessMessage },
+  components: { Sidebar, Toast },
   computed: {
     user() {
       return this.$store.state.user.user;

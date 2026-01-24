@@ -1,22 +1,58 @@
 <template>
-  <Card v-if="user" class="text-4xl font-extrabold">{{
-    $t("dashboard.hello", { name: user.nickname })
-  }}</Card>
-  <div class="flex flex-col space-y-2 pt-5">
-    <template v-for="card in cards" :key="card.id">
-      <button
-        @click="redirectTo(card.link)"
-        v-if="(isAdmin && card.adminOnly) || !card.adminOnly"
-        class="bg-gray-50 hover:text-gray-700 rounded-lg px-4 py-2 md:px-5"
-      >
-        <div class="w-full h-full flex items-center space-x-8">
-          <div class="h-full aspect-square">
-            <font-awesome-icon :icon="card.icon" class="size-10" />
-          </div>
-          <p class="font-semibold text-xl">{{ card.name }}</p>
+  <div class="space-y-8">
+    <div class="flex items-center justify-between space-y-2">
+      <h2 class="text-3xl font-bold tracking-tight" v-if="user">
+        {{ $t("dashboard.hello", { name: user.nickname }) }}
+      </h2>
+    </div>
+
+
+    <div class="hidden md:grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <Card v-for="(stat, key) in statsDisplay" :key="key">
+        <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+          <h3 class="tracking-tight text-sm font-medium text-gray-500">
+            {{ stat.label }}
+          </h3>
+          <font-awesome-icon :icon="stat.icon" class="h-4 w-4 text-gray-500" />
         </div>
-      </button>
-    </template>
+        <div class="text-2xl font-bold">{{ stat.value }}</div>
+        <p class="text-xs text-gray-500 mt-1" v-if="stat.desc">
+          {{ stat.desc }}
+        </p>
+      </Card>
+    </div>
+
+    <div class="border-t border-gray-200"></div>
+
+
+    <div>
+      <h3 class="text-lg font-medium text-gray-900 mb-4">
+        {{ $t("dashboard.menuAndLinks") }}
+      </h3>
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          v-for="card in filteredCards"
+          :key="card.id"
+          @click="redirectTo(card.link)"
+          class="group rounded-xl border border-gray-200 bg-white text-gray-950 shadow-sm transition-all hover:bg-gray-50 hover:shadow-md cursor-pointer"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div class="flex items-center gap-4">
+              <div
+                class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 group-hover:bg-white transition-colors text-gray-700"
+              >
+                <font-awesome-icon :icon="card.icon" class="h-6 w-6" />
+              </div>
+              <div class="space-y-1">
+                <h3 class="font-semibold leading-none tracking-tight">
+                  {{ card.name }}
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,12 +75,26 @@ import {
   faCircleQuestion,
   faBars,
   faGhost,
+  faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
+
 export default {
   components: { Card },
   data() {
     return {
-      cards: [
+      stats: {
+        pages: 0,
+        users: 0,
+        groups: 0,
+        events: 0,
+        camps: 0,
+        locations: 0,
+      },
+    };
+  },
+  computed: {
+    cards() {
+      return [
         {
           id: 1,
           name: this.$t("dashboard.menuAndLinks"),
@@ -138,22 +188,47 @@ export default {
           icon: faGear,
           link: "/dashboard/settings",
         },
-      ],
-    };
-  },
-  computed: {
+      ];
+    },
     user() {
       return this.$store.state.user.user;
     },
+
     isRegion() {
-      return this.settings.isRegion;
+        return this.settings && this.settings.isRegion;
     },
+    filteredCards() {
+
+      return this.cards.filter(card => (this.isAdmin && card.adminOnly) || !card.adminOnly);
+    },
+    statsDisplay() {
+      return [
+        { label: this.$t("dashboard.pages"), value: this.stats.pages, icon: faBookOpen },
+        { label: this.$t("dashboard.users"), value: this.stats.users, icon: faUser },
+
+        { label: this.$t("dashboard.events"), value: this.stats.events, icon: faCalendarDays },
+        { label: this.$t("dashboard.camps"), value: this.stats.camps, icon: faCampground },
+      ];
+    }
   },
   methods: {
     redirectTo(link) {
       this.$router.push(link);
     },
+    async fetchStats() {
+      try {
+        const response = await this.callApi("get", "/dashboard");
+        if (response && response.data) {
+            this.stats = response.data;
+        }
+      } catch (error) {
+        console.error("Failed to fetch dashboard stats", error);
+      }
+    }
   },
+  mounted() {
+    this.fetchStats();
+  }
 };
 </script>
 

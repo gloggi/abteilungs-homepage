@@ -7,6 +7,7 @@
       @clearErrors="errors = {}"
       entity="forms"
       backLinkTo="Forms"
+      :modelName="$t('dashboard.form')"
     />
     <Card>
       <div class="space-y-2 w-full">

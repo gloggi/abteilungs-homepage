@@ -1,149 +1,191 @@
 <template>
-  <div class="bg-gray-50 rounded-lg p-5 flex items-center mb-2">
-    <h2 class="font-extrabold text-4xl">{{ $t("dashboard.settings") }}</h2>
-  </div>
-  <div class="flex justify-end mb-2">
-    <div>
-      <ActionButton
-        @click="updateSettings"
-        :toolTipText="$t('dashboard.saveChanges')"
-      >
-        <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
-      </ActionButton>
+  <div>
+    <PageHeader :title="$t('dashboard.settings')">
+      <template #actions>
+        <div v-if="modifiableSettings">
+          <ActionButton
+            @click="updateSettings"
+            :toolTipText="$t('dashboard.saveChanges')"
+          >
+            <font-awesome-icon :icon="icons.faArrowsRotate" class="h-4 w-4" />
+          </ActionButton>
+        </div>
+      </template>
+    </PageHeader>
+
+    <div v-if="modifiableSettings" class="grid gap-6">
+      <Card>
+        <div class="space-y-6">
+          <SmallTitle>{{ $t("dashboard.generalSettings") }}</SmallTitle>
+          <div class="grid gap-4 md:grid-cols-2">
+            <TextInput
+              id="siteTitle"
+              :label="$t('dashboard.siteTitle')"
+              v-model="modifiableSettings.siteTitle"
+              :errors="errors.siteTitle"
+            />
+            <TextInput
+              id="divisionName"
+              :label="$t('dashboard.divisionName')"
+              v-model="modifiableSettings.divisionName"
+              :errors="errors.divisionName"
+            />
+          </div>
+          <SelectComponent
+            id="navbarPosition"
+            selection="NavbarPosition"
+            :label="$t('dashboard.navbarPosition')"
+            @selectNavbarPosition="handleNavbarPosition"
+            :returnInt="false"
+            :value="modifiableSettings.navbarPosition"
+            :options="navbarPositionOptions"
+            :errors="errors.navbarPosition"
+          />
+
+          <div class="grid gap-8 pt-4 md:grid-cols-3">
+            <div class="flex flex-col items-center gap-3">
+              <FormLabel>{{ $t("dashboard.divisionLogo") }}</FormLabel>
+              <LogoDisplay
+                :allowedExtensions="[
+                  'svg',
+                  'png',
+                  'jpg',
+                  'jpeg',
+                  'gif',
+                  'webp',
+                ]"
+                :logo="modifiableSettings.divisionLogo"
+                @selectImage="(e) => updateLogo('divisionLogo', e)"
+              />
+            </div>
+            <div class="flex flex-col items-center gap-3">
+              <FormLabel>{{ $t("dashboard.websiteIcon") }}</FormLabel>
+              <LogoDisplay
+                :logo="modifiableSettings.websiteIcon"
+                @selectImage="(e) => updateLogo('websiteIcon', e)"
+                :allowedExtensions="['png', 'jpg', 'jpeg', 'gif', 'webp']"
+              />
+            </div>
+            <div class="flex flex-col items-center gap-3">
+              <FormLabel>{{ $t("dashboard.socialIcon") }}</FormLabel>
+              <LogoDisplay
+                :logo="modifiableSettings.socialIcon"
+                @selectImage="(e) => updateLogo('socialIcon', e)"
+                :allowedExtensions="['png', 'jpg', 'jpeg']"
+              />
+              <InfoField :info="$t('dashboard.socialIconInfo')" />
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <div class="space-y-6">
+          <SmallTitle>{{ $t("dashboard.designSettings") }}</SmallTitle>
+          <div class="grid gap-6 md:grid-cols-3">
+            <div>
+              <FormLabel>{{ $t("dashboard.primaryColor") }}</FormLabel>
+              <ColorPicker v-model="modifiableSettings.primaryColor" />
+            </div>
+            <div>
+              <FormLabel>{{ $t("dashboard.secondaryColor") }}</FormLabel>
+              <ColorPicker v-model="modifiableSettings.secondaryColor" />
+            </div>
+            <div>
+              <FormLabel>{{ $t("dashboard.navbarFontColor") }}</FormLabel>
+              <ColorPicker v-model="modifiableSettings.navbarFontColor" />
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <div class="space-y-6">
+          <SmallTitle>{{ $t("dashboard.pageSettings") }}</SmallTitle>
+          <SelectComponent
+            id="notFoundPage"
+            selection="NotFoundPage"
+            :label="$t('dashboard.notFoundPage')"
+            @selectNotFoundPage="handleNotFoundPage"
+            :value="modifiableSettings.notFoundPageId"
+            :options="pages"
+            :errors="errors.notFoundPageId"
+          />
+          <CheckBox
+            :label="$t('dashboard.isRegion')"
+            v-model="modifiableSettings.isRegion"
+          />
+        </div>
+      </Card>
+
+      <Card>
+        <div class="space-y-6">
+          <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
+          <div class="grid gap-4 md:grid-cols-2">
+            <TextInput
+              id="midataId"
+              :label="$t('dashboard.midataId')"
+              type="number"
+              v-model="modifiableSettings.midataId"
+              :errors="errors.midataId"
+            />
+            <TextInput
+              id="midataApiKey"
+              :label="$t('dashboard.midataApiKey')"
+              :info="$t('dashboard.midataApiKeyInfo')"
+              type="text"
+              v-model="modifiableSettings.midataApiKey"
+              :errors="errors.midataApiKey"
+            />
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <div class="space-y-6">
+          <SmallTitle>{{ $t("dashboard.footerSettings") }}</SmallTitle>
+          <Editor
+            :label="$t('dashboard.contactInFooter')"
+            v-model="modifiableSettings.contactInFooter"
+          />
+        </div>
+      </Card>
+
+      <Card>
+        <div class="space-y-6">
+          <SmallTitle>{{ $t("dashboard.alertBannerSettings") }}</SmallTitle>
+          <CheckBox
+            :label="$t('dashboard.showAlertBanner')"
+            v-model="modifiableSettings.showAlert"
+          />
+          <div v-if="modifiableSettings.showAlert" class="space-y-4">
+            <div class="flex gap-6">
+              <div>
+                <FormLabel>{{ $t("dashboard.textColor") }}</FormLabel>
+                <ColorPicker v-model="modifiableSettings.alertTextColor" />
+              </div>
+              <div>
+                <FormLabel>{{ $t("dashboard.bgColor") }}</FormLabel>
+                <ColorPicker v-model="modifiableSettings.alertBgColor" />
+              </div>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <TextInput
+                id="alertText"
+                class="w-full"
+                :label="$t('dashboard.text')"
+                v-model="modifiableSettings.alertText"
+              />
+              <TextInput
+                id="alertUrl"
+                :label="$t('dashboard.url')"
+                v-model="modifiableSettings.alertUrl"
+              />
+            </div>
+          </div>
+        </div>
+      </Card>
     </div>
-  </div>
-  <div
-    v-if="modifiableSettings"
-    class="bg-gray-50 rounded-lg p-3 flex flex-col space-y-2"
-  >
-    <SmallTitle>{{ $t("dashboard.generalSettings") }}</SmallTitle>
-    <TextInput
-      id="siteTitle"
-      :label="$t('dashboard.siteTitle')"
-      v-model="modifiableSettings.siteTitle"
-      :errors="errors.siteTitle"
-    />
-    <TextInput
-      id="divisionName"
-      :label="$t('dashboard.divisionName')"
-      v-model="modifiableSettings.divisionName"
-      :errors="errors.divisionName"
-    />
-    <SelectComponent
-      id="navbarPosition"
-      selection="NavbarPosition"
-      :label="$t('dashboard.navbarPosition')"
-      @selectNavbarPosition="handleNavbarPosition"
-      :returnInt="false"
-      :value="modifiableSettings.navbarPosition"
-      :options="navbarPositionOptions"
-      :errors="errors.navbarPosition"
-    />
-    <div
-      class="flex flex-col md:flex-row w-full md:justify-around items-center md:items-start"
-    >
-      <div>
-        <FormLabel>{{ $t("dashboard.divisionLogo") }}</FormLabel>
-        <LogoDisplay
-          :allowedExtensions="['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp']"
-          :logo="modifiableSettings.divisionLogo"
-          @selectImage="(e) => updateLogo('divisionLogo', e)"
-        />
-      </div>
-      <div>
-        <FormLabel>{{ $t("dashboard.websiteIcon") }}</FormLabel>
-        <LogoDisplay
-          :logo="modifiableSettings.websiteIcon"
-          @selectImage="(e) => updateLogo('websiteIcon', e)"
-          :allowedExtensions="['png', 'jpg', 'jpeg', 'gif', 'webp']"
-        />
-      </div>
-      <div>
-        <FormLabel>{{ $t("dashboard.socialIcon") }}</FormLabel>
-        <LogoDisplay
-          :logo="modifiableSettings.socialIcon"
-          @selectImage="(e) => updateLogo('socialIcon', e)"
-          :allowedExtensions="['png', 'jpg', 'jpeg']"
-        />
-        <InfoField class="w-48" :info="$t('dashboard.socialIconInfo')" />
-      </div>
-    </div>
-    <div class="flex space-x-8">
-      <div class="">
-        <FormLabel>{{ $t("dashboard.primaryColor") }}</FormLabel>
-        <ColorPicker v-model="modifiableSettings.primaryColor" />
-      </div>
-      <div class="">
-        <FormLabel>{{ $t("dashboard.secondaryColor") }}</FormLabel>
-        <ColorPicker v-model="modifiableSettings.secondaryColor" />
-      </div>
-      <div class="">
-        <FormLabel>{{ $t("dashboard.navbarFontColor") }}</FormLabel>
-        <ColorPicker v-model="modifiableSettings.navbarFontColor" />
-      </div>
-    </div>
-    <SelectComponent
-      id="notFoundPage"
-      selection="NotFoundPage"
-      :label="$t('dashboard.notFoundPage')"
-      @selectNotFoundPage="handleNotFoundPage"
-      :value="modifiableSettings.notFoundPageId"
-      :options="pages"
-      :errors="errors.notFoundPageId"
-    />
-    <CheckBox
-      :label="$t('dashboard.isRegion')"
-      v-model="modifiableSettings.isRegion"
-    />
-    <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
-    <TextInput
-      id="midataId"
-      :label="$t('dashboard.midataId')"
-      type="number"
-      v-model="modifiableSettings.midataId"
-      :errors="errors.midataId"
-    />
-    <TextInput
-      id="midataApiKey"
-      :label="$t('dashboard.midataApiKey')"
-      info="Is required to fetch camps from MiData"
-      type="text"
-      v-model="modifiableSettings.midataApiKey"
-      :errors="errors.midataApiKey"
-    />
-    <SmallTitle>{{ $t("dashboard.footerSettings") }}</SmallTitle>
-    <div>
-      <Editor
-        :label="$t('dashboard.contactInFooter')"
-        v-model="modifiableSettings.contactInFooter"
-      />
-    </div>
-    <SmallTitle>{{ $t("dashboard.alertBannerSettings") }}</SmallTitle>
-    <CheckBox
-      :label="$t('dashboard.showAlertBanner')"
-      v-model="modifiableSettings.showAlert"
-    />
-    <div class="flex flex-row space-x-2">
-      <div class="w-fit">
-        <FormLabel>{{ $t("dashboard.textColor") }}</FormLabel>
-        <ColorPicker v-model="modifiableSettings.alertTextColor" />
-      </div>
-      <div class="w-fit">
-        <FormLabel>{{ $t("dashboard.bgColor") }}</FormLabel>
-        <ColorPicker v-model="modifiableSettings.alertBgColor" />
-      </div>
-    </div>
-    <TextInput
-      id="alertText"
-      class="w-full"
-      :label="$t('dashboard.text')"
-      v-model="modifiableSettings.alertText"
-    />
-    <TextInput
-      id="alertUrl"
-      :label="$t('dashboard.url')"
-      v-model="modifiableSettings.alertUrl"
-    />
   </div>
 </template>
 <script>
@@ -158,6 +200,8 @@ import SmallTitle from "../../components/admin/SmallTitle.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
 import InfoField from "../../components/admin/InfoField.vue";
+import PageHeader from "../../components/admin/PageHeader.vue";
+import Card from "../../components/admin/Card.vue";
 
 export default {
   components: {
@@ -171,6 +215,8 @@ export default {
     CheckBox,
     SelectComponent,
     InfoField,
+    PageHeader,
+    Card,
   },
   data() {
     return {

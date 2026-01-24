@@ -13,25 +13,18 @@
         @delete="$emit('delete', $event)"
       />
     </div>
-    <div
+    <EmptyState
       v-else
-      class="flex flex-col items-center justify-center py-16 text-center"
-    >
-      <div class="mb-4 rounded-full bg-gray-50 p-6">
-        <font-awesome-icon :icon="faFolderOpen" class="h-8 w-8 text-gray-400" />
-      </div>
-      <h3 class="mt-2 text-sm font-semibold text-gray-900">
-        {{ $t("dashboard.noFilesFound") }}
-      </h3>
-      <p class="mt-1 text-sm text-gray-500">
-        {{ $t("dashboard.tryAdjustingSearch") }}
-      </p>
-    </div>
+      :title="$t('dashboard.noFilesFound')"
+      :description="$t('dashboard.tryAdjustingSearch')"
+      :icon="faFolderOpen"
+    />
   </div>
 </template>
 
 <script>
 import MediaItem from "./MediaItem.vue";
+import EmptyState from "../EmptyState.vue";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -40,6 +33,7 @@ export default {
   components: {
     MediaItem,
     FontAwesomeIcon,
+    EmptyState,
   },
   props: {
     files: {

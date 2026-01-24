@@ -1,5 +1,8 @@
 <template>
-  <label class="block text-gray-700 text-sm font-bold mb-1" :for="for">
+  <label
+    class="block text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-gray-950"
+    :for="for"
+  >
     <slot></slot>
   </label>
 </template>

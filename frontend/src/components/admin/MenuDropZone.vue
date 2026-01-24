@@ -6,7 +6,9 @@
     @drop="handleDrop"
     @dragenter="dragging = true"
     @dragleave="dragging = false"
-    :class="`${dragging ? 'h-10' : 'h-1.5'} bg-gray-400 rounded-lg`"
+    :class="`w-full transition-all duration-200 ease-in-out rounded-md ${
+      dragging ? 'h-12 bg-gray-50 border-2 border-dashed border-gray-300' : 'h-1 bg-transparent'
+    }`"
   ></div>
 </template>
 <script>

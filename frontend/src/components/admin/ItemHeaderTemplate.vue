@@ -1,14 +1,11 @@
 <template>
-  <Card class="flex justify-between items-center mb-2">
-    <h2 class="font-extrabold text-4xl">{{ title }}</h2>
-  </Card>
-  <div class="flex justify-between mb-2">
-    <router-link :to="{ name: backLinkTo }">
-      <ActionButton>
-        <font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6" />
-      </ActionButton>
-    </router-link>
-    <div class="flex space-x-2">
+  <PageHeader :title="title" class="pt-6">
+    <template #actions>
+      <router-link :to="{ name: backLinkTo }">
+        <ActionButton>
+          <font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6" />
+        </ActionButton>
+      </router-link>
       <slot name="buttons-before"></slot>
       <ActionButton
         v-if="!noDelete"
@@ -25,11 +22,11 @@
         <font-awesome-icon :icon="icons.faArrowsRotate" class="h-6 w-6" />
       </ActionButton>
       <slot name="buttons-after"></slot>
-    </div>
-  </div>
+    </template>
+  </PageHeader>
 </template>
 <script>
-import Card from "../../components/admin/Card.vue";
+import PageHeader from "../../components/admin/PageHeader.vue";
 import {
   faArrowsRotate,
   faChevronLeft,
@@ -40,10 +37,18 @@ import {
 import ActionButton from "./ActionButton.vue";
 export default {
   components: {
-    Card,
+    PageHeader,
     ActionButton,
   },
-  props: ["title", "content", "backLinkTo", "entity", "noDelete", "noUpdate"],
+  props: [
+    "title",
+    "content",
+    "backLinkTo",
+    "entity",
+    "noDelete",
+    "noUpdate",
+    "modelName",
+  ],
   emits: ["errors", "clearErrors", "updatedItem"],
   data() {
     return {
@@ -70,10 +75,18 @@ export default {
       }
       try {
         await this.callApi("delete", `/${this.entity}/${this.contentId}`);
-        this.notifyUser(this.$t("dashboard.itemDeleted"));
+        if (this.modelName) {
+          this.notifyModel(this.modelName, "delete");
+        } else {
+          this.notifyUser(this.$t("dashboard.itemDeleted"));
+        }
         this.$router.push({ name: this.backLinkTo });
       } catch (e) {
-        console.log(e);
+        if (this.modelName) {
+          this.notifyModel(this.modelName, "delete", true);
+        } else {
+          console.log(e);
+        }
       }
     },
     async createItem() {
@@ -90,12 +103,18 @@ export default {
             params: { id: response.data.id },
           });
         }
-        this.notifyUser(this.$t("dashboard.itemCreated"));
+        if (this.modelName) {
+          this.notifyModel(this.modelName, "create");
+        } else {
+          this.notifyUser(this.$t("dashboard.itemCreated"));
+        }
       } catch (e) {
         if (e.response.status === 422) {
           this.$emit("errors", e.response.data.errors);
         } else if (e.response.status === 403) {
-          this.notifyUser(this.$t("dashboard.noPermission"));
+          this.notifyUser(this.$t("dashboard.noPermission"), true);
+        } else if (this.modelName) {
+          this.notifyModel(this.modelName, "create", true);
         }
       }
     },
@@ -112,7 +131,11 @@ export default {
         );
         this.$emit("updatedItem");
 
-        this.notifyUser(this.$t("dashboard.itemUpdated"));
+        if (this.modelName) {
+          this.notifyModel(this.modelName, "update");
+        } else {
+          this.notifyUser(this.$t("dashboard.itemUpdated"));
+        }
       } catch (e) {
         this.handleErrors(e);
       }
@@ -122,6 +145,8 @@ export default {
         this.$emit("errors", e.response.data.errors);
       } else if (e.response.status === 403) {
         this.notifyUser(this.$t("dashboard.noPermission"), true);
+      } else if (this.modelName) {
+        this.notifyModel(this.modelName, "update", true);
       }
     },
   },

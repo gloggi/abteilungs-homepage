@@ -5,6 +5,7 @@
       :content="content"
       entity="users"
       backLinkTo="Users"
+      :modelName="$t('dashboard.user')"
     />
     <Card class="mt-4">
       <div class="flex flex-col space-y-2">

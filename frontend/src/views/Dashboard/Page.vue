@@ -8,6 +8,7 @@
       entity="pages"
       backLinkTo="Pages"
       @updatedItem="handleUpdatedItem"
+      :modelName="$t('dashboard.sitePage')"
     >
       <template v-slot:buttons-before>
         <ActionButton @click="dublicateItem">
@@ -27,7 +28,7 @@
         v-model="content.title"
         :errors="errors.title"
       />
-      <div class="flex flex-col md:flex-row items-center space-x-4">
+      <div class="flex flex-col md:flex-row items-start gap-4">
         <div v-if="!isGroupPage" class="w-full flex flex-col">
           <FormLabel>{{ $t("dashboard.route") }}</FormLabel>
           <div v-if="routeInEdit" class="flex flex-row items-center space-x-2">
@@ -71,12 +72,12 @@
           <InfoField :info="$t('dashboard.infoRootDirectory')" />
         </div>
         <CheckBox
-          class="mt-2 md:ml-2 text-nowrap"
+          class="md:text-nowrap"
           :label="$t('dashboard.isGroupPage')"
           v-model="isGroupPage"
         />
         <CheckBox
-          class="mt-2 md:ml-2 text-nowrap"
+          class="md:text-nowrap"
           :label="$t('dashboard.passwordProtected')"
           v-model="content.passwordProtected"
         />
@@ -497,7 +498,7 @@ export default {
         copy.route = `${copy.route}-kopie`;
         const response = await this.callApi("post", `/pages`, copy);
         if (response.data.id) {
-          // Using nextTick to ensure the page has updated
+
           this.$nextTick(() => {
             this.$router.push({
               name: this.$route.name,

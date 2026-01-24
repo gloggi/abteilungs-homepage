@@ -7,6 +7,7 @@
       @clearErrors="errors = {}"
       entity="faqs"
       backLinkTo="Faqs"
+      :modelName="$t('dashboard.faq')"
     />
     <Card class="mt-4">
       <TextInput

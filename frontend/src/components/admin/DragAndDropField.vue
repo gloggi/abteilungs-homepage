@@ -1,5 +1,6 @@
 <template>
   <div
+    class="w-full"
     @dragover.prevent
     @dragenter="isDragging = true"
     @dragleave="isDragging = false"
@@ -7,11 +8,14 @@
     @drop="dropFile"
   >
     <div
-      :class="`flex flex-col justify-center items-center rounded-lg ${
-        isDragging ? 'bg-gray-50' : ''
-      }  border-2 border-gray-400 border-dashed text-center p-5 relative `"
+      :class="[
+        'relative flex flex-col items-center justify-center w-full rounded-lg border-2 border-dashed px-6 py-10 transition-colors duration-200 ease-in-out',
+        isDragging
+          ? 'border-gray-400 bg-gray-50'
+          : 'border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300',
+      ]"
     >
-      <label for="file-upload" class="absolute z-10 inset-0 cursor-pointer">
+      <label for="file-upload" class="absolute inset-0 w-full h-full cursor-pointer z-10">
         <input
           id="file-upload"
           type="file"
@@ -20,16 +24,21 @@
           @change="uploadFile"
         />
       </label>
-      <font-awesome-icon
-        :icon="icons.faFileCirclePlus"
-        class="h-12 w-12 text-gray-400"
-      />
 
-      <div class="flex items-center text-xs md:text-sm">
-        <p>
-          <span class="font-medium text-gray-900 hover:text-gray-700">{{
-            $t("dashboard.uploadFile")
-          }}</span>
+      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ring-8 ring-gray-50">
+        <font-awesome-icon
+          :icon="icons.faFileCirclePlus"
+          class="h-6 w-6 text-gray-600"
+        />
+      </div>
+
+      <div class="space-y-1 text-center">
+        <p class="text-sm font-medium text-gray-700">
+          <span class="font-semibold">
+            {{ $t("dashboard.uploadFile") }}
+          </span>
+         </p>
+        <p class="text-xs text-gray-500">
           {{ $t("dashboard.dragAndDrop") }}
         </p>
       </div>

@@ -69,7 +69,55 @@ export const mixin = {
       }
     },
     notifyUser(message, error = false) {
-      this.$store.dispatch("notification/notify", { message, error });
+      if (typeof message === "object") {
+        this.$store.dispatch("notification/notify", message);
+        return;
+      }
+      const title = error
+        ? this.$t("dashboard.notifications.error")
+        : this.$t("dashboard.notifications.success");
+      const variant = error ? "destructive" : "success";
+      this.$store.dispatch("notification/notify", {
+        title,
+        description: message,
+        variant,
+      });
+    },
+    notifyModel(model, action, error = false) {
+      const actions = {
+        create: { success: "created", error: "createError" },
+        update: { success: "updated", error: "updateError" },
+        delete: { success: "deleted", error: "deleteError" },
+        duplicate: { success: "duplicated", error: "createError" },
+        sync: { success: "synced", error: "syncError" },
+        upload: { success: "uploaded", error: "uploadError" },
+      };
+
+      const actionKey = actions[action];
+      if (!actionKey) {
+        this.notifyUser(
+          error
+            ? this.$t("dashboard.notifications.generalError")
+            : this.$t("dashboard.notifications.success"),
+          error,
+        );
+        return;
+      }
+
+      const key = error ? actionKey.error : actionKey.success;
+      const description = this.$t(`dashboard.notifications.${key}`, {
+        name: model,
+      });
+      const title = error
+        ? this.$t("dashboard.notifications.error")
+        : this.$t("dashboard.notifications.success");
+      const variant = error ? "destructive" : "success";
+
+      this.$store.dispatch("notification/notify", {
+        title,
+        description,
+        variant,
+      });
     },
     snakeToCamelObject(obj) {
       return sToCO(obj);

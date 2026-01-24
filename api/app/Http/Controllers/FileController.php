@@ -128,15 +128,15 @@ class FileController extends Controller
             }
         }
 
-        // Delete the file from the public disk
+
         Storage::disk('public')->delete(str_replace('/storage/', '', $file->path));
 
-        // Delete the thumbnail if it exists
+
         if ($file->thumbnail) {
             Storage::disk('public')->delete(str_replace('/storage/', '', $file->thumbnail));
         }
 
-        // Delete the File model
+
         $file->delete();
 
         return response()->json(['message' => 'File deleted successfully']);

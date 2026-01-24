@@ -1,23 +1,22 @@
 <template>
-  <div class="relative">
+
+  <div class="group relative inline-block">
     <ColoredLogoCircle
-      class="size-48"
+      class="size-48 transition-all duration-300 group-hover:brightness-95"
       :src="file ? `${backendURL}${file.thumbnail}` : undefined"
       :size="size"
       :backgroundColor="backgroundColor"
       :cover="cover"
     />
-    <div class="absolute top-3 right-3 flex justify-center items-center">
-      <button
-        @click="showModal = true"
-        class="rounded-full w-7 aspect-square bg-white border"
-      >
-        <font-awesome-icon
-          :icon="icons.faPencil"
-          class="text-gray-700 h-4 w-4"
-        />
-      </button>
-    </div>
+    <button
+      @click="showModal = true"
+      class="absolute bottom-1 right-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md transition-all hover:scale-110 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+    >
+      <font-awesome-icon
+        :icon="icons.faPencil"
+        class="h-4 w-4 text-gray-600"
+      />
+    </button>
   </div>
   <MediaModal
     v-if="showModal"

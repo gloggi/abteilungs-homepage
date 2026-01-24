@@ -7,6 +7,7 @@
       @clearErrors="errors = {}"
       entity="sections"
       backLinkTo="Sections"
+      :modelName="$t('dashboard.section')"
     />
     <Card class="mt-4 space-y-5">
       <div
