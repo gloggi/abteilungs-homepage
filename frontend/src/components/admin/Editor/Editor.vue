@@ -14,11 +14,11 @@
       />
       <div class="relative min-h-[12rem]">
         <editor-content v-if="!showHTML" :editor="editor" class="p-4" />
-        <textarea
+        <CodeEditor
           v-else
-          v-model="inputModel"
-          class="w-full h-full min-h-[12rem] p-4 font-mono text-sm focus:outline-none resize-none"
-        ></textarea>
+          v-model="editorContent"
+          class="w-full h-full min-h-[12rem]"
+        />
       </div>
     </div>
   </div>
@@ -95,6 +95,7 @@ import { TableRow } from "@tiptap/extension-table-row";
 import { Underline } from "@tiptap/extension-underline";
 
 import EditorToolbar from "./EditorToolbar.vue";
+import CodeEditor from "./CodeEditor.vue";
 import ImageExtension from "./extensions/ImageExtension";
 import {
   faLink,
@@ -112,7 +113,7 @@ export default {
     BubbleMenu,
     EditorToolbar,
     MediaModal,
-
+    CodeEditor,
     FormLabel,
   },
   data() {
@@ -120,6 +121,7 @@ export default {
       editor: null,
       showHTML: false,
       showMediaModal: false,
+      editorContent: "",
 
       linkUrl: "",
       icons: {
@@ -131,7 +133,13 @@ export default {
   },
   methods: {
     swapEditorContent() {
-      this.showHTML = !this.showHTML;
+      if (this.showHTML) {
+        this.editor.commands.setContent(this.editorContent);
+        this.showHTML = false;
+      } else {
+        this.editorContent = this.editor.getHTML();
+        this.showHTML = true;
+      }
     },
     addImage() {
       this.showMediaModal = true;
@@ -184,11 +192,18 @@ export default {
   },
   watch: {
     modelValue(value) {
+      if (this.showHTML) {
+        this.editorContent = value;
+        return;
+      }
       const isSame = this.editor.getHTML() === value;
       if (isSame) {
         return;
       }
       this.editor.commands.setContent(value, false);
+    },
+    editorContent(value) {
+        this.$emit("update:modelValue", value);
     },
   },
   computed: {
