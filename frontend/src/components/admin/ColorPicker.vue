@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <input
-      id="pickColor"
+      :id="uid"
       class="opacity-0 absolute h-10 w-10 cursor-pointer"
       v-model="value"
       type="color"
@@ -11,7 +11,7 @@
       :class="`${errors ? ' border-red-500' : ''}`"
       :style="`background-color: ${value}`"
     ></div>
-    <label for="pickColor" class="select-none absolute inset-0 cursor-pointer"></label>
+    <label :for="uid" class="select-none absolute inset-0 cursor-pointer"></label>
   </div>
   <div v-if="errors" class="text-red-400 text-xs">
     {{ errors.join(" ") }}
@@ -19,14 +19,25 @@
 </template>
 
 <script>
-import { useModelWrapper } from "../../utils/modelWrapper";
-
 export default {
-  props: ["modelValue", "errors"],
-  setup(props, { emit }) {
+  props: ["modelValue", "errors", "id"],
+  data() {
     return {
-      value: useModelWrapper(props, emit, "modelValue"),
+      generatedId: `color-picker-${Math.random().toString(36).substr(2, 9)}`,
     };
+  },
+  computed: {
+    uid() {
+      return this.id || this.generatedId;
+    },
+    value: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value);
+      },
+    },
   },
 };
 </script>

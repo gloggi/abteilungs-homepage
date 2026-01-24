@@ -3,7 +3,7 @@
     class="rounded-t-full"
     :class="{
       'bg-primary': showMobileMenu,
-      'bg-[#808080]': !showMobileMenu && isDesktop,
+      'bg-side': !showMobileMenu && isDesktop,
       'bg-white': !showMobileMenu && !isDesktop,
       'pt-8': showUserBar && settings.navbarPosition === 'top',
     }"

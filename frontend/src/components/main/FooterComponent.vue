@@ -1,5 +1,5 @@
 <template>
-  <div :class="isDesktop ? 'bg-[#808080]' : 'bg-white'">
+  <div :class="isDesktop ? 'bg-side' : 'bg-white'">
     <div
       class="flex justify-center w-full background bg-[#4A4A4A] rounded-t-lg"
     >

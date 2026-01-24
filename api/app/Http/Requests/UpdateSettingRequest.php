@@ -28,6 +28,8 @@ class UpdateSettingRequest extends FormRequest
             'social_icon_id' => 'nullable|integer|exists:files,id',
             'navbar_font_color' => 'nullable|string',
             'navbar_position' => 'nullable|in:top,between_header_and_content',
+            'font_size' => 'nullable|integer',
+            'side_bg_color' => 'nullable|string',
         ];
     }
 }

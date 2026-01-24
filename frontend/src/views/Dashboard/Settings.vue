@@ -84,92 +84,123 @@
           <SmallTitle>{{ $t("dashboard.designSettings") }}</SmallTitle>
           <div class="grid gap-6 md:grid-cols-3">
             <div>
-              <FormLabel>{{ $t("dashboard.primaryColor") }}</FormLabel>
-              <ColorPicker v-model="modifiableSettings.primaryColor" />
-            </div>
-            <div>
-              <FormLabel>{{ $t("dashboard.secondaryColor") }}</FormLabel>
-              <ColorPicker v-model="modifiableSettings.secondaryColor" />
-            </div>
-            <div>
-              <FormLabel>{{ $t("dashboard.navbarFontColor") }}</FormLabel>
-              <ColorPicker v-model="modifiableSettings.navbarFontColor" />
-            </div>
-          </div>
-        </div>
-      </Card>
-
-      <Card>
-        <div class="space-y-6">
-          <SmallTitle>{{ $t("dashboard.pageSettings") }}</SmallTitle>
-          <SelectComponent
-            id="notFoundPage"
-            selection="NotFoundPage"
-            :label="$t('dashboard.notFoundPage')"
-            @selectNotFoundPage="handleNotFoundPage"
-            :value="modifiableSettings.notFoundPageId"
-            :options="pages"
-            :errors="errors.notFoundPageId"
-          />
-          <CheckBox
-            :label="$t('dashboard.isRegion')"
-            v-model="modifiableSettings.isRegion"
-          />
-        </div>
-      </Card>
-
-      <Card>
-        <div class="space-y-6">
-          <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
-          <div class="grid gap-4 md:grid-cols-2">
-            <TextInput
-              id="midataId"
-              :label="$t('dashboard.midataId')"
-              type="number"
-              v-model="modifiableSettings.midataId"
-              :errors="errors.midataId"
-            />
-            <TextInput
-              id="midataApiKey"
-              :label="$t('dashboard.midataApiKey')"
-              :info="$t('dashboard.midataApiKeyInfo')"
-              type="text"
-              v-model="modifiableSettings.midataApiKey"
-              :errors="errors.midataApiKey"
-            />
-          </div>
-        </div>
-      </Card>
-
-      <Card>
-        <div class="space-y-6">
-          <SmallTitle>{{ $t("dashboard.footerSettings") }}</SmallTitle>
-          <Editor
-            :label="$t('dashboard.contactInFooter')"
-            v-model="modifiableSettings.contactInFooter"
-          />
-        </div>
-      </Card>
-
-      <Card>
-        <div class="space-y-6">
-          <SmallTitle>{{ $t("dashboard.alertBannerSettings") }}</SmallTitle>
-          <CheckBox
-            :label="$t('dashboard.showAlertBanner')"
-            v-model="modifiableSettings.showAlert"
-          />
-          <div v-if="modifiableSettings.showAlert" class="space-y-4">
-            <div class="flex gap-6">
-              <div>
-                <FormLabel>{{ $t("dashboard.textColor") }}</FormLabel>
-                <ColorPicker v-model="modifiableSettings.alertTextColor" />
+                <FormLabel>{{ $t("dashboard.primaryColor") }}</FormLabel>
+                <ColorPicker
+                  id="primaryColor"
+                  v-model="modifiableSettings.primaryColor"
+                />
               </div>
               <div>
-                <FormLabel>{{ $t("dashboard.bgColor") }}</FormLabel>
-                <ColorPicker v-model="modifiableSettings.alertBgColor" />
+                <FormLabel>{{ $t("dashboard.secondaryColor") }}</FormLabel>
+                <ColorPicker
+                  id="secondaryColor"
+                  v-model="modifiableSettings.secondaryColor"
+                />
+              </div>
+              <div>
+                <FormLabel>{{ $t("dashboard.navbarFontColor") }}</FormLabel>
+                <ColorPicker
+                  id="navbarFontColor"
+                  v-model="modifiableSettings.navbarFontColor"
+                />
+              </div>
+              <div>
+                <TextInput
+                  id="fontSize"
+                  :label="$t('dashboard.fontSize')"
+                  v-model="modifiableSettings.fontSize"
+                  type="number"
+                  :errors="errors.fontSize"
+                />
+              </div>
+              <div>
+                <FormLabel>{{ $t("dashboard.sideBgColor") }}</FormLabel>
+                <ColorPicker
+                  id="sideBgColor"
+                  v-model="modifiableSettings.sideBgColor"
+                />
               </div>
             </div>
+          </div>
+        </Card>
+
+        <Card>
+          <div class="space-y-6">
+            <SmallTitle>{{ $t("dashboard.pageSettings") }}</SmallTitle>
+            <SelectComponent
+              id="notFoundPage"
+              selection="NotFoundPage"
+              :label="$t('dashboard.notFoundPage')"
+              @selectNotFoundPage="handleNotFoundPage"
+              :value="modifiableSettings.notFoundPageId"
+              :options="pages"
+              :errors="errors.notFoundPageId"
+            />
+            <CheckBox
+              :label="$t('dashboard.isRegion')"
+              v-model="modifiableSettings.isRegion"
+            />
+          </div>
+        </Card>
+
+        <Card>
+          <div class="space-y-6">
+            <SmallTitle>{{ $t("dashboard.midataSettings") }}</SmallTitle>
             <div class="grid gap-4 md:grid-cols-2">
+              <TextInput
+                id="midataId"
+                :label="$t('dashboard.midataId')"
+                type="number"
+                v-model="modifiableSettings.midataId"
+                :errors="errors.midataId"
+              />
+              <TextInput
+                id="midataApiKey"
+                :label="$t('dashboard.midataApiKey')"
+                :info="$t('dashboard.midataApiKeyInfo')"
+                type="text"
+                v-model="modifiableSettings.midataApiKey"
+                :errors="errors.midataApiKey"
+              />
+            </div>
+          </div>
+        </Card>
+
+        <Card>
+          <div class="space-y-6">
+            <SmallTitle>{{ $t("dashboard.footerSettings") }}</SmallTitle>
+            <Editor
+              :label="$t('dashboard.contactInFooter')"
+              v-model="modifiableSettings.contactInFooter"
+            />
+          </div>
+        </Card>
+
+        <Card>
+          <div class="space-y-6">
+            <SmallTitle>{{ $t("dashboard.alertBannerSettings") }}</SmallTitle>
+            <CheckBox
+              :label="$t('dashboard.showAlertBanner')"
+              v-model="modifiableSettings.showAlert"
+            />
+            <div v-if="modifiableSettings.showAlert" class="space-y-4">
+              <div class="flex gap-6">
+                <div>
+                  <FormLabel>{{ $t("dashboard.textColor") }}</FormLabel>
+                  <ColorPicker
+                    id="alertTextColor"
+                    v-model="modifiableSettings.alertTextColor"
+                  />
+                </div>
+                <div>
+                  <FormLabel>{{ $t("dashboard.bgColor") }}</FormLabel>
+                  <ColorPicker
+                    id="alertBgColor"
+                    v-model="modifiableSettings.alertBgColor"
+                  />
+                </div>
+              </div>
+              <div class="grid gap-4 md:grid-cols-2">
               <TextInput
                 id="alertText"
                 class="w-full"

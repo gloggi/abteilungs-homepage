@@ -50,6 +50,18 @@ export default {
         "focus\\:border-secondary:focus",
         `border-color: ${this.settings.secondaryColor};`,
       );
+      this.createNewCssVariable(
+        "--side-bg-color",
+        this.settings.sideBgColor || "#808080",
+      );
+      this.createNewCssClass(
+        "bg-side",
+        `background-color: ${this.settings.sideBgColor || "#808080"};`,
+      );
+      this.createNewCssVariable(
+        "--main-font-size",
+        `${this.settings.fontSize || 36}px`,
+      );
     },
   },
   computed: {},
@@ -81,13 +93,13 @@ export default {
     Helvetica,
     Arial,
     sans-serif;
-  font-size: 24px;
-  line-height: 36px;
+  font-size: var(--main-font-size);
+  line-height: 1.5;
 }
 @media screen and (max-width: 700px) {
   .main-text {
-    font-size: 18px;
-    line-height: 30px;
+    font-size: calc(var(--main-font-size) * 0.75);
+    line-height: 1.5;
   }
 }
 

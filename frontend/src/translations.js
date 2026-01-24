@@ -109,6 +109,8 @@ export const messages = {
       secondaryColor: "Sekundärfarbe",
       navbarFontColor: "Navbar-Schriftfarbe",
       navbarPosition: "Navbar-Position",
+      fontSize: "Schriftgrösse (px)",
+      sideBgColor: "Hintergrundfarbe Seiten",
       midataApiKey: "MiData-API-Schlüssel",
       midataApiKeyInfo: "Wird benötigt, um Lager von MiData abzurufen",
       contactInFooter: "Kontakt im Footer",

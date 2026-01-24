@@ -26,6 +26,8 @@ class Setting extends Model
         'social_icon_id',
         'navbar_font_color',
         'navbar_position',
+        'font_size',
+        'side_bg_color',
     ];
 
     public function divisionLogo()
