@@ -186,7 +186,9 @@ class EventController extends Controller
     {
         $date = Carbon::parse($event->start_time)->format('d.m.Y H:i').' - '.Carbon::parse($event->end_time)->format('H:i');
         $name = $event->user->nickname ? $event->user->nickname : ($event->user->firstname.' '.$event->user->lastname);
-        $location = $event->startLocation->name;
+        $startLocationName = $event->startLocation ? $event->startLocation->name : '-';
+        $endLocationName = $event->endLocation ? $event->endLocation->name : '-';
+
         $mailText = "<p class='main-text'>Hallo zusammen</p><p class='main-text'>
         {$event->description}
         <br>
@@ -194,10 +196,10 @@ class EventController extends Controller
         {$date}
         <br>
         <strong>Besammlung</strong>: 
-        {$event->startLocation->name}
+        {$startLocationName}
         <br>
         <strong>Schluss</strong>: 
-        {$event->endLocation->name}
+        {$endLocationName}
         <br><br><strong>Mitnehmen</strong>:<br>
         {$event->take_with_you}
         <br>

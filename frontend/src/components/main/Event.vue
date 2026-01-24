@@ -54,13 +54,10 @@
         <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
           <div v-if="show" class="h-full">
             <MapComponent
-              v-if="event.startLocation || event.endLocation"
+              v-if="mapMarkers.length > 0"
               class="w-full h-96"
-              :markers="[event.startLocation, event.endLocation]"
-              :markerTexts="[
-                $t('page.startLocationLabelShort'),
-                $t('page.endLocationLabelShort'),
-              ]"
+              :markers="mapMarkers"
+              :markerTexts="mapMarkerTexts"
             />
             <div class="p-3">
               <div v-html="event.description" v-router-link></div>
@@ -144,6 +141,21 @@ export default {
     return {
       show: false,
     };
+  },
+  computed: {
+    mapMarkers() {
+      return [this.event.startLocation, this.event.endLocation].filter(
+        (location) => location != null
+      );
+    },
+    mapMarkerTexts() {
+      const texts = [];
+      if (this.event.startLocation)
+        texts.push(this.$t("page.startLocationLabelShort"));
+      if (this.event.endLocation)
+        texts.push(this.$t("page.endLocationLabelShort"));
+      return texts;
+    },
   },
   methods: {
     formatDate(date) {
