@@ -1,7 +1,7 @@
 <template>
   <label
     class="block text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-gray-950"
-    :for="for"
+    :for="labelFor"
   >
     <slot></slot>
   </label>
@@ -10,7 +10,7 @@
 export default {
   components: {},
   props: {
-    for: {
+    labelFor: {
       type: String,
       default: "",
     },

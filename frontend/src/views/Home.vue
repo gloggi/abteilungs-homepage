@@ -66,7 +66,7 @@ export default {
           { params: { token } },
         );
         this.page = response.data;
-      } catch (error) {
+      } catch {
         if (this.settings.notFoundPage) {
           return this.getPage(this.settings.notFoundPage.route);
         } else if (pageRoute !== 0) {

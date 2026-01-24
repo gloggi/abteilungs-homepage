@@ -71,11 +71,7 @@ import {
   faCalendarDays,
   faAddressCard,
   faCampground,
-  faDoorOpen,
   faCircleQuestion,
-  faBars,
-  faGhost,
-  faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default {

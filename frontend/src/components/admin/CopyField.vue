@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <FormLabel :for="id" v-if="label">
+    <FormLabel :label-for="id" v-if="label">
       {{ label }}
     </FormLabel>
     <div class="relative">

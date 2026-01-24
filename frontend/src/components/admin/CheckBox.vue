@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <FormLabel v-if="label" :for="id">{{ label }}</FormLabel>
+    <FormLabel v-if="label" :label-for="id">{{ label }}</FormLabel>
     <div class="h-9 flex items-center">
       <label class="relative inline-flex items-center cursor-pointer">
         <input

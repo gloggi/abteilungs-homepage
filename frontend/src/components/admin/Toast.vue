@@ -94,7 +94,7 @@ export default {
           return "text-gray-600";
       }
     },
-    closeButtonClasses(variant) {
+    closeButtonClasses() {
       return "text-gray-500 hover:text-gray-900";
     },
     getIcon(variant) {

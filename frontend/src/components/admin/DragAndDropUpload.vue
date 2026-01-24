@@ -9,17 +9,6 @@ export default {
   emits: ["uploadedFile"],
   props: {
     category: { default: "general" },
-  },
-  data() {
-    return {
-      files: [],
-      isDragging: false,
-      icons: {
-        faFileCirclePlus,
-      },
-    };
-  },
-  props: {
     supportedFileTypes: {
       type: Array,
       default: () => [
@@ -38,6 +27,15 @@ export default {
         "application/zip",
       ],
     },
+  },
+  data() {
+    return {
+      files: [],
+      isDragging: false,
+      icons: {
+        faFileCirclePlus,
+      },
+    };
   },
   methods: {
     async handleDrop(file) {

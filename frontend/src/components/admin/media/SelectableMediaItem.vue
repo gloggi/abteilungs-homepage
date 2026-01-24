@@ -62,7 +62,6 @@ import {
   faFileImage,
   faFileAudio,
   faFileVideo,
-  faFileCode,
   faFileZipper,
   faFile,
   faCheck,

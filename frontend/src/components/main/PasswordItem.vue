@@ -44,7 +44,7 @@ export default {
           localStorage.setItem(this.route || "0", response.data.token);
           this.$router.go();
         }
-      } catch (e) {
+      } catch {
         this.password = "";
         this.error = true;
       }

@@ -144,7 +144,7 @@ export default {
       }
     },
     select(item) {
-      const { component, ...rest } = item;
+      const { component: _component, ...rest } = item;
 
       this.$emit("select", { ...rest, sort: this.sortKey + 0.5 });
       this.closeModal();

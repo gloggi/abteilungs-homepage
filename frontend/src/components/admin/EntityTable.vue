@@ -164,8 +164,8 @@ export default {
         } else {
           try {
             this.$refs.masterbox.checked = false;
-          } catch (e) {
-
+          } catch {
+            // ignore
           }
         }
       },

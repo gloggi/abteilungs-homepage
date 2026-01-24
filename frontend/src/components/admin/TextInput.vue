@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <FormLabel :for="id">
+    <FormLabel :label-for="id">
       {{ label }}
     </FormLabel>
     <input

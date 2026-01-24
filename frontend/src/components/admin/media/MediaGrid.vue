@@ -26,13 +26,13 @@
 import MediaItem from "./MediaItem.vue";
 import EmptyState from "../EmptyState.vue";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 
 export default {
   name: "MediaGrid",
   components: {
     MediaItem,
-    FontAwesomeIcon,
+
     EmptyState,
   },
   props: {

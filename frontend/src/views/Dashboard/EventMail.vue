@@ -34,7 +34,7 @@
           type="text"
           v-model="content.from"
         />
-        <Textarea
+        <TextareaInput
           id="receiver"
           :label="$t('dashboard.to')"
           v-model="content.receiver"
@@ -53,7 +53,7 @@ import Card from "../../components/admin/Card.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import ActionButton from "../../components/admin/ActionButton.vue";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import Textarea from "../../components/admin/Textarea.vue";
+import TextareaInput from "../../components/admin/Textarea.vue";
 import TextInput from "../../components/admin/TextInput.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 export default {
@@ -61,7 +61,7 @@ export default {
     Card,
     ItemHeaderTemplate,
     ActionButton,
-    Textarea,
+    TextareaInput,
     TextInput,
     Editor,
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <FormLabel :for="id">
+    <FormLabel :label-for="id">
       {{ label }}
     </FormLabel>
     <textarea

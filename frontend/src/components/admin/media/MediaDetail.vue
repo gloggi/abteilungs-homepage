@@ -187,7 +187,7 @@ export default {
       if (!date) return "";
       try {
         return formatDate(new Date(date), "dd.MM.yyyy HH:mm");
-      } catch (e) {
+      } catch {
         return date;
       }
     },

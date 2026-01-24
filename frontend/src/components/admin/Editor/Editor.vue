@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-2">
-    <FormLabel :for="id">{{ label }}</FormLabel>
+    <FormLabel :label-for="id">{{ label }}</FormLabel>
     <div
       class="rounded-md border border-gray-200 bg-white shadow-sm overflow-hidden"
     >
@@ -102,9 +102,7 @@ import {
   faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import MediaModal from "../MediaModal.vue";
-import Modal from "../Modal.vue";
-import TextInput from "../TextInput.vue";
-import ActionButton from "../ActionButton.vue";
+
 import FormLabel from "../FormLabel.vue";
 
 export default {
@@ -114,9 +112,7 @@ export default {
     BubbleMenu,
     EditorToolbar,
     MediaModal,
-    Modal,
-    TextInput,
-    ActionButton,
+
     FormLabel,
   },
   data() {

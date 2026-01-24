@@ -512,7 +512,6 @@ export default {
       }
     },
     saveRoute() {
-      this.content.route = this.content.route;
       this.routeInEdit = false;
     },
     handleUpdatedItem() {
