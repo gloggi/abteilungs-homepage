@@ -20,8 +20,10 @@ class UpdateCampRequest extends FormRequest
             'application_conditions' => 'nullable|string',
             'canton' => 'nullable|string|max:255',
             'external_application_link' => 'sometimes|required|string|max:255',
-            'start_at' => 'nullable|date',
-            'finish_at' => 'nullable|date',
+            'start_date' => 'nullable|date',
+            'start_time' => 'nullable|date_format:H:i',
+            'finish_date' => 'nullable|date',
+            'finish_time' => 'nullable|date_format:H:i',
             'files' => 'nullable|array',
             'groups' => 'nullable|array',
         ];

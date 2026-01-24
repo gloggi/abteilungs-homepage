@@ -148,8 +148,10 @@ class CampController extends Controller
                     'application_closing_at' => $externalCamp['application_closing_at'],
                     'application_conditions' => $externalCamp['application_conditions'],
                     'external_application_link' => $externalCamp['external_application_link'],
-                    'start_at' => $eventDate['start_at'] ? Carbon::parse($eventDate['start_at']) : null,
-                    'finish_at' => $eventDate['finish_at'] ? Carbon::parse($eventDate['finish_at']) : null,
+                    'start_date' => $eventDate['start_at'] ? Carbon::parse($eventDate['start_at'])->toDateString() : null,
+                    'start_time' => $eventDate['start_at'] ? Carbon::parse($eventDate['start_at'])->toTimeString() : null,
+                    'finish_date' => $eventDate['finish_at'] ? Carbon::parse($eventDate['finish_at'])->toDateString() : null,
+                    'finish_time' => $eventDate['finish_at'] ? Carbon::parse($eventDate['finish_at'])->toTimeString() : null,
                 ]
             );
         }

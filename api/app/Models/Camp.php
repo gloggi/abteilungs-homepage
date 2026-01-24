@@ -24,15 +24,17 @@ class Camp extends Model
         'application_conditions',
         'canton',
         'external_application_link',
-        'start_at',
-        'finish_at',
+        'start_date',
+        'start_time',
+        'finish_date',
+        'finish_time',
     ];
 
     protected $dates = [
         'application_opening_at',
         'application_closing_at',
-        'start_at',
-        'finish_at',
+        'start_date',
+        'finish_date',
         'created_at',
         'updated_at',
     ];
@@ -56,5 +58,23 @@ class Camp extends Model
             'location' => $this->location,
             'canton' => $this->canton,
         ];
+    }
+
+    public function getStartAtAttribute()
+    {
+        if (! $this->start_date) {
+            return null;
+        }
+
+        return \Carbon\Carbon::parse($this->start_date.' '.($this->start_time ?? '00:00:00'));
+    }
+
+    public function getFinishAtAttribute()
+    {
+        if (! $this->finish_date) {
+            return null;
+        }
+
+        return \Carbon\Carbon::parse($this->finish_date.' '.($this->finish_time ?? '00:00:00'));
     }
 }

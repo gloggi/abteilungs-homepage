@@ -48,20 +48,50 @@
           />
         </BreakPointSpaceManager>
         <BreakPointSpaceManager>
-          <TextInput
-            id="startAt"
-            :label="$t('dashboard.startAt')"
-            type="datetime-local"
-            v-model="content.startAt"
-            :errors="errors.startAt"
-          />
-          <TextInput
-            id="finishAt"
-            :label="$t('dashboard.finishAt')"
-            type="datetime-local"
-            v-model="content.finishAt"
-            :errors="errors.finishAt"
-          />
+          <div class="flex flex-col space-y-2 w-full">
+            <div class="flex space-x-2">
+              <div class="w-1/2">
+                <TextInput
+                  id="startDate"
+                  :label="$t('dashboard.startDate')"
+                  type="date"
+                  v-model="content.startDate"
+                  :errors="errors.startDate"
+                />
+              </div>
+              <div class="w-1/2">
+                <TextInput
+                  id="startTime"
+                  :label="$t('dashboard.startTime')"
+                  type="time"
+                  v-model="content.startTime"
+                  :errors="errors.startTime"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col space-y-2 w-full">
+            <div class="flex space-x-2">
+              <div class="w-1/2">
+                <TextInput
+                  id="finishDate"
+                  :label="$t('dashboard.finishDate')"
+                  type="date"
+                  v-model="content.finishDate"
+                  :errors="errors.finishDate"
+                />
+              </div>
+              <div class="w-1/2">
+                <TextInput
+                  id="finishTime"
+                  :label="$t('dashboard.finishTime')"
+                  type="time"
+                  v-model="content.finishTime"
+                  :errors="errors.finishTime"
+                />
+              </div>
+            </div>
+          </div>
         </BreakPointSpaceManager>
         <BreakPointSpaceManager>
           <TextInput
