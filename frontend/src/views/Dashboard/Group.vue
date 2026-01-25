@@ -28,6 +28,11 @@
             v-model="content.name"
             :errors="errors.name"
           />
+          <CheckBox
+            id="isVisible"
+            :label="$t('dashboard.visible')"
+            v-model="content.isVisible"
+          />
           <BreakpointSpaceManager>
             <SelectComponent
               id="section"
@@ -129,6 +134,7 @@ import ColorPicker from "../../components/admin/ColorPicker.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
 import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
 import InfoField from "../../components/admin/InfoField.vue";
+import CheckBox from "../../components/admin/CheckBox.vue";
 export default {
   components: {
     Card,
@@ -141,6 +147,7 @@ export default {
     FormLabel,
     BreakpointSpaceManager,
     InfoField,
+    CheckBox,
   },
   data() {
     return {

@@ -29,6 +29,11 @@
             v-model="content.name"
             :errors="errors.name"
           />
+          <CheckBox
+            id="isVisible"
+            :label="$t('dashboard.visible')"
+            v-model="content.isVisible"
+          />
           <div class="flex flex-row justify-between space-x-2">
             <TextInput
               id="fromAge"
@@ -95,8 +100,10 @@ import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
 import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
+import SearchField from "../../components/admin/SearchField.vue";
 import ColorPicker from "../../components/admin/ColorPicker.vue";
 import InfoField from "../../components/admin/InfoField.vue";
+import CheckBox from "../../components/admin/CheckBox.vue";
 export default {
   components: {
     Card,
@@ -108,6 +115,7 @@ export default {
     BannerImageSelector,
     ColorPicker,
     InfoField,
+    CheckBox,
   },
   data() {
     return {

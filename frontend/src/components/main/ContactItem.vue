@@ -48,11 +48,15 @@ export default {
   methods: {
     async getContacts() {
       try {
+        const params = { perPage: 100 };
+        if (this.item && this.item.groups && this.item.groups.length > 0) {
+          params.group_ids = this.item.groups.map((g) => g.id);
+        }
         const response = await this.callApi(
           "get",
           "/contacts",
           {},
-          { params: { perPage: 100 } },
+          { params: params },
         );
         this.contacts = response.data.data;
       } catch (e) {

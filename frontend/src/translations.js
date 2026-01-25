@@ -262,6 +262,7 @@ export const messages = {
       event: "Aktivität",
       sitePage: "Seite",
       user: "Benutzer",
+      visible: "Sichtbar?",
       notifications: {
         success: "Erfolg",
         error: "Fehler",

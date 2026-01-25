@@ -17,6 +17,11 @@ class Contact extends Model
         return $this->belongsTo(File::class);
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'contact_group');
+    }
+
     public function toSearchableArray()
     {
         return [

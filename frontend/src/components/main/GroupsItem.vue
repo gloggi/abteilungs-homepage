@@ -192,7 +192,14 @@ export default {
       return this.$store.state.groups.groups;
     },
     sections() {
-      return this.$store.state.sections.sections;
+      return this.$store.state.sections.sections
+        .filter((s) => s.isVisible)
+        .map((s) => {
+          return {
+            ...s,
+            groups: s.groups.filter((g) => g.isVisible),
+          };
+        });
     },
     currentGroupChildren() {
       return this.groups.filter((g) => g.parent?.id === this.currentGroup.id);

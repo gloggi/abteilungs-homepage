@@ -11,7 +11,7 @@ class Page extends Model
 
     protected $fillable = ['title', 'route', 'file_ids', 'big_header', 'group_id', 'password'];
 
-    protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems', 'locationItems', 'faqItems', 'groupEventsItems', 'campItems', 'password'];
+    protected $hidden = ['textItems', 'imageItems', 'formItems', 'filesItems', 'genericItems', 'locationItems', 'faqItems', 'groupEventsItems', 'campItems', 'contactItems', 'password'];
 
     protected $appends = ['password_protected'];
 
@@ -98,6 +98,11 @@ class Page extends Model
         return $this->hasMany(GenericItem::class);
     }
 
+    public function contactItems()
+    {
+        return $this->hasMany(ContactItem::class);
+    }
+
     public function getAllItems()
     {
         $items = collect([]);
@@ -111,6 +116,7 @@ class Page extends Model
         $faqItems = $this->faqItems;
         $groupEventsItems = $this->groupEventsItems;
         $campItems = $this->campItems;
+        $contactItems = $this->contactItems;
 
         $items = $items->concat($textItems);
         $items = $items->concat($imageItems);
@@ -121,6 +127,7 @@ class Page extends Model
         $items = $items->concat($faqItems);
         $items = $items->concat($groupEventsItems);
         $items = $items->concat($campItems);
+        $items = $items->concat($contactItems);
 
         $items = $items->sortBy('sort')->values()->all();
 

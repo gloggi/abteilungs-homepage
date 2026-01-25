@@ -25,6 +25,11 @@ class Group extends Model
         'region',
         'external_link',
         'group_leader_id',
+        'is_visible',
+    ];
+
+    protected $casts = [
+        'is_visible' => 'boolean',
     ];
 
     protected $appends = ['route', 'has_page'];
@@ -72,6 +77,16 @@ class Group extends Model
     public function groupLeader()
     {
         return $this->belongsTo(User::class, 'group_leader_id');
+    }
+
+    public function contacts()
+    {
+        return $this->belongsToMany(Contact::class, 'contact_group');
+    }
+
+    public function contactItems()
+    {
+        return $this->belongsToMany(ContactItem::class, 'contact_item_group');
     }
 
     public function toSearchableArray()

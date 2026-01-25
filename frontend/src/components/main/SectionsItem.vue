@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     sections() {
-      return this.$store.state.sections.sections;
+      return this.$store.state.sections.sections.filter((s) => s.isVisible);
     },
   },
   methods: {

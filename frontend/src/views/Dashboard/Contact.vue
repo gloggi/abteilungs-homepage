@@ -45,6 +45,12 @@
               :errors="errors.lastname"
             />
           </BreakpointSpaceManager>
+          <MultipleSelect
+            :options="groups"
+            v-model="content.groups"
+            :label="$t('dashboard.groups')"
+            id="groups"
+          />
           <TextInput
             id="email"
             :label="$t('dashboard.email')"
@@ -84,6 +90,7 @@ import {
 import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import BreakpointSpaceManager from "../../components/admin/BreakpointSpaceManager.vue";
+import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 export default {
   components: {
     Card,
@@ -91,6 +98,7 @@ export default {
     LogoDisplay,
     ItemHeaderTemplate,
     BreakpointSpaceManager,
+    MultipleSelect,
   },
   data() {
     return {
@@ -99,6 +107,7 @@ export default {
       showModal: false,
       loadedKey: 0,
       errors: {},
+      groups: [],
       icons: {
         faArrowsRotate,
         faChevronLeft,
@@ -128,6 +137,9 @@ export default {
           `/contacts/${this.$route.params.id}`,
         );
         this.content = response.data;
+        if (this.content.groups) {
+          this.content.groups = this.content.groups.map((g) => g.id);
+        }
         this.loadedKey++;
       } catch (e) {
         console.log(e);
@@ -153,6 +165,14 @@ export default {
         console.log(e);
       }
     },
+    async getGroups() {
+      try {
+        const response = await this.callApi("get", `/groups`);
+        this.groups = response.data.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     handleSection(sectionId) {
       this.content.sectionId = sectionId;
     },
@@ -162,6 +182,7 @@ export default {
   },
   async created() {
     await this.getSections();
+    await this.getGroups();
     await this.getContact();
   },
 };

@@ -259,7 +259,7 @@ class PageController extends Controller
                     }
                     break;
                 case 'contactItem':
-                    GenericItem::updateOrCreate(
+                    $contactItem = \App\Models\ContactItem::updateOrCreate(
                         ['id' => $pageItemData['id'] ?? null],
                         [
                             'page_id' => $page->id,
@@ -268,6 +268,12 @@ class PageController extends Controller
                         ]
                     );
 
+                    $groupIds = $pageItemData['groups'] ?? [];
+                    // Handle case where groups might be objects (if not modified by frontend)
+                    if (!empty($groupIds) && is_array($groupIds) && is_array($groupIds[0] ?? null)) {
+                        $groupIds = array_column($groupIds, 'id');
+                    }
+                    $contactItem->groups()->sync($groupIds);
                     break;
                 case 'groupsItem':
                     GenericItem::updateOrCreate(

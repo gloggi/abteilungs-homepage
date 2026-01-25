@@ -29,45 +29,56 @@
         :errors="errors.title"
       />
       <div class="flex flex-col md:flex-row items-start gap-4">
-        <div v-if="!isGroupPage" class="w-full flex flex-col">
+        <div v-if="!isGroupPage" class="flex w-full flex-col gap-1.5">
           <FormLabel>{{ $t("dashboard.route") }}</FormLabel>
-          <div v-if="routeInEdit" class="flex flex-row items-center space-x-2">
-            <div>
-              <div class="flex flex-row items-center">
-                <p class="text-lg text-gray-900 font-semibold">
-                  {{ baseUrl }}
-                </p>
-                <input
-                  id="route"
-                  type="text"
-                  class="p-0 text-lg font-semibold rounded focus:outline-none focus:shadow-outline focus:ring-gray-900 focus:border-gray-900"
-                  v-model="content.route"
-                />
-              </div>
-              <div v-if="errors.route" class="text-red-400 text-xs">
-                {{ errors.route.join(" ") }}
-              </div>
+          <div class="flex items-center gap-2">
+            <div
+              class="flex h-10 w-full items-center overflow-hidden rounded-md border border-gray-200 bg-white text-sm ring-offset-white focus-within:ring-2 focus-within:ring-gray-950 focus-within:ring-offset-2"
+              @click="!routeInEdit && startEditRoute()"
+              :class="{ 'cursor-text': !routeInEdit }"
+            >
+              <span
+                class="flex h-full select-none items-center border-r border-gray-100 bg-gray-50 px-3 text-gray-500"
+              >
+                {{ baseUrl }}
+              </span>
+              <input
+                v-if="routeInEdit"
+                id="route"
+                ref="routeInput"
+                type="text"
+                class="flex-1 bg-transparent px-3 py-2 placeholder:text-gray-500 focus:outline-none"
+                v-model="content.route"
+                @keyup.enter="saveRoute"
+              />
+              <span
+                v-else
+                class="flex-1 truncate px-3 py-2 text-gray-900"
+              >
+                {{ content.route }}
+              </span>
             </div>
-            <ActionButton @click="saveRoute" :reverse="true" size="small">
+
+            <ActionButton
+              v-if="routeInEdit"
+              @click="saveRoute"
+              size="icon"
+              variant="outline"
+            >
               <font-awesome-icon :icon="icons.faCheck" class="size-4" />
             </ActionButton>
-          </div>
-          <div v-else class="flex flex-row items-center space-x-2">
-            <router-link
-              v-if="content.route"
-              class="text-lg text-gray-900 hover:text-gray-600 font-semibold"
-              :to="{ name: 'Home2', params: { path: content.route } }"
-            >
-              {{ `${baseUrl}${this.content.route || ""}` }}
-            </router-link>
             <ActionButton
-              @click="routeInEdit = true"
-              :reverse="true"
+              v-else
+              @click="startEditRoute"
+              size="icon"
+              variant="outline"
               :toolTipText="$t('dashboard.editRoute')"
-              size="small"
             >
               <font-awesome-icon :icon="icons.faPen" class="size-4" />
             </ActionButton>
+          </div>
+          <div v-if="errors.route" class="text-xs text-red-500">
+            {{ errors.route.join(" ") }}
           </div>
           <InfoField :info="$t('dashboard.infoRootDirectory')" />
         </div>
@@ -510,6 +521,14 @@ export default {
       } catch (e) {
         this.handleErrors(e);
       }
+    },
+    startEditRoute() {
+      this.routeInEdit = true;
+      this.$nextTick(() => {
+        if (this.$refs.routeInput) {
+          this.$refs.routeInput.focus();
+        }
+      });
     },
     saveRoute() {
       this.routeInEdit = false;
