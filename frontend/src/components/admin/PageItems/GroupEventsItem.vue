@@ -6,17 +6,16 @@
     @startedDragging="$emit('startedDragging')"
     @endedDragging="$emit('endedDragging')"
   >
-      <SelectComponent
-        selection="GroupEventsItem"
-        @selectGroupEventsItem="handleChange"
-        :value="item.groupId"
-        :options="options"
-      />
+    <SelectComponent
+      selection="GroupEventsItem"
+      @selectGroupEventsItem="handleChange"
+      :value="item.groupId"
+      :options="options"
+    />
   </DragItemBox>
 </template>
 
 <script>
-
 import SelectComponent from "../SelectComponent.vue";
 import DragItemBox from "../DragItemBox.vue";
 

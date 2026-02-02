@@ -9,7 +9,7 @@ class LocationItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['location_id', 'sort', 'page_id'];
+    protected $fillable = ['location_id', 'sort', 'page_id', 'blog_post_id'];
 
     protected $appends = ['type'];
 

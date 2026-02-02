@@ -53,7 +53,9 @@
             <ColoredLogoCircle
               class="size-12"
               :size="actions[key].args.includes('color') ? 65 : 100"
-              :src="item[key] ? `${backendURL}${item[key].thumbnail}` : undefined"
+              :src="
+                item[key] ? `${backendURL}${item[key].thumbnail}` : undefined
+              "
               :backgroundColor="item?.color"
               :cover="cover"
             />
@@ -61,9 +63,7 @@
         </template>
       </template>
 
-      <div
-        class="flex flex-col md:flex-row md:items-center w-full gap-4"
-      >
+      <div class="flex flex-col md:flex-row md:items-center w-full gap-4">
         <div
           v-for="(key, i) in keys"
           :key="`text-${j}-${i}`"
@@ -164,9 +164,7 @@ export default {
         } else {
           try {
             this.$refs.masterbox.checked = false;
-          } catch {
-            // ignore
-          }
+          } catch {}
         }
       },
       deep: true,

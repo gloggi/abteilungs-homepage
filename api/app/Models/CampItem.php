@@ -9,7 +9,7 @@ class CampItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['group_id', 'sort', 'page_id'];
+    protected $fillable = ['group_id', 'sort', 'page_id', 'blog_post_id'];
 
     protected $appends = ['type'];
 

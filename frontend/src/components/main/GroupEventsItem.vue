@@ -10,7 +10,7 @@
         :key="event.id"
         :event="event"
       />
-      <EventPager
+      <Pager
         v-if="eventLastPage > 1"
         @changePage="changeEventPage"
         :numberOfPages="eventLastPage"
@@ -25,7 +25,7 @@
 <script>
 import ContentWrapper from "./ContentWrapper.vue";
 import Event from "./Event.vue";
-import EventPager from "./EventPager.vue";
+import Pager from "./Pager.vue";
 import HeadingTwo from "./HeadingTwo.vue";
 
 export default {
@@ -33,7 +33,7 @@ export default {
   components: {
     ContentWrapper,
     Event,
-    EventPager,
+    Pager,
     HeadingTwo,
   },
   data() {
@@ -65,6 +65,7 @@ export default {
       }
     },
     changeEventPage(page) {
+      this.$el.scrollIntoView({ behavior: "smooth" });
       this.eventPage = page;
       this.getEvents();
     },

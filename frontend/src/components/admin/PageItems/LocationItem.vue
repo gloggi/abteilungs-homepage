@@ -6,17 +6,16 @@
     @startedDragging="$emit('startedDragging')"
     @endedDragging="$emit('endedDragging')"
   >
-      <SelectComponent
-        selection="LocationItem"
-        @selectLocationItem="handleChange"
-        :value="item.locationId"
-        :options="options"
-      />
+    <SelectComponent
+      selection="LocationItem"
+      @selectLocationItem="handleChange"
+      :value="item.locationId"
+      :options="options"
+    />
   </DragItemBox>
 </template>
 
 <script>
-
 import SelectComponent from "../SelectComponent.vue";
 import DragItemBox from "../DragItemBox.vue";
 

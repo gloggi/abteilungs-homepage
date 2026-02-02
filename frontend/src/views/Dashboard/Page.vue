@@ -30,56 +30,14 @@
       />
       <div class="flex flex-col md:flex-row items-start gap-4">
         <div v-if="!isGroupPage" class="flex w-full flex-col gap-1.5">
-          <FormLabel>{{ $t("dashboard.route") }}</FormLabel>
-          <div class="flex items-center gap-2">
-            <div
-              class="flex h-10 w-full items-center overflow-hidden rounded-md border border-gray-200 bg-white text-sm ring-offset-white focus-within:ring-2 focus-within:ring-gray-950 focus-within:ring-offset-2"
-              @click="!routeInEdit && startEditRoute()"
-              :class="{ 'cursor-text': !routeInEdit }"
-            >
-              <span
-                class="flex h-full select-none items-center border-r border-gray-100 bg-gray-50 px-3 text-gray-500"
-              >
-                {{ baseUrl }}
-              </span>
-              <input
-                v-if="routeInEdit"
-                id="route"
-                ref="routeInput"
-                type="text"
-                class="flex-1 bg-transparent px-3 py-2 placeholder:text-gray-500 focus:outline-none"
-                v-model="content.route"
-                @keyup.enter="saveRoute"
-              />
-              <span
-                v-else
-                class="flex-1 truncate px-3 py-2 text-gray-900"
-              >
-                {{ content.route }}
-              </span>
-            </div>
-
-            <ActionButton
-              v-if="routeInEdit"
-              @click="saveRoute"
-              size="icon"
-              variant="outline"
-            >
-              <font-awesome-icon :icon="icons.faCheck" class="size-4" />
-            </ActionButton>
-            <ActionButton
-              v-else
-              @click="startEditRoute"
-              size="icon"
-              variant="outline"
-              :toolTipText="$t('dashboard.editRoute')"
-            >
-              <font-awesome-icon :icon="icons.faPen" class="size-4" />
-            </ActionButton>
-          </div>
-          <div v-if="errors.route" class="text-xs text-red-500">
-            {{ errors.route.join(" ") }}
-          </div>
+          <SlugInput
+            :label="$t('dashboard.route')"
+            :prefix="baseUrl"
+            v-model="content.route"
+            :errors="errors.route"
+            :toolTipText="$t('dashboard.editRoute')"
+            ref="routeInput"
+          />
           <InfoField :info="$t('dashboard.infoRootDirectory')" />
         </div>
         <CheckBox
@@ -244,6 +202,16 @@
         :key="`groupEventsItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
+      <BlogPostsItem
+        v-if="pageItem.type == 'blogPostsItem'"
+        :boxTitle="$t('dashboard.blogPostsItem')"
+        @delete="deleteItem"
+        @startedDragging="isDragging = true"
+        @endedDragging="isDragging = false"
+        @changeBlogPostsItem="changeBlogPostsItem"
+        :key="`blogPostsItem-${pageItem.id || pageItem.tempId}`"
+        :item="pageItem"
+      />
       <AddPageItem
         @changeOrder="changeOrder"
         @select="addItem"
@@ -262,8 +230,6 @@ import AddPageItem from "../../components/admin/AddPageItem.vue";
 import {
   faEye,
   faCopy,
-  faPen,
-  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import TextItem from "../../components/admin/PageItems/TextItem.vue";
 import ImageItem from "../../components/admin/PageItems/ImageItem.vue";
@@ -285,6 +251,8 @@ import GroupEventsItem from "../../components/admin/PageItems/GroupEventsItem.vu
 import ActionButton from "../../components/admin/ActionButton.vue";
 import { nanoid } from "nanoid";
 import InfoField from "../../components/admin/InfoField.vue";
+import BlogPostsItem from "../../components/admin/PageItems/BlogPostsItem.vue";
+import SlugInput from "../../components/admin/SlugInput.vue";
 export default {
   components: {
     TextInput,
@@ -308,6 +276,8 @@ export default {
     GroupEventsItem,
     ActionButton,
     InfoField,
+    BlogPostsItem,
+    SlugInput,
   },
   data() {
     return {
@@ -323,12 +293,9 @@ export default {
       icons: {
         faEye,
         faCopy,
-        faPen,
-        faCheck,
       },
       groups: [],
       isGroupPage: false,
-      routeInEdit: false,
     };
   },
   async created() {
@@ -470,6 +437,16 @@ export default {
       );
       this.content.pageItems[itemIndex].groupId = groupId;
     },
+    changeBlogPostsItem(event) {
+      const pageItemId = event.id;
+      const itemIndex = this.content.pageItems.findIndex(
+        (p) => p.id == pageItemId && p.type == "blogPostsItem",
+      );
+      this.content.pageItems[itemIndex] = {
+        ...this.content.pageItems[itemIndex],
+        ...event,
+      };
+    },
     slugyfy(text) {
       return kebabCase(text);
     },
@@ -509,7 +486,6 @@ export default {
         copy.route = `${copy.route}-kopie`;
         const response = await this.callApi("post", `/pages`, copy);
         if (response.data.id) {
-
           this.$nextTick(() => {
             this.$router.push({
               name: this.$route.name,
@@ -522,19 +498,10 @@ export default {
         this.handleErrors(e);
       }
     },
-    startEditRoute() {
-      this.routeInEdit = true;
-      this.$nextTick(() => {
-        if (this.$refs.routeInput) {
-          this.$refs.routeInput.focus();
-        }
-      });
-    },
-    saveRoute() {
-      this.routeInEdit = false;
-    },
     handleUpdatedItem() {
-      this.routeInEdit = false;
+      if (this.$refs.routeInput) {
+        this.$refs.routeInput.cancelEditing();
+      }
     },
   },
   watch: {

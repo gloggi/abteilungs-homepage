@@ -34,10 +34,12 @@
           v-if="showMobileMenu || isDesktop"
         >
           <template v-for="menuItem in menuItems" :key="menuItem.id">
-            <NavLinkItem v-if="!menuItem.special" :menuItem="menuItem">{{
-              menuItem.title
-            }}</NavLinkItem>
-            <GroupDropdown v-else />
+            <NavLinkItem
+              v-if="!menuItem.special || menuItem.special === 'blogOverview'"
+              :menuItem="menuItem"
+              >{{ menuItem.title }}</NavLinkItem
+            >
+            <GroupDropdown v-else-if="menuItem.special === 'groupPages'" />
           </template>
         </ul>
       </Transition>

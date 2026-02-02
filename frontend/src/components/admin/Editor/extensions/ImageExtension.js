@@ -96,7 +96,6 @@ const ImageExtension = Image.extend({
         "absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-white shadow-md border border-gray-200 rounded p-1 z-30 pointer-events-auto";
 
       const getIconSvg = (iconDef) => {
-        // iconDef is { prefix, iconName, icon: [width, height, aliases, unicode, path] }
         if (!iconDef || !iconDef.icon) return "";
         const path = iconDef.icon[4];
         const width = iconDef.icon[0];

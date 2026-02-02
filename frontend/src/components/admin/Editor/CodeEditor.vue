@@ -64,7 +64,7 @@ export default {
       state: startState,
       parent: this.$refs.cmContainer,
     });
-    
+
     this.$emit("update:modelValue", formattedHTML);
   },
   beforeUnmount() {

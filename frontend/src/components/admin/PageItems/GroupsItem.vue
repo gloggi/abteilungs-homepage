@@ -11,7 +11,6 @@
 </template>
 
 <script>
-
 import DragItemBox from "../DragItemBox.vue";
 
 export default {

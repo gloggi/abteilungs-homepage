@@ -17,9 +17,9 @@
   <Modal v-if="showModal" @close="closeModal" :size="modalSize">
     <div class="p-1">
       <h1 class="text-3xl font-bold pb-4 text-gray-900">{{ modalTitle }}</h1>
-      <div 
-        class="grid grid-cols-2 lg:grid-cols-4 gap-4" 
-        :class="{'overflow-y-auto': true}"
+      <div
+        class="grid grid-cols-2 lg:grid-cols-4 gap-4"
+        :class="{ 'overflow-y-auto': true }"
       >
         <div
           v-for="(item, index) in items"
@@ -30,17 +30,19 @@
           <div
             class="aspect-square bg-white rounded-lg flex justify-center items-center p-4 shadow-inner group-hover:scale-105 transition-transform duration-200"
           >
-            <component 
-              :is="item.component" 
-              class="h-full w-full text-gray-700" 
+            <component
+              :is="item.component"
+              class="h-full w-full text-gray-700"
               v-if="item.component"
             />
             <p v-else class="font-serif text-5xl text-gray-400 select-none">
-              {{ item.name ? item.name.substring(0, 1) : '?' }}
+              {{ item.name ? item.name.substring(0, 1) : "?" }}
             </p>
           </div>
           <div class="px-1">
-            <p class="font-medium text-sm text-center text-gray-800 break-words leading-tight group-hover:text-black">
+            <p
+              class="font-medium text-sm text-center text-gray-800 break-words leading-tight group-hover:text-black"
+            >
               {{ item.name }}
             </p>
           </div>
@@ -63,7 +65,6 @@ export default {
     items: {
       type: Array,
       required: true,
-
     },
     dragging: {
       type: Boolean,
@@ -87,7 +88,7 @@ export default {
     },
     modalSize: {
       type: String,
-      default: "xl", 
+      default: "xl",
     },
   },
   emits: ["select", "changeOrder"],
@@ -102,24 +103,25 @@ export default {
   },
   computed: {
     buttonClasses() {
-
       let classes = [];
-      
 
       if (this.dragging) {
-        classes.push('bg-gray-100 border-2 border-dashed border-gray-400 text-gray-900 shadow-inner');
+        classes.push(
+          "bg-gray-100 border-2 border-dashed border-gray-400 text-gray-900 shadow-inner",
+        );
       } else {
-        classes.push('bg-white hover:bg-gray-50 text-gray-500 hover:text-gray-900 border border-dashed border-gray-300 hover:border-gray-400');
+        classes.push(
+          "bg-white hover:bg-gray-50 text-gray-500 hover:text-gray-900 border border-dashed border-gray-300 hover:border-gray-400",
+        );
       }
-
 
       if (this.increaseHeight) {
-        classes.push('h-32');
+        classes.push("h-32");
       } else {
-        classes.push('min-h-[2.5rem] py-2'); 
+        classes.push("min-h-[2.5rem] py-2");
       }
 
-      return classes.join(' ');
+      return classes.join(" ");
     },
   },
   methods: {

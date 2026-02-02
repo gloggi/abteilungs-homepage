@@ -11,7 +11,10 @@
       :class="`${errors ? ' border-red-500' : ''}`"
       :style="`background-color: ${value}`"
     ></div>
-    <label :for="uid" class="select-none absolute inset-0 cursor-pointer"></label>
+    <label
+      :for="uid"
+      class="select-none absolute inset-0 cursor-pointer"
+    ></label>
   </div>
   <div v-if="errors" class="text-red-400 text-xs">
     {{ errors.join(" ") }}

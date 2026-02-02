@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FilesItem extends Model
 {
-    protected $fillable = ['title', 'page_id', 'sort', 'view_mode'];
+    protected $fillable = ['title', 'page_id', 'blog_post_id', 'sort', 'view_mode'];
 
     protected $appends = ['type'];
 

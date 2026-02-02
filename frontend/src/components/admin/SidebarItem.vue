@@ -25,22 +25,20 @@ export default {
     icon: Object,
     exact: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     isActive() {
-      if (!this.to || typeof this.to !== 'string') return false;
-      
-      const currentPath = this.$route.path;
+      if (!this.to || typeof this.to !== "string") return false;
 
+      const currentPath = this.$route.path;
 
       if (this.exact) {
         return currentPath === this.to;
       }
-      return currentPath === this.to || currentPath.startsWith(this.to + '/');
+      return currentPath === this.to || currentPath.startsWith(this.to + "/");
     },
   },
 };
 </script>
-

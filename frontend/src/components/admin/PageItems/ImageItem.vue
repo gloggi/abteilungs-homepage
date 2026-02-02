@@ -15,7 +15,6 @@ import { faXmark, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import DragItemBox from "../DragItemBox.vue";
 import BannerImageSelector from "../BannerImageSelector.vue";
 
-
 export default {
   components: { DragItemBox, BannerImageSelector },
   props: ["item", "modelValue", "boxTitle"],

@@ -145,7 +145,7 @@ export default {
   computed: {
     mapMarkers() {
       return [this.event.startLocation, this.event.endLocation].filter(
-        (location) => location != null
+        (location) => location != null,
       );
     },
     mapMarkerTexts() {

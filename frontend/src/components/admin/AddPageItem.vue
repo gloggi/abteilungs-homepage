@@ -90,9 +90,13 @@ export default {
           type: "groupEventsItem",
           component: markRaw(GroupEventsItem),
         },
+        {
+          name: this.$t("dashboard.blogPosts"),
+          type: "blogPostsItem",
+          component: markRaw(TextItem), // Using TextItem icon as placeholder if no specific icon exists
+        },
       ],
     };
   },
 };
 </script>
-

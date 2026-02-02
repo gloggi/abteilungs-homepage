@@ -31,7 +31,7 @@ class UpdatePageRequest extends FormRequest
             'page_items' => 'nullable|array',
             'page_items.*.id' => 'nullable',
             'page_items.*.sort' => 'required',
-            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem,campItem,locationItem,faqItem,groupEventsItem',
+            'page_items.*.type' => 'required|string|in:textItem,imageItem,formItem,filesItem,contactItem,groupsItem,sectionsItem,campItem,locationItem,faqItem,groupEventsItem,blogPostsItem',
             'page_items.*.title' => 'nullable',
             'page_items.*.body' => 'nullable',
             'page_items.*.section_id' => 'nullable',
@@ -41,6 +41,8 @@ class UpdatePageRequest extends FormRequest
             'page_items.*.faq_id' => 'nullable',
             'page_items.*.group_id' => 'nullable',
             'page_items.*.view_mode' => 'nullable|string',
+            'page_items.*.tags' => 'nullable|array',
+            'page_items.*.blog_posts' => 'nullable|array',
         ];
     }
 }

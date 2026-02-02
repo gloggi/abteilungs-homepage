@@ -27,7 +27,6 @@ import MediaItem from "./MediaItem.vue";
 import EmptyState from "../EmptyState.vue";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
-
 export default {
   name: "MediaGrid",
   components: {

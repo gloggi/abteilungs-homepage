@@ -6,7 +6,6 @@
       </h2>
     </div>
 
-
     <div class="hidden md:grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card v-for="(stat, key) in statsDisplay" :key="key">
         <div class="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -23,7 +22,6 @@
     </div>
 
     <div class="border-t border-gray-200"></div>
-
 
     <div>
       <h3 class="text-lg font-medium text-gray-900 mb-4">
@@ -191,21 +189,38 @@ export default {
     },
 
     isRegion() {
-        return this.settings && this.settings.isRegion;
+      return this.settings && this.settings.isRegion;
     },
     filteredCards() {
-
-      return this.cards.filter(card => (this.isAdmin && card.adminOnly) || !card.adminOnly);
+      return this.cards.filter(
+        (card) => (this.isAdmin && card.adminOnly) || !card.adminOnly,
+      );
     },
     statsDisplay() {
       return [
-        { label: this.$t("dashboard.pages"), value: this.stats.pages, icon: faBookOpen },
-        { label: this.$t("dashboard.users"), value: this.stats.users, icon: faUser },
+        {
+          label: this.$t("dashboard.pages"),
+          value: this.stats.pages,
+          icon: faBookOpen,
+        },
+        {
+          label: this.$t("dashboard.users"),
+          value: this.stats.users,
+          icon: faUser,
+        },
 
-        { label: this.$t("dashboard.events"), value: this.stats.events, icon: faCalendarDays },
-        { label: this.$t("dashboard.camps"), value: this.stats.camps, icon: faCampground },
+        {
+          label: this.$t("dashboard.events"),
+          value: this.stats.events,
+          icon: faCalendarDays,
+        },
+        {
+          label: this.$t("dashboard.camps"),
+          value: this.stats.camps,
+          icon: faCampground,
+        },
       ];
-    }
+    },
   },
   methods: {
     redirectTo(link) {
@@ -215,16 +230,16 @@ export default {
       try {
         const response = await this.callApi("get", "/dashboard");
         if (response && response.data) {
-            this.stats = response.data;
+          this.stats = response.data;
         }
       } catch (error) {
         console.error("Failed to fetch dashboard stats", error);
       }
-    }
+    },
   },
   mounted() {
     this.fetchStats();
-  }
+  },
 };
 </script>
 

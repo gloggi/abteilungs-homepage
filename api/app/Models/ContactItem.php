@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactItem extends Model
 {
-    protected $fillable = ['page_id', 'type', 'sort'];
+    protected $fillable = ['page_id', 'blog_post_id', 'type', 'sort'];
 
     protected $with = ['groups'];
 

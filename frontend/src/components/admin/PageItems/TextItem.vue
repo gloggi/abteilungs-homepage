@@ -32,7 +32,6 @@
 </template>
 
 <script>
-
 import DragItemBox from "../DragItemBox.vue";
 import Editor from "../Editor/Editor.vue";
 import TextInput from "../TextInput.vue";

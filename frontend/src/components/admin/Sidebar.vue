@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Transition
       enter-active-class="transition-opacity duration-300 ease-out"
       enter-from-class="opacity-0"
@@ -19,7 +18,6 @@
       </button>
     </Transition>
 
-
     <Transition
       enter-active-class="transition-opacity ease-linear duration-300"
       enter-from-class="opacity-0"
@@ -35,12 +33,10 @@
       ></div>
     </Transition>
 
-
     <aside
       class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 border-r border-gray-800 transform transition-transform duration-300 ease-in-out md:static md:translate-x-0 flex flex-col h-full shadow-2xl md:shadow-none"
       :class="[!isOpen && !isDesktop ? '-translate-x-full' : 'translate-x-0']"
     >
-
       <router-link
         to="/dashboard"
         @click="isOpen = false"
@@ -69,7 +65,6 @@
           />
         </div>
       </router-link>
-
 
       <div class="flex-1 overflow-y-auto py-4 custom-scrollbar">
         <nav class="space-y-1 px-1">
@@ -101,7 +96,18 @@
             :icon="icons.faUsers"
             @click="isOpen = false"
           >
-            {{ settings.isRegion ? $t("dashboard.divisions") : $t("dashboard.groups") }}
+            {{
+              settings.isRegion
+                ? $t("dashboard.divisions")
+                : $t("dashboard.groups")
+            }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard/blogposts"
+            :icon="icons.faNewspaper"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.blogPosts") }}
           </SidebarItem>
           <SidebarItem
             v-if="isAdmin"
@@ -177,9 +183,16 @@
           >
             {{ $t("dashboard.settings") }}
           </SidebarItem>
+          <SidebarItem
+            v-if="isAdmin"
+            to="/dashboard/tags"
+            :icon="icons.faTags"
+            @click="isOpen = false"
+          >
+            {{ $t("dashboard.tags") }}
+          </SidebarItem>
         </nav>
       </div>
-
 
       <div class="p-4 border-t border-gray-800 bg-gray-900/50">
         <SidebarItem @click="logout" to="" :icon="icons.faDoorOpen">
@@ -209,6 +222,8 @@ import {
   faBars,
   faGhost,
   faHome,
+  faNewspaper,
+  faTags,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 
@@ -236,6 +251,8 @@ export default {
         faBars,
         faGhost,
         faHome,
+        faNewspaper,
+        faTags,
       },
     };
   },
@@ -261,7 +278,6 @@ export default {
 </script>
 
 <style scoped>
-
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }

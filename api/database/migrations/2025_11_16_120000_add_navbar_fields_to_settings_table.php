@@ -12,10 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('settings', function (Blueprint $table) {
-            // Navbar font color for links/text in the navbar
             $table->string('navbar_font_color')->default('#ffffff')->after('secondary_color');
-
-            // Position of the navbar: on top of the page or between header image and content
             $table->enum('navbar_position', ['top', 'between_header_and_content'])->default('between_header_and_content')->after('navbar_font_color');
         });
     }

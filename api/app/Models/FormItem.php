@@ -9,7 +9,7 @@ class FormItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['form_id', 'sort', 'page_id'];
+    protected $fillable = ['form_id', 'sort', 'page_id', 'blog_post_id'];
 
     protected $appends = ['type'];
 

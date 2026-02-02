@@ -12,7 +12,9 @@
       >
         <CustomMenuItem />
       </div>
-      <p class="text-lg font-semibold text-gray-900 tracking-tight">{{ $t("dashboard.specialItems") }}</p>
+      <p class="text-lg font-semibold text-gray-900 tracking-tight">
+        {{ $t("dashboard.specialItems") }}
+      </p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
@@ -25,8 +27,16 @@
         >
           {{ $t("dashboard.groupPagesDropdown") }}
         </DragableMenuItem>
+        <DragableMenuItem
+          v-if="showBlogOverviewItem"
+          :item="{ special: 'blogOverview' }"
+        >
+          {{ $t("dashboard.blogOverview") }}
+        </DragableMenuItem>
       </div>
-      <p class="text-lg font-semibold text-gray-900 tracking-tight">{{ $t("dashboard.pages") }}</p>
+      <p class="text-lg font-semibold text-gray-900 tracking-tight">
+        {{ $t("dashboard.pages") }}
+      </p>
       <div
         @dragenter.prevent=""
         @dragover.prevent
@@ -39,7 +49,9 @@
       </div>
     </div>
     <div class="flex flex-col w-1/2 space-y-4">
-      <p class="text-lg font-semibold text-gray-900 tracking-tight">{{ $t("dashboard.menu") }}</p>
+      <p class="text-lg font-semibold text-gray-900 tracking-tight">
+        {{ $t("dashboard.menu") }}
+      </p>
       <div
         class="flex flex-col space-y-2 border border-dashed border-gray-300 bg-gray-50 rounded-lg p-6 text-center shadow-sm min-h-[150px]"
       >
@@ -77,9 +89,10 @@
           :icon="icons.faTrash"
           class="text-4xl text-gray-400 group-hover:text-red-500 transition-colors"
         />
-        <span class="text-gray-400 text-sm group-hover:text-red-400 transition-colors">{{
-          $t("dashboard.removeItemFromMenu")
-        }}</span>
+        <span
+          class="text-gray-400 text-sm group-hover:text-red-400 transition-colors"
+          >{{ $t("dashboard.removeItemFromMenu") }}</span
+        >
       </div>
     </div>
   </div>
@@ -105,6 +118,9 @@ export default {
   computed: {
     showGroupPagesItem() {
       return !this.menuItems.find((m) => m.special === "groupPages");
+    },
+    showBlogOverviewItem() {
+      return !this.menuItems.find((m) => m.special === "blogOverview");
     },
   },
   methods: {
@@ -189,6 +205,13 @@ export default {
           title: this.$t("dashboard.groupPagesDropdown"),
           sort: menuItem.sort,
           special: "groupPages",
+        };
+      } else if (menuItem.special === "blogOverview") {
+        menuItem = {
+          title: this.$t("dashboard.blogOverview"),
+          sort: menuItem.sort,
+          special: "blogOverview",
+          url: "/blog",
         };
       } else {
         menuItem = {

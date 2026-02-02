@@ -17,6 +17,14 @@
           <font-awesome-icon :icon="icons.faCalendarDays" />
           {{ $t("dashboard.editEvents") }}
         </button>
+        <button @click="goToEditBlogPost" v-if="showBlogPostEdit">
+          <font-awesome-icon :icon="icons.faPen" />
+          {{ $t("dashboard.editBlogPost") }}
+        </button>
+        <button @click="goToBlogPosts" v-if="showBlogPostsEdit">
+          <font-awesome-icon :icon="icons.faPen" />
+          {{ $t("dashboard.editBlogPosts") }}
+        </button>
       </div>
     </div>
     <div class="flex flex-row space-x-5 items-center">
@@ -52,7 +60,7 @@ export default {
       },
     };
   },
-  props: ["pageId", "groupId"],
+  props: ["pageId", "groupId", "blogPostId"],
   methods: {
     goToEditPage() {
       this.$router.push(`/dashboard/pages/${this.pageId}`);
@@ -62,6 +70,12 @@ export default {
     },
     goToEvents() {
       this.$router.push(`/dashboard/events`);
+    },
+    goToEditBlogPost() {
+      this.$router.push(`/dashboard/blogposts/${this.blogPostId}`);
+    },
+    goToBlogPosts() {
+      this.$router.push(`/dashboard/blogposts`);
     },
     logout() {
       this.$store.dispatch("user/logout");
@@ -75,6 +89,7 @@ export default {
       return this.backendURL + this.settings.divisionLogo?.path;
     },
     showPageEdit() {
+      if (!this.pageId) return false;
       return (
         this.$store.state.user.groupIds.includes(this.groupId) || this.isAdmin
       );
@@ -84,6 +99,15 @@ export default {
         this.groupId &&
         (this.$store.state.user.groupIds.includes(this.groupId) || this.isAdmin)
       );
+    },
+    isAdmin() {
+      return this.$store.state.user.isAdmin;
+    },
+    showBlogPostEdit() {
+      return this.blogPostId && (this.isAdmin || this.$store.state.user.isUnitLeader);
+    },
+    showBlogPostsEdit() {
+      return !this.blogPostId && this.$route.path.startsWith("/blog") && (this.isAdmin || this.$store.state.user.isUnitLeader);
     },
   },
 };

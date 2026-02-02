@@ -17,7 +17,6 @@
 </template>
 
 <script>
-
 import DragItemBox from "../DragItemBox.vue";
 import MultipleSelect from "../MultipleSelect.vue";
 
@@ -40,14 +39,18 @@ export default {
       }
     },
     changeGroups(vals) {
-        this.item.groups = vals;
-    }
+      this.item.groups = vals;
+    },
   },
   async created() {
-      await this.getGroups();
-      if (this.item.groups && this.item.groups.length > 0 && typeof this.item.groups[0] === 'object') {
-          this.item.groups = this.item.groups.map(g => g.id);
-      }
+    await this.getGroups();
+    if (
+      this.item.groups &&
+      this.item.groups.length > 0 &&
+      typeof this.item.groups[0] === "object"
+    ) {
+      this.item.groups = this.item.groups.map((g) => g.id);
+    }
   },
 };
 </script>

@@ -23,6 +23,13 @@ use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
+    protected $pageItemService;
+
+    public function __construct(\App\Services\PageItemService $pageItemService)
+    {
+        $this->pageItemService = $pageItemService;
+    }
+
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -42,6 +49,45 @@ class PageController extends Controller
             ->paginate($perPage);
 
         return response()->json($pages);
+    }
+
+    public function show($id, Request $request)
+    {
+        if ($id === "0") {
+             $page = Page::where('route', 0)->orWhereNull('route')->orWhere('route', 'home')->orWhere('route', '')->first();
+        } else {
+             $page = Page::where('id', $id)->orWhere('route', $id)->first();
+        }
+
+        if (! $page) {
+            return response()->json(['message' => 'Page not found'], 404);
+        }
+
+        $page->load('files');
+
+        if ($page->password) {
+            $token = $request->header('X-Page-Token');
+            $authorized = $this->checkToken($token, $page->id);
+            
+            if (!$authorized) {
+                if ($user = Auth::guard('sanctum')->user()) {
+                    if ($user->hasRole('admin')) {
+                         $authorized = true;
+                    } elseif ($page->group_id && $user->groups->pluck('id')->contains($page->group_id)) {
+                         $authorized = true;
+                    }
+                }
+            }
+
+            if (! $authorized) {
+                return response()->json(['error' => 'Password required'], 403);
+            }
+        }
+
+        $pageData = $page->toArray();
+        $pageData['page_items'] = $page->getAllItems();
+        
+        return response()->json($pageData);
     }
 
     public function store(StorePageRequest $request)
@@ -65,7 +111,9 @@ class PageController extends Controller
 
         $page->files()->sync(array_column($request->input('files', []), 'id'));
 
-        $this->createPageItemsFromValidatedData($page, $validatedData);
+        if (isset($validatedData['page_items'])) {
+            $this->pageItemService->syncItems($page, $validatedData['page_items']);
+        }
 
         return response()->json([
             'id' => $page->id,
@@ -97,31 +145,34 @@ class PageController extends Controller
         $page->update($validatedData);
         $page->files()->sync(array_column($request->input('files', []), 'id'));
 
-        $currentItems = collect($page->getAllItems());
-        $validatedItems = collect($validatedData['page_items']);
+        if (isset($validatedData['page_items'])) {
+            $currentItems = collect($page->getAllItems());
+            $validatedItems = collect($validatedData['page_items']);
 
-        $currentItemKeys = $currentItems->map(function ($item) {
-            return ['id' => $item->id, 'type' => $item->type];
-        });
-
-        $validatedItemKeys = $validatedItems->map(function ($item) {
-            return ['id' => $item['id'] ?? null, 'type' => $item['type']];
-        });
-
-        $idsToDelete = $currentItemKeys->filter(function ($currentKey) use ($validatedItemKeys) {
-            return ! $validatedItemKeys->contains(function ($validatedKey) use ($currentKey) {
-                return $validatedKey['id'] === $currentKey['id'] && $validatedKey['type'] === $currentKey['type'];
+            $currentItemKeys = $currentItems->map(function ($item) {
+                return ['id' => $item->id, 'type' => $item->type];
             });
-        });
 
-        foreach ($currentItems as $item) {
-            if ($idsToDelete->contains(['id' => $item->id, 'type' => $item->type])) {
-                $item->delete();
-                unset($item);
+            $validatedItemKeys = $validatedItems->map(function ($item) {
+                return ['id' => $item['id'] ?? null, 'type' => $item['type']];
+            });
+
+            $idsToDelete = $currentItemKeys->filter(function ($currentKey) use ($validatedItemKeys) {
+                return ! $validatedItemKeys->contains(function ($validatedKey) use ($currentKey) {
+                    return $validatedKey['id'] === $currentKey['id'] && $validatedKey['type'] === $currentKey['type'];
+                });
+            });
+
+            foreach ($currentItems as $item) {
+                if ($idsToDelete->contains(['id' => $item->id, 'type' => $item->type])) {
+                    $item->delete();
+                    unset($item);
+                }
             }
+
+            $this->pageItemService->syncItems($page, $validatedData['page_items']);
         }
 
-        $this->createPageItemsFromValidatedData($page, $validatedData);
         $page = Page::find($id);
 
         return response()->json([
@@ -130,216 +181,6 @@ class PageController extends Controller
             'route' => $page->route,
             'page_items' => $page->getAllItems(),
         ], 200);
-    }
-
-    public function show($routeOrId)
-    {
-        $routeOrId = $routeOrId == '0' ? null : $routeOrId;
-        $user = Auth::user();
-
-        $page = Page::with('files')
-            ->where(function ($query) use ($routeOrId) {
-                $query->where('route', $routeOrId)
-                    ->orWhere('id', $routeOrId)
-                    ->orWhere('route', Str::slug($routeOrId));
-            })->first();
-        if (! $page) {
-            return response()->json(['message' => 'Page not found'], 404);
-        }
-        if (! $user && $page->password && ! $this->checkToken(request()->input('token'), $page->id)) {
-            return response()->json(array_merge($page->toArray(), [
-                'page_items' => [
-                    [
-                        'id' => 0,
-                        'type' => 'passwordItem',
-                    ],
-                ],
-            ]), 200);
-        }
-        $pageItems = $page->getAllItems();
-        foreach ($pageItems as $currentField) {
-            if ($currentField->type == 'formItem' && $currentField->form) {
-                unset($currentField->form->email);
-                $currentField->form->fields = $currentField->form->getAllFields();
-            }
-        }
-
-        return response()->json(array_merge($page->toArray(), [
-            'page_items' => $pageItems,
-        ]), 200);
-
-    }
-
-    public function destroy($id)
-    {
-        $page = Page::find($id);
-
-        if (! $page) {
-            return response()->json(['message' => 'Page not found'], 404);
-        }
-        $user = Auth::user();
-        if (! $user->hasRole('admin')) {
-            $groups = $user->groups->pluck('id');
-            $groupId = $page->group_id;
-            if (! $groups->contains($groupId)) {
-                return response()->json(['message' => 'Unauthorized'], 403);
-            }
-        }
-
-        $page->delete();
-
-        return response()->json(null, 204);
-    }
-
-    private function createPageItemsFromValidatedData(Page $page, $validatedData)
-    {
-        if (! isset($validatedData['page_items'])) {
-            return;
-        }
-        $validatedData['page_items'] = collect($validatedData['page_items'])->sortBy('sort')->values()->all();
-        $sort_counter = 0;
-        foreach ($validatedData['page_items'] as $pageItemData) {
-            switch ($pageItemData['type']) {
-                case 'textItem':
-                    TextItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'title' => $pageItemData['title'] ?? '',
-                            'body' => $pageItemData['body'] ?? '',
-                            'section_id' => $pageItemData['section_id'] ?? null,
-                            'group_id' => $pageItemData['group_id'] ?? null,
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                        ]
-                    );
-                    break;
-                case 'imageItem':
-                    $imageItem = ImageItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                        ]
-                    );
-                    $fileIds = isset($pageItemData['files']) ? array_column($pageItemData['files'], 'id') : [];
-
-                    if (isset($pageItemData['id'])) {
-                        $imageItem->files()->sync($fileIds);
-                    } else {
-                        $imageItem->files()->attach($fileIds);
-                    }
-                    break;
-                case 'formItem':
-                    FormItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                            'form_id' => $pageItemData['form_id'] ?? null,
-                        ]
-                    );
-                    break;
-                case 'filesItem':
-                    error_log($pageItemData['view_mode']);
-                    $imageItem = FilesItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'title' => $pageItemData['title'] ?? '',
-                            'view_mode' => $pageItemData['view_mode'] ?? 'gallery',
-                            'sort' => $sort_counter,
-                        ]
-                    );
-                    $fileIds = isset($pageItemData['files']) ? array_column($pageItemData['files'], 'id') : [];
-
-                    if (isset($pageItemData['id'])) {
-                        $imageItem->files()->sync($fileIds);
-                    } else {
-                        $imageItem->files()->attach($fileIds);
-                    }
-                    break;
-                case 'contactItem':
-                    $contactItem = \App\Models\ContactItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                            'type' => 'contactItem',
-                        ]
-                    );
-
-                    $groupIds = $pageItemData['groups'] ?? [];
-                    // Handle case where groups might be objects (if not modified by frontend)
-                    if (!empty($groupIds) && is_array($groupIds) && is_array($groupIds[0] ?? null)) {
-                        $groupIds = array_column($groupIds, 'id');
-                    }
-                    $contactItem->groups()->sync($groupIds);
-                    break;
-                case 'groupsItem':
-                    GenericItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                            'type' => 'groupsItem',
-                        ]
-                    );
-                    break;
-                case 'sectionsItem':
-                    GenericItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                            'type' => 'sectionsItem',
-                        ]
-                    );
-                    break;
-                case 'campItem':
-                    CampItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                            'group_id' => $pageItemData['group_id'] ?? null,
-                        ]
-                    );
-                    break;
-                case 'locationItem':
-                    LocationItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                            'location_id' => $pageItemData['location_id'] ?? null,
-                        ]
-                    );
-                    break;
-                case 'faqItem':
-                    FaqItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                            'faq_id' => $pageItemData['faq_id'] ?? null,
-                        ]
-                    );
-                    break;
-                case 'groupEventsItem':
-                    GroupEventsItem::updateOrCreate(
-                        ['id' => $pageItemData['id'] ?? null],
-                        [
-                            'page_id' => $page->id,
-                            'sort' => $sort_counter,
-                            'group_id' => $pageItemData['group_id'] ?? null,
-                        ]
-                    );
-                    break;
-                default:
-                    throw new \InvalidArgumentException("Unsupported field type: {$pageItemData['type']}");
-            }
-            $sort_counter++;
-        }
     }
 
     public function getPageToken(Request $request)

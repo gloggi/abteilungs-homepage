@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GenericItem extends Model
 {
-    protected $fillable = ['type', 'page_id', 'sort'];
+    protected $fillable = ['type', 'page_id', 'blog_post_id', 'sort'];
 
     public function page()
     {

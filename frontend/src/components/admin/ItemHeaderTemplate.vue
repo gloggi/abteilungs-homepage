@@ -1,11 +1,13 @@
 <template>
   <PageHeader :title="title" class="pt-6">
-    <template #actions>
+    <template #back-button>
       <router-link :to="{ name: backLinkTo }">
         <ActionButton>
           <font-awesome-icon :icon="icons.faChevronLeft" class="h-6 w-6" />
         </ActionButton>
       </router-link>
+    </template>
+    <template #actions>
       <slot name="buttons-before"></slot>
       <ActionButton
         v-if="!noDelete"

@@ -41,13 +41,10 @@
       />
     </Card>
 
-
     <div class="flex h-full w-full flex-col gap-4 md:w-1/3">
-
       <div class="flex flex-1 flex-col overflow-hidden">
         <div class="flex-1 overflow-y-auto pr-2">
           <div class="space-y-6">
-
             <div class="space-y-4">
               <h3 class="font-medium text-gray-900 border-b pb-2">
                 {{ $t("dashboard.fileDetails") }}
@@ -87,7 +84,6 @@
                 :value="`${backendURL}${file.thumbnail}`"
               />
             </div>
-
 
             <div class="space-y-4">
               <h3 class="font-medium text-gray-900 border-b pb-2">

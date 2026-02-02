@@ -157,6 +157,21 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
 
 Route::post('/webforms', [WebFormController::class, 'store']);
 
+Route::get('/blogposts', [\App\Http\Controllers\BlogPostsController::class, 'index']);
+Route::get('/blogposts/{id}', [\App\Http\Controllers\BlogPostsController::class, 'show']);
+
+Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], function () {
+    Route::post('/blogposts', [\App\Http\Controllers\BlogPostsController::class, 'store']);
+    Route::put('/blogposts/{id}', [\App\Http\Controllers\BlogPostsController::class, 'update']);
+    Route::delete('/blogposts/{id}', [\App\Http\Controllers\BlogPostsController::class, 'destroy']);
+    
+    Route::get('/tags', [\App\Http\Controllers\TagController::class, 'index']);
+    Route::get('/tags/{id}', [\App\Http\Controllers\TagController::class, 'show']);
+    Route::post('/tags', [\App\Http\Controllers\TagController::class, 'store']);
+    Route::put('/tags/{id}', [\App\Http\Controllers\TagController::class, 'update']);
+    Route::delete('/tags/{id}', [\App\Http\Controllers\TagController::class, 'destroy']);
+});
+
 Route::post('/deploy', [DeployController::class, 'runCommands']);
 
 Route::get('/favicon', [MetaController::class, 'favicon']);

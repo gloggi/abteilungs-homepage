@@ -26,7 +26,10 @@ import Camps from "../views/Dashboard/Camps.vue";
 import Camp from "../views/Dashboard/Camp.vue";
 import Faqs from "../views/Dashboard/Faqs.vue";
 import Faq from "../views/Dashboard/Faq.vue";
+import Tags from "../views/Dashboard/Tags.vue";
+import Tag from "../views/Dashboard/Tag.vue";
 import EventMail from "../views/Dashboard/EventMail.vue";
+import MainBlogComponent from "../views/MainBlogComponent.vue";
 
 export const getRouter = ($t) => {
   const routes = [
@@ -73,6 +76,19 @@ export const getRouter = ($t) => {
           path: "pages/:id",
           name: "Page",
           component: Page,
+        },
+        {
+          path: "blogposts",
+          name: "BlogPosts",
+          component: () => import("../views/Dashboard/BlogPosts.vue"),
+          meta: {
+            title: $t("dashboard.blogPosts"),
+          },
+        },
+        {
+          path: "blogposts/:id",
+          name: "BlogPost",
+          component: () => import("../views/Dashboard/BlogPost.vue"),
         },
         {
           path: "sections",
@@ -215,12 +231,35 @@ export const getRouter = ($t) => {
             title: $t("dashboard.settings"),
           },
         },
+        {
+          path: "tags",
+          name: "Tags",
+          component: Tags,
+          meta: {
+            title: $t("dashboard.tags"),
+          },
+        },
+        {
+          path: "tags/:id",
+          name: "Tag",
+          component: Tag,
+        },
       ],
     },
     {
       path: `/${$t("page.groupPagePath")}/:id`,
       name: "GroupPage",
       component: Home,
+    },
+    {
+      path: "/blog",
+      name: "PublicBlogList",
+      component: MainBlogComponent,
+    },
+    {
+      path: "/blog/:slug",
+      name: "PublicBlogPost",
+      component: MainBlogComponent,
     },
     {
       path: "/:path",
@@ -237,7 +276,6 @@ export const getRouter = ($t) => {
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
     scrollBehavior() {
-
       return { top: 0 };
     },
   });

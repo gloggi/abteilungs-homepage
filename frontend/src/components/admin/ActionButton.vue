@@ -72,7 +72,6 @@ export default {
       return this.reverse ? "default" : "outline";
     },
     buttonSize() {
-      // Map legacy sizes to shadcn sizes or pass through if it matches shadcn
       const validSizes = ["default", "sm", "lg", "icon"];
       if (validSizes.includes(this.size)) return this.size;
 
@@ -83,7 +82,7 @@ export default {
           return "lg";
         case "normal":
         default:
-          return "icon"; // Default to icon as it was before for 'normal'
+          return "icon";
       }
     },
   },

@@ -1,5 +1,4 @@
 <template>
-
   <div class="group relative inline-block">
     <ColoredLogoCircle
       class="size-48 transition-all duration-300 group-hover:brightness-95"
@@ -12,10 +11,7 @@
       @click="showModal = true"
       class="absolute bottom-1 right-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md transition-all hover:scale-110 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
     >
-      <font-awesome-icon
-        :icon="icons.faPencil"
-        class="h-4 w-4 text-gray-600"
-      />
+      <font-awesome-icon :icon="icons.faPencil" class="h-4 w-4 text-gray-600" />
     </button>
   </div>
   <MediaModal

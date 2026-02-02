@@ -16,6 +16,9 @@ export const messages = {
       customLinks: "Benutzerdefinierte Links",
       specialItems: "Spezielle Elemente",
       pages: "Seiten",
+      blogPosts: "Blog-Beiträge",
+      blogPost: "Blog-Beitrag",
+      blogOverview: "Blog",
       menu: "Menü",
       footerLinks: "Fusszeilenlinks",
       removeItemFromMenu: "Element aus dem Menü entfernen",
@@ -85,6 +88,12 @@ export const messages = {
       url: "URL",
       thumbnailUrl: "Miniaturansicht-URL",
       createdAt: "Erstellt am",
+      publishedAt: "Veröffentlicht am",
+      active: "Aktiv",
+      tags: "Tags",
+      tag: "Tag",
+      slug: "Slug",
+      editSlug: "Slug bearbeiten",
       menuFooterLinks: "Menü- und Fusszeilenlinks",
       route: "Permalink",
       showBigHeader: "Grosses Header anzeigen",
@@ -101,6 +110,9 @@ export const messages = {
         "Wenn dieses Feld leer gelassen wird, zeigt es auf die Startpage der Website",
       infoAspectRatio:
         "Wenn 'Grosses Header anzeigen' ausgewählt ist, beträgt das ideale Seitenverhältnis 16:9, andernfalls beträgt das ideale Seitenverhältnis 32:9.",
+      previewImage: "Vorschaubild",
+      infoPreviewImage:
+        "Das Vorschaubild wird in der Blog-Übersicht angezeigt.",
       fromAge: "Von Alter",
       toAge: "Bis Alter",
       sectionColor: "Stufenfarbe",
@@ -164,6 +176,7 @@ export const messages = {
       group: "Gruppe",
       groupEvents: "Gruppenaktivitäten",
       groupEventsItem: "Gruppenaktivitäten-Element",
+      blogPostsItem: "Blog-Beiträge-Element",
       isGroupPage: "Ist eine Gruppenseite?",
       clickToAddPageItem:
         "Klicke hier, um ein neues Seitenelement hinzuzufügen",
@@ -228,6 +241,8 @@ export const messages = {
       passwordInfo:
         "Das Passwort wird verschlüsselt gespeichert und wird deshalb nicht angezeigt auch wenn es bereits gesetzt wurde.",
       editPage: "Diese Seite bearbeiten",
+      editBlogPost: "Blogeintrag bearbeiten",
+      editBlogPosts: "Blogposts bearbeiten",
       editEvents: "Aktivitäten bearbeiten",
       goToDashboard: "Zum Dashboard",
       mixed: "Gemischt",
@@ -331,6 +346,12 @@ export const messages = {
       groupPagePath: "gruppen",
       openProtectedPage: "Geschützte Seite öffnen",
       wrongPassword: "Das Passwort ist nicht korrekt.",
+    },
+    blog: {
+      title: "Blog",
+      readMore: "Weiterlesen",
+      backToOverview: "Zurück zur Übersicht",
+      noPosts: "Keine Beiträge vorhanden",
     },
   },
 };

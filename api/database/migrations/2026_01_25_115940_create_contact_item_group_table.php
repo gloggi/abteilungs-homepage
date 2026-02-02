@@ -19,14 +19,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Data Migration: Convert GenericItem(contactItem) to ContactItem and assign to "Abteilungsstab"
         $group = DB::table('groups')->where('name', 'Abteilungsstab')->first();
         
         if ($group) {
             $genericItems = DB::table('generic_items')->where('type', 'contactItem')->get();
             
             foreach ($genericItems as $item) {
-                // Create ContactItem
                 $contactItemId = DB::table('contact_items')->insertGetId([
                     'page_id' => $item->page_id,
                     'type' => 'contactItem',
@@ -35,7 +33,6 @@ return new class extends Migration
                     'updated_at' => $item->updated_at,
                 ]);
 
-                // Link to Group
                 DB::table('contact_item_group')->insert([
                     'contact_item_id' => $contactItemId,
                     'group_id' => $group->id,

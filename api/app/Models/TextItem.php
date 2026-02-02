@@ -9,7 +9,7 @@ class TextItem extends Model
 {
     use Searchable;
 
-    protected $fillable = ['title', 'body', 'page_id', 'sort', 'section_id', 'group_id'];
+    protected $fillable = ['title', 'body', 'page_id', 'blog_post_id', 'sort', 'section_id', 'group_id'];
 
     protected $appends = ['type', 'logoCircle'];
 

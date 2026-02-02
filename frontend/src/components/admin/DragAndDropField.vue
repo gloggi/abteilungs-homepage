@@ -15,7 +15,10 @@
           : 'border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300',
       ]"
     >
-      <label for="file-upload" class="absolute inset-0 w-full h-full cursor-pointer z-10">
+      <label
+        for="file-upload"
+        class="absolute inset-0 w-full h-full cursor-pointer z-10"
+      >
         <input
           id="file-upload"
           type="file"
@@ -25,7 +28,9 @@
         />
       </label>
 
-      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ring-8 ring-gray-50">
+      <div
+        class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 ring-8 ring-gray-50"
+      >
         <font-awesome-icon
           :icon="icons.faFileCirclePlus"
           class="h-6 w-6 text-gray-600"
@@ -37,7 +42,7 @@
           <span class="font-semibold">
             {{ $t("dashboard.uploadFile") }}
           </span>
-         </p>
+        </p>
         <p class="text-xs text-gray-500">
           {{ $t("dashboard.dragAndDrop") }}
         </p>

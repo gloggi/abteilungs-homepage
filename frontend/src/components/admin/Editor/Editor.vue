@@ -77,7 +77,6 @@
 </template>
 
 <script>
-
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
 import { StarterKit } from "@tiptap/starter-kit";
@@ -147,12 +146,10 @@ export default {
     askForLink() {
       const previousUrl = this.editor.getAttributes("link").href;
 
-
       if (previousUrl) {
         this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
         return;
       }
-
 
       this.editor
         .chain()
@@ -203,7 +200,7 @@ export default {
       this.editor.commands.setContent(value, false);
     },
     editorContent(value) {
-        this.$emit("update:modelValue", value);
+      this.$emit("update:modelValue", value);
     },
   },
   computed: {
@@ -338,13 +335,11 @@ export default {
   height: 0;
 }
 
-
 .ProseMirror img {
   display: block;
   max-width: 100%;
   height: auto;
 }
-
 
 .ProseMirror [data-resize-container] {
   position: relative;
@@ -352,12 +347,10 @@ export default {
   line-height: 0;
 }
 
-
 .ProseMirror [data-resize-wrapper] {
   position: relative;
   display: inline-block;
 }
-
 
 .ProseMirror .ProseMirror-selectednode [data-resize-wrapper],
 .ProseMirror
@@ -367,12 +360,10 @@ export default {
   outline-offset: 2px;
 }
 
-
 .ProseMirror [data-resize-handle],
 .ProseMirror [data-image-toolbar] {
   display: none;
 }
-
 
 .ProseMirror .ProseMirror-selectednode [data-resize-handle],
 .ProseMirror
@@ -384,7 +375,6 @@ export default {
   [data-image-toolbar] {
   display: flex !important;
 }
-
 
 .ProseMirror .ProseMirror-selectednode [data-resize-handle],
 .ProseMirror

@@ -28,6 +28,7 @@
         v-if="pageItem.type == 'groupEventsItem'"
         :item="pageItem"
       />
+      <BlogPostsItem v-if="pageItem.type == 'blogPostsItem'" :item="pageItem" />
       <PasswordItem
         :route="page.route"
         v-if="pageItem.type == 'passwordItem'"
@@ -49,6 +50,7 @@ import LocationItem from "./LocationItem.vue";
 import FaqItem from "./FaqItem.vue";
 import GroupEventsItem from "./GroupEventsItem.vue";
 import PasswordItem from "./PasswordItem.vue";
+import BlogPostsItem from "./BlogPostsItem.vue";
 
 export default {
   props: ["page"],
@@ -81,6 +83,7 @@ export default {
     FaqItem,
     GroupEventsItem,
     PasswordItem,
+    BlogPostsItem,
   },
 };
 </script>

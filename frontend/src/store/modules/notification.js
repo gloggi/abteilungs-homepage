@@ -24,13 +24,11 @@ export const notification = {
         duration: 3000,
       };
 
-
       if (payload.message && typeof payload.message === "string") {
         notification.title = payload.error ? "Fehler" : "Erfolg";
         notification.description = payload.message;
         notification.variant = payload.error ? "destructive" : "success";
       } else {
-
         notification = { ...notification, ...payload, id };
       }
 

@@ -4,7 +4,7 @@ import globals from "globals";
 
 export default [
   {
-    ignores: ["dist/**", "node_modules/**", "public/**", ".env", ".env.*"]
+    ignores: ["dist/**", "node_modules/**", "public/**", ".env", ".env.*"],
   },
   js.configs.recommended,
   ...pluginVue.configs["flat/essential"],
@@ -13,14 +13,17 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...globals.es2021
-      }
-    }
+        ...globals.es2021,
+      },
+    },
   },
   {
     rules: {
       "vue/multi-word-component-names": "off",
-      "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
-    }
-  }
+      "no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+    },
+  },
 ];

@@ -9,7 +9,7 @@ class FaqItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['faq_id', 'sort', 'page_id'];
+    protected $fillable = ['faq_id', 'sort', 'page_id', 'blog_post_id'];
 
     protected $appends = ['type'];
 

@@ -2,13 +2,16 @@
   <div
     class="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center"
   >
-    <div>
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-        {{ title }}
-      </h1>
-      <p v-if="description" class="mt-1 text-sm text-gray-500">
-        {{ description }}
-      </p>
+    <div class="flex items-center gap-4">
+      <slot name="back-button"></slot>
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+          {{ title }}
+        </h1>
+        <p v-if="description" class="mt-1 text-sm text-gray-500">
+          {{ description }}
+        </p>
+      </div>
     </div>
     <div class="w-full md:w-auto flex flex-wrap gap-2 items-center">
       <slot name="actions"></slot>

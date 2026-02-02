@@ -7,7 +7,9 @@
     @dragenter="dragging = true"
     @dragleave="dragging = false"
     :class="`w-full transition-all duration-200 ease-in-out rounded-md ${
-      dragging ? 'h-12 bg-gray-50 border-2 border-dashed border-gray-300' : 'h-1 bg-transparent'
+      dragging
+        ? 'h-12 bg-gray-50 border-2 border-dashed border-gray-300'
+        : 'h-1 bg-transparent'
     }`"
   ></div>
 </template>

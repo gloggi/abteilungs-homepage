@@ -4,7 +4,7 @@
     :style="{ color: settings?.navbarFontColor }"
   >
     <router-link
-      v-if="menuItem.pageId"
+      v-if="menuItem.pageId || (menuItem.url && menuItem.url.startsWith('/'))"
       :to="menuItem.url"
       @click="handlePageChange"
       ><slot></slot
