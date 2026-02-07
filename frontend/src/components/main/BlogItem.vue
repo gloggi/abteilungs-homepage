@@ -64,8 +64,8 @@ export default {
   },
   computed: {
     formattedDate() {
-      if (!this.post.publishedAt && !this.post.published_at) return "";
-      const date = this.post.publishedAt || this.post.published_at; // Handle camelCase transform or potential raw data
+      if (!this.post.publishedAt) return "";
+      const date = this.post.publishedAt;
       return new Date(date).toLocaleDateString(navigator.language || "de-CH", {
         day: "numeric",
         month: "long",

@@ -160,11 +160,9 @@ export default {
     checkBoxValues: {
       handler(newValue) {
         if (Object.values(newValue).every((value) => value === true)) {
-          this.$refs.masterbox.checked = true;
+          if (this.$refs.masterbox) this.$refs.masterbox.checked = true;
         } else {
-          try {
-            this.$refs.masterbox.checked = false;
-          } catch {}
+          if (this.$refs.masterbox) this.$refs.masterbox.checked = false;
         }
       },
       deep: true,

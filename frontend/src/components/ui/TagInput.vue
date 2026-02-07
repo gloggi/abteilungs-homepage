@@ -189,7 +189,7 @@ export default {
       newTags.splice(index, 1);
       this.emitUpdate(newTags);
     },
-    handleBackspace(e) {
+    handleBackspace() {
       if (this.search === "" && this.modelValue.length > 0) {
         this.removeTag(this.modelValue.length - 1);
       }

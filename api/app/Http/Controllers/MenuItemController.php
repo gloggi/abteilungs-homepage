@@ -9,64 +9,68 @@ class MenuItemController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 1000);
-        $page = $request->input('page', 1);
-        $menuItems = MenuItem::with('page')->paginate($perPage, ['*'], 'page', $page);
+        $menuItems = MenuItem::whereNull('parent_id')
+            ->with(['page', 'children.page', 'children.children.page'])
+            ->orderBy('sort')
+            ->get();
 
-        $data = $menuItems->items();
-        $data = collect($data)->sortBy('sort')->values()->all();
-        foreach ($data as $item) {
-            if ($item->page) {
-                $item->url = '/'.$item->page->route;
-                $item->title = $item->page->title;
-                unset($item->page);
-            }
-        }
-        $meta = [
-            'current_page' => $menuItems->currentPage(),
-            'from' => $menuItems->firstItem(),
-            'last_page' => $menuItems->lastPage(),
-            'path' => $menuItems->path(),
-            'per_page' => $menuItems->perPage(),
-            'to' => $menuItems->lastItem(),
-            'total' => $menuItems->total(),
-        ];
+        $data = $this->transformMenuItems($menuItems);
 
         return response()->json([
             'data' => $data,
-            'meta' => $meta,
         ]);
+    }
+
+    private function transformMenuItems($items)
+    {
+        return $items->map(function ($item) {
+            if ($item->page) {
+                $item->url = '/' . $item->page->route;
+                $item->title = $item->page->title;
+                // Keep page for ID reference if needed, but original code unset it.
+                // keeping it is useful for "Edit" in admin.
+                // $item->page is hidden by unset in original, but we might want it.
+                // Let's stick to original behavior but we need 'id' for dragging.
+                unset($item->page);
+            }
+            
+            if ($item->children && $item->children->count() > 0) {
+                $item->children = $this->transformMenuItems($item->children);
+            }
+
+            return $item;
+        });
     }
 
     public function store(Request $request)
     {
-        $existingMenuItemOfPage = MenuItem::where('page_id', $request->input('page_id'))->first();
-        $existingMenuItemOfCustom = MenuItem::where('url', $request->input('url'))->first();
-        $existingMenuItemOfSpecial = MenuItem::where('special', $request->input('special'))->first();
-        if ($existingMenuItemOfPage && $request->input('page_id')) {
-            $existingMenuItemOfPage->sort = $request->input('sort');
-            $existingMenuItemOfPage->save();
-
-            return response()->json($existingMenuItemOfPage);
+        // Logic to update existing based on specific constraints
+        // Using ID is safer for updates if provided.
+        if ($request->has('id')) {
+             $menuItem = MenuItem::find($request->input('id'));
+             if ($menuItem) {
+                 $menuItem->title = $request->input('title'); // Allow title updates
+                 $menuItem->url = $request->input('url');
+                 $menuItem->special = $request->input('special');
+                 $menuItem->sort = $request->input('sort');
+                 $menuItem->page_id = $request->input('page_id');
+                 $menuItem->parent_id = $request->input('parent_id');
+                 $menuItem->save();
+                 return response()->json($menuItem);
+             }
         }
-        if ($existingMenuItemOfCustom && $request->input('url')) {
-            $existingMenuItemOfCustom->sort = $request->input('sort');
-            $existingMenuItemOfCustom->save();
 
-            return response()->json($existingMenuItemOfCustom);
-        }
-        if ($existingMenuItemOfSpecial && $request->input('special')) {
-            $existingMenuItemOfSpecial->sort = $request->input('sort');
-            $existingMenuItemOfSpecial->save();
-
-            return response()->json($existingMenuItemOfSpecial);
-        }
+        // Fallback to legacy check or create new
+        // For drag and drop reordering, we often send the whole object with ID.
+        // If we want to support the old "add by page_id" logic:
+        
         $menuItem = new MenuItem;
         $menuItem->title = $request->input('title');
         $menuItem->url = $request->input('url');
         $menuItem->special = $request->input('special');
         $menuItem->sort = $request->input('sort');
         $menuItem->page_id = $request->input('page_id');
+        $menuItem->parent_id = $request->input('parent_id');
         $menuItem->save();
 
         return response()->json($menuItem);

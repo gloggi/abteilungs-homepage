@@ -131,6 +131,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
+        @changeContact="changeContactItem"
         :key="`contactItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
@@ -237,7 +238,7 @@ import FilesItem from "../../components/admin/PageItems/FilesItem.vue";
 import CampItem from "../../components/admin/PageItems/CampItem.vue";
 import LocationItem from "../../components/admin/PageItems/LocationItem.vue";
 import FaqItem from "../../components/admin/PageItems/FaqItem.vue";
-import SelectComponent from "../../components/admin/SelectComponent.vue";
+
 import GroupEventsItem from "../../components/admin/PageItems/GroupEventsItem.vue";
 import ActionButton from "../../components/admin/ActionButton.vue";
 import { nanoid } from "nanoid";
@@ -264,7 +265,7 @@ export default {
     CampItem,
     LocationItem,
     FaqItem,
-    SelectComponent,
+
     GroupEventsItem,
     ActionButton,
     BlogPostsItem,
@@ -435,6 +436,16 @@ export default {
       } else {
         this.content.previewImage = null;
         this.content.previewImageId = null;
+      }
+    },
+    changeContactItem(event) {
+      const pageItemId = event.id;
+      const groups = event.groups;
+      const itemIndex = this.content.pageItems.findIndex(
+        (p) => (p.id || p.tempId) == pageItemId && p.type == "contactItem",
+      );
+      if (itemIndex > -1) {
+        this.content.pageItems[itemIndex].groups = groups;
       }
     },
     slugyfy(text) {

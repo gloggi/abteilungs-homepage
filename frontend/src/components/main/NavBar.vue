@@ -30,16 +30,11 @@
       </div>
       <Transition @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
         <ul
-          class="flex flex-col md:flex-row md:space-x-5 w-full md:w-auto absolute z-10 md:static top-[75px] md:top-0 bg-primary h-full md:h-auto"
+          class="flex flex-col md:flex-row md:items-center md:space-x-5 w-full md:w-auto absolute z-10 md:static top-[75px] md:top-0 bg-primary h-full md:h-auto"
           v-if="showMobileMenu || isDesktop"
         >
-          <template v-for="menuItem in menuItems" :key="menuItem.id">
-            <NavLinkItem
-              v-if="!menuItem.special || menuItem.special === 'blogOverview'"
-              :menuItem="menuItem"
-              >{{ menuItem.title }}</NavLinkItem
-            >
-            <GroupDropdown v-else-if="menuItem.special === 'groupPages'" />
+          <template v-for="menuItem in processedMenuItems" :key="menuItem.id">
+            <NavBarItem :menuItem="menuItem" />
           </template>
         </ul>
       </Transition>
@@ -47,17 +42,52 @@
   </div>
 </template>
 <script>
-import GroupDropdown from "./GroupDropdown.vue";
-import NavLinkItem from "./NavLinkItem.vue";
+
+import NavBarItem from "./NavBarItem.vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { gsap } from "gsap";
 export default {
-  components: { NavLinkItem, GroupDropdown },
+  components: { NavBarItem },
   props: {
     menuItems: {
       type: Array,
       required: true,
     },
+  },
+  computed: {
+    showUserBar() {
+      const user = this.$store.state.user;
+      return this.$store.state.user.user && (user.isAdmin || user.isUnitLeader);
+    },
+    alertVisible() {
+      return this.settings.showAlert;
+    },
+    groups() {
+      return this.$store.state.groups.groups;
+    },
+    processedMenuItems() {
+      return this.menuItems.map((item) => {
+        if (item.special === "groupPages") {
+          const groupChildren = this.groups
+            .filter((g) => g.hasPage)
+            .map((g) => ({
+              id: `group-${g.id}`,
+              title: g.name,
+              url: `/${this.$t("page.groupPagePath")}/${g.route}`,
+            }));
+
+          return {
+            ...item,
+            title: this.$t("page.groups"),
+            children: groupChildren,
+          };
+        }
+        return item;
+      });
+    },
+  },
+  created() {
+    this.$store.dispatch("groups/fetchGroups");
   },
   data() {
     return {
@@ -67,6 +97,12 @@ export default {
       showMobileMenu: false,
       isDesktop: window.innerWidth > 1024,
     };
+  },
+  mounted() {
+    window.addEventListener("resize", this.handleResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
   },
   methods: {
     beforeEnter(el) {
@@ -91,21 +127,6 @@ export default {
     },
     handleResize() {
       this.isDesktop = window.innerWidth > 1024;
-    },
-  },
-  mounted() {
-    window.addEventListener("resize", this.handleResize);
-  },
-  beforeUnmount() {
-    window.removeEventListener("resize", this.handleResize);
-  },
-  computed: {
-    showUserBar() {
-      const user = this.$store.state.user;
-      return this.$store.state.user.user && (user.isAdmin || user.isUnitLeader);
-    },
-    alertVisible() {
-      return this.settings.showAlert;
     },
   },
 };

@@ -9,7 +9,7 @@
     <p>{{ $t("dashboard.contactsMessage") }}</p>
     <MultipleSelect
       :options="options"
-      v-model="item.groups"
+      v-model="localGroups"
       :label="$t('dashboard.groups')"
       :id="`contact-groups-${item.id || item.tempId}`"
     />
@@ -27,7 +27,19 @@ export default {
   data() {
     return {
       options: [],
+      localGroups: this.item.groups || [],
     };
+  },
+  watch: {
+    localGroups(newVal) {
+      this.$emit("changeContact", {
+        id: this.item.id || this.item.tempId,
+        groups: newVal,
+      });
+    },
+    "item.groups"(newVal) {
+      this.localGroups = newVal;
+    },
   },
   methods: {
     async getGroups() {
@@ -38,18 +50,15 @@ export default {
         console.log(e);
       }
     },
-    changeGroups(vals) {
-      this.item.groups = vals;
-    },
   },
   async created() {
     await this.getGroups();
     if (
-      this.item.groups &&
-      this.item.groups.length > 0 &&
-      typeof this.item.groups[0] === "object"
+      this.localGroups &&
+      this.localGroups.length > 0 &&
+      typeof this.localGroups[0] === "object"
     ) {
-      this.item.groups = this.item.groups.map((g) => g.id);
+      this.localGroups = this.localGroups.map((g) => g.id);
     }
   },
 };

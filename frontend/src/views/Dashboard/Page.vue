@@ -141,6 +141,7 @@
         @delete="deleteItem"
         @startedDragging="isDragging = true"
         @endedDragging="isDragging = false"
+        @changeContact="changeContactItem"
         :key="`contactItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
@@ -436,6 +437,16 @@ export default {
         (p) => p.id == pageItemId && p.type == "campItem",
       );
       this.content.pageItems[itemIndex].groupId = groupId;
+    },
+    changeContactItem(event) {
+      const pageItemId = event.id;
+      const groups = event.groups;
+      const itemIndex = this.content.pageItems.findIndex(
+        (p) => (p.id || p.tempId) == pageItemId && p.type == "contactItem",
+      );
+      if (itemIndex > -1) {
+        this.content.pageItems[itemIndex].groups = groups;
+      }
     },
     changeBlogPostsItem(event) {
       const pageItemId = event.id;

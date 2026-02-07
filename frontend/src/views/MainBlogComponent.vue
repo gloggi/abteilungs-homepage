@@ -37,7 +37,7 @@ import ContentWrapper from "../components/main/ContentWrapper.vue";
 import CookieBanner from "../components/main/CookieBanner.vue";
 import FooterComponent from "../components/main/FooterComponent.vue";
 import NavBar from "../components/main/NavBar.vue";
-import PageBuilder from "../components/main/PageBuilder.vue";
+
 import PageWrapper from "../components/main/PageWrapper.vue";
 import RegularPage from "./RegularPage.vue";
 import SmallHeader from "../components/main/SmallHeader.vue";
@@ -53,7 +53,7 @@ export default {
     ContentWrapper,
     FooterComponent,
     NavBar,
-    PageBuilder,
+
     PageWrapper,
     RegularPage,
     SmallHeader,

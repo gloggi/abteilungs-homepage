@@ -93,7 +93,7 @@ export default {
         {
           name: this.$t("dashboard.blogPosts"),
           type: "blogPostsItem",
-          component: markRaw(TextItem), // Using TextItem icon as placeholder if no specific icon exists
+          component: markRaw(TextItem), 
         },
       ],
     };

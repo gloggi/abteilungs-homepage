@@ -15,6 +15,7 @@ class MenuItem extends Model
         'page_id',
         'sort',
         'special',
+        'parent_id',
     ];
 
     protected $appends = ['type'];
@@ -27,5 +28,10 @@ class MenuItem extends Model
     public function page()
     {
         return $this->belongsTo(Page::class);
+    }
+
+    public function children()
+    {
+        return $this->hasMany(MenuItem::class, 'parent_id')->orderBy('sort');
     }
 }

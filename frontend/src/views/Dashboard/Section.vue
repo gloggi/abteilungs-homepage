@@ -61,7 +61,8 @@
             />
             <InfoField :info="$t('dashboard.sectionSortInfo')" />
           </div>
-          <div class="">
+
+          <div>
             <FormLabel>{{ $t("dashboard.sectionColor") }}</FormLabel>
             <ColorPicker v-model="content.color" :errors="errors.color" />
           </div>
@@ -100,7 +101,7 @@ import LogoDisplay from "../../components/admin/LogoDisplay.vue";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
 import BannerImageSelector from "../../components/admin/BannerImageSelector.vue";
-import SearchField from "../../components/admin/SearchField.vue";
+
 import ColorPicker from "../../components/admin/ColorPicker.vue";
 import InfoField from "../../components/admin/InfoField.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
