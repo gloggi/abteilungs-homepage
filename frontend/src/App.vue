@@ -164,4 +164,51 @@ export default {
 .link {
   color: #337ab7;
 }
+
+/* Table styles for content rendered on the main page */
+table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+table td,
+table th {
+  border: 1px solid var(--primary-color);
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  vertical-align: top;
+}
+
+table td > *,
+table th > * {
+  margin-bottom: 0;
+}
+
+table th {
+  font-weight: 600;
+  text-align: left;
+}
+
+table tr:first-child th {
+  border-top: 2px solid var(--primary-color);
+}
+
+table tr th:first-child {
+  border-left: 2px solid var(--primary-color);
+}
+
+table tr:last-child td,
+table tr:last-child th {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 2px solid var(--primary-color);
+}
 </style>

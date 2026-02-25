@@ -228,10 +228,7 @@ import TextInput from "../../components/admin/TextInput.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/AddPageItem.vue";
-import {
-  faEye,
-  faCopy,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEye, faCopy } from "@fortawesome/free-solid-svg-icons";
 import TextItem from "../../components/admin/PageItems/TextItem.vue";
 import ImageItem from "../../components/admin/PageItems/ImageItem.vue";
 import { kebabCase } from "lodash";

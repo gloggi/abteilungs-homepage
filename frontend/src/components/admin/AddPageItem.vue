@@ -93,7 +93,7 @@ export default {
         {
           name: this.$t("dashboard.blogPosts"),
           type: "blogPostsItem",
-          component: markRaw(TextItem), 
+          component: markRaw(TextItem),
         },
       ],
     };

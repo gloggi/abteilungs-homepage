@@ -12,7 +12,7 @@
     </div>
 
     <Pager
-    class="mt-4"
+      class="mt-4"
       v-if="pagination && pagination.lastPage > 1"
       :numberOfPages="pagination.lastPage"
       :currentPage="pagination.currentPage"
@@ -55,12 +55,17 @@ export default {
     async fetchPosts(page = 1) {
       this.isLoading = true;
       try {
-        const { data } = await this.callApi("get", this.endpoint, {}, {
+        const { data } = await this.callApi(
+          "get",
+          this.endpoint,
+          {},
+          {
             params: {
-                page: page,
-                per_page: this.limit
-            }
-        });
+              page: page,
+              per_page: this.limit,
+            },
+          },
+        );
         this.posts = data.data || [];
         this.pagination = data;
       } catch (error) {

@@ -104,10 +104,16 @@ export default {
       return this.$store.state.user.isAdmin;
     },
     showBlogPostEdit() {
-      return this.blogPostId && (this.isAdmin || this.$store.state.user.isUnitLeader);
+      return (
+        this.blogPostId && (this.isAdmin || this.$store.state.user.isUnitLeader)
+      );
     },
     showBlogPostsEdit() {
-      return !this.blogPostId && this.$route.path.startsWith("/blog") && (this.isAdmin || this.$store.state.user.isUnitLeader);
+      return (
+        !this.blogPostId &&
+        this.$route.path.startsWith("/blog") &&
+        (this.isAdmin || this.$store.state.user.isUnitLeader)
+      );
     },
   },
 };

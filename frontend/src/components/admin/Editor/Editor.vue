@@ -292,6 +292,7 @@ export default {
           placeholder: this.placeholder,
         }),
         Table.configure({
+          resizable: true,
           HTMLAttributes: {
             class: "main-text w-full",
           },
@@ -381,5 +382,83 @@ export default {
   [data-resize-container].ProseMirror-selectednode
   [data-resize-handle] {
   display: block !important;
+}
+
+.ProseMirror table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.ProseMirror table td,
+.ProseMirror table th {
+  border: 1px solid var(--primary-color);
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  vertical-align: top;
+}
+
+.ProseMirror table td > *,
+.ProseMirror table th > * {
+  margin-bottom: 0;
+}
+
+.ProseMirror table th {
+  font-weight: 600;
+  text-align: left;
+}
+
+.ProseMirror table .selectedCell:after {
+  background: rgba(var(--primary-color-rgb, 59, 130, 246), 0.15);
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.ProseMirror table .column-resize-handle {
+  background-color: var(--primary-color, #3b82f6);
+  bottom: -2px;
+  pointer-events: none;
+  position: absolute;
+  right: -2px;
+  top: 0;
+  width: 4px;
+}
+
+.ProseMirror.resize-cursor {
+  cursor: col-resize;
+}
+
+/* Table row header styling */
+.ProseMirror table tr:first-child th {
+  border-top: 2px solid var(--primary-color);
+}
+
+.ProseMirror table tr th:first-child {
+  border-left: 2px solid var(--primary-color);
+}
+
+.ProseMirror table tr:last-child td,
+.ProseMirror table tr:last-child th {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.ProseMirror table tr td:last-child,
+.ProseMirror table tr th:last-child {
+  border-right: 2px solid var(--primary-color);
+}
+
+.ProseMirror table td:hover,
+.ProseMirror table th:hover {
+  background-color: rgba(0, 0, 0, 0.02);
 }
 </style>

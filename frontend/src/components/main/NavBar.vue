@@ -42,7 +42,6 @@
   </div>
 </template>
 <script>
-
 import NavBarItem from "./NavBarItem.vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { gsap } from "gsap";
