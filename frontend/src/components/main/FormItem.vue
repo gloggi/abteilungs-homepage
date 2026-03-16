@@ -12,7 +12,6 @@
           {{ $t("page.formSuccessMessage") }}
         </HeadingThree>
       </div>
-
       <div class="flex flex-col space-y-5">
         <div
           v-for="field in item.form.fields"

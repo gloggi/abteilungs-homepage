@@ -40,6 +40,7 @@ trait HasPageItems
         foreach ($formItems as $formItem) {
             if ($form = $formItem->form) {
                 $form->fields = $form->getAllFields();
+                unset($form->email);
             }
         }
 
@@ -97,7 +98,7 @@ trait HasPageItems
 
         $items = $items->concat($this->textItems);
         $items = $items->concat($this->imageItems);
-        $items = $items->concat($this->formItems);
+        $items = $items->concat($this->formItemsWithFields());
         $items = $items->concat($this->filesItems);
         $items = $items->concat($this->genericItems);
         $items = $items->concat($this->locationItems);
