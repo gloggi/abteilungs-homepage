@@ -69,12 +69,20 @@
       <div class="flex-1 overflow-y-auto py-4 custom-scrollbar">
         <nav class="space-y-1 px-1">
           <SidebarItem
-            to="/dashboard"
+            to="/"
             :icon="icons.faHome"
             @click="isOpen = false"
             :exact="true"
           >
             {{ $t("dashboard.home") }}
+          </SidebarItem>
+          <SidebarItem
+            to="/dashboard"
+            :icon="icons.faGauge"
+            @click="isOpen = false"
+            :exact="true"
+          >
+            {{ $t("dashboard.dashboard") }}
           </SidebarItem>
           <SidebarItem
             v-if="isAdmin"
@@ -224,6 +232,7 @@ import {
   faHome,
   faNewspaper,
   faTags,
+  faGauge,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "./SidebarItem.vue";
 
@@ -253,6 +262,7 @@ export default {
         faHome,
         faNewspaper,
         faTags,
+        faGauge,
       },
     };
   },

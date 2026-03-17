@@ -3,6 +3,7 @@ export const messages = {
     dashboard: {
       hello: "Hallo {name}!",
       home: "Startseite",
+      dashboard: "Dashboard",
       formFields: "Formularfelder",
       pageItems: "Seitenelemente",
       uploadFile: "Datei hochladen",
