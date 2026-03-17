@@ -80,7 +80,7 @@ export default {
     },
     select(event, objectid) {
       if (event.target.checked) {
-        this.payload.push(objectid);
+        this.payload = [...this.payload, objectid];
       } else {
         this.payload = this.payload.filter((i) => i !== objectid);
       }

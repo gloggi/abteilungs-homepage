@@ -43,6 +43,7 @@ class StorePageRequest extends FormRequest
             'page_items.*.view_mode' => 'nullable|string',
             'page_items.*.tags' => 'nullable|array',
             'page_items.*.blog_posts' => 'nullable|array',
+            'page_items.*.groups' => 'nullable|array',
         ];
     }
 }

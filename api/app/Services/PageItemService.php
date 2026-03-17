@@ -84,9 +84,10 @@ class PageItemService
                         array_merge($data, ['type' => 'contactItem'])
                     );
                     $groupIds = $itemData['groups'] ?? [];
-                    if (!empty($groupIds) && is_array($groupIds) && is_array($groupIds[0] ?? null)) {
-                        $groupIds = array_column($groupIds, 'id');
-                    }
+                    // Normalize: handle both plain IDs [1,2] and object arrays [['id'=>1],['id'=>2]]
+                    $groupIds = array_map(function ($g) {
+                        return is_array($g) ? $g['id'] : $g;
+                    }, $groupIds);
                     $contactItem->groups()->sync($groupIds);
                     break;
                 case 'groupsItem':
