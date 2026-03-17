@@ -5,7 +5,7 @@
     :titles="`${$t('dashboard.name')},${$t('dashboard.startAt')},${$t(
       'dashboard.finishAt',
     )},${$t('dashboard.participants')}`"
-    columns="name:link(id),startAt:date,finishAt:date,participantCount"
+    columns="name:link(id),startDate:date,finishDate:date,participantCount"
     pushAfterCreationTo="Camp"
     :midataSync="true"
   />
