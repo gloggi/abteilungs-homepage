@@ -256,8 +256,8 @@ export default {
             },
           },
         }),
-        HeadingExtension.configure({ levels: [1, 2] }).extend({
-          levels: [1, 2],
+        HeadingExtension.configure({ levels: [1, 2, 3] }).extend({
+          levels: [1, 2, 3],
           renderHTML({ node, HTMLAttributes }) {
             const level = this.options.levels.includes(node.attrs.level)
               ? node.attrs.level
