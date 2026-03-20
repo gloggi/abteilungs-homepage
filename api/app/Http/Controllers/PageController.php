@@ -54,7 +54,7 @@ class PageController extends Controller
     public function show($id, Request $request)
     {
         if ($id === "0") {
-             $page = Page::where('route', 0)->orWhereNull('route')->orWhere('route', 'home')->orWhere('route', '')->first();
+             $page = Page::whereNull('route')->orWhereIn('route', ['0', 'home', ''])->orderByRaw("CASE WHEN route IS NULL THEN 0 ELSE 1 END")->first();
         } else {
              $page = Page::where('id', $id)->orWhere('route', $id)->first();
         }
