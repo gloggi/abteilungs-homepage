@@ -16,13 +16,11 @@ const i18n = createI18n({
 
 const router = getRouter(i18n.global.t);
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   let splitPath = to.path.split("/");
   let isDashboard = splitPath[1] === "dashboard";
   if (isDashboard && !localStorage.token) {
-    next({ name: "Login" });
-  } else {
-    next();
+    return { name: "Login" };
   }
 });
 

@@ -279,11 +279,10 @@ export const getRouter = ($t) => {
       return { top: 0 };
     },
   });
-  router.beforeEach((to, from, next) => {
+  router.beforeEach((to) => {
     if (to.meta.title) {
       document.title = to.meta.title;
     }
-    next();
   });
 
   return router;

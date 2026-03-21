@@ -45,6 +45,9 @@ export default {
   },
   methods: {
     async getEvents() {
+      if (!this.item.group) {
+        return;
+      }
       try {
         const response = await this.callApi(
           "get",

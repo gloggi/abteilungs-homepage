@@ -1,6 +1,6 @@
 <template>
   <AlertBar v-if="settings.showAlert" />
-  <UserBar v-if="showUserBar" :pageId="page.id" :groupId="page.groupId" />
+  <UserBar v-if="page && showUserBar" :pageId="page.id" :groupId="page.groupId" />
   <RegularPage
     :key="`page-${pageKey}`"
     v-if="page && !pageNonExistent"
