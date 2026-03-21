@@ -183,6 +183,30 @@ class PageController extends Controller
         ], 200);
     }
 
+    public function destroy($id)
+    {
+        $page = Page::find($id);
+        if (! $page) {
+            return response()->json(['message' => 'Page not found'], 404);
+        }
+
+        $user = Auth::user();
+        if (! $user->hasRole('admin')) {
+            if ($page->group_id && ! $user->groups->pluck('id')->contains($page->group_id)) {
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
+        }
+
+        $items = $page->getAllItems();
+        foreach ($items as $item) {
+            $item->delete();
+        }
+
+        $page->delete();
+
+        return response()->json(['message' => 'Page deleted successfully'], 200);
+    }
+
     public function getPageToken(Request $request)
     {
         $route = $request->input('route');
