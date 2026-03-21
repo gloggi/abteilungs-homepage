@@ -7,9 +7,11 @@
     @endedDragging="$emit('endedDragging')"
   >
     <div class="space-y-4">
-      <TagInput
+      <MultipleSelect
         :label="$t('dashboard.tags')"
         :modelValue="item.tags || []"
+        mode="objects"
+        fetchUrl="/tags"
         :allowCreate="false"
         @update:modelValue="updateTags"
       />
@@ -19,12 +21,12 @@
 
 <script>
 import DragItemBox from "../DragItemBox.vue";
-import TagInput from "../../ui/TagInput.vue";
+import MultipleSelect from "../MultipleSelect.vue";
 
 export default {
   components: {
     DragItemBox,
-    TagInput,
+    MultipleSelect,
   },
   props: {
     item: {

@@ -50,9 +50,11 @@
           :errors="errors.active"
         />
       </div>
-      <TagInput
+      <MultipleSelect
         :label="$t('dashboard.tags')"
         v-model="content.tags"
+        mode="objects"
+        fetchUrl="/tags"
         :allowCreate="true"
         class="mb-4"
       />
@@ -215,7 +217,7 @@
 
 <script>
 import TextInput from "../../components/admin/TextInput.vue";
-import TagInput from "../../components/ui/TagInput.vue";
+import MultipleSelect from "../../components/admin/MultipleSelect.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import Card from "../../components/admin/Card.vue";
 import AddPageItem from "../../components/admin/AddPageItem.vue";
@@ -245,7 +247,7 @@ import SlugInput from "../../components/admin/SlugInput.vue";
 export default {
   components: {
     TextInput,
-    TagInput,
+    MultipleSelect,
     Card,
     AddPageItem,
     TextItem,
