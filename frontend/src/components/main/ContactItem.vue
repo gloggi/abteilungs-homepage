@@ -3,32 +3,37 @@
     <HeadingTwo class="w-full text-primary">{{
       $t("page.contact")
     }}</HeadingTwo>
-    <div class="flex flex-col space-y-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
       <div
         v-for="contact in contacts"
         :key="contact.id"
-        class="flex flex-col space-y-3 md:space-y-0 md:flex-row justify-between w-full"
+        class="flex flex-col items-center text-center gap-3"
       >
-        <div class="flex flex-col main-text">
-          <HeadingThree class="text-primary">
+        <img
+          v-if="contact.file?.path"
+          :src="backendURL + contact.file.path"
+          class="w-24 h-24 object-cover rounded-full shrink-0"
+        />
+        <div
+          v-else
+          class="w-24 h-24 rounded-full shrink-0 bg-gray-200 flex items-center justify-center text-gray-500 font-semibold text-3xl uppercase"
+        >
+        </div>
+        <div class="flex flex-col min-w-0 w-full main-text">
+          <p class="text-primary truncate">
             {{ contact.role }}
-          </HeadingThree>
-          <p>
+          </p>
+          <p class="truncate font-semibold text-sm">
             {{ contact.firstname }} {{ contact.lastname }}
             {{ contact.nickname ? "v/o" : "" }} {{ contact.nickname }}
           </p>
           <a
-            class="link hover:text-secondary"
+            class="link hover:text-secondary truncate text-sm"
             :href="`mailto:${contact.email}`"
+            :title="contact.email"
             >{{ contact.email }}</a
           >
         </div>
-
-        <img
-          v-if="contact.file?.path"
-          :src="backendURL + contact.file.path"
-          class="w-36 h-36 object-cover rounded-full self-center"
-        />
       </div>
     </div>
   </ContentWrapper>
