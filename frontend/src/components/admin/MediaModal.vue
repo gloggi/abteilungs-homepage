@@ -18,7 +18,6 @@
       >
         <ButtonComponent
           @click="selectAndClose"
-          :disabled="selected.length === 0"
         >
           <font-awesome-icon :icon="icons.faCheck" class="mr-2 h-4 w-4" />
           {{ $t("dashboard.selectAndClose") }}
