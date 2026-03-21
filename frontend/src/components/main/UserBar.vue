@@ -30,11 +30,11 @@
     <div class="flex flex-row space-x-5 items-center">
       <button>
         <font-awesome-icon :icon="icons.faUser" />
-        <span class="hidden sm:inline">{{ userName }}</span>
+        <span class="hidden sm:inline sm:pl-2">{{ userName }}</span>
       </button>
       <button @click="logout">
         <font-awesome-icon :icon="icons.faDoorOpen" />
-        <span class="hidden sm:inline">{{ $t("dashboard.logout") }}</span>
+        <span class="hidden sm:inline sm:pl-2">{{ $t("dashboard.logout") }}</span>
       </button>
     </div>
   </div>

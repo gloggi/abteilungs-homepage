@@ -1,6 +1,5 @@
 <template>
   <div
-    class="rounded-t-full"
     :class="{
       'bg-primary': showMobileMenu,
       'bg-side': !showMobileMenu && isDesktop,
@@ -94,7 +93,7 @@ export default {
         faBars,
       },
       showMobileMenu: false,
-      isDesktop: window.innerWidth > 1024,
+      isDesktop: window.innerWidth >= 768,
     };
   },
   mounted() {
@@ -107,13 +106,15 @@ export default {
     beforeEnter(el) {
       el.style.height = "0";
       el.style.overflow = "hidden";
+      el.style.opacity = "0";
     },
     enter(el, done) {
       gsap.to(el, {
         height: "auto",
-        overflow: "visible",
+        opacity: 1,
         duration: 0.3,
         onComplete: function () {
+          el.style.overflow = "visible";
           const offsetTop =
             el.getBoundingClientRect().top + window.scrollY - 75;
           window.scrollTo({ top: offsetTop, behavior: "smooth" });
@@ -122,10 +123,11 @@ export default {
       });
     },
     leave(el, done) {
-      gsap.to(el, { height: "0", duration: 0.3, onComplete: done });
+      el.style.overflow = "hidden";
+      gsap.to(el, { height: "0", opacity: 0, duration: 0.3, onComplete: done });
     },
     handleResize() {
-      this.isDesktop = window.innerWidth > 1024;
+      this.isDesktop = window.innerWidth >= 768;
     },
   },
 };
