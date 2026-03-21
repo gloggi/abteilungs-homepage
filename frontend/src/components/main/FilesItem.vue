@@ -27,16 +27,16 @@
         v-for="file in files"
         :key="file.id"
         :href="`${backendURL}${file.path}`"
-        class="flex items-center gap-4 p-2 hover:bg-gray-50 rounded transition-colors group"
+        class="flex items-center gap-4 p-2 hover:bg-gray-50 rounded-sm transition-colors group"
       >
-        <div class="flex-shrink-0">
+        <div class="shrink-0">
           <img
             :src="`${backendURL}${file.thumbnail}`"
-            class="h-16 w-16 object-cover border rounded transition-shadow"
+            class="h-16 w-16 object-cover border rounded-sm transition-shadow"
             style="aspect-ratio: 1 / 1.414"
           />
         </div>
-        <div class="flex-grow">
+        <div class="grow">
           <p class="main-text font-medium group-hover:text-primary-dark">
             {{ file.name }}
           </p>

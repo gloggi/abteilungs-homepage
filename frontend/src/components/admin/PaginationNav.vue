@@ -5,7 +5,7 @@
       size="icon"
       :disabled="pageNumber <= 1"
       @click="$emit('goToPage', pageNumber - 1)"
-      class="!h-9 !w-9"
+      class="h-9! w-9!"
     >
       <font-awesome-icon :icon="icons.faChevronLeft" class="h-4 w-4" />
       <span class="sr-only">Previous Page</span>
@@ -17,7 +17,7 @@
         variant="ghost"
         size="icon"
         disabled
-        class="!h-9 !w-9"
+        class="h-9! w-9!"
       >
         <font-awesome-icon :icon="icons.faEllipsis" class="h-4 w-4" />
         <span class="sr-only">More pages</span>
@@ -25,10 +25,10 @@
 
       <ButtonComponent
         v-else
-        :variant="pageNumber === page ? 'default' : 'outline'"
+        :variant="pageNumber === page ? 'default' : 'outline-solid'"
         size="icon"
         @click="$emit('goToPage', page)"
-        class="!h-9 !w-9"
+        class="h-9! w-9!"
       >
         {{ page }}
       </ButtonComponent>
@@ -39,7 +39,7 @@
       size="icon"
       :disabled="pageNumber >= totalPages"
       @click="$emit('goToPage', pageNumber + 1)"
-      class="!h-9 !w-9"
+      class="h-9! w-9!"
     >
       <font-awesome-icon :icon="icons.faChevronRight" class="h-4 w-4" />
       <span class="sr-only">Next Page</span>

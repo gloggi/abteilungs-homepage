@@ -25,7 +25,7 @@
           v-for="(item, index) in items"
           :key="index"
           @click="select(item)"
-          class="group flex flex-col bg-gray-100 hover:bg-gray-200 rounded-xl p-3 space-y-3 cursor-pointer transition-all border border-transparent hover:border-gray-300 shadow-sm hover:shadow-md"
+          class="group flex flex-col bg-gray-100 hover:bg-gray-200 rounded-xl p-3 space-y-3 cursor-pointer transition-all border border-transparent hover:border-gray-300 shadow-xs hover:shadow-md"
         >
           <div
             class="aspect-square bg-white rounded-lg flex justify-center items-center p-4 shadow-inner group-hover:scale-105 transition-transform duration-200"
@@ -41,7 +41,7 @@
           </div>
           <div class="px-1">
             <p
-              class="font-medium text-sm text-center text-gray-800 break-words leading-tight group-hover:text-black"
+              class="font-medium text-sm text-center text-gray-800 wrap-break-word leading-tight group-hover:text-black"
             >
               {{ item.name }}
             </p>
@@ -118,7 +118,7 @@ export default {
       if (this.increaseHeight) {
         classes.push("h-32");
       } else {
-        classes.push("min-h-[2.5rem] py-2");
+        classes.push("min-h-10 py-2");
       }
 
       return classes.join(" ");

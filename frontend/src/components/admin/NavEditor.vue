@@ -1,7 +1,7 @@
 <template>
   <Card class="min-h-[200px] flex flex-col">
     <div
-      class="flex-grow space-y-2 relative"
+      class="grow space-y-2 relative"
       @dragover.prevent="handleRootDragOver"
       @dragleave="handleRootDragLeave"
       @drop="handleRootDrop"
@@ -26,7 +26,7 @@
 
       <div
         v-if="rootDropActive"
-        class="h-2 bg-gray-500 rounded mt-2 transition-all"
+        class="h-2 bg-gray-500 rounded-sm mt-2 transition-all"
       ></div>
     </div>
   </Card>

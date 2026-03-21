@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item.files.length > 1" class="relative -mb-20">
+  <div v-if="item.files.length > 1" class="relative">
     <transition name="slide">
       <img
         v-if="currentImage"

@@ -32,7 +32,7 @@
           v-for="card in filteredCards"
           :key="card.id"
           @click="redirectTo(card.link)"
-          class="group rounded-xl border border-gray-200 bg-white text-gray-950 shadow-sm transition-all hover:bg-gray-50 hover:shadow-md cursor-pointer"
+          class="group rounded-xl border border-gray-200 bg-white text-gray-950 shadow-xs transition-all hover:bg-gray-50 hover:shadow-md cursor-pointer"
         >
           <div class="flex flex-col space-y-1.5 p-6">
             <div class="flex items-center gap-4">

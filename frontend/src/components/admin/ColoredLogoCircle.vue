@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-full border border-gray-200 shadow-sm relative overflow-hidden transition-all duration-300"
+    class="rounded-full border border-gray-200 shadow-xs relative overflow-hidden transition-all duration-300"
     :style="{ backgroundColor }"
   >
     <div class="flex h-full w-full items-center justify-center">

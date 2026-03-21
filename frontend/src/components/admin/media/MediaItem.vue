@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group relative flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-gray-300 hover:shadow-md"
+    class="group relative flex flex-col rounded-xl border border-gray-200 bg-white shadow-xs transition-all duration-200 hover:border-gray-300 hover:shadow-md"
   >
     <div
       class="relative aspect-square w-full cursor-pointer overflow-hidden rounded-t-xl bg-gray-50"
@@ -25,7 +25,7 @@
       >
         <button
           @click.stop="$emit('delete', file)"
-          class="flex h-8 w-8 items-center justify-center rounded-md bg-white/90 text-red-500 shadow-sm backdrop-blur-sm transition-colors hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-500/20"
+          class="flex h-8 w-8 items-center justify-center rounded-md bg-white/90 text-red-500 shadow-xs backdrop-blur-xs transition-colors hover:bg-red-50 hover:text-red-600 focus:outline-hidden focus:ring-2 focus:ring-red-500/20"
           :title="$t('dashboard.deleteFile')"
         >
           <font-awesome-icon :icon="icons.trash" class="h-4 w-4" />

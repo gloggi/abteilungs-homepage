@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-2">
     <FormLabel :label-for="id">{{ label }}</FormLabel>
     <div
-      class="rounded-md border border-gray-200 bg-white shadow-sm overflow-hidden"
+      class="rounded-md border border-gray-200 bg-white shadow-xs overflow-hidden"
     >
       <EditorToolbar
         v-if="editor"
@@ -12,12 +12,12 @@
         @ask-for-link="askForLink"
         @swap-editor-content="swapEditorContent"
       />
-      <div class="relative min-h-[12rem]">
+      <div class="relative min-h-48">
         <editor-content v-if="!showHTML" :editor="editor" class="p-4" />
         <CodeEditor
           v-else
           v-model="editorContent"
-          class="w-full h-full min-h-[12rem]"
+          class="w-full h-full min-h-48"
         />
       </div>
     </div>
@@ -41,14 +41,14 @@
       <input
         type="url"
         v-model="linkUrl"
-        class="border border-gray-300 rounded px-2 py-1 text-sm text-gray-700 outline-none w-48 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+        class="border border-gray-300 rounded-sm px-2 py-1 text-sm text-gray-700 outline-hidden w-48 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         placeholder="https://..."
         @keydown.enter.prevent="updateLink"
         @blur="updateLink"
       />
       <button
         @click="updateLink"
-        class="text-gray-500 hover:text-green-600 transition-colors p-1 rounded hover:bg-gray-100"
+        class="text-gray-500 hover:text-green-600 transition-colors p-1 rounded-sm hover:bg-gray-100"
         type="button"
         title="Apply Link"
       >
@@ -59,14 +59,14 @@
         :href="linkUrl"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-gray-500 hover:text-blue-600 transition-colors p-1 rounded hover:bg-gray-100 flex items-center justify-center"
+        class="text-gray-500 hover:text-blue-600 transition-colors p-1 rounded-sm hover:bg-gray-100 flex items-center justify-center"
         :title="$t('dashboard.openLink')"
       >
         <font-awesome-icon :icon="icons.faExternalLinkAlt" class="w-4 h-4" />
       </a>
       <button
         @click="removeLink"
-        class="text-gray-500 hover:text-red-600 transition-colors p-1 rounded hover:bg-gray-100"
+        class="text-gray-500 hover:text-red-600 transition-colors p-1 rounded-sm hover:bg-gray-100"
         type="button"
         title="Unlink"
       >
@@ -263,7 +263,7 @@ export default {
               ? node.attrs.level
               : this.options.levels[0];
             const classes = {
-              2: "text-3xl mt-19 mb-5 sm:text-5xl text-heading-2 text-primary mt-4 mb-2",
+              2: "text-3xl mb-5 sm:text-5xl text-heading-2 text-primary mt-4 mb-2",
               3: "text-2xl md:text-3xl pb-2 text-heading-3 text-primary mt-4 mb-2",
             };
             return [
@@ -309,7 +309,7 @@ export default {
       editorProps: {
         attributes: {
           class:
-            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none min-h-[12rem]",
+            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-hidden min-h-48",
           id: this.id,
         },
         handleClick: (view, pos, event) => {

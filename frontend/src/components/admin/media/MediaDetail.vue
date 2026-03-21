@@ -6,18 +6,18 @@
       <img
         v-if="isImage()"
         :src="`${backendURL}${file.path}?cb=${cacheBust}`"
-        class="max-h-full w-auto object-contain shadow-sm rounded-md"
+        class="max-h-full w-auto object-contain shadow-xs rounded-md"
       />
       <object
         v-else-if="file.extension == 'pdf'"
         :data="`${backendURL}${file.path}?cb=${cacheBust}`"
-        class="h-full w-full shadow-sm rounded-md"
+        class="h-full w-full shadow-xs rounded-md"
         type="application/pdf"
       />
       <video
         v-else-if="file.extension == 'mp4'"
         controls
-        class="max-h-full w-full shadow-sm rounded-md"
+        class="max-h-full w-full shadow-xs rounded-md"
       >
         <source
           :src="`${backendURL}${file.path}?cb=${cacheBust}`"

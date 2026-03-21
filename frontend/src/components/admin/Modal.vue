@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-all"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 transition-all"
     @click.self="handleClose"
   >
     <Fade>
@@ -10,7 +10,7 @@
       >
         <button
           @click="handleClose"
-          class="absolute right-4 top-4 z-10 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100 data-[state=open]:text-gray-500"
+          class="absolute right-4 top-4 z-10 rounded-xs opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100 data-[state=open]:text-gray-500"
         >
           <font-awesome-icon :icon="icons.faXmark" class="h-4 w-4" />
           <span class="sr-only">Close</span>

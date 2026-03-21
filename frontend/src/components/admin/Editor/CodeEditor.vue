@@ -1,7 +1,7 @@
 <template>
   <div
     ref="cmContainer"
-    class="w-full h-full min-h-[12rem] font-mono text-sm overflow-hidden"
+    class="w-full h-full min-h-48 font-mono text-sm overflow-hidden"
   ></div>
 </template>
 

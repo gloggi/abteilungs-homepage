@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-xl border border-gray-200 bg-white text-gray-950 shadow-sm"
+    class="rounded-xl border border-gray-200 bg-white text-gray-950 shadow-xs"
   >
     <div
       class="flex flex-row items-center justify-between gap-4 p-4 border-b border-gray-100 bg-gray-50/50 rounded-t-xl"

@@ -11,7 +11,7 @@
       <button
         v-if="!isDesktop && !isOpen"
         @click="isOpen = true"
-        class="fixed z-50 right-4 top-4 h-10 w-10 flex items-center justify-center rounded-md bg-gray-900/90 text-white shadow-lg border border-gray-700/50 backdrop-blur-sm hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"
+        class="fixed z-50 right-4 top-4 h-10 w-10 flex items-center justify-center rounded-md bg-gray-900/90 text-white shadow-lg border border-gray-700/50 backdrop-blur-xs hover:bg-gray-800 transition-colors focus:outline-hidden focus:ring-2 focus:ring-gray-500"
         aria-label="Open Sidebar"
       >
         <font-awesome-icon :icon="icons.faBars" class="h-5 w-5" />
@@ -28,7 +28,7 @@
     >
       <div
         v-if="isOpen && !isDesktop"
-        class="fixed inset-0 bg-gray-950/80 backdrop-blur-sm z-40 md:hidden"
+        class="fixed inset-0 bg-gray-950/80 backdrop-blur-xs z-40 md:hidden"
         @click="isOpen = false"
       ></div>
     </Transition>
@@ -40,7 +40,7 @@
       <router-link
         to="/dashboard"
         @click="isOpen = false"
-        class="flex-shrink-0 flex flex-col justify-center items-center min-h-[5rem] border-b border-gray-800 bg-gray-900/50 backdrop-blur-sm px-4 pt-6 pb-4"
+        class="shrink-0 flex flex-col justify-center items-center min-h-20 border-b border-gray-800 bg-gray-900/50 backdrop-blur-xs px-4 pt-6 pb-4"
       >
         <div
           v-if="settings.divisionLogo?.path"
@@ -54,7 +54,7 @@
         </div>
         <div
           v-else-if="settings.divisionName"
-          class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 text-center mx-auto tracking-tight"
+          class="text-3xl font-extrabold text-transparent bg-clip-text bg-linear-to-b from-gray-200 via-gray-400 to-gray-600 text-center mx-auto tracking-tight"
         >
           {{ settings.divisionName }}
         </div>

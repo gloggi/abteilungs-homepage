@@ -21,7 +21,7 @@
     <div class="relative min-h-[400px]">
       <div
         v-if="loading"
-        class="absolute inset-0 z-10 flex items-center justify-center bg-white/50 backdrop-blur-sm"
+        class="absolute inset-0 z-10 flex items-center justify-center bg-white/50 backdrop-blur-xs"
       >
         <div
           class="h-10 w-10 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"

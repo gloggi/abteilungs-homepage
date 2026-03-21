@@ -7,7 +7,7 @@
       type="color"
     />
     <div
-      class="h-10 w-10 rounded-md border border-gray-200 shadow-sm transition-all peer-focus-visible:ring-2 peer-focus-visible:ring-gray-950 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-white"
+      class="h-10 w-10 rounded-md border border-gray-200 shadow-xs transition-all peer-focus-visible:ring-2 peer-focus-visible:ring-gray-950 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-white"
       :class="`${errors ? ' border-red-500' : ''}`"
       :style="`background-color: ${value}`"
     ></div>

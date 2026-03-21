@@ -120,7 +120,7 @@
                 @mouseenter="hoverGrid(row, col)"
                 @click="insertTableWithSize(row, col)"
                 :class="[
-                  'w-5 h-5 border rounded-sm transition-colors',
+                  'w-5 h-5 border rounded-xs transition-colors',
                   row <= gridHover.rows && col <= gridHover.cols
                     ? 'bg-primary border-primary'
                     : 'bg-gray-100 border-gray-300 hover:bg-gray-200',

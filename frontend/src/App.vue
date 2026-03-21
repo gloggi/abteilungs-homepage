@@ -76,32 +76,7 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,300italic,600italic");
 
-.main-text {
-  color: #333333;
-  font-family:
-    "Source Sans Pro",
-    "system-ui",
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    sans-serif;
-  font-size: var(--main-font-size);
-  line-height: 1.5;
-}
-@media screen and (max-width: 700px) {
-  .main-text {
-    font-size: calc(var(--main-font-size) * 0.75);
-    line-height: 1.5;
-  }
-}
+
 
 .text-heading-1 {
   font-family:

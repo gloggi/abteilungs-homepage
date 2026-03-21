@@ -9,11 +9,11 @@
   >
     <div
       v-if="dropPosition === 'before'"
-      class="absolute -top-1 left-0 right-0 h-1 bg-gray-500 rounded z-10 pointer-events-none"
+      class="absolute -top-1 left-0 right-0 h-1 bg-gray-500 rounded-sm z-10 pointer-events-none"
     ></div>
 
     <div
-      class="bg-white border border-gray-200 rounded-md shadow-sm mb-2 hover:border-gray-300 transition-colors"
+      class="bg-white border border-gray-200 rounded-md shadow-xs mb-2 hover:border-gray-300 transition-colors"
       :class="{
         'border-gray-500 ring-2 ring-gray-200': dropPosition === 'inside',
       }"
@@ -74,7 +74,7 @@
     </div>
     <div
       v-if="dropPosition === 'after'"
-      class="absolute -bottom-1 left-0 right-0 h-1 bg-gray-500 rounded z-10 pointer-events-none"
+      class="absolute -bottom-1 left-0 right-0 h-1 bg-gray-500 rounded-sm z-10 pointer-events-none"
     ></div>
     <div
       v-if="localItem.children && localItem.children.length > 0"

@@ -12,7 +12,7 @@
           v-model="titleValue"
           :label="$t('dashboard.title')"
           id="title"
-          class="flex-grow"
+          class="grow"
         />
         <SelectComponent
           id="viewMode"

@@ -17,7 +17,7 @@
           :id="id"
           ref="input"
           type="text"
-          class="flex-1 bg-transparent px-3 py-2 placeholder:text-gray-500 focus:outline-none"
+          class="flex-1 bg-transparent px-3 py-2 placeholder:text-gray-500 focus:outline-hidden"
           :value="modelValue"
           @input="$emit('update:modelValue', $event.target.value)"
           @keyup.enter="save"

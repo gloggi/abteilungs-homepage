@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async routeHandler() {
-      let pageRoute = undefined;
+      let pageRoute;
       if (this.$route.name == "GroupPage") {
         pageRoute = this.$route.path.split(
           `/${this.$t("page.groupPagePath")}/`,

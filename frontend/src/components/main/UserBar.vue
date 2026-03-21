@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed z-50 w-full h-8 bg-gray-900 text-white mb-5 hidden md:flex flex-row justify-between px-5"
+    class="fixed z-50 w-full h-8 bg-gray-900 text-white mb-5 flex flex-row justify-between px-5"
   >
     <div class="flex flex-row space-x-2 items-center">
       <img class="py-1 h-full" :src="logo" />
@@ -30,11 +30,11 @@
     <div class="flex flex-row space-x-5 items-center">
       <button>
         <font-awesome-icon :icon="icons.faUser" />
-        {{ userName }}
+        <span class="hidden sm:inline">{{ userName }}</span>
       </button>
       <button @click="logout">
         <font-awesome-icon :icon="icons.faDoorOpen" />
-        {{ $t("dashboard.logout") }}
+        <span class="hidden sm:inline">{{ $t("dashboard.logout") }}</span>
       </button>
     </div>
   </div>

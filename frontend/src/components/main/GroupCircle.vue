@@ -13,7 +13,7 @@
       <img
         v-if="group.file?.path"
         :src="backendURL + group.file?.path"
-        class="object-contain w-[100%] h-[100%]"
+        class="object-contain w-full h-full"
       />
     </span>
   </div>

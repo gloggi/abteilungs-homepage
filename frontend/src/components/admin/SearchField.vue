@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-6 flex flex-col gap-4 rounded-xl border border-gray-100 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+    class="mb-6 flex flex-col gap-4 rounded-xl border border-gray-100 bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between"
   >
     <div class="relative w-full sm:flex-1">
       <div

@@ -69,7 +69,7 @@ export default {
   computed: {
     buttonVariant() {
       if (this.variant) return this.variant;
-      return this.reverse ? "default" : "outline";
+      return this.reverse ? "default" : "outline-solid";
     },
     buttonSize() {
       const validSizes = ["default", "sm", "lg", "icon"];

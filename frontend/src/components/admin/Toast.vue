@@ -8,7 +8,7 @@
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
     move-class="transition ease-in-out duration-500"
-    class="fixed z-[100] flex flex-col gap-2 w-full max-w-sm right-0 bottom-0 p-4 pointer-events-none"
+    class="fixed z-100 flex flex-col gap-2 w-full max-w-sm right-0 bottom-0 p-4 pointer-events-none"
   >
     <div
       v-for="notification in notifications"
@@ -19,7 +19,7 @@
       <div class="flex gap-3 w-full">
         <font-awesome-icon
           :icon="getIcon(notification.variant)"
-          class="h-5 w-5 mt-0.5 flex-shrink-0"
+          class="h-5 w-5 mt-0.5 shrink-0"
           :class="iconClasses(notification.variant)"
         />
         <div class="flex flex-col gap-1 flex-1">
@@ -36,7 +36,7 @@
       </div>
       <button
         @click="dismiss(notification.id)"
-        class="absolute right-2 top-2 rounded-md p-1 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 group-hover:opacity-100"
+        class="absolute right-2 top-2 rounded-md p-1 transition-colors focus:outline-hidden focus:ring-2 focus:ring-gray-400 group-hover:opacity-100"
         :class="closeButtonClasses(notification.variant)"
       >
         <font-awesome-icon :icon="icons.faXmark" class="h-4 w-4" />
@@ -77,11 +77,11 @@ export default {
     variantClasses(variant) {
       switch (variant) {
         case "destructive":
-          return "bg-white border-red-200 text-red-900 shadow-sm";
+          return "bg-white border-red-200 text-red-900 shadow-xs";
         case "success":
-          return "bg-white border-green-200 text-green-900 shadow-sm";
+          return "bg-white border-green-200 text-green-900 shadow-xs";
         default:
-          return "bg-white border-gray-200 text-gray-900 shadow-sm";
+          return "bg-white border-gray-200 text-gray-900 shadow-xs";
       }
     },
     iconClasses(variant) {

@@ -5,7 +5,7 @@
         {{ $t("dashboard.customLinks") }}
       </h3>
       <div
-        class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 cursor-grab active:cursor-grabbing hover:border-gray-300 transition-colors"
+        class="bg-white p-4 rounded-lg shadow-xs border border-gray-200 cursor-grab active:cursor-grabbing hover:border-gray-300 transition-colors"
         draggable="true"
         @dragstart="
           onDragStart($event, {
@@ -32,7 +32,7 @@
       <div class="space-y-2">
         <div
           v-if="showGroupPagesItem"
-          class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 cursor-grab active:cursor-grabbing hover:border-gray-300 transition-colors flex items-center gap-3"
+          class="bg-white p-3 rounded-lg shadow-xs border border-gray-200 cursor-grab active:cursor-grabbing hover:border-gray-300 transition-colors flex items-center gap-3"
           draggable="true"
           @dragstart="
             onDragStart($event, {
@@ -50,7 +50,7 @@
         </div>
         <div
           v-if="showBlogOverviewItem"
-          class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 cursor-grab active:cursor-grabbing hover:border-gray-300 transition-colors flex items-center gap-3"
+          class="bg-white p-3 rounded-lg shadow-xs border border-gray-200 cursor-grab active:cursor-grabbing hover:border-gray-300 transition-colors flex items-center gap-3"
           draggable="true"
           @dragstart="
             onDragStart($event, {
@@ -77,7 +77,7 @@
         <div
           v-for="page in pages"
           :key="page.id"
-          class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 cursor-grab active:cursor-grabbing hover:border-gray-300 transition-colors flex items-center gap-3"
+          class="bg-white p-3 rounded-lg shadow-xs border border-gray-200 cursor-grab active:cursor-grabbing hover:border-gray-300 transition-colors flex items-center gap-3"
           draggable="true"
           @dragstart="
             onDragStart($event, {

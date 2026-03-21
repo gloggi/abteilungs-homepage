@@ -11,7 +11,7 @@
           ref="masterbox"
           v-model="topCheckboxValue"
           @change="topCheckboxHandler"
-          class="rounded border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
+          class="rounded-sm border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
         />
       </div>
 
@@ -43,7 +43,7 @@
           type="checkbox"
           @change="(e) => changeBox(e, item['id'])"
           v-model="checkBoxValues[item['id']]"
-          class="rounded border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
+          class="rounded-sm border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
         />
       </div>
 

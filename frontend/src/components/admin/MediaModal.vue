@@ -14,7 +14,7 @@
       />
 
       <div
-        class="sticky bottom-0 flex justify-end bg-white/95 py-4 backdrop-blur-sm border-t border-gray-100"
+        class="sticky bottom-0 flex justify-end bg-white/95 py-4 backdrop-blur-xs border-t border-gray-100"
       >
         <ButtonComponent
           @click="selectAndClose"

@@ -93,7 +93,7 @@ const ImageExtension = Image.extend({
       const toolbar = document.createElement("div");
       toolbar.setAttribute("data-image-toolbar", "true");
       toolbar.className =
-        "absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-white shadow-md border border-gray-200 rounded p-1 z-30 pointer-events-auto";
+        "absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-white shadow-md border border-gray-200 rounded-sm p-1 z-30 pointer-events-auto";
 
       const getIconSvg = (iconDef) => {
         if (!iconDef || !iconDef.icon) return "";
@@ -111,7 +111,7 @@ const ImageExtension = Image.extend({
       const createButton = (iconSvg, alignType) => {
         const btn = document.createElement("button");
         btn.className =
-          "p-1.5 hover:bg-gray-100 rounded text-gray-600 flex items-center justify-center";
+          "p-1.5 hover:bg-gray-100 rounded-sm text-gray-600 flex items-center justify-center";
         btn.innerHTML = iconSvg;
         btn.type = "button";
         btn.title = `Align ${alignType}`;
@@ -213,8 +213,8 @@ const ImageExtension = Image.extend({
 
         const deltaX = e.clientX - startX;
         const deltaY = e.clientY - startY;
-        let newWidth = startWidth;
-        let newHeight = startHeight;
+        let newWidth;
+        let newHeight;
 
         let changeX = 0;
         let changeY = 0;

@@ -4,7 +4,7 @@
     class="group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 ease-in-out mx-2 mb-1"
     :class="[
       isActive
-        ? 'bg-gray-800 text-white shadow-sm ring-1 ring-gray-700/50'
+        ? 'bg-gray-800 text-white shadow-xs ring-1 ring-gray-700/50'
         : 'text-gray-400 hover:bg-gray-800/50 hover:text-white',
     ]"
   >
