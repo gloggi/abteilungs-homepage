@@ -106,22 +106,27 @@ export default {
       );
     },
     getDate(camp) {
-      if (this.isSameDay(camp.startAt, camp.finishAt)) {
-        return this.formatDate(camp.startAt);
+      const start = camp.startDate || camp.startAt;
+      const finish = camp.finishDate || camp.finishAt;
+
+      if (!start || !finish) return "";
+
+      if (this.isSameDay(start, finish)) {
+        return this.formatDate(start);
       }
       if (
-        format(new Date(camp.startAt), "yyyy", { locale: de }) ===
-        format(new Date(camp.finishAt), "yyyy", { locale: de })
+        format(new Date(start), "yyyy", { locale: de }) ===
+        format(new Date(finish), "yyyy", { locale: de })
       ) {
-        return `${format(new Date(camp.startAt), "dd.", {
+        return `${format(new Date(start), "dd.", {
           locale: de,
-        })} - ${format(new Date(camp.finishAt), "dd. MMMM yyyy", {
+        })} - ${format(new Date(finish), "dd. MMMM yyyy", {
           locale: de,
         })}`;
       }
-      return `${format(new Date(camp.startAt), "dd. MMMM yyyy", {
+      return `${format(new Date(start), "dd. MMMM yyyy", {
         locale: de,
-      })} - ${format(new Date(camp.finishAt), "dd. MMMM yyyy", {
+      })} - ${format(new Date(finish), "dd. MMMM yyyy", {
         locale: de,
       })}`;
     },
