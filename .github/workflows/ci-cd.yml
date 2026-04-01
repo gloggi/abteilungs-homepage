@@ -68,3 +68,4 @@ jobs:
           mail-from-name: ${{ vars.MAIL_FROM_NAME }}
           deployment-secret-key: ${{ secrets.DEPLOYMENT_SECRET_KEY }}
           php-path: ${{ vars.PHP_PATH }}
+          sentry-laravel-dsn: ${{ secrets.SENTRY_LARAVEL_DSN }}

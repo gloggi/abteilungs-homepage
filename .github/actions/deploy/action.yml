@@ -133,6 +133,10 @@ inputs:
     description: 'The PHP path'
     required: false
 
+  sentry-laravel-dsn:
+    description: 'The Sentry Laravel DSN for error tracking'
+    required: false
+
 runs:
   using: "composite"
   steps:
@@ -170,4 +174,5 @@ runs:
         MAIL_FROM_NAME: ${{ inputs.mail-from-name }}
         DEPLOYMENT_SECRET_KEY: ${{ inputs.deployment-secret-key }}
         PHP_PATH: ${{ inputs.php-path }}
+        SENTRY_LARAVEL_DSN: ${{ inputs.sentry-laravel-dsn }}
         

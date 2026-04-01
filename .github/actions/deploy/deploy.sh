@@ -50,6 +50,9 @@ sed -ri "s~^MAIL_FROM_NAME=.*\$~MAIL_FROM_NAME=\"$MAIL_FROM_NAME\"~" .env
 
 sed -ri "s~^DEPLOYMENT_SECRET_KEY=.*\$~DEPLOYMENT_SECRET_KEY=\"$DEPLOYMENT_SECRET_KEY\"~" .env
 
+sed -ri "s~^SENTRY_LARAVEL_DSN=.*$~SENTRY_LARAVEL_DSN=$SENTRY_LARAVEL_DSN~" .env
+sed -ri "s~^SENTRY_TRACES_SAMPLE_RATE=.*$~SENTRY_TRACES_SAMPLE_RATE=0~" .env
+
 docker compose run --no-deps --entrypoint "composer install --no-dev" backend
 
 PHP_MIN_VERSION_ID=$(grep -Po '(?<=\(PHP_VERSION_ID >= )[0-9]+(?=\))' vendor/composer/platform_check.php)
