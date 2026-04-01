@@ -5,34 +5,34 @@
     <div class="flex flex-row space-x-2 items-center">
       <img class="py-1 h-full" :src="logo" />
       <div class="flex flex-row space-x-5 items-center pl-5 text-nowrap">
-        <button @click="goToDashboard">
+        <button type="button" class="cursor-pointer" @click="goToDashboard">
           <font-awesome-icon :icon="icons.faGauge" />
           {{ $t("dashboard.goToDashboard") }}
         </button>
-        <button @click="goToEditPage" v-if="showPageEdit">
+        <button type="button" class="cursor-pointer" @click="goToEditPage" v-if="showPageEdit">
           <font-awesome-icon :icon="icons.faPen" />
           {{ $t("dashboard.editPage") }}
         </button>
-        <button @click="goToEvents" v-if="showActivityEdit">
+        <button type="button" class="cursor-pointer" @click="goToEvents" v-if="showActivityEdit">
           <font-awesome-icon :icon="icons.faCalendarDays" />
           {{ $t("dashboard.editEvents") }}
         </button>
-        <button @click="goToEditBlogPost" v-if="showBlogPostEdit">
+        <button type="button" class="cursor-pointer" @click="goToEditBlogPost" v-if="showBlogPostEdit">
           <font-awesome-icon :icon="icons.faPen" />
           {{ $t("dashboard.editBlogPost") }}
         </button>
-        <button @click="goToBlogPosts" v-if="showBlogPostsEdit">
+        <button type="button" class="cursor-pointer" @click="goToBlogPosts" v-if="showBlogPostsEdit">
           <font-awesome-icon :icon="icons.faPen" />
           {{ $t("dashboard.editBlogPosts") }}
         </button>
       </div>
     </div>
     <div class="flex flex-row space-x-5 items-center">
-      <button>
+      <div class="flex items-center">
         <font-awesome-icon :icon="icons.faUser" />
         <span class="hidden sm:inline sm:pl-2">{{ userName }}</span>
-      </button>
-      <button @click="logout">
+      </div>
+      <button type="button" class="cursor-pointer" @click="logout">
         <font-awesome-icon :icon="icons.faDoorOpen" />
         <span class="hidden sm:inline sm:pl-2">{{ $t("dashboard.logout") }}</span>
       </button>
