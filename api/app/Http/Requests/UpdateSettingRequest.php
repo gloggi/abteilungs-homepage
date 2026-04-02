@@ -30,6 +30,9 @@ class UpdateSettingRequest extends FormRequest
             'navbar_position' => 'nullable|in:top,between_header_and_content',
             'font_size' => 'nullable|integer',
             'side_bg_color' => 'nullable|string',
+            'font_weight_heading_1' => 'nullable|integer|min:100|max:900',
+            'font_weight_heading_2' => 'nullable|integer|min:100|max:900',
+            'font_weight_heading_3' => 'nullable|integer|min:100|max:900',
         ];
     }
 }

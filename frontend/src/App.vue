@@ -62,6 +62,18 @@ export default {
         "--main-font-size",
         `${this.settings.fontSize || 36}px`,
       );
+      this.createNewCssVariable(
+        "--font-weight-h1",
+        `${this.settings.fontWeightHeading1 || 600}`,
+      );
+      this.createNewCssVariable(
+        "--font-weight-h2",
+        `${this.settings.fontWeightHeading2 || 300}`,
+      );
+      this.createNewCssVariable(
+        "--font-weight-h3",
+        `${this.settings.fontWeightHeading3 || 300}`,
+      );
     },
   },
   computed: {},
@@ -94,7 +106,7 @@ export default {
     Helvetica,
     Arial,
     sans-serif;
-  font-weight: 600;
+  font-weight: var(--font-weight-h1, 600);
   text-shadow: 0px 0px 10px black;
 }
 
@@ -114,7 +126,7 @@ export default {
     Helvetica,
     Arial,
     sans-serif;
-  font-weight: 300;
+  font-weight: var(--font-weight-h2, 300);
 }
 
 .text-heading-3 {
@@ -133,7 +145,7 @@ export default {
     Helvetica,
     Arial,
     sans-serif;
-  font-weight: 300;
+  font-weight: var(--font-weight-h3, 300);
 }
 
 .link {

@@ -114,6 +114,39 @@
               />
             </div>
             <div>
+              <SelectComponent
+                id="fontWeightHeading1"
+                selection="FontWeightHeading1"
+                :label="$t('dashboard.fontWeightH1')"
+                @selectFontWeightHeading1="handleFontWeight('fontWeightHeading1', $event)"
+                :value="modifiableSettings.fontWeightHeading1"
+                :options="fontWeightOptions"
+                :errors="errors.fontWeightHeading1"
+              />
+            </div>
+            <div>
+              <SelectComponent
+                id="fontWeightHeading2"
+                selection="FontWeightHeading2"
+                :label="$t('dashboard.fontWeightH2')"
+                @selectFontWeightHeading2="handleFontWeight('fontWeightHeading2', $event)"
+                :value="modifiableSettings.fontWeightHeading2"
+                :options="fontWeightOptions"
+                :errors="errors.fontWeightHeading2"
+              />
+            </div>
+            <div>
+              <SelectComponent
+                id="fontWeightHeading3"
+                selection="FontWeightHeading3"
+                :label="$t('dashboard.fontWeightH3')"
+                @selectFontWeightHeading3="handleFontWeight('fontWeightHeading3', $event)"
+                :value="modifiableSettings.fontWeightHeading3"
+                :options="fontWeightOptions"
+                :errors="errors.fontWeightHeading3"
+              />
+            </div>
+            <div>
               <FormLabel>{{ $t("dashboard.sideBgColor") }}</FormLabel>
               <ColorPicker
                 id="sideBgColor"
@@ -265,6 +298,17 @@ export default {
           value: "between_header_and_content",
         },
       ],
+      fontWeightOptions: [
+        { name: "100 - Thin", id: 100 },
+        { name: "200 - Extra Light", id: 200 },
+        { name: "300 - Light", id: 300 },
+        { name: "400 - Regular", id: 400 },
+        { name: "500 - Medium", id: 500 },
+        { name: "600 - Semi Bold", id: 600 },
+        { name: "700 - Bold", id: 700 },
+        { name: "800 - Extra Bold", id: 800 },
+        { name: "900 - Black", id: 900 },
+      ],
     };
   },
   methods: {
@@ -315,6 +359,9 @@ export default {
     handleNavbarPosition(value) {
       console.log(value);
       this.modifiableSettings.navbarPosition = value;
+    },
+    handleFontWeight(key, value) {
+      this.modifiableSettings[key] = value;
     },
   },
   async created() {

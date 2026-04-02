@@ -28,6 +28,9 @@ class Setting extends Model
         'navbar_position',
         'font_size',
         'side_bg_color',
+        'font_weight_heading_1',
+        'font_weight_heading_2',
+        'font_weight_heading_3',
     ];
 
     public function divisionLogo()
