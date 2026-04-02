@@ -53,7 +53,7 @@ sed -ri "s~^DEPLOYMENT_SECRET_KEY=.*\$~DEPLOYMENT_SECRET_KEY=\"$DEPLOYMENT_SECRE
 sed -ri "s~^SENTRY_LARAVEL_DSN=.*$~SENTRY_LARAVEL_DSN=$SENTRY_LARAVEL_DSN~" .env
 sed -ri "s~^SENTRY_TRACES_SAMPLE_RATE=.*$~SENTRY_TRACES_SAMPLE_RATE=0~" .env
 
-docker compose run --no-deps --entrypoint "composer install --no-dev" backend
+composer install --no-dev --optimize-autoloader
 
 PHP_MIN_VERSION_ID=$(grep -Po '(?<=\(PHP_VERSION_ID >= )[0-9]+(?=\))' vendor/composer/platform_check.php)
 
@@ -70,7 +70,7 @@ cp .env.example .env
 sed -ri "s~^VITE_BACKEND_URL=.*$~VITE_BACKEND_URL=$BACKEND_URL~" .env
 sed -ri "s~^VITE_APP_NAME=.*$~VITE_APP_NAME=$APP_NAME~" .env
 
-docker compose run --rm --no-deps --entrypoint "/bin/sh -c 'npm install && npm run build --no-unsafe-inline'" frontend
+npm install && npm run build --no-unsafe-inline
 
 cd ..
 
@@ -98,27 +98,31 @@ EOF
 
 echo "Uploading backend files to the server..."
 cd api
-lftp <<EOF
-  set sftp:auto-confirm true
-  set dns:order "inet"
-  open -u $SSH_USERNAME, sftp://$SSH_HOST -p $SSH_PORT
-  cd $SSH_BACKEND_DIRECTORY
-  mirror -enRv --parallel=10 -x '^\.' -x '^rest-test' -x '^tests' -x '^storage/logs/.*' -x '^storage/app/.*' -x '^storage/framework/maintenance.php$' -x '^storage/framework/down$' -x '^resources/fonts/.*' -x '^resources/js/.*' -x '^resources/css/.*'
-  mirror -Rv -f .env
-EOF
+rsync -avz --delete \
+  -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=no" \
+  --exclude='.*' \
+  --exclude='rest-test' \
+  --exclude='tests' \
+  --exclude='storage/logs/*' \
+  --exclude='storage/app/*' \
+  --exclude='storage/framework/maintenance.php' \
+  --exclude='storage/framework/down' \
+  --exclude='resources/fonts/*' \
+  --exclude='resources/js/*' \
+  --exclude='resources/css/*' \
+  ./ $SSH_USERNAME@$SSH_HOST:$SSH_BACKEND_DIRECTORY/
+
+rsync -avz -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=no" .env $SSH_USERNAME@$SSH_HOST:$SSH_BACKEND_DIRECTORY/
 cd ..
 echo "All backend files uploaded to the server."
 
 echo "Uploading frontend files to the server..."
 cd frontend/dist
-lftp <<EOF
-  set sftp:auto-confirm true
-  set dns:order "inet"
-  open -u $SSH_USERNAME, sftp://$SSH_HOST -p $SSH_PORT
-  cd $SSH_FRONTEND_DIRECTORY
-  mirror -enRv --parallel=10 -x '^\.'
-  mirror -Rv -f .htaccess
-EOF
+rsync -avz --delete \
+  -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=no" \
+  --include='.htaccess' \
+  --exclude='.*' \
+  ./ $SSH_USERNAME@$SSH_HOST:$SSH_FRONTEND_DIRECTORY/
 cd ..
 echo "All frontend files uploaded to the server."
 
