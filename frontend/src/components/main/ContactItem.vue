@@ -28,6 +28,7 @@
             {{ contact.nickname ? "v/o" : "" }} {{ contact.nickname }}
           </p>
           <a
+            v-if="contact.email"
             class="link hover:text-secondary truncate text-sm"
             :href="`mailto:${contact.email}`"
             :title="contact.email"
