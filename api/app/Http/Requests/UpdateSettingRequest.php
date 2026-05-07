@@ -33,6 +33,7 @@ class UpdateSettingRequest extends FormRequest
             'font_weight_heading_1' => 'nullable|integer|min:100|max:900',
             'font_weight_heading_2' => 'nullable|integer|min:100|max:900',
             'font_weight_heading_3' => 'nullable|integer|min:100|max:900',
+            'raisenow_uuid' => 'nullable|string',
         ];
     }
 }

@@ -148,6 +148,12 @@ class PageItemService
                     $ids = isset($itemData['blog_posts']) ? array_column($itemData['blog_posts'], 'id') : [];
                     $blogItem->blogPosts()->sync($ids);
                     break;
+                case 'raisenowItem':
+                    GenericItem::updateOrCreate(
+                        ['id' => $itemData['id'] ?? null],
+                        array_merge($data, ['type' => 'raisenowItem'])
+                    );
+                    break;
                 default:
                     break;
             }

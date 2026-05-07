@@ -31,6 +31,7 @@ class Setting extends Model
         'font_weight_heading_1',
         'font_weight_heading_2',
         'font_weight_heading_3',
+        'raisenow_uuid',
     ];
 
     public function divisionLogo()

@@ -201,6 +201,22 @@
 
       <Card>
         <div class="space-y-6">
+          <SmallTitle>{{ $t("dashboard.raisenowSettings") }}</SmallTitle>
+          <div class="grid gap-4 md:grid-cols-2">
+            <TextInput
+              id="raisenowUuid"
+              :label="$t('dashboard.raisenowUuid')"
+              :info="$t('dashboard.raisenowUuidInfo')"
+              type="text"
+              v-model="modifiableSettings.raisenowUuid"
+              :errors="errors.raisenowUuid"
+            />
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <div class="space-y-6">
           <SmallTitle>{{ $t("dashboard.footerSettings") }}</SmallTitle>
           <Editor
             :label="$t('dashboard.contactInFooter')"

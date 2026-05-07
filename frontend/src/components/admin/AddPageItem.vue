@@ -25,6 +25,7 @@ import CampItem from "../../assets/PageItems/CampItem.svg?component";
 import LocationItem from "../../assets/PageItems/LocationItem.svg?component";
 import FaqItem from "../../assets/PageItems/FaqItem.svg?component";
 import GroupEventsItem from "../../assets/PageItems/GroupEventsItem.svg?component";
+import RaiseNowTwintItem from "../../assets/PageItems/RaiseNowTwintItem.svg?component";
 
 export default {
   components: {
@@ -94,6 +95,11 @@ export default {
           name: this.$t("dashboard.blogPosts"),
           type: "blogPostsItem",
           component: markRaw(TextItem),
+        },
+        {
+          name: this.$t("dashboard.raisenowTwint"),
+          type: "raisenowItem",
+          component: markRaw(RaiseNowTwintItem),
         },
       ],
     };

@@ -170,6 +170,9 @@ export const messages = {
       designSettings: "Design-Einstellungen",
       pageSettings: "Seiteneinstellungen",
       midataSettings: "MiData-Einstellungen",
+      raisenowSettings: "RaiseNow Einstellungen",
+      raisenowUuid: "RaiseNow Solution Id",
+      raisenowUuidInfo: "Die Solution Id ist eine fünfstellige Buchstabenkombination.",
       footerSettings: "Footer-Einstellungen",
       alertBannerSettings: "Alert-Banner-Einstellungen",
       showAlertBanner: "Alert-Banner anzeigen",
@@ -328,6 +331,7 @@ export const messages = {
         uploadError: "Fehler beim Hochladen von {name}",
         generalError: "Ein unerwarteter Fehler ist aufgetreten",
       },
+      raisenowTwint: "RaiseNow TWINT"
     },
     page: {
       campDateLabel: "Lagerdatum",

@@ -213,6 +213,15 @@
         :key="`blogPostsItem-${pageItem.id || pageItem.tempId}`"
         :item="pageItem"
       />
+      <RaiseNowItem
+        v-if="pageItem.type == 'raisenowItem'"
+        boxTitle="RaiseNow Widget"
+        @delete="deleteItem"
+        @startedDragging="isDragging = true"
+        @endedDragging="isDragging = false"
+        :key="`raisenowItem-${pageItem.id || pageItem.tempId}`"
+        :item="pageItem"
+      />
       <AddPageItem
         @changeOrder="changeOrder"
         @select="addItem"
@@ -250,6 +259,7 @@ import ActionButton from "../../components/admin/ActionButton.vue";
 import { nanoid } from "nanoid";
 import InfoField from "../../components/admin/InfoField.vue";
 import BlogPostsItem from "../../components/admin/PageItems/BlogPostsItem.vue";
+import RaiseNowItem from "../../components/admin/PageItems/RaiseNowItem.vue";
 import SlugInput from "../../components/admin/SlugInput.vue";
 export default {
   components: {
@@ -275,6 +285,7 @@ export default {
     ActionButton,
     InfoField,
     BlogPostsItem,
+    RaiseNowItem,
     SlugInput,
   },
   data() {

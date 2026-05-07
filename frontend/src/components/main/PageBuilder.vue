@@ -33,6 +33,7 @@
         :route="page.route"
         v-if="pageItem.type == 'passwordItem'"
       />
+      <RaiseNowItem v-if="pageItem.type == 'raisenowItem'" :item="pageItem" />
     </template>
   </PageWrapper>
 </template>
@@ -51,6 +52,7 @@ import FaqItem from "./FaqItem.vue";
 import GroupEventsItem from "./GroupEventsItem.vue";
 import PasswordItem from "./PasswordItem.vue";
 import BlogPostsItem from "./BlogPostsItem.vue";
+import RaiseNowItem from "./RaiseNowItem.vue";
 
 export default {
   props: ["page"],
@@ -84,6 +86,7 @@ export default {
     GroupEventsItem,
     PasswordItem,
     BlogPostsItem,
+    RaiseNowItem,
   },
 };
 </script>
