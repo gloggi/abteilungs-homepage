@@ -36,7 +36,7 @@ class Group extends Model
 
     public function getRouteAttribute()
     {
-        return Str::kebab($this->name);
+        return Str::slug($this->name);
     }
 
     public function getHasPageAttribute()
