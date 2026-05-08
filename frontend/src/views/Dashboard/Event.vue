@@ -261,7 +261,7 @@ export default {
         this.users = response.data.data.map((u) => {
           return {
             id: u.id,
-            name: `${u.nickname} (${u.firstname} ${u.lastname})`,
+            name: u.nickname ? `${u.nickname} (${u.firstname} ${u.lastname})` : `${u.firstname} ${u.lastname}`,
           };
         });
       } catch (e) {

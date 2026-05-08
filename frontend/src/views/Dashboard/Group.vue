@@ -261,7 +261,7 @@ export default {
       return this.users.map((user) => {
         return {
           id: user.id,
-          name: `${user.nickname} (${user.firstname} ${user.lastname})`,
+          name: user.nickname ? `${user.nickname} (${user.firstname} ${user.lastname})` : `${user.firstname} ${user.lastname}`,
         };
       });
     },

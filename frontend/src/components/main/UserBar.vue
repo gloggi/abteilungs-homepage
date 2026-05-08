@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     userName() {
-      return this.$store.state.user.user.nickname;
+      return this.$store.state.user.user.nickname || this.$store.state.user.user.firstname;
     },
     logo() {
       return this.backendURL + this.settings.divisionLogo?.path;

@@ -9,7 +9,7 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'nickname' => 'sometimes|string|max:255',
+            'nickname' => 'nullable|string|max:255',
             'firstname' => 'sometimes|string|max:255',
             'lastname' => 'sometimes|string|max:255',
             'role' => 'sometimes|integer|exists:roles,id',

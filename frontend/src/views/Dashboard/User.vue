@@ -1,7 +1,7 @@
 <template>
   <div v-if="content">
     <ItemHeaderTemplate
-      :title="content.nickname"
+      :title="content.nickname || content.firstname"
       :content="content"
       entity="users"
       backLinkTo="Users"

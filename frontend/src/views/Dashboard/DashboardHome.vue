@@ -2,7 +2,7 @@
   <div class="space-y-8">
     <div class="flex items-center justify-between space-y-2">
       <h2 class="text-3xl font-bold tracking-tight" v-if="user">
-        {{ $t("dashboard.hello", { name: user.nickname }) }}
+        {{ $t("dashboard.hello", { name: user.nickname || user.firstname }) }}
       </h2>
     </div>
 
