@@ -3,7 +3,7 @@
     class="group relative flex flex-col rounded-xl border bg-white shadow-xs transition-all duration-200 cursor-pointer overflow-hidden"
     :class="
       selected
-        ? 'border-blue-500 ring-2 ring-blue-500 ring-offset-2'
+        ? 'border-gray-900 ring-2 ring-gray-900 ring-offset-2'
         : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
     "
     @click="$emit('select', file)"
@@ -25,10 +25,10 @@
 
       <div
         v-if="selected"
-        class="absolute inset-0 flex items-center justify-center bg-blue-500/10"
+        class="absolute inset-0 flex items-center justify-center bg-gray-900/10"
       >
         <div
-          class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white shadow-xs ring-2 ring-white"
+          class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-900 text-white shadow-xs ring-2 ring-white"
         >
           <font-awesome-icon :icon="icons.check" class="h-4 w-4" />
         </div>

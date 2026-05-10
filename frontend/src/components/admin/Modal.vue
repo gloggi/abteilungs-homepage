@@ -27,9 +27,11 @@
           </h3>
         </div>
 
-        <div class="relative overflow-y-auto max-h-[80vh]">
+        <div class="relative overflow-y-auto max-h-[70vh]">
           <slot></slot>
         </div>
+
+        <slot name="footer"></slot>
       </div>
     </Fade>
   </div>

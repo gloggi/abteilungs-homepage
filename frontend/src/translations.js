@@ -314,6 +314,8 @@ export const messages = {
       customLinkDraggable: "Benutzerdefinierter Link",
       editMenuItem: "Menüpunkt bearbeiten",
       cancel: "Abbrechen",
+      confirm: "Bestätigen",
+      selected: "ausgewählt",
       page: "Seite",
       notifications: {
         success: "Erfolg",
