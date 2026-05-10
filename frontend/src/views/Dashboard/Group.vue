@@ -37,18 +37,14 @@
             <SelectComponent
               id="section"
               :label="$t('dashboard.section')"
-              @selectSection="(event) => handleSection(event)"
-              :value="content.section ? content.section['id'] : null"
-              selection="Section"
+              v-model="content.sectionId"
               :options="sections"
               :errors="errors.sectionId"
             />
             <SelectComponent
               id="gender"
               :label="$t('dashboard.gender')"
-              @selectGender="(event) => handleGender(event)"
-              :value="content.gender"
-              selection="Gender"
+              v-model="content.gender"
               :options="genders"
               :errors="errors.gender"
             />
@@ -67,9 +63,7 @@
           <SelectComponent
             id="parentGroup"
             :label="$t('dashboard.parentGroup')"
-            @selectParentGroup="(event) => handleParentGroup(event)"
-            :value="content.parentId ? content.parentId : null"
-            selection="ParentGroup"
+            v-model="content.parentId"
             :options="groups"
           />
           <BreakpointSpaceManager>
@@ -89,9 +83,7 @@
           <SelectComponent
             id="groupLeader"
             :label="$t('dashboard.groupLeader')"
-            :value="content.groupLeaderId"
-            selection="GroupLeader"
-            @selectGroupLeader="handleSelectGroupLeader"
+            v-model="content.groupLeaderId"
             :options="formatedUsers"
             :errors="errors.groupType"
           />
@@ -186,6 +178,9 @@ export default {
           `/groups/${this.$route.params.id}`,
         );
         this.content = response.data;
+        if (this.content.section) {
+          this.content.sectionId = this.content.section.id;
+        }
         if (this.content.predecessors) {
           this.content.predecessors = this.content.predecessors.map(
             (p) => p.id,
@@ -234,20 +229,9 @@ export default {
         console.log(e);
       }
     },
-    handleSection(sectionId) {
-      this.content.sectionId = sectionId;
-    },
-    handleGender(genderId) {
-      this.content.gender = genderId;
-    },
-    handleParentGroup(groupId) {
-      this.content.parentId = groupId;
-    },
+
     handleErrors(errors) {
       this.errors = errors;
-    },
-    handleSelectGroupLeader(userId) {
-      this.content.groupLeaderId = userId;
     },
     changeHeaderImages(event) {
       this.content.headerImages = event.files;

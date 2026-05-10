@@ -7,9 +7,7 @@
     @endedDragging="$emit('endedDragging')"
   >
     <SelectComponent
-      selection="Group"
-      @selectGroup="handleChange"
-      :value="item.groupId"
+      v-model="selectedValue"
       :options="options"
     />
   </DragItemBox>
@@ -36,12 +34,17 @@ export default {
         console.log(error);
       }
     },
-    handleChange(value) {
-      this.$emit("changeCamp", { groupId: value, id: this.item.id });
+  },
+  computed: {
+    selectedValue: {
+      get() {
+        return this.item.groupId;
+      },
+      set(value) {
+        this.$emit("changeCamp", { groupId: value, id: this.item.id });
+      },
     },
   },
-
-  computed: {},
   async created() {
     await this.getGroups();
   },

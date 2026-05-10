@@ -7,9 +7,7 @@
     @endedDragging="$emit('endedDragging')"
   >
     <SelectComponent
-      selection="FaqItem"
-      @selectFaqItem="handleChange"
-      :value="item.faqId"
+      v-model="selectedValue"
       :options="options"
     />
   </DragItemBox>
@@ -50,12 +48,17 @@ export default {
         console.log(error);
       }
     },
-    handleChange(value) {
-      this.$emit("changeFaq", { faqId: value, id: this.item.id });
+  },
+  computed: {
+    selectedValue: {
+      get() {
+        return this.item.faqId;
+      },
+      set(value) {
+        this.$emit("changeFaq", { faqId: value, id: this.item.id });
+      },
     },
   },
-
-  computed: {},
   async created() {
     await this.getFaqs();
   },

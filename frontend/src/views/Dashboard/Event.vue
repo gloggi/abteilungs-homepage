@@ -36,10 +36,8 @@
         <SelectComponent
           id="responsible"
           :label="$t('dashboard.responsible')"
-          selection="User"
-          @selectUser="handleSelectUser"
+          v-model="content.userId"
           :options="users"
-          :value="content.userId"
           :errors="errors.userId"
         />
         <MultipleSelect
@@ -69,19 +67,15 @@
           <SelectComponent
             id="startLocation"
             :label="$t('dashboard.startLocation')"
-            selection="StartLocation"
-            @selectStartLocation="handleSelectStartLocation"
+            v-model="content.startLocationId"
             :options="locations"
-            :value="content.startLocationId"
             :errors="errors.startLocationId"
           />
           <SelectComponent
             id="endLocation"
             :label="$t('dashboard.endLocation')"
-            selection="EndLocation"
-            @selectEndLocation="handleSelectEndLocation"
+            v-model="content.endLocationId"
             :options="locations"
-            :value="content.endLocationId"
             :errors="errors.endLocationId"
           />
         </BreakpointSpaceManager>
@@ -239,21 +233,12 @@ export default {
         console.log(e);
       }
     },
-    handleSelectStartLocation(event) {
-      this.content.startLocationId = event;
-    },
-    handleSelectEndLocation(event) {
-      this.content.endLocationId = event;
-    },
+
     handleErrors(errors) {
       this.errors = errors;
     },
     changeFiles(event) {
       this.content.files = event.files;
-    },
-    handleSelectUser(event) {
-      console.log("selected", event);
-      this.content.userId = event;
     },
     async getUsers() {
       try {

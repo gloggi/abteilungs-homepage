@@ -40,10 +40,8 @@
         <SelectComponent
           id="role"
           :label="$t('dashboard.role')"
-          selection="Role"
-          @selectRole="handleSelectRole"
+          v-model="content.role"
           :options="roles"
-          :value="content.role"
         />
       </div>
     </Card>
@@ -121,9 +119,7 @@ export default {
         console.log(e);
       }
     },
-    handleSelectRole(role) {
-      this.content.role = role;
-    },
+
   },
   async created() {
     await this.getGroups();

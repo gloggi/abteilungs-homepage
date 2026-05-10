@@ -56,9 +56,7 @@
         id="group"
         :label="$t('dashboard.group')"
         :options="groups"
-        selection="Group"
-        @selectGroup="($event) => (content.groupId = $event)"
-        :value="content.groupId"
+        v-model="content.groupId"
         :errors="errors.groupId"
       />
       <div>

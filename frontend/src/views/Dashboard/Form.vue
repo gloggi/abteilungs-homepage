@@ -35,11 +35,9 @@
         <SelectComponent
           id="groups"
           :label="$t('dashboard.groups')"
-          :value="content.groupId"
+          v-model="content.groupId"
           :options="userGroups"
           :errors="errors.group"
-          selection="Group"
-          @selectGroup="handleSelectGroup"
         />
         <CheckBox
           :label="$t('dashboard.enableAutoresponse')"
@@ -49,11 +47,9 @@
           <SelectComponent
             id="autoresponseEmailField"
             :label="$t('dashboard.autoresponseEmailField')"
-            :value="content.autoresponseEmailFieldId"
+            v-model="content.autoresponseEmailFieldId"
             :options="possibleEmailFields"
             :errors="errors.autoresponseEmailField"
-            selection="Field"
-            @selectField="handleSelectField"
           />
           <TextInput
             id="autoresponseSubject"
@@ -304,12 +300,7 @@ export default {
     handleErrors(errors) {
       this.errors = errors;
     },
-    async handleSelectGroup(value) {
-      this.content.groupId = value;
-    },
-    handleSelectField(value) {
-      this.content.autoresponseEmailFieldId = value;
-    },
+
     getTypeName(inputType) {
       if (inputType === "text") {
         return this.$t("dashboard.textfield");

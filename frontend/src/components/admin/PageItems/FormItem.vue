@@ -7,9 +7,7 @@
     @endedDragging="$emit('endedDragging')"
   >
     <SelectComponent
-      selection="FormItem"
-      @selectFormItem="handleChange"
-      :value="item.formId"
+      v-model="selectedValue"
       :options="options"
     />
   </DragItemBox>
@@ -48,12 +46,17 @@ export default {
         console.log(error);
       }
     },
-    handleChange(value) {
-      this.$emit("changeForm", { formId: value, id: this.item.id });
+  },
+  computed: {
+    selectedValue: {
+      get() {
+        return this.item.formId;
+      },
+      set(value) {
+        this.$emit("changeForm", { formId: value, id: this.item.id });
+      },
     },
   },
-
-  computed: {},
   async created() {
     await this.getForms();
   },

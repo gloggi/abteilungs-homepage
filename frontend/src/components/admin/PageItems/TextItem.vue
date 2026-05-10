@@ -20,10 +20,8 @@
           :key="loadedKey"
           class="w-full md:w-1/4"
           :label="$t('dashboard.showSectionOrGroupLogo')"
-          :value="groupOrSectionId"
+          v-model="selectedLogo"
           :options="groupsAndSections"
-          @selectLogo="selectLogo"
-          selection="Logo"
         />
       </div>
       <Editor v-model="bodyValue" />
@@ -67,18 +65,7 @@ export default {
     };
   },
   methods: {
-    selectLogo(id) {
-      const name = this.groupsAndSections.find((obj) => obj.id === id)?.name;
-      if (!name) {
-        this.groupIdValue = null;
-        this.sectionIdValue = null;
-        return;
-      }
-      this.groupIdValue = this.groups.find((group) => group.name === name)?.id;
-      this.sectionIdValue = this.sections.find(
-        (section) => section.name === name,
-      )?.id;
-    },
+
     async getGroups() {
       await this.$store.dispatch("groups/fetchGroups");
     },
@@ -147,6 +134,23 @@ export default {
       return this.sections
         .concat(this.groups)
         .map((obj) => ({ ...obj, id: id++ }));
+    },
+    selectedLogo: {
+      get() {
+        return this.groupOrSectionId;
+      },
+      set(id) {
+        const name = this.groupsAndSections.find((obj) => obj.id === id)?.name;
+        if (!name) {
+          this.groupIdValue = null;
+          this.sectionIdValue = null;
+          return;
+        }
+        this.groupIdValue = this.groups.find((group) => group.name === name)?.id;
+        this.sectionIdValue = this.sections.find(
+          (section) => section.name === name,
+        )?.id;
+      },
     },
   },
   async created() {

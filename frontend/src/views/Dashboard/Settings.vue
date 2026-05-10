@@ -33,11 +33,10 @@
           </div>
           <SelectComponent
             id="navbarPosition"
-            selection="NavbarPosition"
             :label="$t('dashboard.navbarPosition')"
-            @selectNavbarPosition="handleNavbarPosition"
             :returnInt="false"
-            :value="modifiableSettings.navbarPosition"
+            :required="true"
+            v-model="modifiableSettings.navbarPosition"
             :options="navbarPositionOptions"
             :errors="errors.navbarPosition"
           />
@@ -116,10 +115,8 @@
             <div>
               <SelectComponent
                 id="fontWeightHeading1"
-                selection="FontWeightHeading1"
                 :label="$t('dashboard.fontWeightH1')"
-                @selectFontWeightHeading1="handleFontWeight('fontWeightHeading1', $event)"
-                :value="modifiableSettings.fontWeightHeading1"
+                v-model="modifiableSettings.fontWeightHeading1"
                 :options="fontWeightOptions"
                 :errors="errors.fontWeightHeading1"
               />
@@ -127,10 +124,8 @@
             <div>
               <SelectComponent
                 id="fontWeightHeading2"
-                selection="FontWeightHeading2"
                 :label="$t('dashboard.fontWeightH2')"
-                @selectFontWeightHeading2="handleFontWeight('fontWeightHeading2', $event)"
-                :value="modifiableSettings.fontWeightHeading2"
+                v-model="modifiableSettings.fontWeightHeading2"
                 :options="fontWeightOptions"
                 :errors="errors.fontWeightHeading2"
               />
@@ -138,10 +133,8 @@
             <div>
               <SelectComponent
                 id="fontWeightHeading3"
-                selection="FontWeightHeading3"
                 :label="$t('dashboard.fontWeightH3')"
-                @selectFontWeightHeading3="handleFontWeight('fontWeightHeading3', $event)"
-                :value="modifiableSettings.fontWeightHeading3"
+                v-model="modifiableSettings.fontWeightHeading3"
                 :options="fontWeightOptions"
                 :errors="errors.fontWeightHeading3"
               />
@@ -162,10 +155,8 @@
           <SmallTitle>{{ $t("dashboard.pageSettings") }}</SmallTitle>
           <SelectComponent
             id="notFoundPage"
-            selection="NotFoundPage"
             :label="$t('dashboard.notFoundPage')"
-            @selectNotFoundPage="handleNotFoundPage"
-            :value="modifiableSettings.notFoundPageId"
+            v-model="modifiableSettings.notFoundPageId"
             :options="pages"
             :errors="errors.notFoundPageId"
           />
@@ -369,16 +360,7 @@ export default {
         console.log(error);
       }
     },
-    handleNotFoundPage(value) {
-      this.modifiableSettings.notFoundPageId = value;
-    },
-    handleNavbarPosition(value) {
-      console.log(value);
-      this.modifiableSettings.navbarPosition = value;
-    },
-    handleFontWeight(key, value) {
-      this.modifiableSettings[key] = value;
-    },
+
   },
   async created() {
     await this.getSettings();

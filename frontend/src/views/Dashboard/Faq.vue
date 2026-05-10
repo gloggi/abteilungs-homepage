@@ -20,11 +20,9 @@
       <SelectComponent
         id="groups"
         :label="$t('dashboard.groups')"
-        :value="content.groupId"
+        v-model="content.groupId"
         :options="userGroups"
         :errors="errors.group"
-        selection="Group"
-        @selectGroup="handleSelectGroup"
       />
     </Card>
     <AddQuestion
@@ -170,9 +168,7 @@ export default {
         q.sort = i;
       });
     },
-    handleSelectGroup(value) {
-      this.content.groupId = value;
-    },
+
   },
   async created() {
     await this.$store.dispatch("groups/fetchGroups");
