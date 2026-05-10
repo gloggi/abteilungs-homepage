@@ -11,7 +11,7 @@ class Section extends Model
     use HasFactory, Searchable;
 
     protected $fillable = ['name', 'description', 'from_age', 'to_age', 'file_id', 'file_ids', 'color', 'sort', 'is_visible'];
-    
+
     protected $casts = [
         'is_visible' => 'boolean',
     ];

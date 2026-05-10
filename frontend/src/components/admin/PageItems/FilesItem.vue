@@ -80,7 +80,6 @@ export default {
       event.title = this.title;
       this.$emit("changeFiles", event);
     },
-
   },
   created() {
     this.preSelectedImages = this.item.files;

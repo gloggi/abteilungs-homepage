@@ -168,7 +168,6 @@ export default {
         q.sort = i;
       });
     },
-
   },
   async created() {
     await this.$store.dispatch("groups/fetchGroups");

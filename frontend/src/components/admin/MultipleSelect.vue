@@ -24,16 +24,32 @@
               @click.stop="removeItem(option.id)"
               @mousedown.prevent
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
               </svg>
             </button>
           </span>
-          <span v-if="selectedOptions.length > maxVisibleTags" class="multiple-select-tag multiple-select-tag--count">
+          <span
+            v-if="selectedOptions.length > maxVisibleTags"
+            class="multiple-select-tag multiple-select-tag--count"
+          >
             +{{ selectedOptions.length - maxVisibleTags }}
           </span>
         </div>
-        <span v-else class="multiple-select-placeholder">{{ placeholder }}</span>
+        <span v-else class="multiple-select-placeholder">{{
+          placeholder
+        }}</span>
       </div>
       <svg
         class="multiple-select-chevron"
@@ -48,7 +64,7 @@
         stroke-linecap="round"
         stroke-linejoin="round"
       >
-        <path d="m6 9 6 6 6-6"/>
+        <path d="m6 9 6 6 6-6" />
       </svg>
     </button>
 
@@ -62,12 +78,26 @@
           v-if="showDropdown"
           ref="popover"
           class="multiple-select-popover"
-          :class="popoverPlacement === 'top' ? 'multiple-select-popover--top' : ''"
+          :class="
+            popoverPlacement === 'top' ? 'multiple-select-popover--top' : ''
+          "
           :style="popoverStyle"
         >
           <div class="multiple-select-search-wrapper">
-            <svg class="multiple-select-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            <svg
+              class="multiple-select-search-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
             </svg>
             <input
               ref="searchInput"
@@ -87,7 +117,10 @@
           <!-- Options List -->
           <div class="multiple-select-options" ref="optionsList">
             <!-- Select All / Clear All -->
-            <div v-if="filteredOptions.length > 0 && !searchQuery" class="multiple-select-actions">
+            <div
+              v-if="filteredOptions.length > 0 && !searchQuery"
+              class="multiple-select-actions"
+            >
               <button
                 type="button"
                 class="multiple-select-action-btn"
@@ -113,7 +146,8 @@
               class="multiple-select-option"
               :class="{
                 'multiple-select-option--selected': isSelected(option.id),
-                'multiple-select-option--highlighted': highlightedIndex === index,
+                'multiple-select-option--highlighted':
+                  highlightedIndex === index,
               }"
               @click="toggleOption(option.id)"
               @mousedown.prevent
@@ -133,24 +167,40 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <polyline points="20 6 9 17 4 12"/>
+                    <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </Transition>
               </div>
-              <span class="multiple-select-option__label">{{ option.name }}</span>
+              <span class="multiple-select-option__label">{{
+                option.name
+              }}</span>
             </div>
 
             <div
               v-if="allowCreate && searchQuery && canCreateTag"
               class="multiple-select-option multiple-select-option--create"
-              :class="{ 'multiple-select-option--highlighted': highlightedIndex === filteredOptions.length }"
+              :class="{
+                'multiple-select-option--highlighted':
+                  highlightedIndex === filteredOptions.length,
+              }"
               @click="createAndAddTag"
               @mousedown.prevent
               @mouseenter="highlightedIndex = filteredOptions.length"
             >
               <div class="multiple-select-create-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 5v14"/><path d="M5 12h14"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 5v14" />
+                  <path d="M5 12h14" />
                 </svg>
               </div>
               <span class="multiple-select-option__label">
@@ -158,7 +208,10 @@
               </span>
             </div>
 
-            <div v-if="filteredOptions.length === 0 && !canCreateTag" class="multiple-select-empty">
+            <div
+              v-if="filteredOptions.length === 0 && !canCreateTag"
+              class="multiple-select-empty"
+            >
               Keine Ergebnisse gefunden
             </div>
           </div>
@@ -261,15 +314,13 @@ export default {
       if (!this.searchQuery) return this.allOptions;
       const query = this.searchQuery.toLowerCase();
       return this.allOptions.filter((o) =>
-        o.name.toLowerCase().includes(query)
+        o.name.toLowerCase().includes(query),
       );
     },
     canCreateTag() {
       if (!this.allowCreate || !this.searchQuery.trim()) return false;
       const trimmed = this.searchQuery.trim().toLowerCase();
-      return !this.allOptions.some(
-        (o) => o.name.toLowerCase() === trimmed
-      );
+      return !this.allOptions.some((o) => o.name.toLowerCase() === trimmed);
     },
     totalSelectableItems() {
       let count = this.filteredOptions.length;
@@ -387,8 +438,10 @@ export default {
       const container = this.$refs.container;
       const popover = this.$refs.popover;
       if (
-        container && !container.contains(event.target) &&
-        popover && !popover.contains(event.target)
+        container &&
+        !container.contains(event.target) &&
+        popover &&
+        !popover.contains(event.target)
       ) {
         this.closeDropdown();
       }
@@ -429,7 +482,10 @@ export default {
       }
     },
     handleEnter() {
-      if (this.highlightedIndex >= 0 && this.highlightedIndex < this.filteredOptions.length) {
+      if (
+        this.highlightedIndex >= 0 &&
+        this.highlightedIndex < this.filteredOptions.length
+      ) {
         this.toggleOption(this.filteredOptions[this.highlightedIndex].id);
       } else if (
         this.highlightedIndex === this.filteredOptions.length &&
@@ -452,9 +508,7 @@ export default {
       this.$nextTick(() => {
         const list = this.$refs.optionsList;
         if (!list) return;
-        const items = list.querySelectorAll(
-          ".multiple-select-option"
-        );
+        const items = list.querySelectorAll(".multiple-select-option");
         if (items[this.highlightedIndex]) {
           items[this.highlightedIndex].scrollIntoView({ block: "nearest" });
         }
@@ -489,7 +543,9 @@ export default {
   line-height: 1.25rem;
   color: #0a0a0a;
   cursor: pointer;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
   text-align: left;
   outline: none;
 }
@@ -500,7 +556,9 @@ export default {
 
 .multiple-select-trigger:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px white, 0 0 0 4px #0a0a0a;
+  box-shadow:
+    0 0 0 2px white,
+    0 0 0 4px #0a0a0a;
 }
 
 .multiple-select-trigger--error {
@@ -605,10 +663,14 @@ export default {
 
 /* Popover transitions – downward (default) */
 .multiple-select-popover-enter-active {
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
 }
 .multiple-select-popover-leave-active {
-  transition: opacity 0.1s ease, transform 0.1s ease;
+  transition:
+    opacity 0.1s ease,
+    transform 0.1s ease;
 }
 .multiple-select-popover-enter-from {
   opacity: 0;
@@ -714,7 +776,9 @@ export default {
   border-radius: 0.25rem;
   border: 1.5px solid #d1d5db;
   flex-shrink: 0;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
   color: white;
   background: white;
 }
@@ -726,10 +790,14 @@ export default {
 
 /* Check animation */
 .multiple-select-check-anim-enter-active {
-  transition: opacity 0.1s ease, transform 0.1s ease;
+  transition:
+    opacity 0.1s ease,
+    transform 0.1s ease;
 }
 .multiple-select-check-anim-leave-active {
-  transition: opacity 0.08s ease, transform 0.08s ease;
+  transition:
+    opacity 0.08s ease,
+    transform 0.08s ease;
 }
 .multiple-select-check-anim-enter-from {
   opacity: 0;

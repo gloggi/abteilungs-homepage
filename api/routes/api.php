@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeployController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FaqController;
@@ -18,7 +19,6 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebFormController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
     Route::get('/users', [UserController::class, 'index']);
 });
 
-//Route::get('/users', [UserController::class, 'index']);
+// Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);
 Route::put('/users/{id}', [UserController::class, 'update']);
@@ -164,7 +164,7 @@ Route::group(['middleware' => ['auth:sanctum', 'roleOr:admin,unitleader']], func
     Route::post('/blogposts', [\App\Http\Controllers\BlogPostsController::class, 'store']);
     Route::put('/blogposts/{id}', [\App\Http\Controllers\BlogPostsController::class, 'update']);
     Route::delete('/blogposts/{id}', [\App\Http\Controllers\BlogPostsController::class, 'destroy']);
-    
+
     Route::get('/tags', [\App\Http\Controllers\TagController::class, 'index']);
     Route::get('/tags/{id}', [\App\Http\Controllers\TagController::class, 'show']);
     Route::post('/tags', [\App\Http\Controllers\TagController::class, 'store']);

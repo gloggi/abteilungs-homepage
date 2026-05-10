@@ -7,7 +7,7 @@ use Laravel\Scout\Searchable;
 
 class Page extends Model
 {
-    use Searchable, \App\Traits\HasPageItems;
+    use \App\Traits\HasPageItems, Searchable;
 
     protected $fillable = ['title', 'route', 'file_ids', 'big_header', 'group_id', 'password'];
 
@@ -38,8 +38,6 @@ class Page extends Model
             'route' => $this->route,
         ];
     }
-
-
 
     public function getPasswordProtectedAttribute()
     {

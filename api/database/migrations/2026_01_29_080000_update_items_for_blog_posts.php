@@ -21,7 +21,7 @@ return new class extends Migration
             'group_events_items',
             'camp_items',
             'contact_items',
-            'generic_items'
+            'generic_items',
         ];
 
         foreach ($tables as $tableName) {
@@ -47,7 +47,7 @@ return new class extends Migration
             'group_events_items',
             'camp_items',
             'contact_items',
-            'generic_items'
+            'generic_items',
         ];
 
         foreach ($tables as $tableName) {

@@ -30,7 +30,7 @@ class PageItemService
                 'sort' => $sortCounter,
                 $foreignKey => $parentId,
             ];
-            
+
             switch ($itemData['type']) {
                 case 'textItem':
                     TextItem::updateOrCreate(
@@ -106,32 +106,32 @@ class PageItemService
                     CampItem::updateOrCreate(
                         ['id' => $itemData['id'] ?? null],
                         array_merge($data, [
-                             'group_id' => $itemData['group_id'] ?? null,
+                            'group_id' => $itemData['group_id'] ?? null,
                         ])
                     );
                     break;
                 case 'locationItem':
-                     LocationItem::updateOrCreate(
+                    LocationItem::updateOrCreate(
                         ['id' => $itemData['id'] ?? null],
-                         array_merge($data, [
-                             'location_id' => $itemData['location_id'] ?? null,
-                         ])
+                        array_merge($data, [
+                            'location_id' => $itemData['location_id'] ?? null,
+                        ])
                     );
                     break;
                 case 'faqItem':
                     FaqItem::updateOrCreate(
                         ['id' => $itemData['id'] ?? null],
-                         array_merge($data, [
-                             'faq_id' => $itemData['faq_id'] ?? null,
-                         ])
+                        array_merge($data, [
+                            'faq_id' => $itemData['faq_id'] ?? null,
+                        ])
                     );
                     break;
                 case 'groupEventsItem':
-                     GroupEventsItem::updateOrCreate(
+                    GroupEventsItem::updateOrCreate(
                         ['id' => $itemData['id'] ?? null],
-                         array_merge($data, [
-                             'group_id' => $itemData['group_id'] ?? null,
-                         ])
+                        array_merge($data, [
+                            'group_id' => $itemData['group_id'] ?? null,
+                        ])
                     );
                     break;
                 case 'blogPostsItem':
@@ -141,7 +141,7 @@ class PageItemService
                             'view_mode' => $itemData['view_mode'] ?? 'all',
                         ])
                     );
-                    
+
                     $tagIds = isset($itemData['tags']) ? array_column($itemData['tags'], 'id') : [];
                     $blogItem->tags()->sync($tagIds);
 

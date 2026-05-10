@@ -6,10 +6,7 @@
     @startedDragging="$emit('startedDragging')"
     @endedDragging="$emit('endedDragging')"
   >
-    <SelectComponent
-      v-model="selectedValue"
-      :options="options"
-    />
+    <SelectComponent v-model="selectedValue" :options="options" />
   </DragItemBox>
 </template>
 <script>

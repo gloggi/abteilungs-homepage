@@ -17,8 +17,7 @@
         <div
           v-else
           class="w-24 h-24 rounded-full shrink-0 bg-gray-200 flex items-center justify-center text-gray-500 font-semibold text-3xl uppercase"
-        >
-        </div>
+        ></div>
         <div class="flex flex-col min-w-0 w-full main-text">
           <p class="text-primary truncate">
             {{ contact.role }}

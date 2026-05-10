@@ -12,7 +12,6 @@ use App\Models\GroupEventsItem;
 use App\Models\ImageItem;
 use App\Models\LocationItem;
 use App\Models\TextItem;
-use App\Models\VideoItem;
 
 trait HasPageItems
 {

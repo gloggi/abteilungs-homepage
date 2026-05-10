@@ -65,7 +65,6 @@ export default {
     };
   },
   methods: {
-
     async getGroups() {
       await this.$store.dispatch("groups/fetchGroups");
     },
@@ -146,7 +145,9 @@ export default {
           this.sectionIdValue = null;
           return;
         }
-        this.groupIdValue = this.groups.find((group) => group.name === name)?.id;
+        this.groupIdValue = this.groups.find(
+          (group) => group.name === name,
+        )?.id;
         this.sectionIdValue = this.sections.find(
           (section) => section.name === name,
         )?.id;

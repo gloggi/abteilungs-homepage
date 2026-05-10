@@ -119,7 +119,6 @@ export default {
         console.log(e);
       }
     },
-
   },
   async created() {
     await this.getGroups();

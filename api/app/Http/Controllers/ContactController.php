@@ -20,7 +20,7 @@ class ContactController extends Controller
 
         if ($request->has('group_ids')) {
             $groupIds = $request->input('group_ids');
-            if (!empty($groupIds)) {
+            if (! empty($groupIds)) {
                 $query->whereHas('groups', function ($q) use ($groupIds) {
                     $q->whereIn('groups.id', $groupIds);
                 });

@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\BlogPost;
 use App\Models\TextItem;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class BlogPostsTableSeeder extends Seeder
@@ -14,7 +14,7 @@ class BlogPostsTableSeeder extends Seeder
     public function run()
     {
         $user = User::first();
-        if (!$user) {
+        if (! $user) {
             $user = User::create([
                 'nickname' => 'Admin',
                 'firstname' => 'Admin',
@@ -74,16 +74,16 @@ class BlogPostsTableSeeder extends Seeder
 
             $blogPost = BlogPost::create([
                 'title' => $postData['title'],
-                'slug' => Str::slug($postData['title']) . '-' . uniqid(), 
-                'published_at' => Carbon::now()->subDays($index * 3), 
+                'slug' => Str::slug($postData['title']).'-'.uniqid(),
+                'published_at' => Carbon::now()->subDays($index * 3),
                 'active' => true,
                 'user_id' => $user->id,
                 'author' => $user->nickname ?? $user->firstname,
                 'preview_image_id' => $previewImage ? $previewImage->id : null,
             ]);
             TextItem::create([
-                'title' => '', 
-                'body' => '<p class="main-text">' . $postData['content'] . '</p>',
+                'title' => '',
+                'body' => '<p class="main-text">'.$postData['content'].'</p>',
                 'blog_post_id' => $blogPost->id,
                 'sort' => 0,
             ]);

@@ -88,8 +88,6 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,300italic,600italic");
 
-
-
 .text-heading-1 {
   font-family:
     "Source Sans Pro",

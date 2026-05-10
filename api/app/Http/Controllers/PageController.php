@@ -4,14 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
-use App\Models\CampItem;
-use App\Models\FaqItem;
-use App\Models\FilesItem;
-use App\Models\FormItem;
-use App\Models\GenericItem;
-use App\Models\GroupEventsItem;
-use App\Models\ImageItem;
-use App\Models\LocationItem;
 use App\Models\Page;
 use App\Models\TextItem;
 use Illuminate\Http\Request;
@@ -19,7 +11,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -53,10 +44,10 @@ class PageController extends Controller
 
     public function show($id, Request $request)
     {
-        if ($id === "0") {
-             $page = Page::whereNull('route')->orWhereIn('route', ['0', 'home', ''])->orderByRaw("CASE WHEN route IS NULL THEN 0 ELSE 1 END")->first();
+        if ($id === '0') {
+            $page = Page::whereNull('route')->orWhereIn('route', ['0', 'home', ''])->orderByRaw('CASE WHEN route IS NULL THEN 0 ELSE 1 END')->first();
         } else {
-             $page = Page::where('id', $id)->orWhere('route', $id)->first();
+            $page = Page::where('id', $id)->orWhere('route', $id)->first();
         }
 
         if (! $page) {
@@ -68,13 +59,13 @@ class PageController extends Controller
         if ($page->password) {
             $token = $request->header('X-Page-Token');
             $authorized = $this->checkToken($token, $page->id);
-            
-            if (!$authorized) {
+
+            if (! $authorized) {
                 if ($user = Auth::guard('sanctum')->user()) {
                     if ($user->hasRole('admin')) {
-                         $authorized = true;
+                        $authorized = true;
                     } elseif ($page->group_id && $user->groups->pluck('id')->contains($page->group_id)) {
-                         $authorized = true;
+                        $authorized = true;
                     }
                 }
             }
@@ -86,7 +77,7 @@ class PageController extends Controller
 
         $pageData = $page->toArray();
         $pageData['page_items'] = $page->getAllItems();
-        
+
         return response()->json($pageData);
     }
 

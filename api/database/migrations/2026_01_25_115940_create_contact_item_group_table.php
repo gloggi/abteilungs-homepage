@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -20,10 +20,10 @@ return new class extends Migration
         });
 
         $group = DB::table('groups')->where('name', 'Abteilungsstab')->first();
-        
+
         if ($group) {
             $genericItems = DB::table('generic_items')->where('type', 'contactItem')->get();
-            
+
             foreach ($genericItems as $item) {
                 $contactItemId = DB::table('contact_items')->insertGetId([
                     'page_id' => $item->page_id,

@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Requests\UpdateBlogPostRequest;
 use App\Models\BlogPost;
-use App\Models\TextItem;
 use App\Services\PageItemService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class BlogPostsController extends Controller
 {
@@ -25,22 +23,22 @@ class BlogPostsController extends Controller
         $query = BlogPost::query()->with('files', 'previewImage', 'tags');
 
         if ($request->has('search')) {
-            $blogSearchResults = BlogPost::where('title', 'like', '%' . $request->get('search') . '%')->pluck('id');
+            $blogSearchResults = BlogPost::where('title', 'like', '%'.$request->get('search').'%')->pluck('id');
             $query = BlogPost::whereIn('id', $blogSearchResults);
         }
 
         if ($request->has('tags')) {
             $tags = $request->input('tags');
             if (is_array($tags) && count($tags) > 0) {
-                 $query->whereHas('tags', function ($q) use ($tags) {
-                     $q->whereIn('tags.id', $tags);
-                 });
+                $query->whereHas('tags', function ($q) use ($tags) {
+                    $q->whereIn('tags.id', $tags);
+                });
             }
         }
 
-        if (!$request->input('dashboard')) {
+        if (! $request->input('dashboard')) {
             $query->where('active', true)
-                  ->where('published_at', '<=', now());
+                ->where('published_at', '<=', now());
         }
 
         $perPage = $request->input('per_page', 3);
@@ -79,12 +77,12 @@ class BlogPostsController extends Controller
             ->with('files', 'previewImage', 'tags')
             ->first();
 
-        if (!$post) {
+        if (! $post) {
             return response()->json(['message' => 'Blog post not found'], 404);
         }
-        
-        if (!Auth::check() && (!$post->active || ($post->published_at && $post->published_at > now()))) {
-             return response()->json(['message' => 'Blog post not found'], 404);
+
+        if (! Auth::check() && (! $post->active || ($post->published_at && $post->published_at > now()))) {
+            return response()->json(['message' => 'Blog post not found'], 404);
         }
 
         return response()->json(array_merge($post->toArray(), [
@@ -95,7 +93,7 @@ class BlogPostsController extends Controller
     public function update(UpdateBlogPostRequest $request, $id)
     {
         $post = BlogPost::find($id);
-        if (!$post) {
+        if (! $post) {
             return response()->json(['message' => 'Blog post not found'], 404);
         }
 
@@ -108,16 +106,18 @@ class BlogPostsController extends Controller
             $currentItems = collect($post->getAllItems());
             $validatedItems = collect($validatedData['page_items']);
 
-            $validatedIds = $validatedItems->pluck('id')->filter()->map(function($id) { return (int)$id; });
-            
+            $validatedIds = $validatedItems->pluck('id')->filter()->map(function ($id) {
+                return (int) $id;
+            });
+
             foreach ($currentItems as $item) {
-                 $found = $validatedItems->first(function($valItem) use ($item) {
-                     return isset($valItem['id']) && $valItem['id'] == $item->id && $valItem['type'] == $item->type;
-                 });
-                 
-                 if (!$found) {
-                     $item->delete();
-                 }
+                $found = $validatedItems->first(function ($valItem) use ($item) {
+                    return isset($valItem['id']) && $valItem['id'] == $item->id && $valItem['type'] == $item->type;
+                });
+
+                if (! $found) {
+                    $item->delete();
+                }
             }
 
             $this->pageItemService->syncItems($post, $validatedData['page_items']);
@@ -135,7 +135,7 @@ class BlogPostsController extends Controller
     public function destroy($id)
     {
         $post = BlogPost::find($id);
-        if (!$post) {
+        if (! $post) {
             return response()->json(['message' => 'Blog post not found'], 404);
         }
 

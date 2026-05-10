@@ -9,19 +9,39 @@
           <font-awesome-icon :icon="icons.faGauge" />
           {{ $t("dashboard.goToDashboard") }}
         </button>
-        <button type="button" class="cursor-pointer" @click="goToEditPage" v-if="showPageEdit">
+        <button
+          type="button"
+          class="cursor-pointer"
+          @click="goToEditPage"
+          v-if="showPageEdit"
+        >
           <font-awesome-icon :icon="icons.faPen" />
           {{ $t("dashboard.editPage") }}
         </button>
-        <button type="button" class="cursor-pointer" @click="goToEvents" v-if="showActivityEdit">
+        <button
+          type="button"
+          class="cursor-pointer"
+          @click="goToEvents"
+          v-if="showActivityEdit"
+        >
           <font-awesome-icon :icon="icons.faCalendarDays" />
           {{ $t("dashboard.editEvents") }}
         </button>
-        <button type="button" class="cursor-pointer" @click="goToEditBlogPost" v-if="showBlogPostEdit">
+        <button
+          type="button"
+          class="cursor-pointer"
+          @click="goToEditBlogPost"
+          v-if="showBlogPostEdit"
+        >
           <font-awesome-icon :icon="icons.faPen" />
           {{ $t("dashboard.editBlogPost") }}
         </button>
-        <button type="button" class="cursor-pointer" @click="goToBlogPosts" v-if="showBlogPostsEdit">
+        <button
+          type="button"
+          class="cursor-pointer"
+          @click="goToBlogPosts"
+          v-if="showBlogPostsEdit"
+        >
           <font-awesome-icon :icon="icons.faPen" />
           {{ $t("dashboard.editBlogPosts") }}
         </button>
@@ -34,7 +54,9 @@
       </div>
       <button type="button" class="cursor-pointer" @click="logout">
         <font-awesome-icon :icon="icons.faDoorOpen" />
-        <span class="hidden sm:inline sm:pl-2">{{ $t("dashboard.logout") }}</span>
+        <span class="hidden sm:inline sm:pl-2">{{
+          $t("dashboard.logout")
+        }}</span>
       </button>
     </div>
   </div>
@@ -83,7 +105,10 @@ export default {
   },
   computed: {
     userName() {
-      return this.$store.state.user.user.nickname || this.$store.state.user.user.firstname;
+      return (
+        this.$store.state.user.user.nickname ||
+        this.$store.state.user.user.firstname
+      );
     },
     logo() {
       return this.backendURL + this.settings.divisionLogo?.path;

@@ -172,7 +172,8 @@ export const messages = {
       midataSettings: "MiData-Einstellungen",
       raisenowSettings: "RaiseNow Einstellungen",
       raisenowUuid: "RaiseNow Solution Id",
-      raisenowUuidInfo: "Die Solution Id ist eine fünfstellige Buchstabenkombination.",
+      raisenowUuidInfo:
+        "Die Solution Id ist eine fünfstellige Buchstabenkombination.",
       footerSettings: "Footer-Einstellungen",
       alertBannerSettings: "Alert-Banner-Einstellungen",
       showAlertBanner: "Alert-Banner anzeigen",
@@ -333,7 +334,7 @@ export const messages = {
         uploadError: "Fehler beim Hochladen von {name}",
         generalError: "Ein unerwarteter Fehler ist aufgetreten",
       },
-      raisenowTwint: "RaiseNow TWINT"
+      raisenowTwint: "RaiseNow TWINT",
     },
     page: {
       campDateLabel: "Lagerdatum",

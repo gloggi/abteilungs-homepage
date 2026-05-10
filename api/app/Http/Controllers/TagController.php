@@ -12,6 +12,7 @@ class TagController extends Controller
         if ($request->has('dashboard')) {
             return response()->json(Tag::paginate(20));
         }
+
         return response()->json(Tag::all());
     }
 
@@ -37,7 +38,7 @@ class TagController extends Controller
         $tag = Tag::findOrFail($id);
 
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255|unique:tags,name,' . $tag->id,
+            'name' => 'required|string|max:255|unique:tags,name,'.$tag->id,
             'color' => 'nullable|string|max:7',
         ]);
 

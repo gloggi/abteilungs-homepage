@@ -128,14 +128,11 @@ class FileController extends Controller
             }
         }
 
-
         Storage::disk('public')->delete(str_replace('/storage/', '', $file->path));
-
 
         if ($file->thumbnail) {
             Storage::disk('public')->delete(str_replace('/storage/', '', $file->thumbnail));
         }
-
 
         $file->delete();
 
@@ -157,7 +154,7 @@ class FileController extends Controller
         } elseif ($newFile->extension === 'pdf') {
             $thumbnailPath = 'thumbnails/'.$filename.'.png';
 
-            $imagick = new Imagick();
+            $imagick = new Imagick;
             $imagick->setResolution(72, 72);
             $imagick->readImage($fileData.'[0]');
             if ($imagick->getImageWidth() > $imagick->getImageHeight()) {

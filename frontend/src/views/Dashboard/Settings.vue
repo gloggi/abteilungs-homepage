@@ -360,7 +360,6 @@ export default {
         console.log(error);
       }
     },
-
   },
   async created() {
     await this.getSettings();

@@ -48,7 +48,7 @@ class BlogPost extends Model
         parent::boot();
 
         static::creating(function ($blogPost) {
-            if (!$blogPost->slug) {
+            if (! $blogPost->slug) {
                 $blogPost->slug = Str::slug($blogPost->title);
             }
         });

@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -30,7 +30,7 @@ return new class extends Migration
                 $updates['finish_date'] = \Carbon\Carbon::parse($camp->finish_at)->toDateString();
                 $updates['finish_time'] = \Carbon\Carbon::parse($camp->finish_at)->toTimeString();
             }
-            if (!empty($updates)) {
+            if (! empty($updates)) {
                 DB::table('camps')->where('id', $camp->id)->update($updates);
             }
         }
@@ -55,13 +55,13 @@ return new class extends Migration
             $updates = [];
             if ($camp->start_date) {
                 $time = $camp->start_time ?: '00:00:00';
-                $updates['start_at'] = $camp->start_date . ' ' . $time;
+                $updates['start_at'] = $camp->start_date.' '.$time;
             }
             if ($camp->finish_date) {
                 $time = $camp->finish_time ?: '00:00:00';
-                $updates['finish_at'] = $camp->finish_date . ' ' . $time;
+                $updates['finish_at'] = $camp->finish_date.' '.$time;
             }
-            if (!empty($updates)) {
+            if (! empty($updates)) {
                 DB::table('camps')->where('id', $camp->id)->update($updates);
             }
         }

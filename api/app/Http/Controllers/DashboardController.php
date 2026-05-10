@@ -8,7 +8,6 @@ use App\Models\Group;
 use App\Models\Location;
 use App\Models\Page;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {

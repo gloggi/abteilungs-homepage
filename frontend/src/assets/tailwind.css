@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin '@tailwindcss/forms';
 
@@ -22,29 +22,29 @@
 
 @layer components {
   .main-text {
-  color: #333333;
-  font-family:
-    "Source Sans Pro",
-    "system-ui",
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    sans-serif;
-  font-size: var(--main-font-size);
-  line-height: 1.5;
-}
-@media screen and (max-width: 700px) {
-  .main-text {
-    font-size: calc(var(--main-font-size) * 0.75);
+    color: #333333;
+    font-family:
+      "Source Sans Pro",
+      "system-ui",
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      "Fira Sans",
+      "Droid Sans",
+      "Helvetica Neue",
+      Helvetica,
+      Arial,
+      sans-serif;
+    font-size: var(--main-font-size);
     line-height: 1.5;
   }
-}
+  @media screen and (max-width: 700px) {
+    .main-text {
+      font-size: calc(var(--main-font-size) * 0.75);
+      line-height: 1.5;
+    }
+  }
 }
