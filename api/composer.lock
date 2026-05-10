@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5c637916a512c381755a2e667c79f5e",
+    "content-hash": "e4ec06dc634220cbfc3e3bc068a46e51",
     "packages": [
         {
             "name": "brick/math",
@@ -4434,24 +4434,24 @@
         },
         {
             "name": "spatie/pdf-to-image",
-            "version": "1.4.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/pdf-to-image.git",
-                "reference": "8deb3d899ecbef7e8e1dad16e3e7b57997582abc"
+                "reference": "eb46281e228a2b9723d12c13c365d90b28b99253"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/pdf-to-image/zipball/8deb3d899ecbef7e8e1dad16e3e7b57997582abc",
-                "reference": "8deb3d899ecbef7e8e1dad16e3e7b57997582abc",
+                "url": "https://api.github.com/repos/spatie/pdf-to-image/zipball/eb46281e228a2b9723d12c13c365d90b28b99253",
+                "reference": "eb46281e228a2b9723d12c13c365d90b28b99253",
                 "shasum": ""
             },
             "require": {
                 "ext-imagick": "*",
-                "php": ">=5.5.0"
+                "php": "^8.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.2"
+                "pestphp/pest": "^2.34|^3.0|^4.0"
             },
             "type": "library",
             "autoload": {
@@ -4469,6 +4469,12 @@
                     "email": "freek@spatie.be",
                     "homepage": "https://spatie.be",
                     "role": "Developer"
+                },
+                {
+                    "name": "Patrick Organ",
+                    "email": "patrick@permafrost.dev",
+                    "homepage": "https://permafrost.dev",
+                    "role": "Developer"
                 }
             ],
             "description": "Convert a pdf to an image",
@@ -4482,15 +4488,19 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/pdf-to-image/issues",
-                "source": "https://github.com/spatie/pdf-to-image/tree/1.4.0"
+                "source": "https://github.com/spatie/pdf-to-image/tree/3.2.0"
             },
             "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
                 {
                     "url": "https://github.com/spatie",
                     "type": "github"
                 }
             ],
-            "time": "2017-06-15T18:15:09+00:00"
+            "time": "2026-02-09T14:43:55+00:00"
         },
         {
             "name": "symfony/clock",
