@@ -39,7 +39,7 @@
     "@tiptap/pm": "^3.16.0",
     "@tiptap/starter-kit": "^3.16.0",
     "@tiptap/vue-3": "^3.16.0",
-    "axios": "^1.7.4",
+    "axios": "^1.15.2",
     "date-fns": "^3.0.6",
     "gsap": "^3.12.4",
     "js-beautify": "^1.15.4",
