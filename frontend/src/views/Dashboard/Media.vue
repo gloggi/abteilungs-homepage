@@ -19,25 +19,29 @@
     />
 
     <div class="relative min-h-[400px]">
+      <MediaGrid v-if="files.length > 0 || !loading" :files="files" @open="openFile" @delete="confirmDelete" />
       <div
         v-if="loading"
-        class="absolute inset-0 z-10 flex items-center justify-center bg-white/50 backdrop-blur-xs"
+        class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+        :class="{ 'mt-4': files.length > 0 }"
       >
         <div
-          class="h-10 w-10 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"
-        ></div>
+          v-for="i in (files.length === 0 ? 12 : 6)"
+          :key="`skeleton-${i}`"
+          class="flex flex-col rounded-xl border border-gray-200 bg-white shadow-xs animate-pulse"
+        >
+          <div class="aspect-square w-full rounded-t-xl bg-white"></div>
+          <div class="flex flex-col p-3">
+            <div class="h-4 w-3/4 rounded-md bg-gray-200"></div>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="h-3 w-10 rounded-md bg-gray-200"></div>
+              <div class="h-3 w-12 rounded-md bg-gray-200"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <MediaGrid :files="files" @open="openFile" @delete="confirmDelete" />
-    </div>
-
-    <div class="mt-6">
-      <PaginationNav
-        :total-items="total"
-        :items-per-page="perPage"
-        :page-number="currentPage"
-        @go-to-page="changePage"
-      />
+      <div ref="sentinel" class="h-1"></div>
     </div>
 
     <Modal v-if="showModal" @close="closeModal" size="5xl">
@@ -63,7 +67,6 @@ import SearchField from "../../components/admin/SearchField.vue";
 import PageHeader from "../../components/admin/PageHeader.vue";
 import MediaGrid from "../../components/admin/media/MediaGrid.vue";
 import MediaDetail from "../../components/admin/media/MediaDetail.vue";
-import PaginationNav from "../../components/admin/PaginationNav.vue";
 import DragAndDropUpload from "../../components/admin/DragAndDropUpload.vue";
 import Modal from "../../components/admin/Modal.vue";
 import { debounce } from "lodash";
@@ -77,7 +80,6 @@ export default {
     PageHeader,
     MediaGrid,
     MediaDetail,
-    PaginationNav,
     DragAndDropUpload,
     Modal,
     FontAwesomeIcon,
@@ -97,6 +99,7 @@ export default {
       showUploadModal: false,
       selectedFile: null,
       cacheBust: Date.now(),
+      observer: null,
       extensionMap: {
         image: "jpg,jpeg,png,gif,webp,svg,bmp,tiff,ico",
         document: "pdf,doc,docx,txt,rtf,odt",
@@ -122,17 +125,39 @@ export default {
         { value: "archive", label: this.$t("dashboard.archives") },
       ];
     },
+    hasMorePages() {
+      return this.currentPage <= this.lastPage;
+    },
   },
-  created() {
-    this.getFiles();
+  mounted() {
+    this.$nextTick(() => {
+      this.setupObserver();
+    });
+  },
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  },
+  async created() {
+    await this.loadMore();
   },
   methods: {
-    async getFiles(page = 1) {
+    resetAndLoad() {
+      this.currentPage = 1;
+      this.files = [];
+      this.total = 0;
+      this.lastPage = 1;
+      this.loadMore();
+    },
+    async loadMore() {
+      if (this.loading || !this.hasMorePages) return;
+
       this.loading = true;
       try {
         const params = {
           per_page: this.perPage,
-          page: page,
+          page: this.currentPage,
         };
 
         if (this.search) {
@@ -144,11 +169,21 @@ export default {
         }
 
         const response = await this.callApi("get", "/files", null, { params });
-        this.files = response.data.data;
-        this.currentPage = response.data.currentPage;
+        if (response.status == 204) {
+          this.currentPage = 1;
+          this.files = [];
+          this.total = 0;
+          this.lastPage = 1;
+          this.loading = false;
+          return;
+        }
+
+        const newItems = response.data.data;
+        this.files = [...this.files, ...newItems];
         this.lastPage = response.data.lastPage;
         this.total = response.data.total;
         this.perPage = response.data.perPage;
+        this.currentPage++;
       } catch (e) {
         console.error(e);
         this.notifyUser(this.$t("dashboard.noFilesFound"), "error");
@@ -157,24 +192,34 @@ export default {
       }
     },
 
+    setupObserver() {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && !this.loading && this.hasMorePages) {
+            this.loadMore();
+          }
+        },
+        {
+          rootMargin: "200px",
+        },
+      );
+      if (this.$refs.sentinel) {
+        this.observer.observe(this.$refs.sentinel);
+      }
+    },
+
     onSearch: debounce(function (val) {
       this.search = val;
-      this.getFiles(1);
+      this.resetAndLoad();
     }, 300),
 
     onFilter(val) {
       this.filter = val;
-      this.getFiles(1);
-    },
-
-    changePage(page) {
-      if (page >= 1 && page <= this.lastPage) {
-        this.getFiles(page);
-      }
+      this.resetAndLoad();
     },
 
     onUploaded() {
-      this.getFiles();
+      this.resetAndLoad();
       this.notifyUser(this.$t("dashboard.uploaded"));
       this.showUploadModal = false;
     },
@@ -200,7 +245,8 @@ export default {
     async deleteFile(file) {
       try {
         await this.callApi("delete", `/files/${file.id}`);
-        await this.getFiles();
+        this.files = this.files.filter(f => f.id !== file.id);
+        this.total--;
         this.notifyUser(this.$t("dashboard.itemDeleted"));
         if (
           this.showModal &&
@@ -221,9 +267,13 @@ export default {
           name: updatedFile.name,
           category: updatedFile.category,
         });
-        await this.getFiles();
-        this.notifyUser(this.$t("dashboard.itemUpdated"));
 
+        const index = this.files.findIndex(f => f.id === updatedFile.id);
+        if (index !== -1) {
+          this.files[index] = { ...this.files[index], ...updatedFile };
+        }
+
+        this.notifyUser(this.$t("dashboard.itemUpdated"));
         this.selectedFile = { ...this.selectedFile, ...updatedFile };
       } catch (e) {
         console.error(e);
@@ -238,9 +288,11 @@ export default {
         formData.append("category", "test");
 
         await this.callApi("post", `/files/${this.selectedFile.id}`, formData);
-        await this.getFiles();
-
-        this.cacheBust = Date.now();
+        
+        // As the controller doesn't return the updated file object, we just trigger a full reload
+        // to ensure we have the correct thumbnail and file path.
+        this.resetAndLoad();
+        
         this.cacheBust = Date.now();
         this.notifyUser(this.$t("dashboard.itemUpdated"));
       } catch (e) {
@@ -251,3 +303,5 @@ export default {
   },
 };
 </script>
+
+<style></style>

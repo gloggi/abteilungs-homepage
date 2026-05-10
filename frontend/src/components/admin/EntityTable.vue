@@ -27,13 +27,13 @@
       </div>
     </div>
 
-    <div v-if="totalItems == 0" class="bg-white w-full">
+    <div v-if="totalItems == 0 && !loading" class="bg-white w-full">
       <EmptyState :title="$t('dashboard.noItemsAvailable')" />
     </div>
 
     <div
       v-for="(item, j) in content"
-      :key="`row-${j}`"
+      :key="`row-${item['id'] || j}`"
       class="bg-white w-full p-3 border-b border-gray-100 last:border-0 flex justify-start items-center transition-colors hover:bg-gray-50/50 gap-4"
     >
       <div class="w-10 flex items-center justify-center flex-none">
@@ -110,42 +110,64 @@
         </div>
       </div>
     </div>
+
+    <template v-if="loading">
+      <div
+        v-for="i in (content.length === 0 ? 10 : 3)"
+        :key="`skeleton-${i}`"
+        class="bg-white w-full p-3 border-b border-gray-100 last:border-0 flex justify-start items-center gap-4 animate-pulse"
+      >
+        <div class="w-10 flex items-center justify-center flex-none">
+          <div class="h-4 w-4 bg-gray-200 rounded-sm"></div>
+        </div>
+        
+        <div class="justify-start items-center md:hidden px-4 hidden">
+           <div class="size-12 rounded-full bg-gray-200"></div>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center w-full gap-4">
+          <div
+            v-for="(key, k) in keys"
+            :key="`skeleton-col-${i}-${k}`"
+            :class="getColumnClass(key)"
+          >
+            <div v-if="actions[key] && actions[key].actionName == 'image'" class="hidden md:block">
+               <div class="size-10 rounded-full bg-gray-200"></div>
+            </div>
+            <div v-else class="h-4 bg-gray-200 rounded-md w-3/4 max-w-[200px]"></div>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 
-  <div class="mt-4">
-    <PaginationNav
-      :pageNumber="page"
-      :itemsPerPage="itemsPerPage"
-      :totalItems="totalItems"
-      @goToPage="(i) => goToPage(i)"
-    />
-  </div>
+  <div ref="sentinel" class="h-1"></div>
 </template>
 
 <script>
 import { get } from "lodash";
-import PaginationNav from "./PaginationNav.vue";
 import { format } from "date-fns";
 import ColoredLogoCircle from "./ColoredLogoCircle.vue";
 import EmptyState from "./EmptyState.vue";
 export default {
-  components: { PaginationNav, ColoredLogoCircle, EmptyState },
+  components: { ColoredLogoCircle, EmptyState },
   props: ["entity", "columns", "titles", "searchString", "cover"],
   emits: ["changeSelected"],
   data() {
     return {
-      content: undefined,
+      content: [],
       keys: undefined,
       actions: {},
       page: 1,
       totalItems: -1,
-      itemsPerPage: 1,
-      paginationKey: 0,
+      lastPage: 1,
+      loading: false,
       topCheckboxValue: false,
       checkBoxValues: {},
       tableKey: 0,
       selected: new Set([]),
       isDesktop: window.innerWidth > 768,
+      observer: null,
     };
   },
   computed: {
@@ -154,6 +176,9 @@ export default {
     },
     getTitles() {
       return this.titles.split(",");
+    },
+    hasMorePages() {
+      return this.page <= this.lastPage;
     },
   },
   watch: {
@@ -168,7 +193,7 @@ export default {
       deep: true,
     },
     searchString() {
-      this.getItems();
+      this.resetAndLoad();
     },
   },
   methods: {
@@ -211,17 +236,26 @@ export default {
         this.tableKey++;
       }
     },
-    setUpBoxes() {
-      this.content.forEach((item) => {
+    setUpBoxes(items) {
+      items.forEach((item) => {
         this.checkBoxValues[item["id"]] = false;
       });
     },
-    goToPage(i) {
-      this.page = i;
-      this.getItems();
-      window.scrollTo(0, 0);
+    resetAndLoad() {
+      this.page = 1;
+      this.content = [];
+      this.totalItems = -1;
+      this.lastPage = 1;
+      this.checkBoxValues = {};
+      this.selected = new Set([]);
+      this.topCheckboxValue = false;
+      this.$emit("changeSelected", []);
+      this.loadMore();
     },
-    async getItems() {
+    async loadMore() {
+      if (this.loading || !this.hasMorePages) return;
+
+      this.loading = true;
       try {
         const response = await this.callApi(
           "get",
@@ -238,17 +272,23 @@ export default {
         );
         if (response.status == 204) {
           this.page = 1;
-          this.getItems();
+          this.content = [];
+          this.totalItems = 0;
+          this.lastPage = 1;
+          this.loading = false;
           return;
         }
-        this.content = response.data.data;
-        this.totalItems = response.data.total;
-        this.itemsPerPage = response.data.perPage;
 
-        this.tableKey++;
-        this.paginationKey++;
+        const newItems = response.data.data;
+        this.content = [...this.content, ...newItems];
+        this.totalItems = response.data.total;
+        this.lastPage = response.data.lastPage;
+        this.setUpBoxes(newItems);
+        this.page++;
       } catch (e) {
         console.log(e);
+      } finally {
+        this.loading = false;
       }
     },
     entryProcessor() {
@@ -274,17 +314,37 @@ export default {
     handleResize() {
       this.isDesktop = window.innerWidth > 768;
     },
+    setupObserver() {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && !this.loading && this.hasMorePages) {
+            this.loadMore();
+          }
+        },
+        {
+          rootMargin: "200px",
+        },
+      );
+      if (this.$refs.sentinel) {
+        this.observer.observe(this.$refs.sentinel);
+      }
+    },
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
+    this.$nextTick(() => {
+      this.setupObserver();
+    });
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   },
   async created() {
     this.entryProcessor();
-    await this.getItems();
-    this.setUpBoxes();
+    await this.loadMore();
   },
 };
 </script>
