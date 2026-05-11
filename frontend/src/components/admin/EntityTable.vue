@@ -113,16 +113,16 @@
 
     <template v-if="loading">
       <div
-        v-for="i in (content.length === 0 ? 10 : 3)"
+        v-for="i in content.length === 0 ? 10 : 3"
         :key="`skeleton-${i}`"
         class="bg-white w-full p-3 border-b border-gray-100 last:border-0 flex justify-start items-center gap-4 animate-pulse"
       >
         <div class="w-10 flex items-center justify-center flex-none">
           <div class="h-4 w-4 bg-gray-200 rounded-sm"></div>
         </div>
-        
+
         <div class="justify-start items-center md:hidden px-4 hidden">
-           <div class="size-12 rounded-full bg-gray-200"></div>
+          <div class="size-12 rounded-full bg-gray-200"></div>
         </div>
 
         <div class="flex flex-col md:flex-row md:items-center w-full gap-4">
@@ -131,10 +131,16 @@
             :key="`skeleton-col-${i}-${k}`"
             :class="getColumnClass(key)"
           >
-            <div v-if="actions[key] && actions[key].actionName == 'image'" class="hidden md:block">
-               <div class="size-10 rounded-full bg-gray-200"></div>
+            <div
+              v-if="actions[key] && actions[key].actionName == 'image'"
+              class="hidden md:block"
+            >
+              <div class="size-10 rounded-full bg-gray-200"></div>
             </div>
-            <div v-else class="h-4 bg-gray-200 rounded-md w-3/4 max-w-[200px]"></div>
+            <div
+              v-else
+              class="h-4 bg-gray-200 rounded-md w-3/4 max-w-[200px]"
+            ></div>
           </div>
         </div>
       </div>

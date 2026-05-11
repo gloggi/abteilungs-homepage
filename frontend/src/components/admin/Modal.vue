@@ -27,7 +27,10 @@
           </h3>
         </div>
 
-        <div class="relative overflow-y-auto max-h-[70vh]">
+        <div
+          class="relative"
+          :class="noContentOverflow ? '' : 'overflow-y-auto max-h-[70vh]'"
+        >
           <slot></slot>
         </div>
 
@@ -52,6 +55,10 @@ export default {
     size: {
       type: String,
       default: "medium",
+    },
+    noContentOverflow: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

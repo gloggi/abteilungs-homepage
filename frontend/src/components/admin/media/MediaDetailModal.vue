@@ -1,51 +1,47 @@
 <template>
-  <div
-    class="flex flex-col gap-6 md:flex-row"
-    :class="hideActions ? 'h-full' : 'h-[75vh]'"
-  >
-    <Card
-      class="flex h-full w-full items-center justify-center overflow-hidden bg-gray-50/50 md:w-2/3"
-    >
-      <img
-        v-if="isImage()"
-        :src="`${backendURL}${file.path}?cb=${cacheBust}`"
-        class="max-h-full w-auto object-contain shadow-xs rounded-md"
-      />
-      <object
-        v-else-if="file.extension == 'pdf'"
-        :data="`${backendURL}${file.path}?cb=${cacheBust}`"
-        class="h-full w-full shadow-xs rounded-md"
-        type="application/pdf"
-      />
-      <video
-        v-else-if="file.extension == 'mp4'"
-        controls
-        class="max-h-full w-full shadow-xs rounded-md"
+  <Modal @close="$emit('close')" size="5xl" :noContentOverflow="true">
+    <div class="flex flex-col md:flex-row gap-6 h-[75vh] md:h-[70vh]">
+      <Card
+        class="flex shrink-0 items-center justify-center overflow-hidden bg-gray-50/50 md:w-2/3 h-48 md:h-full"
       >
-        <source
+        <img
+          v-if="isImage()"
           :src="`${backendURL}${file.path}?cb=${cacheBust}`"
-          type="video/mp4"
+          class="max-h-full w-auto object-contain shadow-xs rounded-md"
         />
-      </video>
-      <audio
-        v-else-if="file.extension == 'mp3'"
-        controls
-        class="w-full max-w-md"
-      >
-        <source
-          :src="`${backendURL}${file.path}?cb=${cacheBust}`"
-          type="audio/mpeg"
+        <object
+          v-else-if="file.extension == 'pdf'"
+          :data="`${backendURL}${file.path}?cb=${cacheBust}`"
+          class="h-full w-full shadow-xs rounded-md"
+          type="application/pdf"
         />
-      </audio>
-      <img
-        v-else
-        :src="`${backendURL}${file.thumbnail}`"
-        class="max-h-full w-auto rounded-md"
-      />
-    </Card>
-
-    <div class="flex h-full w-full flex-col gap-4 md:w-1/3">
-      <div class="flex flex-1 flex-col overflow-hidden">
+        <video
+          v-else-if="file.extension == 'mp4'"
+          controls
+          class="max-h-full w-full shadow-xs rounded-md"
+        >
+          <source
+            :src="`${backendURL}${file.path}?cb=${cacheBust}`"
+            type="video/mp4"
+          />
+        </video>
+        <audio
+          v-else-if="file.extension == 'mp3'"
+          controls
+          class="w-full max-w-md"
+        >
+          <source
+            :src="`${backendURL}${file.path}?cb=${cacheBust}`"
+            type="audio/mpeg"
+          />
+        </audio>
+        <img
+          v-else
+          :src="`${backendURL}${file.thumbnail}`"
+          class="max-h-full w-auto rounded-md"
+        />
+      </Card>
+      <div class="flex flex-col w-full md:w-1/3 min-h-0">
         <div class="flex-1 overflow-y-auto pr-2">
           <div class="space-y-6">
             <div class="space-y-4">
@@ -104,8 +100,10 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <div v-if="!hideActions" class="flex justify-end gap-2 shrink-0">
+    <template #footer>
+      <div class="flex justify-end gap-2 pt-4 border-t border-gray-100">
         <ButtonComponent
           variant="destructive"
           size="icon"
@@ -119,40 +117,39 @@
           <span>{{ $t("dashboard.save") }}</span>
         </ButtonComponent>
       </div>
-    </div>
-  </div>
+    </template>
+  </Modal>
 </template>
 
 <script>
+import Modal from "../Modal.vue";
+import Card from "../Card.vue";
 import TextInput from "../TextInput.vue";
 import CopyField from "../CopyField.vue";
 import DragAndDropField from "../DragAndDropField.vue";
 import ButtonComponent from "../ButtonComponent.vue";
-import Card from "../Card.vue";
 import { format as formatDate } from "date-fns";
 import { faTrash, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default {
-  name: "MediaDetail",
+  name: "MediaDetailModal",
   components: {
+    Modal,
+    Card,
     TextInput,
     CopyField,
     DragAndDropField,
     ButtonComponent,
-    Card,
     FontAwesomeIcon,
   },
+  emits: ["close", "update", "delete", "replace"],
   props: {
     file: {
       type: Object,
       required: true,
     },
     cacheBust: [Number, String],
-    hideActions: {
-      type: Boolean,
-      default: false,
-    },
   },
   data() {
     return {

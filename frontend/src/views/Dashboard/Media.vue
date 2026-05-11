@@ -19,14 +19,19 @@
     />
 
     <div class="relative min-h-[400px]">
-      <MediaGrid v-if="files.length > 0 || !loading" :files="files" @open="openFile" @delete="confirmDelete" />
+      <MediaGrid
+        v-if="files.length > 0 || !loading"
+        :files="files"
+        @open="openFile"
+        @delete="confirmDelete"
+      />
       <div
         v-if="loading"
         class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
         :class="{ 'mt-4': files.length > 0 }"
       >
         <div
-          v-for="i in (files.length === 0 ? 12 : 6)"
+          v-for="i in files.length === 0 ? 12 : 6"
           :key="`skeleton-${i}`"
           class="flex flex-col rounded-xl border border-gray-200 bg-white shadow-xs animate-pulse"
         >
@@ -44,16 +49,15 @@
       <div ref="sentinel" class="h-1"></div>
     </div>
 
-    <Modal v-if="showModal" @close="closeModal" size="5xl">
-      <MediaDetail
-        v-if="selectedFile"
-        :file="selectedFile"
-        :cacheBust="cacheBust"
-        @update="updateFile"
-        @delete="confirmDelete(selectedFile)"
-        @replace="replaceFile"
-      />
-    </Modal>
+    <MediaDetailModal
+      v-if="showModal && selectedFile"
+      :file="selectedFile"
+      :cacheBust="cacheBust"
+      @close="closeModal"
+      @update="updateFile"
+      @delete="confirmDelete(selectedFile)"
+      @replace="replaceFile"
+    />
 
     <Modal v-if="showUploadModal" @close="showUploadModal = false">
       <h2 class="text-xl font-bold mb-4">{{ $t("dashboard.uploadFile") }}</h2>
@@ -66,7 +70,7 @@
 import SearchField from "../../components/admin/SearchField.vue";
 import PageHeader from "../../components/admin/PageHeader.vue";
 import MediaGrid from "../../components/admin/media/MediaGrid.vue";
-import MediaDetail from "../../components/admin/media/MediaDetail.vue";
+import MediaDetailModal from "../../components/admin/media/MediaDetailModal.vue";
 import DragAndDropUpload from "../../components/admin/DragAndDropUpload.vue";
 import Modal from "../../components/admin/Modal.vue";
 import { debounce } from "lodash";
@@ -79,7 +83,7 @@ export default {
     SearchField,
     PageHeader,
     MediaGrid,
-    MediaDetail,
+    MediaDetailModal,
     DragAndDropUpload,
     Modal,
     FontAwesomeIcon,
@@ -245,7 +249,7 @@ export default {
     async deleteFile(file) {
       try {
         await this.callApi("delete", `/files/${file.id}`);
-        this.files = this.files.filter(f => f.id !== file.id);
+        this.files = this.files.filter((f) => f.id !== file.id);
         this.total--;
         this.notifyUser(this.$t("dashboard.itemDeleted"));
         if (
@@ -268,7 +272,7 @@ export default {
           category: updatedFile.category,
         });
 
-        const index = this.files.findIndex(f => f.id === updatedFile.id);
+        const index = this.files.findIndex((f) => f.id === updatedFile.id);
         if (index !== -1) {
           this.files[index] = { ...this.files[index], ...updatedFile };
         }
@@ -288,11 +292,11 @@ export default {
         formData.append("category", "test");
 
         await this.callApi("post", `/files/${this.selectedFile.id}`, formData);
-        
+
         // As the controller doesn't return the updated file object, we just trigger a full reload
         // to ensure we have the correct thumbnail and file path.
         this.resetAndLoad();
-        
+
         this.cacheBust = Date.now();
         this.notifyUser(this.$t("dashboard.itemUpdated"));
       } catch (e) {
