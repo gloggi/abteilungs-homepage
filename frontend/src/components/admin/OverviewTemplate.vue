@@ -4,7 +4,7 @@
       <template #actions>
         <ActionButton
           v-if="itemsSelected"
-          @click="deleteItems"
+          @click="showDeleteModal = true"
           :toolTipText="$t('dashboard.deleteSelectedItems')"
         >
           <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
@@ -35,6 +35,13 @@
       :searchString="searchString"
       :cover="cover"
     />
+    <ConfirmDeleteModal
+      v-if="showDeleteModal"
+      @close="showDeleteModal = false"
+      @confirm="deleteItems"
+      :message="$t('dashboard.confirmDeleteSelectedItems')"
+      :title="$t('dashboard.deleteSelectedItems')"
+    />
   </div>
 </template>
 
@@ -45,6 +52,7 @@ import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import MiDataSync from "@/icons/MiDataSync.vue";
 import ActionButton from "./ActionButton.vue";
 import SearchField from "./SearchField.vue";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.vue";
 export default {
   props: {
     name: String,
@@ -75,6 +83,7 @@ export default {
     ActionButton,
     SearchField,
     PageHeader,
+    ConfirmDeleteModal,
   },
   data() {
     return {
@@ -86,6 +95,7 @@ export default {
         faTrash,
         faPlus,
       },
+      showDeleteModal: false,
     };
   },
   computed: {
@@ -98,6 +108,7 @@ export default {
       this.selected = event;
     },
     async deleteItems() {
+      this.showDeleteModal = false;
       try {
         await Promise.all(
           this.selected.map(async (entityId) => {

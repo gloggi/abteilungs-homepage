@@ -11,7 +11,7 @@
       <slot name="buttons-before"></slot>
       <ActionButton
         v-if="!noDelete"
-        @click="deleteItem"
+        @click="confirmDelete"
         :toolTipText="$t('dashboard.deleteItem')"
       >
         <font-awesome-icon :icon="icons.faTrash" class="h-6 w-6" />
@@ -26,6 +26,12 @@
       <slot name="buttons-after"></slot>
     </template>
   </PageHeader>
+
+  <ConfirmDeleteModal
+    v-if="showDeleteModal"
+    @close="showDeleteModal = false"
+    @confirm="deleteItem"
+  />
 </template>
 <script>
 import PageHeader from "../../components/admin/PageHeader.vue";
@@ -37,10 +43,12 @@ import {
   faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 import ActionButton from "./ActionButton.vue";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.vue";
 export default {
   components: {
     PageHeader,
     ActionButton,
+    ConfirmDeleteModal,
   },
   props: [
     "title",
@@ -62,6 +70,7 @@ export default {
         faCopy,
       },
       isDragging: false,
+      showDeleteModal: false,
     };
   },
   computed: {
@@ -70,7 +79,15 @@ export default {
     },
   },
   methods: {
+    confirmDelete() {
+      if (this.contentId === "new") {
+        this.$router.push({ name: this.backLinkTo });
+        return;
+      }
+      this.showDeleteModal = true;
+    },
     async deleteItem() {
+      this.showDeleteModal = false;
       if (this.contentId === "new") {
         this.$router.push({ name: this.backLinkTo });
         return;

@@ -20,7 +20,7 @@
       </div>
       <div class="flex flex-row items-center gap-2">
         <ActionButton
-          @click="$emit('delete', item)"
+          @click="showDeleteModal = true"
           variant="ghost"
           size="icon"
           :toolTipText="$t('dashboard.delete')"
@@ -33,15 +33,21 @@
     <div class="p-4">
       <slot></slot>
     </div>
+    <ConfirmDeleteModal
+      v-if="showDeleteModal"
+      @close="showDeleteModal = false"
+      @confirm="executeDelete"
+    />
   </div>
 </template>
 
 <script>
 import { faTrash, faGripVertical } from "@fortawesome/free-solid-svg-icons";
 import ActionButton from "./ActionButton.vue";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.vue";
 
 export default {
-  components: { ActionButton },
+  components: { ActionButton, ConfirmDeleteModal },
   props: {
     item: {
       type: Object,
@@ -58,9 +64,14 @@ export default {
         faGripVertical,
         faTrash,
       },
+      showDeleteModal: false,
     };
   },
   methods: {
+    executeDelete() {
+      this.showDeleteModal = false;
+      this.$emit("delete", this.item);
+    },
     dragStart(e) {
       e.dataTransfer.setData("text/plain", JSON.stringify(this.item));
       this.$emit("startedDragging", true);

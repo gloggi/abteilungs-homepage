@@ -63,6 +63,13 @@
       <h2 class="text-xl font-bold mb-4">{{ $t("dashboard.uploadFile") }}</h2>
       <DragAndDropUpload @uploadedFile="onUploaded" />
     </Modal>
+
+    <ConfirmDeleteModal
+      v-if="showDeleteModal"
+      @close="showDeleteModal = false"
+      @confirm="executeDelete"
+      :message="$t('dashboard.confirmDelete')"
+    />
   </div>
 </template>
 
@@ -77,6 +84,7 @@ import { debounce } from "lodash";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ButtonComponent from "../../components/admin/ButtonComponent.vue";
+import ConfirmDeleteModal from "../../components/admin/ConfirmDeleteModal.vue";
 
 export default {
   components: {
@@ -88,6 +96,7 @@ export default {
     Modal,
     FontAwesomeIcon,
     ButtonComponent,
+    ConfirmDeleteModal,
   },
   data() {
     return {
@@ -101,7 +110,9 @@ export default {
       loading: false,
       showModal: false,
       showUploadModal: false,
+      showDeleteModal: false,
       selectedFile: null,
+      fileToDelete: null,
       cacheBust: Date.now(),
       observer: null,
       extensionMap: {
@@ -240,9 +251,16 @@ export default {
       }, 300);
     },
 
-    async confirmDelete(file) {
-      if (confirm(this.$t("dashboard.confirmDelete"))) {
-        await this.deleteFile(file);
+    confirmDelete(file) {
+      this.fileToDelete = file;
+      this.showDeleteModal = true;
+    },
+
+    executeDelete() {
+      this.showDeleteModal = false;
+      if (this.fileToDelete) {
+        this.deleteFile(this.fileToDelete);
+        this.fileToDelete = null;
       }
     },
 
