@@ -5,13 +5,11 @@
     >
       <div class="w-10 flex items-center justify-center flex-none">
         <label class="hidden" for="master-checkbox"></label>
-        <input
+        <MasterCheckbox
           id="master-checkbox"
-          type="checkbox"
-          ref="masterbox"
           :checked="isMasterChecked"
+          :indeterminate="isPartiallyChecked"
           @change="toggleAllRows"
-          class="rounded-sm border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
         />
       </div>
 
@@ -153,6 +151,7 @@ import { get } from "lodash";
 import { format } from "date-fns";
 import ColoredLogoCircle from "./ColoredLogoCircle.vue";
 import EmptyState from "./EmptyState.vue";
+import MasterCheckbox from "./MasterCheckbox.vue";
 
 const props = defineProps({
   entity: { type: String, required: true },
@@ -174,7 +173,6 @@ const lastPage = ref(1);
 const loading = ref(false);
 const isDesktop = ref(window.innerWidth > 768);
 const sentinel = ref(null);
-const masterbox = ref(null);
 let observer = null;
 
 const rowSelection = ref({});
@@ -309,6 +307,13 @@ const table = useVueTable({
 const isMasterChecked = computed(() => {
   const rows = table.getRowModel().rows;
   return rows.length > 0 && rows.every((row) => row.getIsSelected());
+});
+
+const isPartiallyChecked = computed(() => {
+  const rows = table.getRowModel().rows;
+  if (rows.length === 0) return false;
+  const selectedCount = rows.filter((row) => row.getIsSelected()).length;
+  return selectedCount > 0 && selectedCount < rows.length;
 });
 
 watch(
