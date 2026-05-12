@@ -1,7 +1,7 @@
 <template>
   <Modal :title="title || $t('dashboard.deleteItem')" @close="$emit('close')">
     <p class="text-gray-600 mb-6">
-      {{ message || $t('dashboard.confirmDeleteItem') }}
+      {{ message || $t("dashboard.confirmDeleteItem") }}
     </p>
     <template #footer>
       <div class="flex justify-end space-x-3 mt-6">

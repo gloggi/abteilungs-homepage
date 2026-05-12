@@ -2,10 +2,22 @@
   <OverviewTemplate
     :name="$t('dashboard.contacts')"
     entity="contacts"
-    :titles="`${$t('dashboard.logo')},${$t('dashboard.nickname')},${$t(
-      'dashboard.role',
-    )},${$t('dashboard.email')}`"
-    columns="file:image(thumbnail;rounded),nickname:link(id),role,email"
+    :columns="[
+      {
+        key: 'file',
+        title: $t('dashboard.logo'),
+        type: 'image',
+        imageField: 'thumbnail',
+      },
+      {
+        key: 'nickname',
+        title: $t('dashboard.nickname'),
+        type: 'link',
+        linkKey: 'id',
+      },
+      { key: 'role', title: $t('dashboard.role') },
+      { key: 'email', title: $t('dashboard.email') },
+    ]"
     pushAfterCreationTo="Contact"
     :cover="true"
   />

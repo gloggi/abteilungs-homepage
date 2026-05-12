@@ -2,10 +2,22 @@
   <OverviewTemplate
     :name="$t('dashboard.events')"
     entity="events"
-    :titles="`${$t('dashboard.title')},${$t('dashboard.start')},${$t(
-      'dashboard.end',
-    )},${$t('dashboard.groups')}`"
-    columns="title:link(id),startTime:date,endTime:date,groups:list(name)"
+    :columns="[
+      {
+        key: 'title',
+        title: $t('dashboard.title'),
+        type: 'link',
+        linkKey: 'id',
+      },
+      { key: 'startTime', title: $t('dashboard.start'), type: 'date' },
+      { key: 'endTime', title: $t('dashboard.end'), type: 'date' },
+      {
+        key: 'groups',
+        title: $t('dashboard.groups'),
+        type: 'list',
+        listKey: 'name',
+      },
+    ]"
     pushAfterCreationTo="Event"
     :midataSync="true"
   />

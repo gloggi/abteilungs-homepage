@@ -9,54 +9,71 @@
           id="master-checkbox"
           type="checkbox"
           ref="masterbox"
-          v-model="topCheckboxValue"
-          @change="topCheckboxHandler"
+          :checked="isMasterChecked"
+          @change="toggleAllRows"
           class="rounded-sm border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
         />
       </div>
 
       <div class="flex flex-col md:flex-row w-full gap-4">
         <div
-          v-for="(key, i) in getTitles"
-          :key="`text-${i}`"
-          class="hidden md:block text-xs font-medium text-gray-500 uppercase tracking-wider"
-          :class="getColumnClass(keys?.[i])"
+          v-for="header in table.getHeaderGroups()[0]?.headers ?? []"
+          :key="header.id"
+          class="hidden md:flex items-center gap-1 text-xs font-medium text-gray-500 uppercase tracking-wider select-none"
+          :class="getColumnClass(header.column.id)"
+          :style="header.column.getCanSort() ? { cursor: 'pointer' } : {}"
+          @click="header.column.getToggleSortingHandler()?.($event)"
         >
-          {{ key }}
+          <FlexRender
+            :render="header.column.columnDef.header"
+            :props="header.getContext()"
+          />
+          <span
+            v-if="header.column.getIsSorted() === 'asc'"
+            class="text-gray-400"
+            >↑</span
+          >
+          <span
+            v-else-if="header.column.getIsSorted() === 'desc'"
+            class="text-gray-400"
+            >↓</span
+          >
         </div>
       </div>
     </div>
 
-    <div v-if="totalItems == 0 && !loading" class="bg-white w-full">
+    <div v-if="totalItems === 0 && !loading" class="bg-white w-full">
       <EmptyState :title="$t('dashboard.noItemsAvailable')" />
     </div>
-
     <div
-      v-for="(item, j) in content"
-      :key="`row-${item['id'] || j}`"
+      v-for="row in table.getRowModel().rows"
+      :key="row.id"
       class="bg-white w-full p-3 border-b border-gray-100 last:border-0 flex justify-start items-center transition-colors hover:bg-gray-50/50 gap-4"
     >
       <div class="w-10 flex items-center justify-center flex-none">
-        <label class="hidden" :for="`checkbox-${item['id']}`"></label>
+        <label class="hidden" :for="`checkbox-${row.original.id}`"></label>
         <input
-          :id="`checkbox-${item['id']}`"
+          :id="`checkbox-${row.original.id}`"
           type="checkbox"
-          @change="(e) => changeBox(e, item['id'])"
-          v-model="checkBoxValues[item['id']]"
+          :checked="row.getIsSelected()"
+          @change="row.toggleSelected($event.target.checked)"
           class="rounded-sm border-gray-300 text-gray-900 focus:ring-offset-0 focus:ring-0 cursor-pointer"
         />
       </div>
-
-      <template v-for="(key, i) in keys" :key="`mobile-img-${j}-${i}`">
-        <template v-if="actions[key] && actions[key].actionName == 'image'">
+      <template v-for="col in columns" :key="`mobile-img-${row.id}-${col.key}`">
+        <template v-if="col.type === 'image'">
           <div class="justify-start items-center md:hidden px-4">
             <ColoredLogoCircle
               class="size-12"
-              :size="actions[key].args.includes('color') ? 65 : 100"
+              :size="col.useColor ? 65 : 100"
               :src="
-                item[key] ? `${backendURL}${item[key].thumbnail}` : undefined
+                row.original[col.key]
+                  ? `${backendURL}${
+                      row.original[col.key][col.imageField || 'thumbnail']
+                    }`
+                  : undefined
               "
-              :backgroundColor="item?.color"
+              :backgroundColor="row.original?.color"
               :cover="cover"
             />
           </div>
@@ -65,48 +82,15 @@
 
       <div class="flex flex-col md:flex-row md:items-center w-full gap-4">
         <div
-          v-for="(key, i) in keys"
-          :key="`text-${j}-${i}`"
+          v-for="cell in row.getVisibleCells()"
+          :key="cell.id"
           class="text-sm text-gray-700 overflow-hidden text-ellipsis"
-          :class="getColumnClass(key)"
+          :class="getColumnClass(cell.column.id)"
         >
-          <template v-if="actions[key] && actions[key].actionName == 'link'">
-            <router-link
-              class="font-medium text-gray-900 hover:underline hover:text-gray-900 transition-colors"
-              :to="`${entity}/${item[actions[key].actionArgument]}`"
-              >{{ item[key] || $t("dashboard.noValue") }}</router-link
-            >
-          </template>
-
-          <template v-if="actions[key] && actions[key].actionName == 'image'">
-            <div class="justify-start items-center hidden md:block">
-              <ColoredLogoCircle
-                class="size-10"
-                :size="actions[key].args.includes('color') ? 65 : 100"
-                :src="
-                  item[key] ? `${backendURL}${item[key].thumbnail}` : undefined
-                "
-                :backgroundColor="item?.color"
-                :cover="cover"
-              />
-            </div>
-          </template>
-
-          <template v-if="actions[key] && actions[key].actionName == 'date'">
-            <div class="text-gray-500">{{ formatDate(item[key]) }}</div>
-          </template>
-
-          <template v-if="actions[key] && actions[key].actionName == 'list'">
-            <div class="text-gray-500">
-              {{
-                item[key].map((v) => v[actions[key].actionArgument]).join(", ")
-              }}
-            </div>
-          </template>
-
-          <template v-if="!actions[key]">
-            <div class="text-gray-500">{{ getValue(item, key) }}</div>
-          </template>
+          <FlexRender
+            :render="cell.column.columnDef.cell"
+            :props="cell.getContext()"
+          />
         </div>
       </div>
     </div>
@@ -127,14 +111,11 @@
 
         <div class="flex flex-col md:flex-row md:items-center w-full gap-4">
           <div
-            v-for="(key, k) in keys"
+            v-for="(col, k) in columns"
             :key="`skeleton-col-${i}-${k}`"
-            :class="getColumnClass(key)"
+            :class="getColumnClass(col.key)"
           >
-            <div
-              v-if="actions[key] && actions[key].actionName == 'image'"
-              class="hidden md:block"
-            >
+            <div v-if="col.type === 'image'" class="hidden md:block">
               <div class="size-10 rounded-full bg-gray-200"></div>
             </div>
             <div
@@ -150,209 +131,288 @@
   <div ref="sentinel" class="h-1"></div>
 </template>
 
-<script>
+<script setup>
+import {
+  ref,
+  computed,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+  getCurrentInstance,
+  h,
+  nextTick,
+} from "vue";
+import { RouterLink } from "vue-router";
+import {
+  useVueTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  FlexRender,
+} from "@tanstack/vue-table";
 import { get } from "lodash";
 import { format } from "date-fns";
 import ColoredLogoCircle from "./ColoredLogoCircle.vue";
 import EmptyState from "./EmptyState.vue";
-export default {
-  components: { ColoredLogoCircle, EmptyState },
-  props: ["entity", "columns", "titles", "searchString", "cover"],
-  emits: ["changeSelected"],
-  data() {
+
+const props = defineProps({
+  entity: { type: String, required: true },
+  columns: { type: Array, required: true },
+  searchString: { type: String, default: "" },
+  cover: { type: Boolean, default: false },
+});
+
+const emit = defineEmits(["changeSelected"]);
+
+const instance = getCurrentInstance();
+const callApi = (...args) => instance.proxy.callApi(...args);
+const backendURL = computed(() => instance.proxy.backendURL);
+
+const content = ref([]);
+const page = ref(1);
+const totalItems = ref(-1);
+const lastPage = ref(1);
+const loading = ref(false);
+const isDesktop = ref(window.innerWidth > 768);
+const sentinel = ref(null);
+const masterbox = ref(null);
+let observer = null;
+
+const rowSelection = ref({});
+const sorting = ref([]);
+
+const hasMorePages = computed(() => page.value <= lastPage.value);
+
+function formatDate(date) {
+  return format(new Date(date), "dd.MM.yyyy HH:mm");
+}
+
+function getValue(obj, key) {
+  return get(obj, key);
+}
+
+function getColumnClass(key) {
+  if (!isDesktop.value) return "w-full mb-2 md:mb-0";
+  const col = props.columns.find((c) => c.key === key);
+  if (col?.type === "image") {
+    return "flex-none w-auto";
+  }
+  return "flex-1";
+}
+
+const columnDefs = computed(() => {
+  return props.columns.map((col) => {
+    const { key, title, type } = col;
+
     return {
-      content: [],
-      keys: undefined,
-      actions: {},
-      page: 1,
-      totalItems: -1,
-      lastPage: 1,
-      loading: false,
-      topCheckboxValue: false,
-      checkBoxValues: {},
-      tableKey: 0,
-      selected: new Set([]),
-      isDesktop: window.innerWidth > 768,
-      observer: null,
-    };
-  },
-  computed: {
-    columnWidth() {
-      return parseInt(90 / this.columns.split(",").length);
-    },
-    getTitles() {
-      return this.titles.split(",");
-    },
-    hasMorePages() {
-      return this.page <= this.lastPage;
-    },
-  },
-  watch: {
-    checkBoxValues: {
-      handler(newValue) {
-        if (Object.values(newValue).every((value) => value === true)) {
-          if (this.$refs.masterbox) this.$refs.masterbox.checked = true;
-        } else {
-          if (this.$refs.masterbox) this.$refs.masterbox.checked = false;
+      id: key,
+      accessorFn: (row) => get(row, key),
+      header: () => title,
+      enableSorting: true,
+      cell: (info) => {
+        const item = info.row.original;
+        const value = info.getValue();
+
+        if (!type) {
+          return h("div", { class: "text-gray-500" }, getValue(item, key));
+        }
+
+        switch (type) {
+          case "link":
+            return h(
+              RouterLink,
+              {
+                class:
+                  "font-medium text-gray-900 hover:underline hover:text-gray-900 transition-colors",
+                to: `${props.entity}/${item[col.linkKey]}`,
+              },
+              () => value || instance.proxy.$t("dashboard.noValue"),
+            );
+
+          case "image":
+            return h(
+              "div",
+              { class: "justify-start items-center hidden md:block" },
+              h(ColoredLogoCircle, {
+                class: "size-10",
+                size: col.useColor ? 65 : 100,
+                src: item[key]
+                  ? `${backendURL.value}${
+                      item[key][col.imageField || "thumbnail"]
+                    }`
+                  : undefined,
+                backgroundColor: item?.color,
+                cover: props.cover,
+              }),
+            );
+
+          case "date":
+            return h(
+              "div",
+              { class: "text-gray-500" },
+              value ? formatDate(value) : "",
+            );
+
+          case "list":
+            return h(
+              "div",
+              { class: "text-gray-500" },
+              Array.isArray(value)
+                ? value.map((v) => v[col.listKey]).join(", ")
+                : "",
+            );
+
+          default:
+            return h("div", { class: "text-gray-500" }, getValue(item, key));
         }
       },
-      deep: true,
+    };
+  });
+});
+
+const table = useVueTable({
+  get data() {
+    return content.value;
+  },
+  get columns() {
+    return columnDefs.value;
+  },
+  state: {
+    get rowSelection() {
+      return rowSelection.value;
     },
-    searchString() {
-      this.resetAndLoad();
+    get sorting() {
+      return sorting.value;
     },
   },
-  methods: {
-    getColumnClass(key) {
-      if (!this.isDesktop) return "w-full mb-2 md:mb-0";
-      if (this.actions[key]?.actionName === "image") {
-        return "flex-none w-auto";
-      }
-      return "flex-1";
-    },
-    getValue(obj, key) {
-      return get(obj, key);
-    },
-    formatDate(date) {
-      return format(new Date(date), "dd.MM.yyyy HH:mm");
-    },
-    changeBox(event, iri) {
-      if (event.target.checked) {
-        this.selected.add(`${iri}`);
-      } else {
-        this.selected.delete(`${iri}`);
-      }
+  enableRowSelection: true,
+  enableSorting: true,
+  onRowSelectionChange: (updaterOrValue) => {
+    const newValue =
+      typeof updaterOrValue === "function"
+        ? updaterOrValue(rowSelection.value)
+        : updaterOrValue;
+    rowSelection.value = newValue;
+  },
+  onSortingChange: (updaterOrValue) => {
+    const newValue =
+      typeof updaterOrValue === "function"
+        ? updaterOrValue(sorting.value)
+        : updaterOrValue;
+    sorting.value = newValue;
+  },
+  getRowId: (row) => String(row.id),
+  getCoreRowModel: getCoreRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+  manualFiltering: true,
+});
 
-      this.$emit("changeSelected", Array.from(this.selected));
-    },
-    topCheckboxHandler() {
-      if (this.topCheckboxValue) {
-        Object.keys(this.checkBoxValues).forEach(
-          (cbv) => (this.checkBoxValues[cbv] = true),
-        );
-        this.selected = new Set(Object.keys(this.checkBoxValues));
-        this.$emit("changeSelected", Array.from(this.selected));
-        this.tableKey++;
-      } else {
-        Object.keys(this.checkBoxValues).forEach(
-          (cbv) => (this.checkBoxValues[cbv] = false),
-        );
-        this.selected = new Set([]);
-        this.$emit("changeSelected", Array.from(this.selected));
-        this.tableKey++;
-      }
-    },
-    setUpBoxes(items) {
-      items.forEach((item) => {
-        this.checkBoxValues[item["id"]] = false;
-      });
-    },
-    resetAndLoad() {
-      this.page = 1;
-      this.content = [];
-      this.totalItems = -1;
-      this.lastPage = 1;
-      this.checkBoxValues = {};
-      this.selected = new Set([]);
-      this.topCheckboxValue = false;
-      this.$emit("changeSelected", []);
-      this.loadMore();
-    },
-    async loadMore() {
-      if (this.loading || !this.hasMorePages) return;
+const isMasterChecked = computed(() => {
+  const rows = table.getRowModel().rows;
+  return rows.length > 0 && rows.every((row) => row.getIsSelected());
+});
 
-      this.loading = true;
-      try {
-        const response = await this.callApi(
-          "get",
-          `/${this.entity}`,
-          {},
-          {
-            params: {
-              page: this.page,
-              dashboard: true,
-              perPage: 20,
-              search: this.searchString,
-            },
-          },
-        );
-        if (response.status == 204) {
-          this.page = 1;
-          this.content = [];
-          this.totalItems = 0;
-          this.lastPage = 1;
-          this.loading = false;
-          return;
-        }
+watch(
+  rowSelection,
+  (newSelection) => {
+    const selectedIds = Object.entries(newSelection)
+      .filter(([, v]) => v)
+      .map(([id]) => id);
+    emit("changeSelected", selectedIds);
+  },
+  { deep: true },
+);
 
-        const newItems = response.data.data;
-        this.content = [...this.content, ...newItems];
-        this.totalItems = response.data.total;
-        this.lastPage = response.data.lastPage;
-        this.setUpBoxes(newItems);
-        this.page++;
-      } catch (e) {
-        console.log(e);
-      } finally {
-        this.loading = false;
-      }
-    },
-    entryProcessor() {
-      const columns = this.columns.split(",");
-      this.keys = columns.map((column) => {
-        if (column.split(":").length === 1) {
-          return column;
-        } else {
-          const [columnName, action] = column.split(":");
-          const [actionName, ...params] = action.split(/\(|\)/);
-          this.actions[columnName] = {
-            actionName,
-          };
-          if (params.length > 0) {
-            const actionParams = params[0].split(";");
-            this.actions[columnName].actionArgument = actionParams[0];
-            this.actions[columnName].args = actionParams.slice(1);
-          }
-          return columnName;
-        }
-      });
-    },
-    handleResize() {
-      this.isDesktop = window.innerWidth > 768;
-    },
-    setupObserver() {
-      this.observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && !this.loading && this.hasMorePages) {
-            this.loadMore();
-          }
+function toggleAllRows(event) {
+  const checked = event.target.checked;
+  table.toggleAllRowsSelected(checked);
+}
+
+async function loadMore() {
+  if (loading.value || !hasMorePages.value) return;
+
+  loading.value = true;
+  try {
+    const response = await callApi(
+      "get",
+      `/${props.entity}`,
+      {},
+      {
+        params: {
+          page: page.value,
+          dashboard: true,
+          perPage: 20,
+          search: props.searchString,
         },
-        {
-          rootMargin: "200px",
-        },
-      );
-      if (this.$refs.sentinel) {
-        this.observer.observe(this.$refs.sentinel);
-      }
-    },
-  },
-  mounted() {
-    window.addEventListener("resize", this.handleResize);
-    this.$nextTick(() => {
-      this.setupObserver();
-    });
-  },
-  beforeUnmount() {
-    window.removeEventListener("resize", this.handleResize);
-    if (this.observer) {
-      this.observer.disconnect();
+      },
+    );
+
+    if (response.status === 204) {
+      page.value = 1;
+      content.value = [];
+      totalItems.value = 0;
+      lastPage.value = 1;
+      loading.value = false;
+      return;
     }
-  },
-  async created() {
-    this.entryProcessor();
-    await this.loadMore();
-  },
-};
+
+    const newItems = response.data.data;
+    content.value = [...content.value, ...newItems];
+    totalItems.value = response.data.total;
+    lastPage.value = response.data.lastPage;
+    page.value++;
+  } catch (e) {
+    console.log(e);
+  } finally {
+    loading.value = false;
+  }
+}
+
+function resetAndLoad() {
+  page.value = 1;
+  content.value = [];
+  totalItems.value = -1;
+  lastPage.value = 1;
+  rowSelection.value = {};
+  emit("changeSelected", []);
+  loadMore();
+}
+
+watch(
+  () => props.searchString,
+  () => resetAndLoad(),
+);
+
+function handleResize() {
+  isDesktop.value = window.innerWidth > 768;
+}
+
+function setupObserver() {
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && !loading.value && hasMorePages.value) {
+        loadMore();
+      }
+    },
+    { rootMargin: "200px" },
+  );
+  if (sentinel.value) {
+    observer.observe(sentinel.value);
+  }
+}
+
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+  nextTick(() => setupObserver());
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
+  if (observer) {
+    observer.disconnect();
+  }
+});
+
+loadMore();
 </script>
 
 <style></style>

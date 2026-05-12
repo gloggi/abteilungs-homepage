@@ -2,8 +2,9 @@
   <OverviewTemplate
     :name="$t('dashboard.tags')"
     entity="tags"
-    :titles="`${$t('dashboard.name')}`"
-    columns="name:link(id)"
+    :columns="[
+      { key: 'name', title: $t('dashboard.name'), type: 'link', linkKey: 'id' },
+    ]"
     pushAfterCreationTo="Tag"
     :create="isAdmin"
   />

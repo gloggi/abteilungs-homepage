@@ -2,8 +2,14 @@
   <OverviewTemplate
     :name="$t('dashboard.faqs')"
     entity="faqs"
-    :titles="`${$t('dashboard.title')}`"
-    columns="title:link(id)"
+    :columns="[
+      {
+        key: 'title',
+        title: $t('dashboard.title'),
+        type: 'link',
+        linkKey: 'id',
+      },
+    ]"
     pushAfterCreationTo="Faq"
   />
 </template>

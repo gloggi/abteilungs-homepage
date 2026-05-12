@@ -30,7 +30,6 @@
       :key="tableKey"
       :entity="entity"
       @changeSelected="changeSelected"
-      :titles="titles"
       :columns="columns"
       :searchString="searchString"
       :cover="cover"
@@ -57,8 +56,7 @@ export default {
   props: {
     name: String,
     entity: String,
-    titles: String,
-    columns: String,
+    columns: Array,
     pushAfterCreationTo: String,
     midataSync: {
       type: Boolean,

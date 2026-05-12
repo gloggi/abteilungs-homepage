@@ -2,10 +2,17 @@
   <OverviewTemplate
     :name="$t('dashboard.blogPosts')"
     entity="blogposts"
-    :titles="`${$t('dashboard.title')},${$t('dashboard.slug')},${$t(
-      'dashboard.publishedAt',
-    )},${$t('dashboard.active')}`"
-    columns="title:link(id),slug,published_at,active"
+    :columns="[
+      {
+        key: 'title',
+        title: $t('dashboard.title'),
+        type: 'link',
+        linkKey: 'id',
+      },
+      { key: 'slug', title: $t('dashboard.slug') },
+      { key: 'published_at', title: $t('dashboard.publishedAt') },
+      { key: 'active', title: $t('dashboard.active') },
+    ]"
     pushAfterCreationTo="BlogPost"
     :create="true"
   />

@@ -4,10 +4,17 @@
       settings.isRegion ? $t('dashboard.divisions') : $t('dashboard.groups')
     "
     entity="groups"
-    :titles="`${$t('dashboard.logo')},${$t('dashboard.name')},${$t(
-      'dashboard.section',
-    )}`"
-    columns="file:image(thumbnail;color),name:link(id),section.name"
+    :columns="[
+      {
+        key: 'file',
+        title: $t('dashboard.logo'),
+        type: 'image',
+        imageField: 'thumbnail',
+        useColor: true,
+      },
+      { key: 'name', title: $t('dashboard.name'), type: 'link', linkKey: 'id' },
+      { key: 'section.name', title: $t('dashboard.section') },
+    ]"
     pushAfterCreationTo="Group"
     :create="isAdmin"
   />

@@ -2,10 +2,11 @@
   <OverviewTemplate
     :name="$t('dashboard.locations')"
     entity="locations"
-    :titles="`${$t('dashboard.name')},${$t('dashboard.latitude')},${$t(
-      'dashboard.longitude',
-    )}`"
-    columns="name:link(id),lat,long"
+    :columns="[
+      { key: 'name', title: $t('dashboard.name'), type: 'link', linkKey: 'id' },
+      { key: 'lat', title: $t('dashboard.latitude') },
+      { key: 'long', title: $t('dashboard.longitude') },
+    ]"
     pushAfterCreationTo="Location"
   />
 </template>

@@ -2,10 +2,12 @@
   <OverviewTemplate
     :name="$t('dashboard.camps')"
     entity="camps"
-    :titles="`${$t('dashboard.name')},${$t('dashboard.startAt')},${$t(
-      'dashboard.finishAt',
-    )},${$t('dashboard.participants')}`"
-    columns="name:link(id),startDate:date,finishDate:date,participantCount"
+    :columns="[
+      { key: 'name', title: $t('dashboard.name'), type: 'link', linkKey: 'id' },
+      { key: 'startDate', title: $t('dashboard.startAt'), type: 'date' },
+      { key: 'finishDate', title: $t('dashboard.finishAt'), type: 'date' },
+      { key: 'participantCount', title: $t('dashboard.participants') },
+    ]"
     pushAfterCreationTo="Camp"
     :midataSync="true"
   />

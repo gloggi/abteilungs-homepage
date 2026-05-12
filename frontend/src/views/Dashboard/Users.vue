@@ -2,10 +2,17 @@
   <OverviewTemplate
     :name="$t('dashboard.users')"
     entity="users"
-    :titles="`${$t('dashboard.nickname')},${$t('dashboard.firstName')},${$t(
-      'dashboard.lastName',
-    )},${$t('dashboard.email')}`"
-    columns="nickname:link(id),firstname,lastname,email"
+    :columns="[
+      {
+        key: 'nickname',
+        title: $t('dashboard.nickname'),
+        type: 'link',
+        linkKey: 'id',
+      },
+      { key: 'firstname', title: $t('dashboard.firstName') },
+      { key: 'lastname', title: $t('dashboard.lastName') },
+      { key: 'email', title: $t('dashboard.email') },
+    ]"
     pushAfterCreationTo="User"
     :create="false"
   />

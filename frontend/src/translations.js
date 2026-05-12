@@ -297,8 +297,10 @@ export const messages = {
       uploaded: "Hochgeladen",
       save: "Speichern",
       confirmDelete: "Bist du sicher, dass du diese Datei löschen willst?",
-      confirmDeleteItem: "Bist du sicher, dass du dieses Element löschen willst?",
-      confirmDeleteSelectedItems: "Bist du sicher, dass du die ausgewählten Elemente löschen willst?",
+      confirmDeleteItem:
+        "Bist du sicher, dass du dieses Element löschen willst?",
+      confirmDeleteSelectedItems:
+        "Bist du sicher, dass du die ausgewählten Elemente löschen willst?",
       showing: "Zeige",
       toPagination: "bis",
       of: "von",
