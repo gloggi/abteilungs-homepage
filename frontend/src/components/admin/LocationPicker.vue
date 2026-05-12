@@ -28,10 +28,14 @@ export default {
   },
   watch: {
     lat: function () {
-      this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
+      if (this.markerPoint) {
+        this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
+      }
     },
     long: function () {
-      this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
+      if (this.markerPoint) {
+        this.markerPoint.setCoordinates(fromLonLat([this.long, this.lat]));
+      }
     },
   },
   methods: {
@@ -75,7 +79,6 @@ export default {
       });
 
       iconFeature.setStyle(iconStyle);
-
       vectorSource.addFeature(iconFeature);
 
       const vectorLayer = new VectorLayer({
@@ -85,14 +88,12 @@ export default {
       return vectorLayer;
     },
     selectLocation(event) {
-      {
-        const pixel = event.pixel;
-        const coords = this.map.getCoordinateFromPixel(pixel);
-        this.markerPoint.setCoordinates(coords);
-        const lonLat = toLonLat(coords);
+      const pixel = event.pixel;
+      const coords = this.map.getCoordinateFromPixel(pixel);
+      this.markerPoint.setCoordinates(coords);
+      const lonLat = toLonLat(coords);
 
-        this.$emit("location-selected", { lat: lonLat[1], long: lonLat[0] });
-      }
+      this.$emit("location-selected", { lat: lonLat[1], long: lonLat[0] });
     },
   },
 };

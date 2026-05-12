@@ -66,6 +66,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { project, unproject } from "swissgrid";
+
 export default {
   components: {
     Card,
@@ -94,7 +95,7 @@ export default {
           project([
             parseFloat(this.content.long),
             parseFloat(this.content.lat),
-          ]),
+          ])
         );
       }
     },
@@ -104,18 +105,33 @@ export default {
           project([
             parseFloat(this.content.long),
             parseFloat(this.content.lat),
-          ]),
+          ])
         );
       }
     },
     lv95: function (newVal, oldVal) {
-      if (oldVal && oldVal != newVal && this.content.lat && this.content.long) {
-        let [x, y] = this.lv95.split("/");
-        x = x.replace(/\s/g, "");
-        y = y.replace(/\s/g, "");
-        const [long, lat] = unproject([parseFloat(x), parseFloat(y)]);
-        this.content.lat = lat;
-        this.content.long = long;
+      if (oldVal && oldVal !== newVal && this.content.lat && this.content.long) {
+        const currentProjected = this.formatLV95(
+          project([
+            parseFloat(this.content.long),
+            parseFloat(this.content.lat),
+          ])
+        );
+        
+        if (newVal === currentProjected) {
+          return;
+        }
+
+        try {
+          let [x, y] = newVal.split("/");
+          if (x && y) {
+            x = x.replace(/\s/g, "");
+            y = y.replace(/\s/g, "");
+            const [long, lat] = unproject([parseFloat(x), parseFloat(y)]);
+            this.content.lat = lat;
+            this.content.long = long;
+          }
+        } catch (e) {}
       }
     },
   },
@@ -127,7 +143,7 @@ export default {
       try {
         const response = await this.callApi(
           "get",
-          `/locations/${this.$route.params.id}`,
+          `/locations/${this.$route.params.id}`
         );
         this.content = response.data;
         this.loadedKey++;
@@ -140,7 +156,7 @@ export default {
         await this.callApi(
           "put",
           `/locations/${this.$route.params.id}`,
-          this.content,
+          this.content
         );
         this.notifyUser(this.$t("dashboard.itemUpdatedMessage"));
       } catch (e) {
@@ -159,7 +175,7 @@ export default {
         .map((num) =>
           new Intl.NumberFormat("de-CH")
             .format(Math.round(num))
-            .replace(/’/g, " "),
+            .replace(/’/g, " ")
         )
         .join(" / ");
     },
