@@ -279,7 +279,42 @@ export default {
           openOnClick: false,
           HTMLAttributes: {
             class: "link",
-            target: "_self",
+          },
+        }).extend({
+          renderHTML({ HTMLAttributes }) {
+            const href = HTMLAttributes.href || "";
+            const isInternal =
+              href.startsWith("/") ||
+              href.startsWith("#") ||
+              href.startsWith("mailto:") ||
+              href.startsWith("tel:") ||
+              (typeof window !== "undefined" &&
+                href.startsWith(window.location.origin));
+
+            const attrs = { ...HTMLAttributes };
+
+            if (isInternal) {
+              delete attrs.target;
+              delete attrs.rel;
+              return [
+                "a",
+                mergeAttributes(this.options.HTMLAttributes, attrs),
+                0,
+              ];
+            }
+
+            return [
+              "a",
+              mergeAttributes(
+                this.options.HTMLAttributes,
+                {
+                  target: "_blank",
+                  rel: "noopener noreferrer nofollow",
+                },
+                attrs,
+              ),
+              0,
+            ];
           },
         }),
         TextStyle,
