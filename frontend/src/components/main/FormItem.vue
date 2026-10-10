@@ -15,15 +15,16 @@
       <div class="flex flex-col space-y-5">
         <div
           v-for="field in item.form.fields"
-          :key="field.id"
+          :key="field.uuid"
           class="flex flex-col space-y-2"
         >
-          <label class="font-bold main-text text-2xl" for="form.label"
+          <label class="font-bold main-text text-2xl" :for="fieldInputId(field)"
             >{{ field.label }} {{ field.required ? "*" : "" }}</label
           >
           <input
             v-if="field.type == 'textField'"
-            v-model="formContent[field.key]"
+            :id="fieldInputId(field)"
+            v-model="formContent[field.uuid]"
             :required="field.required"
             autocomplete="off"
             class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary w-full"
@@ -32,7 +33,8 @@
           />
           <textarea
             v-if="field.type == 'textareaField'"
-            v-model="formContent[field.key]"
+            :id="fieldInputId(field)"
+            v-model="formContent[field.uuid]"
             :required="field.required"
             autocomplete="off"
             class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary min-h-36"
@@ -40,14 +42,15 @@
           ></textarea>
           <select
             v-if="field.type == 'selectField'"
-            v-model="formContent[field.key]"
+            :id="fieldInputId(field)"
+            v-model="formContent[field.uuid]"
             :required="field.required"
             class="rounded-lg border border-primary bg-white h-[50px] main-text text-xl focus:ring-0 focus:border-secondary"
           >
             <option
               v-for="option in field.optionFields"
-              :key="option.id"
-              :value="option.name"
+              :key="option.uuid"
+              :value="option.uuid"
             >
               {{ option.name }}
             </option>
@@ -83,12 +86,24 @@ export default {
     };
   },
   methods: {
+    fieldInputId(field) {
+      return `form-${this.item.id}-field-${field.uuid}`;
+    },
+    buildPayload() {
+      return {
+        id: this.item.form.id,
+        fields: this.item.form.fields
+          .filter((field) => field.uuid in this.formContent)
+          .map((field) => ({
+            uuid: field.uuid,
+            value: this.formContent[field.uuid],
+          })),
+      };
+    },
     async handleForm() {
       try {
-        this.formContent.id = this.item.form.id;
         this.isLoading = true;
-        await this.callApi("post", "/webforms", this.formContent);
-        this.isLoading = false;
+        await this.callApi("post", "/webforms", this.buildPayload());
         this.submitSuccess = true;
         document
           .getElementById(`form-${this.item.id}`)
@@ -96,6 +111,8 @@ export default {
         this.formContent = {};
       } catch (error) {
         console.log(error);
+      } finally {
+        this.isLoading = false;
       }
     },
   },

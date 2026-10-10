@@ -19,6 +19,7 @@ class TextareaFieldsTableSeeder extends Seeder
         \DB::table('textarea_fields')->insert([
             0 => [
                 'id' => 1,
+                'uuid' => '1c6a4909-6db9-4bf8-a1b9-b9fd34a63b91',
                 'label' => 'Nachricht',
                 'required' => 1,
                 'sort' => 6,
@@ -28,6 +29,7 @@ class TextareaFieldsTableSeeder extends Seeder
             ],
             1 => [
                 'id' => 2,
+                'uuid' => '37832b0f-c2e4-4cd0-a275-fd759990e0f7',
                 'label' => 'Nachricht',
                 'required' => 1,
                 'sort' => 1,
