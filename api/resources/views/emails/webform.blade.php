@@ -11,10 +11,10 @@
                       @endif
                     </h1>
                     <p>Hallo,<br>In dieser E-Mail erhältst Du alle Informationen des ausgefüllten Webformulars.</p>
-                    @foreach ($formData as $key => $value)
-                    <p style="font-weight: 600">{{ $key }}:</p>
+                    @foreach ($formData as $entry)
+                    <p style="font-weight: 600">{{ $entry['label'] }}:</p>
                     <p>
-                      {!! $value !!}
+                      {!! $entry['value'] !!}
 
                     </p>
                     @endforeach
