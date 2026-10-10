@@ -96,3 +96,17 @@ Authorization: Bearer {{token}}
 GET {{host}}/api/forms/2
 Accept: application/json
 Authorization: Bearer {{token}}
+
+### POST a filled web form (public endpoint)
+POST {{host}}/api/webforms
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": 1,
+  "fields": [
+    { "uuid": "f294979d-7ebd-41bc-b316-b24b13ad2d46", "value": "Jürg" },
+    { "uuid": "18bfe626-d78a-4dd0-90e7-48a91ab97323", "value": "Müller-Lüdenscheidt" },
+    { "uuid": "844624cf-b8cb-44b8-b419-64cba9aa80bc", "value": "juerg@example.com" }
+  ]
+}

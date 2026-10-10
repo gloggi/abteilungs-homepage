@@ -16,13 +16,15 @@ class StoreFormRequest extends FormRequest
             'enable_autoresponse' => 'nullable|boolean',
             'autoresponse_subject' => 'nullable|string|max:255',
             'autoresponse_message' => 'nullable|string',
-            'autoresponse_email_field_id' => 'nullable|exists:text_fields,id',
+            'autoresponse_email_field_uuid' => 'nullable|uuid',
             'fields' => 'nullable|array',
             'fields.*.type' => 'required|string|in:textField,textareaField,selectField',
+            'fields.*.uuid' => 'nullable|uuid',
             'fields.*.input_type' => 'nullable',
             'fields.*.required' => 'nullable',
             'fields.*.sort' => 'required',
             'fields.*.option_fields' => 'nullable|array|min:1',
+            'fields.*.option_fields.*.uuid' => 'nullable|uuid',
             'fields.*.label' => 'required|string|max:255',
         ];
     }

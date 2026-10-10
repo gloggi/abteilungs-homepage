@@ -9,7 +9,7 @@ class Form extends Model
 {
     use Searchable;
 
-    protected $fillable = ['name', 'email', 'subject', 'group_id', 'enable_autoresponse', 'autoresponse_subject', 'autoresponse_message', 'autoresponse_email_field_id'];
+    protected $fillable = ['name', 'email', 'subject', 'group_id', 'enable_autoresponse', 'autoresponse_subject', 'autoresponse_message', 'autoresponse_email_field_uuid'];
 
     public function textFields()
     {
@@ -33,7 +33,7 @@ class Form extends Model
 
     public function autoresponseField()
     {
-        return $this->belongsTo(TextField::class, 'autoresponse_email_field_id');
+        return $this->belongsTo(TextField::class, 'autoresponse_email_field_uuid', 'uuid');
     }
 
     public function getAllFields()
