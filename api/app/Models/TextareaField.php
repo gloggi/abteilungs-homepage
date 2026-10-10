@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class TextareaField extends Model
 {
+    use HasUuids;
+
     protected $fillable = ['form_id', 'label', 'sort', 'required', 'uuid'];
 
-    protected $appends = ['type', 'key'];
+    protected $appends = ['type'];
 
-    public function getKeyAttribute()
+    public function uniqueIds(): array
     {
-        return str_replace('-', '', $this->uuid);
+        return ['uuid'];
     }
 
     public function getTypeAttribute()

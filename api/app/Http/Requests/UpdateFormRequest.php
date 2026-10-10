@@ -18,14 +18,17 @@ class UpdateFormRequest extends FormRequest
             'enable_autoresponse' => 'nullable|boolean',
             'autoresponse_subject' => 'nullable|string|max:255',
             'autoresponse_message' => 'nullable|string',
-            'autoresponse_email_field_id' => 'nullable|exists:text_fields,id',
+            'autoresponse_email_field_uuid' => 'nullable|uuid',
             'fields' => 'nullable|array',
             'fields.*.input_type' => 'nullable',
             'fields.*.id' => 'sometimes|integer',
+            'fields.*.uuid' => 'nullable|uuid',
             'fields.*.sort' => 'sometimes|required',
             'fields.*.required' => 'nullable',
             'fields.*.type' => 'sometimes|required|string|in:textField,textareaField,selectField',
             'fields.*.option_fields' => 'nullable|array|min:1',
+            'fields.*.option_fields.*.id' => 'nullable|integer',
+            'fields.*.option_fields.*.uuid' => 'nullable|uuid',
             'fields.*.label' => 'sometimes|required|string|max:255',
         ];
     }
