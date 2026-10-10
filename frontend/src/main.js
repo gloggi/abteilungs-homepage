@@ -33,12 +33,55 @@ const app = createApp(App)
 app.directive("router-link", {
   mounted(el) {
     el.addEventListener("click", (event) => {
-      event.preventDefault();
-      const path = event.target.getAttribute("href");
-      if (path.startsWith("/")) {
-        router.push(path);
-      } else {
-        window.location.href = path;
+      const link = event.target.closest("a");
+      if (!link) {
+        return;
+      }
+
+      const href = link.getAttribute("href");
+      if (!href) {
+        return;
+      }
+      if (
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        event.button !== 0
+      ) {
+        return;
+      }
+      const target = link.getAttribute("target");
+      if (target === "_blank") {
+        return;
+      }
+      if (
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        href.startsWith("javascript:")
+      ) {
+        return;
+      }
+
+      if (href.startsWith("#")) {
+        return;
+      }
+
+      if (href.startsWith("/")) {
+        event.preventDefault();
+        router.push(href);
+        return;
+      }
+
+      try {
+        const url = new URL(href, window.location.origin);
+        if (url.origin === window.location.origin) {
+          event.preventDefault();
+          router.push(url.pathname + url.search + url.hash);
+          return;
+        }
+      } catch {
+        return;
       }
     });
   },

@@ -9,12 +9,15 @@ use App\Models\OptionField;
 use App\Models\SelectField;
 use App\Models\TextareaField;
 use App\Models\TextField;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
+    private const FIELD_MODELS = [TextField::class, TextareaField::class, SelectField::class];
+
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 1000);
@@ -47,6 +50,7 @@ class FormController extends Controller
         $form = Form::create($validatedData);
 
         $this->createFieldsFromValidatedData($form, $validatedData);
+        $this->ensureValidAutoresponseField($form);
 
         return response()->json([
             'id' => $form->id,
@@ -100,6 +104,7 @@ class FormController extends Controller
         $this->createFieldsFromValidatedData($form, $validatedData);
 
         $form = Form::find($id);
+        $this->ensureValidAutoresponseField($form);
 
         return response()->json([
 
@@ -148,63 +153,111 @@ class FormController extends Controller
         $validatedData['fields'] = collect($validatedData['fields'])->sortBy('sort')->values()->all();
         $sort_counter = 0;
         foreach ($validatedData['fields'] as $fieldData) {
+            $attributes = [
+                'label' => $fieldData['label'] ?? '',
+                'required' => $fieldData['required'] ?? false,
+                'sort' => $sort_counter,
+            ];
+
             switch ($fieldData['type']) {
                 case 'textField':
-                    TextField::updateOrCreate(
-                        ['id' => $fieldData['id'] ?? null],
-                        [
-                            'label' => $fieldData['label'] ?? '',
-                            'form_id' => $form->id,
-                            'required' => $fieldData['required'] ?? false,
-                            'input_type' => $fieldData['input_type'],
-                            'sort' => $sort_counter,
-                            'uuid' => $fieldData['uuid'] ?? (string) Str::uuid(),
-                        ]
-                    );
+                    $this->upsertField(TextField::class, $form, $fieldData, array_merge($attributes, [
+                        'input_type' => $fieldData['input_type'],
+                    ]));
                     break;
                 case 'textareaField':
-                    TextareaField::updateOrCreate(
-                        ['id' => $fieldData['id'] ?? null],
-                        [
-                            'label' => $fieldData['label'] ?? '',
-                            'form_id' => $form->id,
-                            'required' => $fieldData['required'] ?? false,
-                            'sort' => $sort_counter,
-                            'uuid' => $fieldData['uuid'] ?? (string) Str::uuid(),
-                        ]
-                    );
+                    $this->upsertField(TextareaField::class, $form, $fieldData, $attributes);
                     break;
                 case 'selectField':
-                    $selectField = SelectField::updateOrCreate(
-                        ['id' => $fieldData['id'] ?? null],
-                        [
-                            'label' => $fieldData['label'] ?? '',
-                            'form_id' => $form->id,
-                            'required' => $fieldData['required'] ?? false,
-                            'sort' => $sort_counter,
-                            'uuid' => $fieldData['uuid'] ?? (string) Str::uuid(),
-                        ]
-                    );
-                    if (isset($fieldData['option_fields'])) {
-
-                        foreach ($fieldData['option_fields'] as $option) {
-
-                            OptionField::updateOrCreate(
-                                ['id' => $option['id'] ?? null],
-                                [
-                                    'name' => $option['name'],
-                                    'select_field_id' => $selectField->id,
-                                    'uuid' => $fieldData['uuid'] ?? (string) Str::uuid(),
-                                ]
-                            );
-
-                        }
-                    }
+                    $selectField = $this->upsertField(SelectField::class, $form, $fieldData, $attributes);
+                    $this->syncOptionFields($selectField, $fieldData['option_fields'] ?? []);
                     break;
                 default:
                     throw new \InvalidArgumentException("Unsupported field type: {$fieldData['type']}");
             }
             $sort_counter++;
+        }
+    }
+
+    private function upsertField(string $modelClass, Form $form, array $fieldData, array $attributes): Model
+    {
+        $field = isset($fieldData['id'])
+            ? $modelClass::where('form_id', $form->id)->find($fieldData['id'])
+            : null;
+
+        if ($field) {
+            $field->update($attributes);
+
+            return $field;
+        }
+
+        return $modelClass::create(array_merge($attributes, [
+            'form_id' => $form->id,
+            'uuid' => $this->availableUuid($fieldData['uuid'] ?? null, self::FIELD_MODELS),
+        ]));
+    }
+
+    private function syncOptionFields(SelectField $selectField, array $options): void
+    {
+        foreach ($options as $optionData) {
+            $attributes = ['name' => $optionData['name'] ?? null];
+
+            $option = isset($optionData['id'])
+                ? $selectField->optionFields()->find($optionData['id'])
+                : null;
+
+            if ($option) {
+                $option->update($attributes);
+
+                continue;
+            }
+
+            $selectField->optionFields()->create(array_merge($attributes, [
+                'uuid' => $this->availableUuid($optionData['uuid'] ?? null, [OptionField::class]),
+            ]));
+        }
+    }
+
+    /**
+     * Returns the uuid proposed by the dashboard if it is valid and not yet
+     * used, otherwise null (the model then generates a fresh one).
+     *
+     * Accepting the client uuid lets the dashboard reference a field (e.g. as
+     * autoresponse e-mail field) before it has been saved for the first time.
+     */
+    private function availableUuid(?string $candidate, array $modelClasses): ?string
+    {
+        if (! is_string($candidate) || ! Str::isUuid($candidate)) {
+            return null;
+        }
+
+        $candidate = strtolower($candidate);
+
+        foreach ($modelClasses as $modelClass) {
+            if ($modelClass::where('uuid', $candidate)->exists()) {
+                return null;
+            }
+        }
+
+        return $candidate;
+    }
+
+    /**
+     * The autoresponse field must be an e-mail text field of this form.
+     */
+    private function ensureValidAutoresponseField(Form $form): void
+    {
+        if (! $form->autoresponse_email_field_uuid) {
+            return;
+        }
+
+        $isValid = $form->textFields()
+            ->where('uuid', $form->autoresponse_email_field_uuid)
+            ->where('input_type', 'email')
+            ->exists();
+
+        if (! $isValid) {
+            $form->update(['autoresponse_email_field_uuid' => null]);
         }
     }
 }
