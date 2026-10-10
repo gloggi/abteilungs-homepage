@@ -47,9 +47,10 @@
           <SelectComponent
             id="autoresponseEmailField"
             :label="$t('dashboard.autoresponseEmailField')"
-            v-model="content.autoresponseEmailFieldId"
+            v-model="content.autoresponseEmailFieldUuid"
             :options="possibleEmailFields"
-            :errors="errors.autoresponseEmailField"
+            :returnInt="false"
+            :errors="errors.autoresponseEmailFieldUuid"
           />
           <TextInput
             id="autoresponseSubject"
@@ -59,9 +60,6 @@
             :errors="errors.autoresponseSubject"
           />
           <div>
-            <FormLabel>
-              {{ $t("dashboard.autoresponseMessage") }}
-            </FormLabel>
             <Editor
               :label="$t('dashboard.autoresponseMessage')"
               v-model="content.autoresponseMessage"
@@ -78,7 +76,7 @@
         :dragging="isDragging"
         :sortKey="-1"
       />
-      <template v-for="field in content.fields" :key="field.id">
+      <template v-for="field in content.fields" :key="field.uuid">
         <DragItemBox
           :item="field"
           @delete="deleteField"
@@ -148,7 +146,7 @@
             <div
               class="flex space-x-2 items-center"
               v-for="(option, i) in field.optionFields"
-              :key="option.id"
+              :key="option.uuid"
             >
               <font-awesome-icon :icon="icons.faCircle" />
               <TextInput
@@ -200,7 +198,7 @@ import DragItemBox from "../../components/admin/DragItemBox.vue";
 import ItemHeaderTemplate from "../../components/admin/ItemHeaderTemplate.vue";
 import CheckBox from "../../components/admin/CheckBox.vue";
 import SelectComponent from "../../components/admin/SelectComponent.vue";
-import { nanoid } from "nanoid";
+import { v4 as uuidv4 } from "uuid";
 import Editor from "../../components/admin/Editor/Editor.vue";
 import FormLabel from "../../components/admin/FormLabel.vue";
 export default {
@@ -242,7 +240,7 @@ export default {
       if (!field.optionFields) {
         field.optionFields = [];
       }
-      field.optionFields.push({ name: event.target.value });
+      field.optionFields.push({ name: event.target.value, uuid: uuidv4() });
       event.target.value = "";
       await new Promise((resolve) => setTimeout(resolve, 15));
       const textFieldToFocus = document.getElementById(
@@ -252,22 +250,27 @@ export default {
     },
     changeOrder(newField) {
       this.content.fields = this.content.fields.filter(
-        (f) => f.id !== newField.id || f.tempId !== newField.tempId,
+        (f) => f.uuid !== newField.uuid,
       );
       this.content.fields.push(newField);
       this.content.fields = this.content.fields.sort((a, b) => a.sort - b.sort);
       this.content.fields.forEach((f, i) => (f.sort = i));
     },
     addField(field) {
-      field.tempId = nanoid();
+      // The uuid identifies the field in the dashboard and in submitted web
+      // forms. The backend keeps it as long as it is not already taken.
+      field.uuid = uuidv4();
       this.content.fields.push(field);
       this.content.fields = this.content.fields.sort((a, b) => a.sort - b.sort);
       this.content.fields.forEach((f, i) => (f.sort = i));
     },
     deleteField(item) {
       this.content.fields = this.content.fields.filter(
-        (f) => f.sort !== item.sort,
+        (f) => f.uuid !== item.uuid,
       );
+      if (this.content.autoresponseEmailFieldUuid === item.uuid) {
+        this.content.autoresponseEmailFieldUuid = null;
+      }
     },
     async getForm() {
       try {
@@ -322,7 +325,7 @@ export default {
       return this.content.fields
         .filter((f) => f.inputType === "email")
         .map((f) => ({
-          id: f.id,
+          id: f.uuid,
           name: f.label,
         }));
     },
