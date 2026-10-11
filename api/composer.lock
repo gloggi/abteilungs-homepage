@@ -3119,27 +3119,27 @@
         },
         {
             "name": "orangehill/iseed",
-            "version": "v3.1.1",
+            "version": "v3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orangehill/iseed.git",
-                "reference": "bfe8f5882641f70b309cd01e30f02e8e9d09b492"
+                "reference": "15ce002707c8cc3806544c0a24661e3b619cb9d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orangehill/iseed/zipball/bfe8f5882641f70b309cd01e30f02e8e9d09b492",
-                "reference": "bfe8f5882641f70b309cd01e30f02e8e9d09b492",
+                "url": "https://api.github.com/repos/orangehill/iseed/zipball/15ce002707c8cc3806544c0a24661e3b619cb9d9",
+                "reference": "15ce002707c8cc3806544c0a24661e3b619cb9d9",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-                "php": "^7.2|^8.0.2"
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "php": "^8.0.2"
             },
             "require-dev": {
-                "illuminate/filesystem": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
-                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/filesystem": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "mockery/mockery": "^1.0.0",
-                "phpunit/phpunit": "^8.0|^11.5.3"
+                "phpunit/phpunit": "^9.0|^10.0|^11.0"
             },
             "type": "library",
             "extra": {
@@ -3176,9 +3176,9 @@
             ],
             "support": {
                 "issues": "https://github.com/orangehill/iseed/issues",
-                "source": "https://github.com/orangehill/iseed/tree/v3.1.1"
+                "source": "https://github.com/orangehill/iseed/tree/v3.8.1"
             },
-            "time": "2025-03-04T07:56:48+00:00"
+            "time": "2026-06-24T08:59:33+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
