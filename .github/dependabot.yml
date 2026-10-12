@@ -11,6 +11,10 @@ updates:
     directory: "/frontend"
     schedule:
       interval: "weekly"
+    groups:
+      tiptap:
+        patterns:
+          - "@tiptap/*"
 
   # API (Laravel/Composer)
   - package-ecosystem: "composer"
