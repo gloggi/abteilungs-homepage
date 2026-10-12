@@ -273,6 +273,7 @@ return [
         'fields.*.required' => 'Erforderlich',
         'fields.*.sort' => 'Sortieren',
         'fields.*.option_fields' => 'Optionsfelder',
+        'fields.*.option_fields.*.name' => 'Optionsname',
         'fields.*.label' => 'Beschriftung',
 
         // StoreFooterLinkRequest.php
@@ -366,6 +367,7 @@ return [
         'fields.*.required' => 'Erforderlich',
         'fields.*.sort' => 'Sortieren',
         'fields.*.option_fields' => 'Optionsfelder',
+        'fields.*.option_fields.*.name' => 'Optionsname',
         'fields.*.label' => 'Beschriftung',
     ],
 

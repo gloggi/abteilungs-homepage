@@ -24,6 +24,8 @@ class StoreFormRequest extends FormRequest
             'fields.*.required' => 'nullable',
             'fields.*.sort' => 'required',
             'fields.*.option_fields' => 'nullable|array|min:1',
+            'fields.*.option_fields.*.id' => 'nullable|integer',
+            'fields.*.option_fields.*.name' => 'required|string|max:255',
             'fields.*.option_fields.*.uuid' => 'nullable|uuid',
             'fields.*.label' => 'required|string|max:255',
         ];

@@ -185,6 +185,10 @@ class FormController extends Controller
             ? $modelClass::where('form_id', $form->id)->find($fieldData['id'])
             : null;
 
+        if (! $field && isset($fieldData['uuid'])) {
+            $field = $modelClass::where('form_id', $form->id)->where('uuid', $fieldData['uuid'])->first();
+        }
+
         if ($field) {
             $field->update($attributes);
 
@@ -199,6 +203,8 @@ class FormController extends Controller
 
     private function syncOptionFields(SelectField $selectField, array $options): void
     {
+        $keptIds = [];
+
         foreach ($options as $optionData) {
             $attributes = ['name' => $optionData['name'] ?? null];
 
@@ -206,16 +212,24 @@ class FormController extends Controller
                 ? $selectField->optionFields()->find($optionData['id'])
                 : null;
 
+            if (! $option && isset($optionData['uuid'])) {
+                $option = $selectField->optionFields()->where('uuid', $optionData['uuid'])->first();
+            }
+
             if ($option) {
                 $option->update($attributes);
+                $keptIds[] = $option->id;
 
                 continue;
             }
 
-            $selectField->optionFields()->create(array_merge($attributes, [
+            $created = $selectField->optionFields()->create(array_merge($attributes, [
                 'uuid' => $this->availableUuid($optionData['uuid'] ?? null, [OptionField::class]),
             ]));
+            $keptIds[] = $created->id;
         }
+
+        $selectField->optionFields()->whereNotIn('id', $keptIds)->delete();
     }
 
     /**
