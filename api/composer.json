@@ -12,7 +12,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^11.1",
         "laravel/socialite": "^5.11",
-        "laravel/tinker": "^2.8",
+        "laravel/tinker": "^3.0",
         "orangehill/iseed": "^3.0",
         "sentry/sentry-laravel": "^4.24",
         "spatie/laravel-permission": "^6.2",
